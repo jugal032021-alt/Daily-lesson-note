@@ -1,4 +1,4 @@
-// ଆପଣଙ୍କର Firebase ଲିଙ୍କ୍ (ମୂଳ ଲିଙ୍କ୍, ଶେଷରେ .json ନାହିଁ)
+// ଆପଣଙ୍କର Firebase ଲିଙ୍କ୍
 const baseURL = "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app"; 
 
 // 1. ନୂଆ ନୋଟ୍ ସେଭ୍ କରିବା (Save)
@@ -41,8 +41,7 @@ async function fetchNoteForEdit() {
         }
 
         if (foundNote) {
-            // ଫର୍ମ ରେ ଡାଟା ଭରିବା
-            document.getElementById('noteId').value = foundId; // ଲୁଚିଥିବା ID ସେଭ୍ କରିବା
+            document.getElementById('noteId').value = foundId; 
             document.getElementById('date').value = foundNote.date;
             document.getElementById('className').value = foundNote.className;
             document.getElementById('period').value = foundNote.period;
@@ -56,7 +55,6 @@ async function fetchNoteForEdit() {
             document.getElementById('prayoga').value = foundNote.prayoga;
             document.getElementById('prasara').value = foundNote.prasara;
 
-            // ବଟନ୍ ଗୁଡିକ ବଦଳାଇବା
             document.getElementById('modeText').innerText = "ନୋଟ୍ କୁ ଏଡିଟ୍ କରନ୍ତୁ";
             document.getElementById('btnSubmit').style.display = 'none';
             document.getElementById('btnUpdate').style.display = 'block';
@@ -76,7 +74,7 @@ async function updateNote() {
     
     try {
         let response = await fetch(`${baseURL}/notes/${noteId}.json`, {
-            method: 'PUT', // PUT ମାନେ ପୁରୁଣା ଜାଗାରେ ନୂଆ ରିପ୍ଲେସ୍ କରିବା
+            method: 'PUT',
             body: JSON.stringify(updatedNote),
             headers: { 'Content-Type': 'application/json' }
         });
@@ -101,13 +99,18 @@ async function deleteNote() {
     }
 }
 
-// ଶିକ୍ଷକଙ୍କ ପାଇଁ Index ପେଜ୍ ରୁ ଖୋଜିବା
+// 5. ଶିକ୍ଷକଙ୍କ ପାଇଁ Index ପେଜ୍ ରୁ ଖୋଜିବା (ଅପଡେଟ୍ ହୋଇଥିବା)
 async function searchNote() {
     let searchDate = document.getElementById('searchDate').value;
     let searchClass = document.getElementById('searchClass').value;
+    let searchSubject = document.getElementById('searchSubject').value.trim().toLowerCase(); // ନୂଆ ବିଷୟ ଫିଲ୍ଟର୍
     let resultArea = document.getElementById('resultArea');
 
-    if (!searchDate) { alert("ଦୟାକରି ତାରିଖ ବାଛନ୍ତୁ!"); return; }
+    if (!searchDate || !searchClass || !searchSubject) { 
+        alert("ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ପୂରଣ କରନ୍ତୁ!"); 
+        return; 
+    }
+    
     resultArea.innerHTML = "<p style='text-align:center;'>ଖୋଜା ଚାଲିଛି...</p>";
 
     try {
@@ -116,9 +119,15 @@ async function searchNote() {
 
         if(data) {
             let foundNote = null;
+            // ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ (subject) ତିନୋଟି ଯାକ ମ୍ୟାଚ୍ କରିବା
             for (let key in data) {
-                if (data[key].date === searchDate && data[key].className === searchClass) {
-                    foundNote = data[key]; break;
+                let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
+                
+                if (data[key].date === searchDate && 
+                    data[key].className === searchClass && 
+                    noteSub.includes(searchSubject)) {
+                    foundNote = data[key]; 
+                    break;
                 }
             }
 
@@ -138,12 +147,11 @@ async function searchNote() {
                         <div class="note-item"><strong>୫. ପ୍ରସାର:</strong> ${foundNote.prasara}</div>
                     </div>
                 `;
-            } else { resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:20px;">କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ!</p>`; }
+            } else { resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:20px;">କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ! (ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟର ବନାନ ଠିକ୍ ଅଛି କି ନାହିଁ ଯାଞ୍ଚ କରନ୍ତୁ)</p>`; }
         } else { resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:20px;">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଡାଟା ଉପଲବ୍ଧ ନାହିଁ!</p>`; }
     } catch (error) { resultArea.innerHTML = `<p style="color:red; text-align:center;">କିଛି ଅସୁବିଧା ହେଲା!</p>`; }
 }
 
-// ଫର୍ମ ରୁ ଡାଟା ସଂଗ୍ରହ କରିବାର ସର୍ଟକଟ୍
 function getFormData() {
     return {
         date: document.getElementById('date').value,
@@ -161,7 +169,6 @@ function getFormData() {
     };
 }
 
-// ତାରିଖ ସେଟ୍ କରିବା ପାଇଁ
 window.onload = function() {
     let today = new Date().toISOString().split('T')[0];
     if(document.getElementById('date')) document.getElementById('date').value = today;
