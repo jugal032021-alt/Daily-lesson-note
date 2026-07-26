@@ -211,4 +211,28 @@ if (classSelect && subjectSelect) {
         }
     });
 }
+// Admin Panel ର Dropdown ପାଇଁ (admin.html)
+const adminClassSelect = document.getElementById("className");
+const adminSubjectSelect = document.getElementById("subject");
+
+if (adminClassSelect && adminSubjectSelect) {
+    adminClassSelect.addEventListener("change", function() {
+        const selectedClass = this.value;
+        
+        // Subject dropdown କୁ ଖାଲି କରିବା
+        adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+        
+        // ଯଦି ଶ୍ରେଣୀ ବଛାଯାଇଛି, ତେବେ ବହି ନାମ ତାଲିକା ଯୋଡ଼ିବା
+        if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
+            classBooks[selectedClass].forEach(function(bookName) {
+                const option = document.createElement("option");
+                option.value = bookName;
+                option.textContent = bookName;
+                adminSubjectSelect.appendChild(option);
+            });
+        } else {
+            adminSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
+        }
+    });
+}
 
