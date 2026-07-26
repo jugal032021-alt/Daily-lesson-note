@@ -175,3 +175,40 @@ window.onload = function() {
     if(document.getElementById('searchDate')) document.getElementById('searchDate').value = today;
     if(document.getElementById('searchEditDate')) document.getElementById('searchEditDate').value = today;
 }
+// ବହିର ନାମ ତାଲିକା (Class-wise Book List)
+const classBooks = {
+    "Class 1": ["ଗଣିତ ଖେଳ", "ଝୁଲଣା-୧"],
+    "Class 2": ["ମଜା ମଜାରେ ଗଣିତ", "ଝୁଲଣା-୨"],
+    "Class 3": ["ଗଣିତ ମେଳା", "ଭାଷା ମହକ-୧", "Pallavi", "ବିଚିତ୍ର ଆମ ପୃଥିବୀ"],
+    "Class 4": ["ଗଣିତ ମେଳା", "ଭାଷା ମହକ-୨", "Pallavi", "ଆମ ବିଚିତ୍ର ବିଶ୍ୱ"],
+    "Class 5": ["ଗଣିତ ମେଳା", "ଭାଷା ମହକ-୩", "Pallavi", "ଆମ ବିଚିତ୍ର ବିଶ୍ୱ"],
+    "Class 6": ["ସାହିତ୍ୟ ସୁଧା", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"],
+    "Class 7": ["ସାହିତ୍ୟ ସୁମନ", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"],
+    "Class 8": ["ସାହିତ୍ୟ ସୁରଭି", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"]
+};
+
+// ଆମେ HTML ରେ ଯେଉଁ ID ଦେଇଥିଲେ ତାହା ଏଠାରେ ବ୍ୟବହାର ହେବ
+const classSelect = document.getElementById("searchClass");
+const subjectSelect = document.getElementById("searchSubject");
+
+if (classSelect && subjectSelect) {
+    classSelect.addEventListener("change", function() {
+        const selectedClass = this.value;
+        
+        // Subject dropdown କୁ ଖାଲି କରିବା
+        subjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+        
+        // ଯଦି ଶ୍ରେଣୀ ବଛାଯାଇଛି, ତେବେ ବହି ନାମ ତାଲିକା ଯୋଡ଼ିବା
+        if (selectedClass && classBooks[selectedClass]) {
+            classBooks[selectedClass].forEach(function(bookName) {
+                const option = document.createElement("option");
+                option.value = bookName;
+                option.textContent = bookName;
+                subjectSelect.appendChild(option);
+            });
+        } else {
+            subjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
+        }
+    });
+}
+
