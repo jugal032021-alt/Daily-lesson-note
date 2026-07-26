@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Upload/Edit Lesson Note</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .edit-section { background-color: #ffebd6; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ff9900; }
+        .edit-section h3 { margin-top: 0; color: #cc6600; font-size: 16px; }
+        .btn-search { background-color: #007bff; }
+        .btn-update { background-color: #ff9900; display: none; }
+        .btn-delete { background-color: #dc3545; display: none; }
+        .btn-submit { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>ଶିକ୍ଷକ ଆଡମିନ୍ ପ୍ୟାନେଲ୍</h2>
+            <p>ଆଜିର ନୋଟ୍ ଅପଲୋଡ୍ କିମ୍ବା ପୁରୁଣା ନୋଟ୍ ଏଡିଟ୍ କରନ୍ତୁ</p>
+        </div>
+        <div class="content">
+            
+            <!-- ପୁରୁଣା ଖୋଜିବା ବିଭାଗ (ଏଡିଟ୍ ପାଇଁ) -->
+            <div class="edit-section">
+                <h3>ସୁଧାରିବା ପାଇଁ ପୁରୁଣା ନୋଟ୍ ଖୋଜନ୍ତୁ</h3>
+                <div class="form-group"><label>ତାରିଖ:</label><input type="date" id="searchEditDate"></div>
+                <div class="form-group">
+                    <label>ଶ୍ରେଣୀ:</label>
+                    <select id="searchEditClass">
+                        <option value="Class 1">Class 1</option><option value="Class 2">Class 2</option>
+                        <option value="Class 3">Class 3</option><option value="Class 4">Class 4</option>
+                        <option value="Class 5">Class 5</option><option value="Class 6">Class 6</option>
+                        <option value="Class 7">Class 7</option><option value="Class 8">Class 8</option>
+                    </select>
+                </div>
+                <button class="btn-search" onclick="fetchNoteForEdit()">ନୋଟ୍ ଖୋଜନ୍ତୁ</button>
+            </div>
+
+            <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid #ccc;">
+
+            <!-- ମୁଖ୍ୟ ଫର୍ମ ବିଭାଗ -->
+            <p style="text-align:center; font-weight:bold; color:#0056b3;" id="modeText">ନୂଆ ଲେସନ୍ ନୋଟ୍ ଟାଇପ୍ କରନ୍ତୁ</p>
+            <input type="hidden" id="noteId"> <!-- ଲୁଚି ରହିଥିବା ID (Firebase ପାଇଁ) -->
+
+            <div class="form-group"><label>ତାରିଖ:</label><input type="date" id="date" required></div>
+            <div class="form-group">
+                <label>ଶ୍ରେଣୀ:</label>
+                <select id="className"><option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option><option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option></select>
+            </div>
+            <div class="form-group"><label>ପିରିୟଡ଼ (Period):</label><input type="text" id="period"></div>
+            <div class="form-group"><label>ବିଷୟ (Subject):</label><input type="text" id="subject"></div>
+            <div class="form-group"><label>ପାଠ୍ୟ ପ୍ରସଙ୍ଗ (Topic):</label><input type="text" id="topic"></div>
+            <div class="form-group"><label>ଶିକ୍ଷଣ ଫଳାଫଳ (Learning Outcomes):</label><textarea id="outcomes"></textarea></div>
+            <div class="form-group"><label>ଶିକ୍ଷଣ ସାମଗ୍ରୀ (TLM):</label><textarea id="tlm"></textarea></div>
+
+            <div class="section-title">ପଞ୍ଚପଦୀ ଶିକ୍ଷାଦାନ (5-Steps)</div>
+            <div class="form-group"><label>୧. ଅଧିତି (Engage):</label><textarea id="adhiti"></textarea></div>
+            <div class="form-group"><label>୨. ବୋଧ (Explain):</label><textarea id="bodha"></textarea></div>
+            <div class="form-group"><label>୩. ଅଭ୍ୟାସ (Explore):</label><textarea id="abhyasa"></textarea></div>
+            <div class="form-group"><label>୪. ପ୍ରୟୋଗ (Elaborate):</label><textarea id="prayoga"></textarea></div>
+            <div class="form-group"><label>୫. ପ୍ରସାର (Evaluate):</label><textarea id="prasara"></textarea></div>
+
+            <!-- ବଟନ୍ ଗୁଡିକ -->
+            <button id="btnSubmit" class="btn-submit" onclick="saveNote()">ନୂଆ ନୋଟ୍ ଅପଲୋଡ୍ କରନ୍ତୁ</button>
+            <button id="btnUpdate" class="btn-update" onclick="updateNote()">ପରିବର୍ତ୍ତନ କୁ ସେଭ୍ କରନ୍ତୁ (Update)</button>
+            <button id="btnDelete" class="btn-delete" onclick="deleteNote()">ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରନ୍ତୁ</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

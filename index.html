@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Lesson Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>ଦୈନନ୍ଦିନ ଲେସନ୍ ନୋଟ୍</h2>
+            <p>Govt. Elementary School - ପଞ୍ଚପଦୀ ଆଧାରିତ</p>
+        </div>
+        <div class="content">
+            <p style="text-align:center; color:#555;">ଆଜିର ନୋଟ୍ ଖୋଜିବା ପାଇଁ ତାରିଖ ଓ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</p>
+            
+            <div class="form-group"><label>ତାରିଖ ବାଛନ୍ତୁ:</label><input type="date" id="searchDate"></div>
+            <div class="form-group">
+                <label>ଶ୍ରେଣୀ ବାଛନ୍ତୁ:</label>
+                <select id="searchClass"><option value="Class 1">Class 1</option><option value="Class 2">Class 2</option><option value="Class 3">Class 3</option><option value="Class 4">Class 4</option><option value="Class 5">Class 5</option><option value="Class 6">Class 6</option><option value="Class 7">Class 7</option><option value="Class 8">Class 8</option></select>
+            </div>
+            
+            <button onclick="searchNote()">ନୋଟ୍ ଖୋଜନ୍ତୁ (Search)</button>
+
+            <!-- ଏଠାରେ ସର୍ଚ୍ଚ ରେଜଲ୍ଟ ଦେଖାଯିବ -->
+            <div id="resultArea"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
