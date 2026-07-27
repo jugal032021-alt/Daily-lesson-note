@@ -258,11 +258,21 @@ if (adminClassSelect && adminSubjectSelect) {
     });
 }
 
-// Admin Panel Search Edit Dropdown ପାଇଁ (admin.html)
+// Admin Panel Search Edit Dropdown (admin.html)
 const searchEditClass = document.getElementById("searchEditClass");
 const searchEditSubject = document.getElementById("searchEditSubject");
 
 if (searchEditClass && searchEditSubject) {
+    if (searchEditClass.value && classBooks[searchEditClass.value]) {
+        searchEditSubject.innerHTML = '<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>';
+        classBooks[searchEditClass.value].forEach(function(bookName) {
+            const option = document.createElement("option");
+            option.value = bookName;
+            option.textContent = bookName;
+            searchEditSubject.appendChild(option);
+        });
+    }
+
     searchEditClass.addEventListener("change", function() {
         const selectedClass = this.value;
         searchEditSubject.innerHTML = '<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>';
@@ -279,6 +289,7 @@ if (searchEditClass && searchEditSubject) {
         }
     });
 }
+
 
 // Admin Panel Dropdown ଏବଂ Edit ଠିକ୍ କରିବା ପାଇଁ
 function updateAdminSubjects() {
