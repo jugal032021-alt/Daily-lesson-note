@@ -43,7 +43,23 @@ async function fetchNoteForEdit() {
         if (foundNote) {
             document.getElementById('noteId').value = foundId; 
             document.getElementById('date').value = foundNote.date;
-            document.getElementById('className').value = foundNote.className;
+                document.getElementById('className').value = foundNote.className;
+
+    // ଶ୍ରେଣୀ ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଡ୍ରପ୍-ଡାଉନ୍‌ରେ ଲୋଡ୍ କରିବା
+    const adminSubjectSelect = document.getElementById("subject");
+    adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+
+    if (foundNote.className && classBooks[foundNote.className]) {
+        classBooks[foundNote.className].forEach(function(bookName) {
+            const option = document.createElement("option");
+            option.value = bookName;
+            option.textContent = bookName;
+            adminSubjectSelect.appendChild(option);
+        });
+    }
+
+    document.getElementById('subject').value = foundNote.subject;
+            
             // ଶ୍ରେଣୀ ବଛା ହେବା ପରେ ସେହି ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଲୋଡ୍ କରିବା
 if (typeof updateAdminSubjects === 'function') {
     updateAdminSubjects();
