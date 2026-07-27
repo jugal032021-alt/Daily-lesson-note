@@ -278,4 +278,23 @@ if (searchClassSelect && searchSubjectSelect) {
         }
     });
 }
+// Admin Panel ର Dropdown ଏବଂ Edit ଠିକ୍ କରିବା ପାଇଁ
+function updateAdminSubjects() {
+    const adminClassSelect = document.getElementById("className");
+    const adminSubjectSelect = document.getElementById("subject");
+    const selectedClass = adminClassSelect.value;
+    
+    adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+    
+    if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
+        classBooks[selectedClass].forEach(function(bookName) {
+            const option = document.createElement("option");
+            option.value = bookName;
+            option.textContent = bookName;
+            adminSubjectSelect.appendChild(option);
+        });
+    } else {
+        adminSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
+    }
+}
 
