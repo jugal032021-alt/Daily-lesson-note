@@ -44,6 +44,11 @@ async function fetchNoteForEdit() {
             document.getElementById('noteId').value = foundId; 
             document.getElementById('date').value = foundNote.date;
             document.getElementById('className').value = foundNote.className;
+            // ଶ୍ରେଣୀ ବଛା ହେବା ପରେ ସେହି ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଲୋଡ୍ କରିବା
+if (typeof updateAdminSubjects === 'function') {
+    updateAdminSubjects();
+}
+        
             document.getElementById('period').value = foundNote.period;
             document.getElementById('subject').value = foundNote.subject;
             document.getElementById('topic').value = foundNote.topic;
