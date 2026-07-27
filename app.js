@@ -21,7 +21,12 @@ async function saveNote() {
 async function fetchNoteForEdit() {
     let sDate = document.getElementById('searchEditDate').value;
     let sClass = document.getElementById('searchEditClass').value;
-    if (!sDate) { alert("ଦୟାକରି ତାରିଖ ବାଛନ୍ତୁ!"); return; }
+    let sSub = document.getElementById('searchEditSubject').value;
+
+    if (!sDate || !sClass || !sSub) { 
+        alert("ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ସବୁକିଛି ବାଛନ୍ତୁ!"); 
+        return; 
+    }
 
     try {
         let response = await fetch(`${baseURL}/notes.json`);
@@ -32,7 +37,7 @@ async function fetchNoteForEdit() {
 
         if(data) {
             for (let key in data) {
-                if (data[key].date === sDate && data[key].className === sClass) {
+                if (data[key].date === sDate && data[key].className === sClass && data[key].subject === sSub) {
                     foundId = key;
                     foundNote = data[key];
                     break;
@@ -43,30 +48,32 @@ async function fetchNoteForEdit() {
         if (foundNote) {
             document.getElementById('noteId').value = foundId; 
             document.getElementById('date').value = foundNote.date;
-                document.getElementById('className').value = foundNote.className;
+            document.getElementById('className').value = foundNote.className;
 
-    // ଶ୍ରେଣୀ ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଡ୍ରପ୍-ଡାଉନ୍‌ରେ ଲୋଡ୍ କରିବା
-    const adminSubjectSelect = document.getElementById("subject");
-    adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+            // ଶ୍ରେଣୀ ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଡ୍ରପ୍-ଡାଉନ୍‌ରେ ଲୋଡ୍ କରିବା
+            const adminSubjectSelect = document.getElementById("subject");
+            adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
 
-    if (foundNote.className && classBooks[foundNote.className]) {
-        classBooks[foundNote.className].forEach(function(bookName) {
-            const option = document.createElement("option");
-            option.value = bookName;
-            option.textContent = bookName;
-            adminSubjectSelect.appendChild(option);
-        });
-    }
+            if (foundNote.className && classBooks[foundNote.className]) {
+                classBooks[foundNote.className].forEach(function(bookName) {
+                    const option = document.createElement("option");
+                    option.value = bookName;
+                    option.textContent = bookName;
+                    if (bookName === foundNote.subject) {
+                        option.selected = true;
+                    }
+                    adminSubjectSelect.appendChild(option);
+                });
+            }
 
-    document.getElementById('subject').value = foundNote.subject;
+            document.getElementById('subject').value = foundNote.subject;
             
             // ଶ୍ରେଣୀ ବଛା ହେବା ପରେ ସେହି ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଲୋଡ୍ କରିବା
-if (typeof updateAdminSubjects === 'function') {
-    updateAdminSubjects();
-}
+            if (typeof updateAdminSubjects === 'function') {
+                updateAdminSubjects();
+            }
         
             document.getElementById('period').value = foundNote.period;
-            document.getElementById('subject').value = foundNote.subject;
             document.getElementById('topic').value = foundNote.topic;
             document.getElementById('outcomes').value = foundNote.outcomes;
             document.getElementById('tlm').value = foundNote.tlm;
@@ -83,7 +90,7 @@ if (typeof updateAdminSubjects === 'function') {
             
             alert("ନୋଟ୍ ମିଳିଗଲା! ତଳକୁ ଯାଇ ଏଡିଟ୍ କରନ୍ତୁ।");
         } else {
-            alert("କ୍ଷମା କରିବେ, ଏହି ତାରିଖ ପାଇଁ କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ!");
+            alert("କ୍ଷମା କରିବେ, ଏହି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପାଇଁ କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ!");
         }
     } catch (error) { alert("ଏରର୍: " + error); }
 }
@@ -196,6 +203,7 @@ window.onload = function() {
     if(document.getElementById('searchDate')) document.getElementById('searchDate').value = today;
     if(document.getElementById('searchEditDate')) document.getElementById('searchEditDate').value = today;
 }
+
 // ବହିର ନାମ ତାଲିକା (Class-wise Book List)
 const classBooks = {
     "Class 1": ["ଗଣିତ ଖେଳ", "ଝୁଲଣା-୧"],
@@ -208,18 +216,14 @@ const classBooks = {
     "Class 8": ["ସାହିତ୍ୟ ସୁରଭି", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"]
 };
 
-// ଆମେ HTML ରେ ଯେଉଁ ID ଦେଇଥିଲେ ତାହା ଏଠାରେ ବ୍ୟବହାର ହେବ
+// Index Page Dropdown
 const classSelect = document.getElementById("searchClass");
 const subjectSelect = document.getElementById("searchSubject");
 
 if (classSelect && subjectSelect) {
     classSelect.addEventListener("change", function() {
         const selectedClass = this.value;
-        
-        // Subject dropdown କୁ ଖାଲି କରିବା
         subjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-        
-        // ଯଦି ଶ୍ରେଣୀ ବଛାଯାଇଛି, ତେବେ ବହି ନାମ ତାଲିକା ଯୋଡ଼ିବା
         if (selectedClass && classBooks[selectedClass]) {
             classBooks[selectedClass].forEach(function(bookName) {
                 const option = document.createElement("option");
@@ -232,18 +236,15 @@ if (classSelect && subjectSelect) {
         }
     });
 }
-// Admin Panel ର Dropdown ପାଇଁ (admin.html)
+
+// Admin Panel Dropdown (admin.html)
 const adminClassSelect = document.getElementById("className");
 const adminSubjectSelect = document.getElementById("subject");
 
 if (adminClassSelect && adminSubjectSelect) {
     adminClassSelect.addEventListener("change", function() {
         const selectedClass = this.value;
-        
-        // Subject dropdown କୁ ଖାଲି କରିବା
         adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-        
-        // ଯଦି ଶ୍ରେଣୀ ବଛାଯାଇଛି, ତେବେ ବହି ନାମ ତାଲିକା ଯୋଡ଼ିବା
         if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
             classBooks[selectedClass].forEach(function(bookName) {
                 const option = document.createElement("option");
@@ -256,36 +257,36 @@ if (adminClassSelect && adminSubjectSelect) {
         }
     });
 }
-// Index Page (Search Page) ର Dropdown ପାଇଁ
-const searchClassSelect = document.getElementById("searchClass");
-const searchSubjectSelect = document.getElementById("searchSubject");
 
-if (searchClassSelect && searchSubjectSelect) {
-    searchClassSelect.addEventListener("change", function() {
+// Admin Panel Search Edit Dropdown ପାଇଁ (admin.html)
+const searchEditClass = document.getElementById("searchEditClass");
+const searchEditSubject = document.getElementById("searchEditSubject");
+
+if (searchEditClass && searchEditSubject) {
+    searchEditClass.addEventListener("change", function() {
         const selectedClass = this.value;
-        
-        searchSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+        searchEditSubject.innerHTML = '<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>';
         
         if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
             classBooks[selectedClass].forEach(function(bookName) {
                 const option = document.createElement("option");
                 option.value = bookName;
                 option.textContent = bookName;
-                searchSubjectSelect.appendChild(option);
+                searchEditSubject.appendChild(option);
             });
         } else {
-            searchSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
+            searchEditSubject.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
         }
     });
 }
-// Admin Panel ର Dropdown ଏବଂ Edit ଠିକ୍ କରିବା ପାଇଁ
+
+// Admin Panel Dropdown ଏବଂ Edit ଠିକ୍ କରିବା ପାଇଁ
 function updateAdminSubjects() {
     const adminClassSelect = document.getElementById("className");
     const adminSubjectSelect = document.getElementById("subject");
     const selectedClass = adminClassSelect.value;
     
     adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-    
     if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
         classBooks[selectedClass].forEach(function(bookName) {
             const option = document.createElement("option");
@@ -297,4 +298,3 @@ function updateAdminSubjects() {
         adminSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
     }
 }
-
