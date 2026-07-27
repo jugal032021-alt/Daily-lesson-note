@@ -256,4 +256,26 @@ if (adminClassSelect && adminSubjectSelect) {
         }
     });
 }
+// Index Page (Search Page) ର Dropdown ପାଇଁ
+const searchClassSelect = document.getElementById("searchClass");
+const searchSubjectSelect = document.getElementById("searchSubject");
+
+if (searchClassSelect && searchSubjectSelect) {
+    searchClassSelect.addEventListener("change", function() {
+        const selectedClass = this.value;
+        
+        searchSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+        
+        if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
+            classBooks[selectedClass].forEach(function(bookName) {
+                const option = document.createElement("option");
+                option.value = bookName;
+                option.textContent = bookName;
+                searchSubjectSelect.appendChild(option);
+            });
+        } else {
+            searchSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
+        }
+    });
+}
 
