@@ -117,10 +117,13 @@
         e.preventDefault();
         const email = document.getElementById("email").value;
 
-        if (isLogin) {
-            // ଲଗଇନ୍ ସଫଳ ହେଲେ ସିଧାସଳଖ ଲେସନ୍ ନୋଟ୍ ପେଜ୍ (index.html) କୁ ଯିବେ
-            alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
+                if (isLogin) {
+            // ଲଗଇନ୍ ସଫଳ ହେଲେ ଏକ ମାର୍କ ସେଭ୍ ହେବ
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", email);
             window.location.href = "index.html";
+                
+        
         } else {
             const name = document.getElementById("name").value;
             // ସାଇନ୍-ଅପ୍ ସଫଳ ହେଲେ ୟୁଜର୍ ଙ୍କୁ ଲଗଇନ୍ ମୋଡ୍ କୁ ଫେରାଇବ
