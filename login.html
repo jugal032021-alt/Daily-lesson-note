@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - Daily Lesson Notes</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .auth-container h2 {
+            text-align: center;
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn-auth {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-auth:hover {
+            background-color: #0056b3;
+        }
+        .toggle-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .toggle-text a {
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="auth-container">
+        <h2 id="formTitle">ୟୁଜର୍ ଲଗଇନ୍ (User Login)</h2>
+        
+        <!-- ଲଗଇନ୍ / ସାଇନ୍-ଅପ୍ ଫର୍ମ -->
+        <form id="authForm">
+            <div class="form-group" id="nameGroup" style="display: none;">
+                <label>ନାମ (Name):</label>
+                <input type="text" id="name" placeholder="ଆପଣଙ୍କ ପୂରା ନାମ ଲେଖନ୍ତୁ">
+            </div>
+            <div class="form-group">
+                <label>ଇମେଲ୍ (Email):</label>
+                <input type="email" id="email" required placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label>ପାସୱାର୍ଡ (Password):</label>
+                <input type="password" id="password" required placeholder="********">
+            </div>
+            <button type="submit" class="btn-auth" id="submitBtn">ଲଗଇନ୍ କରନ୍ତୁ</button>
+        </form>
+
+        <div class="toggle-text">
+            <p id="toggleMsg">ଆକାଉଣ୍ଟ୍ ନାହିଁ? <a onclick="toggleMode()">ସେଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let isLogin = true;
+
+    function toggleMode() {
+        isLogin = !isLogin;
+        const formTitle = document.getElementById("formTitle");
+        const nameGroup = document.getElementById("nameGroup");
+        const submitBtn = document.getElementById("submitBtn");
+        const toggleMsg = document.getElementById("toggleMsg");
+
+        if (isLogin) {
+            formTitle.innerText = "ୟୁଜର୍ ଲଗଇନ୍ (User Login)";
+            nameGroup.style.display = "none";
+            submitBtn.innerText = "ଲଗଇନ୍ କରନ୍ତୁ";
+            toggleMsg.innerHTML = `ଆକାଉଣ୍ଟ୍ ନାହିଁ? <a onclick="toggleMode()">ସେଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ</a>`;
+        } else {
+            formTitle.innerText = "ଆକାଉଣ୍ଟ୍ ତିଆରି କରନ୍ତୁ (Sign up)";
+            nameGroup.style.display = "block";
+            submitBtn.innerText = "ରେଜିଷ୍ଟର୍ କରନ୍ତୁ";
+            toggleMsg.innerHTML = `ପୂର୍ବରୁ ଆକାଉଣ୍ଟ୍ ଅଛି? <a onclick="toggleMode()">ଲଗଇନ୍ କରନ୍ତୁ</a>`;
+        }
+    }
+
+    document.getElementById("authForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+
+        if (isLogin) {
+            // ଲଗଇନ୍ ସଫଳ ହେଲେ ସିଧାସଳଖ ଲେସନ୍ ନୋଟ୍ ପେଜ୍ (index.html) କୁ ଯିବେ
+            alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
+            window.location.href = "index.html";
+        } else {
+            const name = document.getElementById("name").value;
+            // ସାଇନ୍-ଅପ୍ ସଫଳ ହେଲେ ୟୁଜର୍ ଙ୍କୁ ଲଗଇନ୍ ମୋଡ୍ କୁ ଫେରାଇବ
+            alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ।");
+            toggleMode();
+        }
+    });
+</script>
+
+</body>
+</html>
