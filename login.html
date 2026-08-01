@@ -113,24 +113,35 @@
         }
     }
 
-    document.getElementById("authForm").addEventListener("submit", function(e) {
+        document.getElementById("authForm").addEventListener("submit", function(e) {
         e.preventDefault();
         const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-                if (isLogin) {
-            // ଲଗଇନ୍ ସଫଳ ହେଲେ ଏକ ମାର୍କ ସେଭ୍ ହେବ
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userEmail", email);
-            window.location.href = "index.html";
-                
-        
+        if (isLogin) {
+            // ଲଗଇନ୍ ସମୟରେ ଯାଞ୍ଚ କରିବ ଯେ ଆକାଉଣ୍ଟ୍ ଅଛି କି ନାହିଁ
+            const savedUser = localStorage.getItem("user_" + email);
+            const savedPass = localStorage.getItem("pass_" + email);
+
+            if (savedUser && savedPass === password) {
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userEmail", email);
+                alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
+                window.location.href = "index.html";
+            } else {
+                alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ କିମ୍ବା ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି! ପ୍ରଥମେ Sign up କରନ୍ତୁ।");
+            }
         } else {
             const name = document.getElementById("name").value;
-            // ସାଇନ୍-ଅପ୍ ସଫଳ ହେଲେ ୟୁଜର୍ ଙ୍କୁ ଲଗଇନ୍ ମୋଡ୍ କୁ ଫେରାଇବ
+            // ସାଇନ୍-ଅପ୍ ସମୟରେ ୟୁଜର୍‌ଙ୍କ ଡାଟା ସେଭ୍ କରି ରଖିବ
+            localStorage.setItem("user_" + email, name);
+            localStorage.setItem("pass_" + email, password);
+            
             alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ।");
             toggleMode();
         }
     });
+    
 </script>
 
 </body>
