@@ -90,59 +90,81 @@
     </div>
 </div>
 
-<script>
-    let isLogin = true;
+    <!-- Firebase App ଏବଂ Firestore ଲାଇବ୍ରେରୀ -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-    function toggleMode() {
-        isLogin = !isLogin;
-        const formTitle = document.getElementById("formTitle");
-        const nameGroup = document.getElementById("nameGroup");
-        const submitBtn = document.getElementById("submitBtn");
-        const toggleMsg = document.getElementById("toggleMsg");
+    <script>
+        // ଆପଣଙ୍କ ଫାୟାରବେସ୍ କନଫିଗ୍ ତଥ୍ୟ
+        const firebaseConfig = {
+            apiKey: "AIzaSyCq18Y1jPbJ8P3kTjKlQ05O...",
+            authDomain: "daily-lesson-note.firebaseapp.com",
+            databaseURL: "https://daily-lesson-note-default-rtdb.firebaseio.com",
+            projectId: "daily-lesson-note",
+            storageBucket: "daily-lesson-note.appspot.com",
+            messagingSenderId: "902287150468",
+            appId: "1:902287150460:web:90bd366eb30a4eae268f9",
+            measurementId: "G-LRSYL5Y9HF"
+        };
 
-        if (isLogin) {
-            formTitle.innerText = "ୟୁଜର୍ ଲଗଇନ୍ (User Login)";
-            nameGroup.style.display = "none";
-            submitBtn.innerText = "ଲଗଇନ୍ କରନ୍ତୁ";
-            toggleMsg.innerHTML = `ଆକାଉଣ୍ଟ୍ ନାହିଁ? <a onclick="toggleMode()">ସେଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ</a>`;
-        } else {
-            formTitle.innerText = "ଆକାଉଣ୍ଟ୍ ତିଆରି କରନ୍ତୁ (Sign up)";
-            nameGroup.style.display = "block";
-            submitBtn.innerText = "ରେଜିଷ୍ଟର୍ କରନ୍ତୁ";
-            toggleMsg.innerHTML = `ପୂର୍ବରୁ ଆକାଉଣ୍ଟ୍ ଅଛି? <a onclick="toggleMode()">ଲଗଇନ୍ କରନ୍ତୁ</a>`;
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let isLogin = true;
+
+        function toggleMode() {
+            isLogin = !isLogin;
+            const formTitle = document.getElementById("formTitle");
+            const nameGroup = document.getElementById("nameGroup");
+            const submitBtn = document.getElementById("submitBtn");
+            const toggleMsg = document.getElementById("toggleMsg");
+
+            if (isLogin) {
+                formTitle.innerText = "ୟୁଜର୍ ଲଗଇନ୍ (User Login)";
+                nameGroup.style.display = "none";
+                submitBtn.innerText = "ଲଗଇନ୍ କରନ୍ତୁ";
+                toggleMsg.innerHTML = `ଆକାଉଣ୍ଟ୍ ନାହିଁ? <a onclick="toggleMode()">ସେଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ</a>`;
+            } else {
+                formTitle.innerText = "ଆକାଉଣ୍ଟ୍ ତିଆରି କରନ୍ତୁ (Sign up)";
+                nameGroup.style.display = "block";
+                submitBtn.innerText = "ରେଜିଷ୍ଟର୍ କରନ୍ତୁ";
+                toggleMsg.innerHTML = `ପୂର୍ବରୁ ଆକାଉଣ୍ଟ୍ ଅଛି? <a onclick="toggleMode()">ଲଗଇନ୍ କରନ୍ତୁ</a>`;
+            }
         }
-    }
 
         document.getElementById("authForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-        if (isLogin) {
-            // ଲଗଇନ୍ ସମୟରେ ଯାଞ୍ଚ କରିବ ଯେ ଆକାଉଣ୍ଟ୍ ଅଛି କି ନାହିଁ
-            const savedUser = localStorage.getItem("user_" + email);
-            const savedPass = localStorage.getItem("pass_" + email);
-
-            if (savedUser && savedPass === password) {
-                localStorage.setItem("isLoggedIn", "true");
-                localStorage.setItem("userEmail", email);
-                alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
-                window.location.href = "index.html";
+            if (isLogin) {
+                db.collection("users").where("email", "==", email).where("password", "==", password)
+                    .get()
+                    .then((querySnapshot) => {
+                        if (!querySnapshot.empty) {
+                            localStorage.setItem("isLoggedIn", "true");
+                            localStorage.setItem("userEmail", email);
+                            alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
+                            window.location.href = "index.html";
+                        } else {
+                            alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ କିମ୍ବା ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି! ପ୍ରଥମେ Sign up କରନ୍ତୁ।");
+                        }
+                    });
             } else {
-                alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ କିମ୍ବା ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି! ପ୍ରଥମେ Sign up କରନ୍ତୁ।");
+                const name = document.getElementById("name").value;
+                db.collection("users").add({
+                    name: name,
+                    email: email,
+                    password: password,
+                    createdAt: new Date()
+                }).then(() => {
+                    alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ।");
+                    toggleMode();
+                });
             }
-        } else {
-            const name = document.getElementById("name").value;
-            // ସାଇନ୍-ଅପ୍ ସମୟରେ ୟୁଜର୍‌ଙ୍କ ଡାଟା ସେଭ୍ କରି ରଖିବ
-            localStorage.setItem("user_" + email, name);
-            localStorage.setItem("pass_" + email, password);
-            
-            alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ।");
-            toggleMode();
-        }
-    });
-    
-</script>
+        });
+    </script>
+
 
 </body>
 </html>
