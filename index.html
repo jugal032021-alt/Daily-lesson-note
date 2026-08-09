@@ -129,7 +129,7 @@
                     </select>
                 </div>
             </div>
-            <button class="search-btn" onclick="searchNote()"><i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)</button>
+            <button class="search-btn" onclick="checkLogin()"><i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)</button>
         </div>
 
         <!-- ୪ଟି ଆକର୍ଷଣୀୟ କାର୍ଡ -->
@@ -211,6 +211,16 @@
             © 2026 DailyLessonNote.in | All Rights Reserved
         </div>
     </footer>
+    <script>
+        function checkLogin() {
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                searchNote();
+            } else {
+                alert("ଦୟାକରି ଲେସନ୍ ନୋଟ୍ ଦେଖିବା ପାଇଁ ପ୍ରଥମେ Login କରନ୍ତୁ!");
+                window.location.href = "login.html";
+            }
+        }
+    </script>
 
     <script src="app.js"></script>
 </body>
