@@ -204,3 +204,15 @@ button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
 }
+/* ମୋବାଇଲ୍ ପାଇଁ ଲେଖା ଆକାର ବୃଦ୍ଧି */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px !important;
+    }
+    input, select, textarea, button {
+        font-size: 16px !important;
+    }
+    label {
+        font-size: 15px !important;
+    }
+}
