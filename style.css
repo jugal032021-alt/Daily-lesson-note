@@ -69,3 +69,36 @@ button:active { background-color: #218838; }
     }
 }
 
+/* ନୂଆ ଟପ୍ ହେଡର୍ ଡିଜାଇନ୍ */
+.top-navbar {
+    background-color: #0044cc;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    font-size: 35px;
+}
+
+.site-title h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ମୋବାଇଲ୍ ସ୍କ୍ରିନ୍ ପାଇଁ ସେଟିଂ */
+@media (max-width: 768px) {
+    .top-navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
