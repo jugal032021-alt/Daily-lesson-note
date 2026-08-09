@@ -6,55 +6,6 @@
     <title>Video Gallery - Daily Lesson Note</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .video-item {
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            text-align: left;
-        }
-        .video-item:hover {
-            transform: translateY(-5px);
-        }
-        .video-item img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-        .video-info {
-            padding: 12px;
-        }
-        .video-info h4 {
-            font-size: 14px;
-            color: #333;
-            margin: 0 0 10px 0;
-            line-height: 1.4;
-            height: 40px;
-            overflow: hidden;
-        }
-        .watch-btn {
-            display: block;
-            text-align: center;
-            background: #ff0000;
-            color: white;
-            text-decoration: none;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: bold;
-        }
-        .watch-btn:hover {
-            background: #cc0000;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -80,63 +31,29 @@
 
         <!-- ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ -->
         <div class="content">
-            <div class="section-title">ଆମର ସମସ୍ତ ୟୁଟ୍ୟୁବ୍ ଭିଡିଓ ତାଲିକା</div>
+            <div class="section-title">ଆମର ୟୁଟ୍ୟୁବ୍ ଭିଡିଓ ଗ୍ୟାଲେକ୍ଟ୍ରି</div>
             
             <!-- ୟୁଟ୍ୟୁବ୍ ଚ୍ୟାନେଲ୍ ଲିଙ୍କ୍ ବଟନ୍ -->
             <div style="text-align: center; margin-bottom: 20px;">
-                <a href="https://www.youtube.com/@jagadishgovtupsregeda" target="_blank">
+                <a href="https://www.youtube.com/@JagadishGovtUPSREGEDA" target="_blank">
                     <button style="background: linear-gradient(135deg, #ff0000, #cc0000); width: auto; padding: 12px 25px; font-size: 16px;">
-                        <i class="fa-brands fa-youtube"></i> ୟୁଟ୍ୟୁବ୍ ଚ୍ୟାନେଲ୍‌ରେ ସବୁ ଦେଖନ୍ତୁ
+                        <i class="fa-brands fa-youtube"></i> ୟୁଟ୍ୟୁବ୍ ଚ୍ୟାନେଲ୍‌ରେ ସବୁ ଭିଡିଓ ଦେଖନ୍ତୁ
                     </button>
                 </a>
             </div>
 
-            <!-- ଭିଡିଓ ଗ୍ରୀଡ୍ ଏଠାରେ ଅଟୋମେଟିକ୍ ଆସିବ -->
-            <div id="youtubeVideos" class="video-grid">
-                <p style="text-align: center; width: 100%; color: #666;">ଭିଡିଓଗୁଡ଼ିକ ଲୋଡ୍ ହେଉଛି...</p>
+            <!-- ଭିଡିଓ ପ୍ଲେଲିଷ୍ଟ ଏବେଡ୍ କାର୍ଡ -->
+            <div class="note-card" style="text-align: center;">
+                <h3>ଚ୍ୟାନେଲ୍ ଭିଡିଓ ତାଲିକା</h3>
+                <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-top: 10px;">
+                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;" src="https://www.youtube.com/embed/videoseries?list=UU_Your_Uploads_Playlist_ID" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
             </div>
 
-            <div style="text-align: center; margin-top: 30px;">
+            <div style="text-align: center; margin-top: 20px;">
                 <a href="index.html"><button style="background-color: #0044cc; width: auto; padding: 10px 20px;">← ପ୍ରଧାନ ପୃଷ୍ଠାକୁ ଫେରନ୍ତୁ</button></a>
             </div>
         </div>
     </div>
-
-    <script>
-        // ଆପଣଙ୍କ ୟୁଟ୍ୟୁବ୍ ଚ୍ୟାନେଲ୍ ID ଏଠାରେ ଦିଆଯାଇଛି
-        const channelID = "UC_Your_Channel_ID"; // ଯଦି ଚ୍ୟାନେଲ୍ ID ନାହିଁ, ତେବେ RSS ପାଇଁ ନିମ୍ନୋକ୍ତ ମାଧ୍ୟମ କାମ କରିବ
-        
-        // Alternative: Fetching via rss2json API using channel handle or uploads
-        // ସହଜ ପଦ୍ଧତିରେ ଚ୍ୟାନେଲ୍ ଭିଡିଓ ଫେଚ୍ କରିବା ପାଇଁ:
-        fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.youtube.com%2Ffeeds%2Fvideos.xml%3Fchannel_id%3DUCL16uK7qXfO521633D6rLJA')
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById('youtubeVideos');
-            if(data.items && data.items.length > 0) {
-                container.innerHTML = "";
-                data.items.forEach(item => {
-                    // Get YouTube video ID from link
-                    let ytId = item.link.split('v=')[1];
-                    let thumbnailURL = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
-                    
-                    let videoCard = `
-                        <div class="video-item">
-                            <img src="${thumbnailURL}" alt="${item.title}">
-                            <div class="video-info">
-                                <h4>${item.title}</h4>
-                                <a href="${item.link}" target="_blank" class="watch-btn"><i class="fa-brands fa-youtube"></i> ଭିଡିଓ ଦେଖନ୍ତୁ</a>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += videoCard;
-                });
-            } else {
-                container.innerHTML = "<p style='text-align:center;'>କୌଣସି ଭିଡିଓ ମିଳିଲା ନାହିଁ।</p>";
-            }
-        })
-        .catch(error => {
-            document.getElementById('youtubeVideos').innerHTML = "<p style='text-align:center; color:red;'>ଭିଡିଓ ଲୋଡ୍ ହେବାରେ ସମସ୍ୟା ହେଲା। ଦୟାକରି ଉପର ବଟନ୍ କ୍ଲିକ୍ କରି ଚ୍ୟାନେଲ୍ ଦେଖନ୍ତୁ।</p>";
-        });
-    </script>
 </body>
 </html>
