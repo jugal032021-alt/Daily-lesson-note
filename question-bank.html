@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank - Daily Lesson Note</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f4f6f9; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background-color: #003399; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo-title { display: flex; align-items: center; gap: 15px; }
+        .logo-title i { font-size: 30px; }
+        .logo-text h1 { font-size: 22px; margin-bottom: 2px; }
+        .logo-text p { font-size: 12px; color: #ffcc00; }
+        .nav-menu { display: flex; gap: 15px; list-style: none; flex-wrap: wrap; }
+        .nav-menu li a { color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 11px; gap: 5px; }
+        
+        .main-content { flex: 1; max-width: 1100px; margin: 30px auto; padding: 0 15px; width: 100%; text-align: center; }
+        .page-title { color: #6a1b9a; font-size: 26px; margin-bottom: 10px; }
+        .page-subtitle { color: #555; font-size: 15px; margin-bottom: 40px; }
+
+        .qb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .qb-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 4px solid #6a1b9a; transition: 0.3s; }
+        .qb-card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .qb-card h3 { color: #333; font-size: 20px; margin-bottom: 10px; }
+        .qb-card p { color: #666; font-size: 13px; margin-bottom: 20px; }
+        .qb-btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .btn-pdf { background-color: #d32f2f; color: white; padding: 10px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; }
+        .btn-quiz { background-color: #2e7d32; color: white; padding: 10px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; }
+        .btn-pdf:hover { background-color: #b71c1c; }
+        .btn-quiz:hover { background-color: #1b5e20; }
+
+        /* ଫୁଟର୍ */
+        footer { background-color: #002266; color: #ccc; padding: 40px 30px 20px; margin-top: 40px; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; margin-bottom: 20px; }
+        .footer-col h4 { color: white; font-size: 16px; margin-bottom: 15px; font-weight: bold; }
+        .footer-col p { font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .social-links { display: flex; gap: 10px; margin-top: 15px; }
+        .social-links a { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 14px; background: rgba(255,255,255,0.1); }
+        .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+        .footer-contact div { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+        .copyright { text-align: center; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- ହେଡର୍ -->
+    <header>
+        <div class="logo-title">
+            <i class="fa-solid fa-book-open"></i>
+            <div class="logo-text">
+                <h1>Daily Lesson Note</h1>
+                <p>Simple Digital Learning Resource</p>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="book-library.html"><i class="fa-solid fa-book"></i> Book Library</a></li>
+            <li><a href="video-gallery.html"><i class="fa-brands fa-youtube"></i> Video Gallery</a></li>
+            <li><a href="#"><i class="fa-solid fa-bell"></i> Important Notice</a></li>
+            <li><a href="question-bank.html"><i class="fa-solid fa-circle-question"></i> Question Bank</a></li>
+            <li><a href="#"><i class="fa-solid fa-calendar-days"></i> Calendar</a></li>
+        </ul>
+    </header>
+
+    <div class="main-content">
+        <h2 class="page-title"><i class="fa-solid fa-file-alt"></i> ପ୍ରଶ୍ନୋତ୍ତର (Question Bank)</h2>
+        <p class="page-subtitle">ବିଭିନ୍ନ ପରୀକ୍ଷା ପାଇଁ ପ୍ରଶ୍ନପତ୍ର (PDF) ଡାଉନଲୋଡ୍ କରନ୍ତୁ କିମ୍ବା ଇଣ୍ଟରାକ୍ଟିଭ୍ କୁଇଜ୍ ଅଭ୍ୟାସ କରନ୍ତୁ।</p>
+
+        <div class="qb-grid">
+            <!-- ପ୍ରାଇମେରୀ ବିଭାଗ -->
+            <div class="qb-card">
+                <h3>ପ୍ରାଥମିକ ବିଭାଗ (Class 1 to 5)</h3>
+                <p>FA-1, FA-2 ଏବଂ SA-1 ପରୀକ୍ଷା ପାଇଁ ଅଭ୍ୟାସ ପ୍ରଶ୍ନପତ୍ର।</p>
+                <div class="qb-btn-group">
+                    <a href="#" class="btn-pdf"><i class="fa-solid fa-download"></i> PDF ପ୍ରଶ୍ନପତ୍ର</a>
+                    <a href="#" class="btn-quiz"><i class="fa-solid fa-laptop-code"></i> ଅନ୍‌ଲାଇନ୍ ଟେଷ୍ଟ (Quiz)</a>
+                </div>
+            </div>
+
+            <!-- ଉଚ୍ଚ ପ୍ରାଥମିକ ବିଭାଗ -->
+            <div class="qb-card">
+                <h3>ଉଚ୍ଚ ପ୍ରାଥମିକ (Class 6 to 8)</h3>
+                <p>ଗଣିତ, ବିଜ୍ଞାନ, ଇଂରାଜୀ ଏବଂ ଅନ୍ୟାନ୍ୟ ବିଷୟର ପ୍ରଶ୍ନୋତ୍ତର।</p>
+                <div class="qb-btn-group">
+                    <a href="#" class="btn-pdf"><i class="fa-solid fa-download"></i> PDF ପ୍ରଶ୍ନପତ୍ର</a>
+                    <a href="#" class="btn-quiz"><i class="fa-solid fa-laptop-code"></i> ଅନ୍‌ଲାଇନ୍ ଟେଷ୍ଟ (Quiz)</a>
+                </div>
+            </div>
+
+            <!-- ବୃତ୍ତି ପରୀକ୍ଷା / ମେଧାବୃତ୍ତି -->
+            <div class="qb-card">
+                <h3>ବୃତ୍ତି ପରୀକ୍ଷା (Scholarship)</h3>
+                <p>ପଠାଣି ସାମନ୍ତ, ମେଧାବୃତ୍ତି ଏବଂ ନବୋଦୟ ପରୀକ୍ଷା ପ୍ରସ୍ତୁତି।</p>
+                <div class="qb-btn-group">
+                    <a href="#" class="btn-pdf"><i class="fa-solid fa-download"></i> ଦ୍ରଷ୍ଟବ୍ୟ ପ୍ରଶ୍ନପତ୍ର</a>
+                    <a href="#" class="btn-quiz"><i class="fa-solid fa-laptop-code"></i> Mock Test ଆରମ୍ଭ କରନ୍ତୁ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ଫୁଟର୍ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Daily Lesson Note</h4>
+                <p>“ଶିଖିବା ଜାରି ରଖନ୍ତୁ, ଆଗକୁ ବଢ଼ି ଚାଲନ୍ତୁ।”<br>ଶିଖନ୍ତୁ, ଶିଖାନ୍ତୁ, ଆଗକୁ ବଢ଼ନ୍ତୁ ।</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@JagadishGovtUPSREGEDA" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Home</a></li>
+                    <li><a href="book-library.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Book Library</a></li>
+                    <li><a href="video-gallery.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Video Gallery</a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Important Notice</a></li>
+                    <li><a href="question-bank.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Question Bank</a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Calendar</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <div class="footer-contact">
+                    <div><i class="fa-solid fa-user"></i> Jugal Kishor Choudhury (Asst. Teacher)</div>
+                    <div><i class="fa-solid fa-phone"></i> +91 7008257964</div>
+                    <div><i class="fa-solid fa-envelope"></i> jugalchaudhury@gmail.com</div>
+                    <div><i class="fa-solid fa-location-dot"></i> India</div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 DailyLessonNote.in | All Rights Reserved
+        </div>
+    </footer>
+
+</body>
+</html>
