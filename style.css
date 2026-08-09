@@ -45,3 +45,27 @@ button:active { background-color: #218838; }
 .note-card h3 { color: #b30000; margin-top: 0; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
 .note-item { margin-bottom: 10px; }
 .note-item strong { color: #0056b3; }
+/* ଡେସ୍କଟପ୍ (କମ୍ପ୍ୟୁଟର) ସ୍କ୍ରିନ୍ ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଡିଜାଇନ୍ */
+@media (min-width: 768px) {
+    /* ୱେବସାଇଟ୍ ର ମୁଖ୍ୟ ବକ୍ସକୁ ଚଉଡ଼ା କରିବା */
+    .container {
+        max-width: 900px !important;
+        margin: 0 auto;
+    }
+
+    /* ୩ଟି ଯାକ ବକ୍ସକୁ ଗୋଟିଏ ଧାଡ଼ିରେ ରଖିବା ପାଇଁ ଫ୍ଲେକ୍ସବକ୍ସ (Flexbox) ବ୍ୟବହାର */
+    .desktop-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px; /* ବକ୍ସଗୁଡ଼ିକ ମଝିରେ ଫାଙ୍କା ଜାଗା */
+        margin-bottom: 20px;
+    }
+
+    /* ପ୍ରତ୍ୟେକ ବକ୍ସକୁ ସମାନ ସାଇଜ୍ (ପାଖାପାଖି ୩୩%) ଦେବା */
+    .desktop-row .input-box {
+        width: 32%;
+        margin-bottom: 0; /* ଡେସ୍କଟପ୍ ରେ ତଳ ଆଡ଼କୁ ଫାଙ୍କା ରହିବନି */
+    }
+}
+
