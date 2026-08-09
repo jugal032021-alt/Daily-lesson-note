@@ -116,3 +116,28 @@ button:active { background-color: #218838; }
         gap: 15px;
     }
 }
+/* ମୋବାଇଲ୍ ସ୍କ୍ରିନ୍ ପାଇଁ ଅତିରିକ୍ତ ସେଟିଂ */
+@media (max-width: 768px) {
+    .top-navbar {
+        display: block !important;
+        width: 100% !important;
+        text-align: center !important;
+        padding: 15px 10px !important;
+        box-sizing: border-box !important;
+    }
+    
+    .logo-section {
+        display: block !important;
+        margin-bottom: 15px !important;
+    }
+
+    .menu-section ul {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 15px !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+}
+
