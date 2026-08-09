@@ -107,10 +107,14 @@
             <div class="dash-card card-4"><div class="dash-icon"><i class="fa-solid fa-file-lines"></i></div><h3>Question Bank</h3><p>ବିଭିନ୍ନ ପରୀକ୍ଷା ପାଇଁ ପ୍ରଶ୍ନୋତ୍ତର ଏଠାରେ ଅଭ୍ୟାସ କରନ୍ତୁ।</p><a href="#" class="dash-btn">Practice Now →</a></div>
         </div>
 
-        <div class="notice-ticker">
-            <div class="notice-title"><i class="fa-solid fa-bullhorn"></i> ସୂଚନା</div>
-            <div class="notice-text">FA-1 ପରୀକ୍ଷା ସୂଚନା ଶୀଘ୍ର ପ୍ରକାଶିତ ହେବ। | ନୂଆ ପାଠ ଟିପଣୀ ପ୍ରତିଦିନ ଅପ୍‌ଲୋଡ୍ କରାଯାଏ।</div>
-        </div>
+         <!-- ସ୍କ୍ରୋଲିଂ ସୂଚନା ବାର୍ (Notice Ticker) -->
+<div class="notice-ticker" style="overflow: hidden; white-space: nowrap;">
+    <div class="notice-title" style="display: inline-block; vertical-align: middle;"><i class="fa-solid fa-bullhorn"></i> ସୂଚନା</div>
+    <marquee behavior="scroll" direction="left" scrollamount="5" style="display: inline-block; width: calc(100% - 100px); vertical-align: middle;" onmouseover="this.stop();" onmouseout="this.start();">
+        <span class="notice-text">FA-1 ପରୀକ୍ଷା ସୂଚନା ଶୀଘ୍ର ପ୍ରକାଶିତ ହେବ। &nbsp;&nbsp;|&nbsp;&nbsp; ନୂଆ ପାଠ ଟିପଣୀ ପ୍ରତିଦିନ ଅପ୍‌ଲୋଡ୍ କରାଯାଏ। &nbsp;&nbsp;|&nbsp;&nbsp; ସମସ୍ତ ପାଠ ଟିପଣୀ PDF ଭାବରେ ଉପଲବ୍ଧ।</span>
+    </marquee>
+</div>
+      
         <div id="resultArea"></div>
     </div>
 
