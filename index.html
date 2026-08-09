@@ -1,64 +1,112 @@
 <!DOCTYPE html>
 <html lang="or">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNTBPBR6YF"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-TNTBPBR6YF');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Lesson Notes</title>
+    <title>Daily Lesson Note</title>
+    <!-- ସିଏସ୍ଏସ୍ ଫାଇଲ୍ ଏବଂ ଆଇକନ୍ -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #f4f6f9; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* ହେଡର୍ (Header) ଡିଜାଇନ୍ */
+        header { background-color: #003399; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo-title { display: flex; align-items: center; gap: 15px; }
+        .logo-title i { font-size: 30px; }
+        .logo-text h1 { font-size: 22px; margin-bottom: 2px; }
+        .logo-text p { font-size: 12px; color: #ffcc00; }
+        .nav-menu { display: flex; gap: 20px; list-style: none; }
+        .nav-menu li a { color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 12px; gap: 5px; }
+
+        /* ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ */
+        .main-content { flex: 1; max-width: 1100px; margin: 20px auto; padding: 0 15px; width: 100%; }
+        .page-title { text-align: center; color: #003399; font-size: 24px; margin-bottom: 5px; }
+        .page-subtitle { text-align: center; color: #555; font-style: italic; margin-bottom: 25px; font-size: 15px; }
+
+        /* ସର୍ଚ୍ଚ ବକ୍ସ ଡିଜାଇନ୍ */
+        .search-section { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eef0f5; margin-bottom: 30px; }
+        .search-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .search-group label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 8px; color: #333; }
+        .search-group input, .search-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none; font-size: 14px; }
+        .search-btn { width: 100%; background-color: #1a8c3a; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        .search-btn:hover { background-color: #146c2e; }
+
+        /* ୪ଟି କାର୍ଡ ଡିଜାଇନ୍ */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .card { background: white; border-radius: 10px; padding: 25px 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eef0f5; }
+        .card-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; color: white; font-size: 24px; }
+        .card:nth-child(1) .card-icon { background-color: #0044cc; }
+        .card:nth-child(2) .card-icon { background-color: #d32f2f; }
+        .card:nth-child(3) .card-icon { background-color: #2e7d32; }
+        .card:nth-child(4) .card-icon { background-color: #6a1b9a; }
+        .card h3 { color: #333; margin-bottom: 10px; font-size: 18px; }
+        .card p { color: #666; font-size: 13px; margin-bottom: 20px; line-height: 1.5; min-height: 40px; }
+        .card a { display: inline-block; padding: 8px 20px; border-radius: 20px; color: white; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .card:nth-child(1) a { background-color: #0044cc; }
+        .card:nth-child(2) a { background-color: #d32f2f; }
+        .card:nth-child(3) a { background-color: #2e7d32; }
+        .card:nth-child(4) a { background-color: #6a1b9a; }
+
+        /* ସ୍କ୍ରୋଲିଂ ସୂଚନା ଡିଜାଇନ୍ */
+        .notice-bar { background: white; display: flex; align-items: center; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .notice-label { background: #eef2ff; color: #003399; font-weight: bold; padding: 12px 20px; display: flex; align-items: center; gap: 8px; border-right: 1px solid #e2e8f0; white-space: nowrap; }
+        .notice-marquee { padding: 0 15px; color: #444; font-size: 14px; width: 100%; }
+
+        /* ଫୁଟର୍ ଡିଜାଇନ୍ */
+        footer { background-color: #002266; color: #ccc; padding: 40px 30px 20px; margin-top: auto; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; margin-bottom: 20px; }
+        .footer-col h4 { color: white; font-size: 16px; margin-bottom: 15px; font-weight: bold; }
+        .footer-col p { font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .footer-col ul li a:hover { color: white; }
+        .social-links { display: flex; gap: 10px; margin-top: 15px; }
+        .social-links a { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 14px; background: rgba(255,255,255,0.1); }
+        .social-links a:hover { background: rgba(255,255,255,0.2); }
+        .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+        .footer-contact div { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+        .copyright { text-align: center; font-size: 12px; }
+    </style>
 </head>
 <body>
-    <script>
-        // ଯଦି ଲଗଇନ୍ ହୋଇନି, ତେବେ ସିଧାସଳଖ login.html କୁ ପଠାଇଦେବ
-        if (localStorage.getItem("isLoggedIn") !== "true") {
-            window.location.href = "login.html";
-        }
-    </script>
 
-    <div class="container">
-        <!-- ଟପ୍ ନେଭିଗେସନ୍ ହେଡର୍ -->
-        <header class="top-navbar">
-            <div class="logo-section">
-                <i class="fa-solid fa-book-open logo-icon"></i>
-                <div class="site-title">
-                    <h1>Daily Lesson Note</h1>
-                    <p style="color: #ffcc00; font-size: 14px; margin: 0;">Simple Digital Learning Resource</p>
-                </div>
+    <!-- ହେଡର୍ -->
+    <header>
+        <div class="logo-title">
+            <i class="fa-solid fa-book-open"></i>
+            <div class="logo-text">
+                <h1>Daily Lesson Note</h1>
+                <p>Simple Digital Learning Resource</p>
             </div>
-            
-                        <nav class="menu-section">
-                <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
-                    <li><a href="index.html" style="color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 13px;"><i class="fa-solid fa-house" style="font-size: 20px; margin-bottom: 5px;"></i>Home</a></li>
-                    <li><a href="book-library.html" style="color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 13px;"><i class="fa-solid fa-book-journal-whills" style="font-size: 20px; margin-bottom: 5px;"></i>Books</a></li>
-                    <li><a href="video-gallery.html" style="color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 13px;"><i class="fa-brands fa-youtube" style="font-size: 20px; margin-bottom: 5px;"></i>Video</a></li>
-                    <li><a href="#" style="color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 13px;"><i class="fa-solid fa-bell" style="font-size: 20px; margin-bottom: 5px;"></i>Notice</a></li>
-                </ul>
-                        </nav>        
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="book-library.html"><i class="fa-solid fa-book"></i> Book Library</a></li>
+            <li><a href="video-gallery.html"><i class="fa-brands fa-youtube"></i> Video Gallery</a></li>
+            <li><a href="#"><i class="fa-solid fa-bell"></i> Important Notice</a></li>
+            <li><a href="#"><i class="fa-solid fa-circle-question"></i> Question Bank</a></li>
+        </ul>
+    </header>
 
-        </header>
+    <div class="main-content">
+        <!-- ଟାଇଟଲ୍ ଏବଂ କୋଟେସନ୍ -->
+        <h2 class="page-title">ଦୈନିକ ଶିକ୍ଷା ପାଠ ଟିପଣୀ ଖୋଜନ୍ତୁ</h2>
+        <p class="page-subtitle">“ଶିକ୍ଷା ହେଉଛି ସେହି ଆଲୋକ, ଯାହା ଜ୍ଞାନର ପଥକୁ ଉଜ୍ଜ୍ୱଳ କରେ।”</p>
 
-        <!-- ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ ଏବଂ ସର୍ଚ୍ଚ ବକ୍ସ -->
-        <div class="content">
-            <p style="text-align:center; color: #555;">ଆଜିର ନୋଟ୍ ଖୋଜିବା ପାଇଁ ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ବାଛନ୍ତୁ</p>
-            
-            <div class="desktop-row">
-                <div class="form-group input-box">
-                    <label for="searchDate">ତାରିଖ ବାଛନ୍ତୁ :</label>
+        <!-- ସର୍ଚ୍ଚ ବକ୍ସ (ଏହାର ID ଗୁଡ଼ିକ app.js ସହ ଲିଙ୍କ୍ ଅଛି, ଏଗୁଡ଼ିକୁ ବଦଳାନ୍ତୁ ନାହିଁ) -->
+        <div class="search-section">
+            <div class="search-grid">
+                <div class="search-group">
+                    <label>ତାରିଖ ଚୟନ କରନ୍ତୁ :</label>
                     <input type="date" id="searchDate">
                 </div>
-
-                <div class="form-group input-box">
-                    <label for="searchClass">ଶ୍ରେଣୀ ବାଛନ୍ତୁ :</label>
-                    <select id="searchClass" required>
-                        <option value="">ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
+                <div class="search-group">
+                    <label>ଶ୍ରେଣୀ ଚୟନକରନ୍ତୁ :</label>
+                    <select id="searchClass">
+                        <option value="">ଶ୍ରେଣୀ ଚୟନକରନ୍ତୁ</option>
                         <option value="Class 1">Class 1</option>
                         <option value="Class 2">Class 2</option>
                         <option value="Class 3">Class 3</option>
@@ -69,23 +117,109 @@
                         <option value="Class 8">Class 8</option>
                     </select>
                 </div>
-
-                <div class="form-group input-box">
-                    <label for="searchSubject">ବିଷୟ ବାଛନ୍ତୁ (Subject):</label>
-                    <select id="searchSubject" required>
-                        <option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
+                <div class="search-group">
+                    <label>ବିଷୟ ଚୟନକରନ୍ତୁ (Subject):</label>
+                    <select id="searchSubject">
+                        <option value="">ବିଷୟ ଚୟନକରନ୍ତୁ</option>
+                        <option value="Odia">Odia (ଓଡ଼ିଆ)</option>
+                        <option value="English">English (ଇଂରାଜୀ)</option>
+                        <option value="Mathematics">Mathematics (ଗଣିତ)</option>
+                        <option value="EVS">EVS / Science</option>
+                        <option value="Social Science">Social Science (ସାମାଜିକ ବିଜ୍ଞାନ)</option>
+                        <option value="Hindi">Hindi (ହିନ୍ଦୀ)</option>
+                        <option value="Sanskrit">Sanskrit (ସଂସ୍କୃତ)</option>
                     </select>
                 </div>
             </div>
-
-            <button onclick="searchNote()">ଖୋଜନ୍ତୁ (Search)</button>
-
-            <!-- ଏଠାରେ ଫଳ ଦେଖାଯିବ -->
-            <div id="resultArea"></div>
+            <!-- ବଟନ୍ ଯାହା app.js କୁ ଖୋଜିବା ପାଇଁ ଆଦେଶ ଦିଏ -->
+            <button class="search-btn" onclick="searchNote()"><i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)</button>
         </div>
+
+        <!-- ୪ଟି ଆକର୍ଷଣୀୟ କାର୍ଡ -->
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h3>Book Library</h3>
+                <p>ପାଠ୍ୟପୁସ୍ତକ, ସହାୟକ ପୁସ୍ତକ<br>ଓ PDF ସଂଗ୍ରହ ପାଆନ୍ତୁ ।</p>
+                <a href="book-library.html">Browse Books →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-play"></i></div>
+                <h3>Video Gallery</h3>
+                <p>ଶିକ୍ଷାମୂଳକ ଭିଡିଓ ଦେଖନ୍ତୁ<br>ଏବଂ ଶିଖନ୍ତୁ ।</p>
+                <a href="video-gallery.html">Watch Videos →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-bell"></i></div>
+                <h3>Important Notice</h3>
+                <p>ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ସୂଚନା ଓ ଅପଡେଟ୍<br>ଏଠାରେ ପାଆନ୍ତୁ ।</p>
+                <a href="#">View Notice →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-file-alt"></i></div>
+                <h3>Question Bank</h3>
+                <p>ବିଭିନ୍ନ ପରୀକ୍ଷା ପାଇଁ ପ୍ରଶ୍ନୋତ୍ତର<br>ଏଠାରେ ଅଭ୍ୟାସ କରନ୍ତୁ ।</p>
+                <a href="#">Practice Now →</a>
+            </div>
+        </div>
+
+        <!-- ସ୍କ୍ରୋଲିଂ ସୂଚନା (Notice Ticker) -->
+        <div class="notice-bar">
+            <div class="notice-label"><i class="fa-solid fa-bullhorn"></i> ସୂଚନା</div>
+            <div class="notice-marquee">
+                <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
+                    <span style="display: flex; gap: 30px;">
+                        <span><i class="fa-solid fa-chevron-right" style="color:#0044cc; font-size:10px;"></i> FA-1 ପରୀକ୍ଷା ସୂଚନା ଶୀଘ୍ର ପ୍ରକାଶିତ ହେବ ।</span>
+                        <span><i class="fa-solid fa-chevron-right" style="color:#0044cc; font-size:10px;"></i> ନୂଆ ପାଠ ଟିପଣୀ ପ୍ରତିଦିନ ଅପ୍‌ଲୋଡ୍ କରାଯାଏ ।</span>
+                        <span><i class="fa-solid fa-chevron-right" style="color:#0044cc; font-size:10px;"></i> ସମସ୍ତ ପାଠ ଟିପଣୀ PDF ଭାବରେ ଉପଲବ୍ଧ ।</span>
+                    </span>
+                </marquee>
+            </div>
+        </div>
+
+        <!-- ଏହି ଜାଗାରେ Lesson Note ର ରେଜଲ୍ଟ ଆସିବ -->
+        <div id="resultArea"></div>
     </div>
 
+    <!-- ନୂଆ ଅପଡେଟ୍ ହୋଇଥିବା ଫୁଟର୍ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Daily Lesson Note</h4>
+                <p>ଶିକ୍ଷାଗୁ ସମ୍ପଦ ଜରିଆ ଜନକ ସବୁରୁ ପାଇଁ ।<br>ଶିକ୍ଷନ୍ତୁ, ଶିଖାନ୍ତୁ, ଆଗକୁ ବଢ଼ନ୍ତୁ ।</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@JagadishGovtUPSREGEDA" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Home</a></li>
+                    <li><a href="book-library.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Book Library</a></li>
+                    <li><a href="video-gallery.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Video Gallery</a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Important Notice</a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Question Bank</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <div class="footer-contact">
+                    <div><i class="fa-solid fa-user"></i> Jugal Kishor Choudhury (Asst. Teacher)</div>
+                    <div><i class="fa-solid fa-phone"></i> +91 7008257964</div>
+                    <div><i class="fa-solid fa-envelope"></i> jugalchaudhury@gmail.com</div>
+                    <div><i class="fa-solid fa-envelope"></i> dailylessonnote.in@gmail.com</div>
+                    <div><i class="fa-solid fa-location-dot"></i> India</div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 DailyLessonNote.in | All Rights Reserved
+        </div>
+    </footer>
+
+    <!-- ସବୁଠାରୁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ - ଆପଣଙ୍କର ପାଠ ଟିପଣୀ ଆଣିବା ଫାଇଲ୍ -->
     <script src="app.js"></script>
 </body>
 </html>
-
