@@ -72,31 +72,52 @@
 
         <div style="background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 15px;">
-                <div>
-                    <label style="display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px;">ତାରିଖ ଚୟନ କରନ୍ତୁ :</label>
-                    <input type="date" id="searchDate" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                </div>
-                <div>
-                    <label style="display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px;">ଶ୍ରେଣୀ ଚୟନକରନ୍ତୁ :</label>
-                    <select id="searchClass" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                        <option value="">ଶ୍ରେଣୀ ଚୟନକରନ୍ତୁ</option>
-                        <option value="Class 1">Class 1</option>
-                        <option value="Class 2">Class 2</option>
-                        <option value="Class 3">Class 3</option>
-                        <option value="Class 4">Class 4</option>
-                        <option value="Class 5">Class 5</option>
-                        <option value="Class 6">Class 6</option>
-                        <option value="Class 7">Class 7</option>
-                        <option value="Class 8">Class 8</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px;">ବିଷୟ ଚୟନକରନ୍ତୁ (Subject):</label>
-                    <select id="searchSubject" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                        <option value="">ବିଷୟ ଚୟନକରନ୍ତୁ</option>
-                    </select>
-                </div>
-            </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 15px;">
+    <div>
+        <label style="display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px;">ତାରିଖ ଚୟନ କରନ୍ତୁ :</label>
+        <input type="date" id="searchDate" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+    </div>
+    
+    <div>
+        <label style="display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px;">ଶ୍ରେଣୀ ଚୟନକରନ୍ତୁ :</label>
+        <select id="searchClass" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+            <option value="">ଶ୍ରେଣୀ ଚୟନକରନ୍ତୁ</option>
+            <option value="Class 1">Grade - 1 (ପ୍ରଥମ ଶ୍ରେଣୀ)</option>
+            <option value="Class 2">Grade - 2 (ଦ୍ୱିତୀୟ ଶ୍ରେଣୀ)</option>
+            <option value="Class 3">Grade - 3 (ତୃତୀୟ ଶ୍ରେଣୀ)</option>
+            <option value="Class 4">Grade - 4 (ଚତୁର୍ଥ ଶ୍ରେଣୀ)</option>
+            <option value="Class 5">Grade - 5 (ପଞ୍ଚମ ଶ୍ରେଣୀ)</option>
+            <option value="Class 6">Grade - 6 (ଷଷ୍ଠ ଶ୍ରେଣୀ)</option>
+            <option value="Class 7">Grade - 7 (ସପ୍ତମ ଶ୍ରେଣୀ)</option>
+            <option value="Class 8">Grade - 8 (ଅଷ୍ଟମ ଶ୍ରେଣୀ)</option>
+        </select>
+    </div>
+    
+    <div>
+        <label style="display: block; font-weight: bold; font-size: 12px; margin-bottom: 5px;">ବିଷୟ ଚୟନକରନ୍ତୁ (Subject):</label>
+        <select id="searchSubject" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+            <option value="">ବିଷୟ ଚୟନକରନ୍ତୁ</option>
+            <option value="ଝୁଲଣା">ଝୁଲଣା</option>
+            <option value="ଗଣିତ ଖେଳ / ମେଳା / ପ୍ରକାଶ">ଗଣିତ (ଖେଳ/ମେଳା/ପ୍ରକାଶ)</option>
+            <option value="ଭାଷା ମହକ">ଭାଷା ମହକ</option>
+            <option value="Pallavi">Pallavi</option>
+            <option value="ଆମ ବିଚିତ୍ର ପୃଥିବୀ/ବିଶ୍ବ">ଆମ ବିଚିତ୍ର ପୃଥିବୀ/ବିଶ୍ବ</option>
+            <option value="ଇନ୍ଦ୍ରଧନୁ">ଇନ୍ଦ୍ରଧନୁ</option>
+            <option value="ଖେଳ ଓ ଯୋଗ / ଶିକ୍ଷା">ଖେଳ ଓ ଯୋଗ / ଶିକ୍ଷା</option>
+            <option value="ନବରସ">ନବରସ</option>
+            <option value="ସାହିତ୍ୟ (ସୁଧା/ସୁମନ୍/ସୁରଭି)">ସାହିତ୍ୟ (ସୁଧା/ସୁମନ୍/ସୁରଭି)</option>
+            <option value="Jasmine">Jasmine</option>
+            <option value="ଜିଜ୍ଞାସା">ଜିଜ୍ଞାସା</option>
+            <option value="ସାମାଜିକ ବିଜ୍ଞାନ">ସାମାଜିକ ବିଜ୍ଞାନ</option>
+            <option value="ହିନ୍ଦୀ କଳିକା">ହିନ୍ଦୀ କଳିକା</option>
+            <option value="ସଂସ୍କୃତ କଳିକା">ସଂସ୍କୃତ କଳିକା</option>
+            <option value="ତଲାଶ">ତଲାଶ</option>
+            <option value="କଳା କୁଞ୍ଜ / କଳାକୃତି">କଳା କୁଞ୍ଜ / କଳାକୃତି</option>
+            <option value="କୌଶଳ ବୋଧ">କୌଶଳ ବୋଧ</option>
+        </select>
+    </div>
+</div>
+
             <button onclick="searchNote()" style="width: 100%; background: #28a745; color: white; border: none; padding: 10px; font-size: 15px; font-weight: bold; border-radius: 5px; cursor: pointer;"><i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)</button>
         </div>
 
