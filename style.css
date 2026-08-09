@@ -10,12 +10,7 @@ body {
     min-height: 100vh;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-.header {
-    background-color: #0056b3; color: white;
-    padding: 20px; text-align: center;
-}
-.header h2 { margin: 0; font-size: 24px; }
-.header p { margin: 5px 0 0 0; font-size: 14px; color: #d1e0ff; }
+
 .content { padding: 20px; }
 .form-group { margin-bottom: 15px; }
 label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
@@ -97,8 +92,26 @@ button:active { background-color: #218838; }
 
 /* ମୋବାଇଲ୍ ସ୍କ୍ରିନ୍ ପାଇଁ ସେଟିଂ */
 @media (max-width: 768px) {
+    /* ମୋବାଇଲ୍ ସ୍କ୍ରିନ୍ ପାଇଁ ସ୍ୱତନ୍ତ୍ର ସେଟିଂ */
+@media (max-width: 768px) {
     .top-navbar {
         flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 15px 10px;
+    }
+    
+    .logo-section {
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 15px;
+    }
+
+    .menu-section ul {
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 15px;
     }
 }
+    
+    
