@@ -75,6 +75,21 @@
         .footer-contact { display: flex; flex-direction: column; gap: 10px; }
         .footer-contact div { display: flex; align-items: center; gap: 10px; font-size: 13px; }
         .copyright { text-align: center; font-size: 12px; }
+        /* ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ୍ ଏବଂ ସ୍ପେସିଂ କମାଇବା ପାଇଁ */
+.main-content { flex: 1; max-width: 1200px; margin: 10px auto; padding: 0 20px; width: 100%; }
+.search-section { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-bottom: 15px; }
+.notice-bar { background: white; display: flex; align-items: center; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eef2ff; }
+
+/* ଅକ୍ଷରଗୁଡ଼ିକୁ ବଡ଼, ଡାର୍କ ଏବଂ ସ୍ପଷ୍ଟ କରିବା ପାଇଁ */
+body { font-size: 16px; color: #111; }
+.page-title { font-size: 26px; font-weight: bold; color: #003399; margin-bottom: 15px; }
+.search-group label { font-size: 16px; font-weight: bold; color: #000; }
+.search-group input, .search-group select { font-size: 15px; font-weight: bold; color: #000; }
+.search-btn { font-size: 16px; font-weight: bold; }
+.card h3 { font-size: 20px; font-weight: bold; color: #111; }
+.card p { font-size: 14px; font-weight: 600; color: #333; }
+        
     </style>
 </head>
 <body>
