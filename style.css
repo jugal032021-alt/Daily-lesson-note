@@ -91,8 +91,11 @@ button:active { background-color: #218838; }
 }
 
 /* ମୋବାଇଲ୍ ସ୍କ୍ରିନ୍ ପାଇଁ ସେଟିଂ */
-@media (max-width: 768px) {
-    /* ମୋବାଇଲ୍ ସ୍କ୍ରିନ୍ ପାଇଁ ସ୍ୱତନ୍ତ୍ର ସେଟିଂ */
+.top-navbar {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 @media (max-width: 768px) {
     .top-navbar {
         flex-direction: column;
@@ -113,5 +116,3 @@ button:active { background-color: #218838; }
         gap: 15px;
     }
 }
-    
-    
