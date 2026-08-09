@@ -169,3 +169,38 @@ button:active {
         list-style: none !important;
     }
 }
+/* ୨ୟ ପର୍ଯ୍ୟାୟ: ସର୍ଚ୍ଚ ଫର୍ମକୁ ଆକର୍ଷଣୀୟ କରିବା */
+.content {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    margin-top: 15px;
+}
+
+.form-group input, .form-group select {
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    background-color: #fafbfc;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: #0044cc;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 68, 204, 0.1);
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
