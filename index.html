@@ -22,8 +22,7 @@
 
         /* ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ */
         .main-content { flex: 1; max-width: 1100px; margin: 20px auto; padding: 0 15px; width: 100%; }
-        .page-title { text-align: center; color: #003399; font-size: 24px; margin-bottom: 5px; }
-        .page-subtitle { text-align: center; color: #555; font-style: italic; margin-bottom: 25px; font-size: 15px; }
+        .page-title { text-align: center; color: #003399; font-size: 24px; margin-bottom: 25px; margin-top: 10px; }
 
         /* ସର୍ଚ୍ଚ ବକ୍ସ ଡିଜାଇନ୍ */
         .search-section { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eef0f5; margin-bottom: 30px; }
@@ -52,7 +51,7 @@
         /* ସ୍କ୍ରୋଲିଂ ସୂଚନା ଡିଜାଇନ୍ */
         .notice-bar { background: white; display: flex; align-items: center; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; margin-bottom: 30px; }
         .notice-label { background: #eef2ff; color: #003399; font-weight: bold; padding: 12px 20px; display: flex; align-items: center; gap: 8px; border-right: 1px solid #e2e8f0; white-space: nowrap; }
-        .notice-marquee { padding: 0 15px; color: #444; font-size: 14px; width: 100%; }
+        .notice-marquee { padding: 0 15px; color: #444; font-size: 14px; width: 100%; min-height: 20px; }
 
         /* ଫୁଟର୍ ଡିଜାଇନ୍ */
         footer { background-color: #002266; color: #ccc; padding: 40px 30px 20px; margin-top: auto; }
@@ -92,11 +91,9 @@
     </header>
 
     <div class="main-content">
-        <!-- ଟାଇଟଲ୍ ଏବଂ କୋଟେସନ୍ -->
         <h2 class="page-title">ଦୈନିକ ଶିକ୍ଷା ପାଠ ଟିପଣୀ ଖୋଜନ୍ତୁ</h2>
-        <p class="page-subtitle">“ଶିକ୍ଷା ହେଉଛି ସେହି ଆଲୋକ, ଯାହା ଜ୍ଞାନର ପଥକୁ ଉଜ୍ଜ୍ୱଳ କରେ।”</p>
 
-        <!-- ସର୍ଚ୍ଚ ବକ୍ସ (ଏହାର ID ଗୁଡ଼ିକ app.js ସହ ଲିଙ୍କ୍ ଅଛି, ଏଗୁଡ଼ିକୁ ବଦଳାନ୍ତୁ ନାହିଁ) -->
+        <!-- ସର୍ଚ୍ଚ ବକ୍ସ -->
         <div class="search-section">
             <div class="search-grid">
                 <div class="search-group">
@@ -131,7 +128,6 @@
                     </select>
                 </div>
             </div>
-            <!-- ବଟନ୍ ଯାହା app.js କୁ ଖୋଜିବା ପାଇଁ ଆଦେଶ ଦିଏ -->
             <button class="search-btn" onclick="searchNote()"><i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)</button>
         </div>
 
@@ -163,25 +159,20 @@
             </div>
         </div>
 
-        <!-- ସ୍କ୍ରୋଲିଂ ସୂଚନା (Notice Ticker) -->
+        <!-- ସ୍କ୍ରୋଲିଂ ସୂଚନା ଖାଲି ରଖାଯାଇଛି -->
         <div class="notice-bar">
             <div class="notice-label"><i class="fa-solid fa-bullhorn"></i> ସୂଚନା</div>
             <div class="notice-marquee">
                 <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();">
-                    <span style="display: flex; gap: 30px;">
-                        <span><i class="fa-solid fa-chevron-right" style="color:#0044cc; font-size:10px;"></i> FA-1 ପରୀକ୍ଷା ସୂଚନା ଶୀଘ୍ର ପ୍ରକାଶିତ ହେବ ।</span>
-                        <span><i class="fa-solid fa-chevron-right" style="color:#0044cc; font-size:10px;"></i> ନୂଆ ପାଠ ଟିପଣୀ ପ୍ରତିଦିନ ଅପ୍‌ଲୋଡ୍ କରାଯାଏ ।</span>
-                        <span><i class="fa-solid fa-chevron-right" style="color:#0044cc; font-size:10px;"></i> ସମସ୍ତ ପାଠ ଟିପଣୀ PDF ଭାବରେ ଉପଲବ୍ଧ ।</span>
-                    </span>
+                    
                 </marquee>
             </div>
         </div>
 
-        <!-- ଏହି ଜାଗାରେ Lesson Note ର ରେଜଲ୍ଟ ଆସିବ -->
         <div id="resultArea"></div>
     </div>
 
-    <!-- ନୂଆ ଅପଡେଟ୍ ହୋଇଥିବା ଫୁଟର୍ -->
+    <!-- ଫୁଟର୍ -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
@@ -209,7 +200,6 @@
                     <div><i class="fa-solid fa-user"></i> Jugal Kishor Choudhury (Asst. Teacher)</div>
                     <div><i class="fa-solid fa-phone"></i> +91 7008257964</div>
                     <div><i class="fa-solid fa-envelope"></i> jugalchaudhury@gmail.com</div>
-                    <div><i class="fa-solid fa-envelope"></i> dailylessonnote.in@gmail.com</div>
                     <div><i class="fa-solid fa-location-dot"></i> India</div>
                 </div>
             </div>
@@ -219,7 +209,6 @@
         </div>
     </footer>
 
-    <!-- ସବୁଠାରୁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ - ଆପଣଙ୍କର ପାଠ ଟିପଣୀ ଆଣିବା ଫାଇଲ୍ -->
     <script src="app.js"></script>
 </body>
 </html>
