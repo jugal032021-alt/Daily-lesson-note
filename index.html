@@ -199,7 +199,81 @@ body { font-size: 16px; color: #111; }
 
    
     </div>
+<!-- ଭିଜିଟର୍ସ ମେସେଜ୍ ଏବଂ ଫିଡବ୍ୟାକ୍ ସେକ୍ସନ୍ -->
+<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 20px auto; border: 1px solid #eef2ff;">
+    <h3 style="color: #003399; font-size: 20px; margin-bottom: 15px; text-align: center;"><i class="fa-solid fa-comments"></i> ଛାତ୍ରଛାତ୍ରୀ ଓ ଶିକ୍ଷକବନ୍ଧୁଙ୍କ ମତାମତ</h3>
+    
+    <!-- ମେସେଜ୍ ଦେବା ଫର୍ମ -->
+    <form id="feedbackForm" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+        <input type="text" id="visitorName" placeholder="ଆପଣଙ୍କ ନାମ (Your Name)" required style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;">
+        <textarea id="visitorMessage" rows="3" placeholder="ଆପଣଙ୍କ ମେସେଜ୍ କିମ୍ବା ମତାମତ ଏଠାରେ ଲେଖନ୍ତୁ..." required style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;"></textarea>
+        <button type="submit" id="submitBtn" style="background-color: #1a8c3a; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer;">ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)</button>
+    </form>
 
+    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
+
+    <!-- ଅନୁମୋଦିତ ମେସେଜ୍ ଦେଖାଇବା ଜାଗା (Public Board) -->
+    <h4 style="color: #333; font-size: 16px; margin-bottom: 10px;"><i class="fa-solid fa-bullhorn" style="color: #003399;"></i> ସାଧାରଣ ମତାମତ ବୋର୍ଡ:</h4>
+    <div id="approvedMessagesList" style="display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;">
+        <div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #003399; font-size: 14px;">
+            ଲୋଡ୍ ହେଉଛି... (Loading messages)
+        </div>
+    </div>
+</div>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw05OCkBgtIdEgsuC6G6v1otGliEjZPzCE3OTE7_ggd4qy4-VqyDoT4_Q2nALnk6FIy-Q/exec';
+
+const form = document.getElementById('feedbackForm');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.innerText = "ପଠାଯାଉଛି...";
+  btn.disabled = true;
+
+  const data = {
+    name: document.getElementById('visitorName').value,
+    message: document.getElementById('visitorMessage').value
+  };
+
+  fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
+    .then(response => {
+      alert('ଆପଣଙ୍କ ମେସେଜ୍ ସଫଳତାପୂର୍ବକ ପଠାଗଲା! ଆପ୍ରୁଭ୍ ହେବା ପରେ ଏହା ୱେବସାଇଟ୍‌ରେ ଦେଖାଯିବ।');
+      form.reset();
+      btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)";
+      btn.disabled = false;
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      alert('କିଛି ଭୁଲ୍ ହେଲା, ପୁନର୍ବାସ ଚେଷ୍ଟା କରନ୍ତୁ।');
+      btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)";
+      btn.disabled = false;
+    });
+});
+
+function loadApprovedMessages() {
+  fetch(scriptURL)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('approvedMessagesList');
+      container.innerHTML = "";
+      if(data.length === 0) {
+        container.innerHTML = `<div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #003399; font-size: 14px;">ବର୍ତ୍ତମାନ କୌଣସି ମେସେଜ୍ ନାହିଁ।</div>`;
+        return;
+      }
+      data.reverse().forEach(item => {
+        const div = document.createElement('div');
+        div.style = "background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #1a8c3a; font-size: 14px;";
+        div.innerHTML = `<b>${item.name}:</b> ${item.message}`;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => console.error('Error loading messages', err));
+}
+
+loadApprovedMessages();
+</script>
+    
     <!-- ଫୁଟର୍ -->
     <footer>
         <div class="footer-grid">
