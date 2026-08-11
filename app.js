@@ -29,23 +29,24 @@ async function fetchNoteForEdit() {
     }
 
     try {
-        let response = await fetch(`${baseURL}/notes.json`);
-        let data = await response.json();
-        
-        let foundId = null;
-        let foundNote = null;
+        let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${sDate}"`);
+let data = await response.json();
 
-        if(data) {
-            for (let key in data) {
-                if (data[key].date === sDate && data[key].className === sClass && data[key].subject === sSub) {
-                    foundId = key;
-                    foundNote = data[key];
-                    break;
-                }
-            }
+let foundId = null;
+let foundNote = null;
+
+if(data) {
+    for (let key in data) {
+        // ଏଠାରେ ସର୍ଭରରୁ ଆସିଥିବା ଡାଟା ଭିତରୁ ସଠିକ୍ Class ଏବଂ Subject ମ୍ୟାଚ୍ କରୁଛୁ
+        if (data[key].className === sClass && data[key].subject === sSub) {
+            foundId = key;
+            foundNote = data[key];
+            break;
         }
+    }
+}
 
-        if (foundNote) {
+      if (foundNote) {
             document.getElementById('noteId').value = foundId; 
             document.getElementById('date').value = foundNote.date;
             document.getElementById('className').value = foundNote.className;
@@ -142,22 +143,21 @@ async function searchNote() {
     resultArea.innerHTML = "<p style='text-align:center;'>ଖୋଜା ଚାଲିଛି...</p>";
 
     try {
-        let response = await fetch(`${baseURL}/notes.json`);
-        let data = await response.json();
+    let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${searchDate}"`);
+    let data = await response.json();
 
-        if(data) {
-            let foundNote = null;
-            // ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ (subject) ତିନୋଟି ଯାକ ମ୍ୟାଚ୍ କରିବା
-            for (let key in data) {
-                let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
-                
-                if (data[key].date === searchDate && 
-                    data[key].className === searchClass && 
-                    noteSub.includes(searchSubject)) {
-                    foundNote = data[key]; 
-                    break;
-                }
+    if(data) {
+        let foundNote = null;
+        for (let key in data) {
+            let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
+            // ତାରିଖ ପୂର୍ବରୁ ଫିଲ୍ଟର୍ ହୋଇସାରିଥିବାରୁ ଏଠାରେ କେବଳ ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ଯାଞ୍ଚ ହେବ
+            if (data[key].className === searchClass &&
+                noteSub.includes(searchSubject)) {
+                foundNote = data[key];
+                break;
             }
+        }
+
 
             if (foundNote) {
                 resultArea.innerHTML = `
