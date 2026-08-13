@@ -114,7 +114,11 @@ body { font-size: 16px; color: #111; }
             <li><a href="question-bank.html"><i class="fa-solid fa-circle-question"></i> Question Bank</a></li>
             <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
 <li><a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
-            
+    <li>
+    <a href="#" onclick="signOut(); return false;">
+        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+    </a>
+    </li>        
         </ul>
     </header>
 
@@ -324,6 +328,14 @@ loadApprovedMessages();
                 alert("ଦୟାକରି ଲେସନ୍ ନୋଟ୍ ଦେଖିବା ପାଇଁ ପ୍ରଥମେ Login କରନ୍ତୁ!");
                 window.location.href = "login.html";
             }
+        }
+        function signOut() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userEmail");
+
+    alert("ଆପଣ ସଫଳତାର ସହିତ Sign Out ହୋଇଛନ୍ତି!");
+
+    window.location.href = "login.html";
         }
     </script>
 
