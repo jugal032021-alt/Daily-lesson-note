@@ -103,7 +103,7 @@
             projectId: "daily-lesson-note",
             storageBucket: "daily-lesson-note.appspot.com",
             messagingSenderId: "902287150468",
-            appId: "1:902287150460:web:90bd366eb30a4eae268f9",
+            appId: "1:902287150460:web:90bd366eb30a4ae268f9",
             measurementId: "G-LRSYL5Y9HF"
         };
 
@@ -138,41 +138,43 @@
             const password = document.getElementById("password").value;
 
             if (isLogin) {
-    db.collection("users").doc(email).get()
-    .then((doc) => {
-        if (doc.exists) {
-            let userData = doc.data();
-            if (userData.password === password) {
-                localStorage.setItem("isLoggedIn", "true");
-                localStorage.setItem("userEmail", email);
-                alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
-                window.location.href = "index.html";
+                db.collection("users").doc(email).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        let userData = doc.data();
+                        if (userData.password === password) {
+                            localStorage.setItem("isLoggedIn", "true");
+                            localStorage.setItem("userEmail", email);
+                            alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
+                            window.location.href = "index.html";
+                        } else {
+                            alert("ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି!");
+                        }
+                    } else {
+                        alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ! ପ୍ରଥମେ Sign up କରନ୍ତୁ");
+                    }
+                })
+                .catch((error) => {
+                    alert("ସମସ୍ୟା ହେଲା: " + error);
+                });
             } else {
-                alert("ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି!");
+                // ସାଇନ୍ ଅପ୍ ପ୍ରୋସେସ୍
+                const name = document.getElementById("name").value;
+                db.collection("users").doc(email).set({
+                    name: name,
+                    email: email,
+                    password: password,
+                    createdAt: new Date()
+                }, { merge: true })
+                .then(() => {
+                    alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ");
+                    toggleMode();
+                })
+                .catch((error) => {
+                    alert("ସମସ୍ୟା ହେଲା: " + error);
+                });
             }
-        } else {
-            alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ! ପ୍ରଥମେ Sign up କରନ୍ତୁ");
-        }
-    })
-    .catch((error) => {
-        alert("ସମସ୍ୟା ହେଲା: " + error);
-    });
-          
-                } else {
-        // ସାଇନ୍ ଅପ୍ ପ୍ରୋସେସ୍
-        const name = document.getElementById("name").value;
-        db.collection("users").doc(email).set({
-            name: name,
-            email: email,
-            password: password,
-            createdAt: new Date()
-        }, { merge: true })
-        .then(() => {
-            alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ");
-            toggleMode();
-        })
-        .catch((error) => {
-            alert("ସମସ୍ୟା ହେଲା: " + error);
         });
-    }
-});
+    </script>
+</body>
+</html>
