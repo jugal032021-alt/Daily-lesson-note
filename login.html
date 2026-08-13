@@ -138,18 +138,27 @@
             const password = document.getElementById("password").value;
 
             if (isLogin) {
-                db.collection("users").where("email", "==", email).where("password", "==", password)
-                    .get()
-                    .then((querySnapshot) => {
-                        if (!querySnapshot.empty) {
-                            localStorage.setItem("isLoggedIn", "true");
-                            localStorage.setItem("userEmail", email);
-                            alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
-                            window.location.href = "index.html";
-                        } else {
-                            alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ କିମ୍ବା ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି! ପ୍ରଥମେ Sign up କରନ୍ତୁ।");
-                        }
-                    });
+    db.collection("users").doc(email).get()
+    .then((doc) => {
+        if (doc.exists) {
+            let userData = doc.data();
+            if (userData.password === password) {
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userEmail", email);
+                alert(email + " ଲଗଇନ୍ ସଫଳ ହେଲା!");
+                window.location.href = "index.html";
+            } else {
+                alert("ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି!");
+            }
+        } else {
+            alert("ଏହି ଇମେଲ୍ ପାଇଁ କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ! ପ୍ରଥମେ Sign up କରନ୍ତୁ");
+        }
+    })
+    .catch((error) => {
+        alert("ସମସ୍ୟା ହେଲା: " + error);
+    });
+            }
+            
             } else {
                 const name = document.getElementById("name").value;
                 db.collection("users").doc(email).set({
