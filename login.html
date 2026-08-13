@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="or">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>User Login - Odishapathasala.in</title>
 
     <link rel="stylesheet" href="style.css">
 
     <style>
+
         .auth-container {
             max-width: 400px;
             margin: 60px auto;
@@ -86,25 +91,34 @@
             color: #666;
             margin-top: 5px;
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
 <div class="container">
 
     <div class="auth-container">
 
+
         <h2 id="formTitle">
             ୟୁଜର୍ ଲଗଇନ୍ (User Login)
         </h2>
 
+
         <form id="authForm">
 
+
             <!-- NAME -->
-            <div class="form-group"
-                 id="nameGroup"
-                 style="display:none;">
+
+            <div
+                class="form-group"
+                id="nameGroup"
+                style="display:none;">
 
                 <label>
                     ନାମ (Name):
@@ -114,10 +128,12 @@
                     type="text"
                     id="name"
                     placeholder="ଆପଣଙ୍କ ପୂରା ନାମ ଲେଖନ୍ତୁ">
+
             </div>
 
 
             <!-- EMAIL -->
+
             <div class="form-group">
 
                 <label>
@@ -134,6 +150,7 @@
 
 
             <!-- PASSWORD -->
+
             <div class="form-group">
 
                 <label>
@@ -149,14 +166,17 @@
                 <div
                     class="password-note"
                     id="passwordNote">
-                    ନୂଆ Account ପାଇଁ minimum 6 characters।
-                    ପୁରୁଣା user ପୁରୁଣା password ଦେଇ login କରିପାରିବେ।
+
+                    ପୁରୁଣା user ନିଜର ପୁରୁଣା password
+                    ଦେଇ Login କରିପାରିବେ।
+
                 </div>
 
             </div>
 
 
-            <!-- SUBMIT -->
+            <!-- SUBMIT BUTTON -->
+
             <button
                 type="submit"
                 class="btn-auth"
@@ -168,6 +188,7 @@
 
 
             <!-- FORGOT PASSWORD -->
+
             <div
                 class="extra-links"
                 id="forgotPasswordLink">
@@ -175,16 +196,20 @@
                 <span></span>
 
                 <a onclick="forgotPassword()">
+
                     ପାସୱାର୍ଡ ଭୁଲିଯାଇଛନ୍ତି?
                     (Forgot Password)
+
                 </a>
 
             </div>
 
+
         </form>
 
 
-        <!-- TOGGLE -->
+        <!-- TOGGLE LOGIN / SIGNUP -->
+
         <div class="toggle-text">
 
             <p id="toggleMsg">
@@ -199,9 +224,11 @@
 
         </div>
 
+
     </div>
 
 </div>
+
 
 
 <!-- =====================================================
@@ -215,11 +242,13 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 
+
 <script>
 
-/* =====================================================
-   FIREBASE CONFIG
-===================================================== */
+
+// =====================================================
+// FIREBASE CONFIGURATION
+// =====================================================
 
 const firebaseConfig = {
 
@@ -246,12 +275,13 @@ const firebaseConfig = {
 
     measurementId:
         "G-LRSYL5Y9HF"
+
 };
 
 
-/* =====================================================
-   INITIALIZE FIREBASE
-===================================================== */
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
 
 firebase.initializeApp(firebaseConfig);
 
@@ -262,13 +292,15 @@ const auth = firebase.auth();
 let isLogin = true;
 
 
-/* =====================================================
-   LOGIN / SIGNUP TOGGLE
-===================================================== */
+
+// =====================================================
+// TOGGLE LOGIN / SIGNUP
+// =====================================================
 
 function toggleMode() {
 
     isLogin = !isLogin;
+
 
     const formTitle =
         document.getElementById("formTitle");
@@ -291,64 +323,82 @@ function toggleMode() {
 
     if (isLogin) {
 
-        /* LOGIN MODE */
+
+        // LOGIN MODE
 
         formTitle.innerText =
             "ୟୁଜର୍ ଲଗଇନ୍ (User Login)";
 
+
         nameGroup.style.display =
             "none";
+
 
         submitBtn.innerText =
             "ଲଗଇନ୍ କରନ୍ତୁ";
 
+
         forgotPasswordLink.style.display =
             "flex";
 
+
         passwordNote.innerText =
-            "ପୁରୁଣା user ପୁରୁଣା password ଦେଇ login କରିପାରିବେ।";
+            "ପୁରୁଣା user ନିଜର ପୁରୁଣା password ଦେଇ Login କରିପାରିବେ।";
 
 
         toggleMsg.innerHTML =
+
             `ଆକାଉଣ୍ଟ୍ ନାହିଁ?
+
             <a onclick="toggleMode()">
-            ସାଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ
+                ସାଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ
             </a>`;
+
 
     }
 
     else {
 
-        /* SIGNUP MODE */
+
+        // SIGNUP MODE
 
         formTitle.innerText =
             "ଆକାଉଣ୍ଟ୍ ତିଆରି କରନ୍ତୁ (Sign up)";
 
+
         nameGroup.style.display =
             "block";
+
 
         submitBtn.innerText =
             "ରେଜିଷ୍ଟର୍ କରନ୍ତୁ";
 
+
         forgotPasswordLink.style.display =
             "none";
+
 
         passwordNote.innerText =
             "ନୂଆ Account ପାଇଁ password minimum 6 characters ହେବା ଦରକାର।";
 
 
         toggleMsg.innerHTML =
+
             `ପୂର୍ବରୁ ଆକାଉଣ୍ଟ୍ ଅଛି?
+
             <a onclick="toggleMode()">
-            ଲଗଇନ୍ କରନ୍ତୁ
+                ଲଗଇନ୍ କରନ୍ତୁ
             </a>`;
+
     }
+
 }
 
 
-/* =====================================================
-   FORGOT PASSWORD
-===================================================== */
+
+// =====================================================
+// FORGOT PASSWORD
+// =====================================================
 
 function forgotPassword() {
 
@@ -375,15 +425,20 @@ function forgotPassword() {
     .then(() => {
 
         alert(
+
             "Password reset link ଆପଣଙ୍କ Email କୁ ପଠାଯାଇଛି!\n\n" +
+
             "Gmail Inbox ଏବଂ Spam/Junk folder ମଧ୍ୟ check କରନ୍ତୁ।"
+
         );
 
     })
 
+
     .catch((error) => {
 
         console.error(error);
+
 
         if (
             error.code ===
@@ -391,8 +446,11 @@ function forgotPassword() {
         ) {
 
             alert(
+
                 "ଏହି Email ପାଇଁ Firebase Authentication account ମିଳିଲା ନାହିଁ।\n\n" +
-                "ଯଦି ଏହା ପୁରୁଣା user ଅଟନ୍ତି, ତେବେ ପୁରୁଣା password ଦେଇ Login କରନ୍ତୁ।"
+
+                "ଯଦି ଆପଣ ପୁରୁଣା user, ତେବେ ପୁରୁଣା password ଦେଇ ପ୍ରଥମେ Login କରନ୍ତୁ।"
+
             );
 
         }
@@ -407,12 +465,14 @@ function forgotPassword() {
         }
 
     });
+
 }
 
 
-/* =====================================================
-   FORM SUBMIT
-===================================================== */
+
+// =====================================================
+// LOGIN / SIGNUP FORM
+// =====================================================
 
 document
 .getElementById("authForm")
@@ -420,10 +480,12 @@ document
     "submit",
     function(e) {
 
+
         e.preventDefault();
 
 
         const email =
+
             document
             .getElementById("email")
             .value
@@ -432,21 +494,23 @@ document
 
 
         const password =
+
             document
             .getElementById("password")
             .value;
 
 
-        /* =================================================
-           LOGIN
-        ================================================= */
+
+        // =================================================
+        // LOGIN
+        // =================================================
 
         if (isLogin) {
 
 
             /*
-             * STEP 1
-             * Try Firebase Authentication
+             * FIRST:
+             * Firebase Authentication login
              */
 
             auth.signInWithEmailAndPassword(
@@ -454,14 +518,17 @@ document
                 password
             )
 
+
             .then((userCredential) => {
 
-                /* Firebase Auth login success */
+
+                // Firebase Auth login successful
 
                 localStorage.setItem(
                     "isLoggedIn",
                     "true"
                 );
+
 
                 localStorage.setItem(
                     "userEmail",
@@ -482,79 +549,93 @@ document
 
             .catch((authError) => {
 
+
                 /*
-                 * STEP 2
-                 * Firebase Auth ରେ login ନହେଲେ
-                 * Firestore old user check କରିବା
+                 * Firebase Auth login failed.
+                 *
+                 * NOW CHECK OLD FIRESTORE USER.
+                 *
+                 * IMPORTANT:
+                 * Firestore document ID random.
+                 * Therefore email field is searched.
                  */
 
 
+                console.log(
+                    "Firebase Auth Error:",
+                    authError.code
+                );
+
+
                 db.collection("users")
-                .doc(email)
+
+                .where(
+                    "email",
+                    "==",
+                    email
+                )
+
+                .limit(1)
+
                 .get()
 
-                .then((doc) => {
+
+                .then((snapshot) => {
 
 
-                    /* -------------------------------------
-                       OLD USER NOT FOUND
-                    ------------------------------------- */
+                    // =====================================
+                    // OLD USER NOT FOUND
+                    // =====================================
 
-                    if (!doc.exists) {
+                    if (snapshot.empty) {
 
-                        /*
-                         * Firebase error ଦେଖାଇବା
-                         */
-
-                        if (
-                            authError.code ===
-                            "auth/invalid-credential"
-                            ||
-                            authError.code ===
-                            "auth/wrong-password"
-                            ||
-                            authError.code ===
-                            "auth/user-not-found"
-                        ) {
-
-                            alert(
-                                "Email କିମ୍ବା Password ଭୁଲ୍ ଅଛି!"
-                            );
-
-                        }
-
-                        else {
-
-                            alert(
-                                "Login ସମସ୍ୟା:\n" +
-                                authError.message
-                            );
-
-                        }
+                        alert(
+                            "Email କିମ୍ବା Password ଭୁଲ୍ ଅଛି!"
+                        );
 
                         return;
                     }
 
 
-                    /*
-                     * OLD FIRESTORE USER
-                     */
+                    // =====================================
+                    // OLD USER FOUND
+                    // =====================================
+
+                    const doc =
+                        snapshot.docs[0];
+
 
                     const userData =
                         doc.data();
 
 
+                    /*
+                     * Old password from Firestore
+                     */
+
                     const oldPassword =
-                        userData.password;
+                        String(
+                            userData.password
+                        );
 
 
-                    /* -------------------------------------
-                       CHECK OLD PASSWORD
-                    ------------------------------------- */
+                    /*
+                     * Password entered by user
+                     */
+
+                    const enteredPassword =
+                        String(
+                            password
+                        );
+
+
+                    // =====================================
+                    // CHECK OLD PASSWORD
+                    // =====================================
 
                     if (
                         oldPassword !==
-                        password
+                        enteredPassword
                     ) {
 
                         alert(
@@ -565,32 +646,32 @@ document
                     }
 
 
+                    // =====================================
+                    // OLD PASSWORD CORRECT
+                    // =====================================
+
+
                     /*
-                     * OLD PASSWORD CORRECT
+                     * 2/3/4/5 DIGIT OLD USER
+                     *
+                     * Firebase Auth minimum is 6.
+                     *
+                     * Therefore don't try to create
+                     * Firebase Auth account.
+                     *
+                     * Allow old Firestore login.
                      */
 
-
-                    /* =====================================
-                       IMPORTANT:
-                       2/3/4/5 DIGIT OLD USER
-                       ===================================== */
-
                     if (
-                        password.length < 6
+                        enteredPassword.length < 6
                     ) {
 
-                        /*
-                         * Firebase Auth ରେ
-                         * <6 password create ହୁଏ ନାହିଁ।
-                         *
-                         * ତେଣୁ old Firestore login
-                         * directly allow କରିବା।
-                         */
 
                         localStorage.setItem(
                             "isLoggedIn",
                             "true"
                         );
+
 
                         localStorage.setItem(
                             "userEmail",
@@ -617,94 +698,36 @@ document
                     }
 
 
+                    // =====================================
+                    // OLD USER 6+ PASSWORD
+                    // MIGRATE TO FIREBASE AUTH
+                    // =====================================
+
+
                     /*
-                     * =====================================
-                     * OLD USER WITH 6+ PASSWORD
-                     * =====================================
+                     * If Firestore already says
+                     * migratedToAuth = true,
+                     * try Firebase login again.
                      */
 
-                    auth.createUserWithEmailAndPassword(
-                        email,
-                        password
-                    )
-
-                    .then((userCredential) => {
-
-                        return db
-                        .collection("users")
-                        .doc(email)
-                        .set({
-
-                            name:
-                                userData.name ||
-                                "",
-
-                            email:
-                                email,
-
-                            authUid:
-                                userCredential
-                                .user
-                                .uid,
-
-                            migratedToAuth:
-                                true
-
-                        }, {
-
-                            merge: true
-
-                        });
-
-                    })
-
-                    .then(() => {
+                    if (
+                        userData.migratedToAuth === true
+                    ) {
 
 
-                        localStorage.setItem(
-                            "isLoggedIn",
-                            "true"
-                        );
+                        auth.signInWithEmailAndPassword(
+                            email,
+                            enteredPassword
+                        )
 
-                        localStorage.setItem(
-                            "userEmail",
-                            email
-                        );
+                        .then(() => {
 
-
-                        alert(
-                            "ପୁରୁଣା Account ସଫଳତାର ସହ update ହୋଇଗଲା!\n\n" +
-                            "ବର୍ତ୍ତମାନ Firebase Authentication ମଧ୍ୟ ବ୍ୟବହାର ହେଉଛି।"
-                        );
-
-
-                        window.location.href =
-                            "index.html";
-
-                    })
-
-
-                    .catch((migrationError) => {
-
-                        console.error(
-                            migrationError
-                        );
-
-
-                        /*
-                         * ଯଦି account already exists,
-                         * ତେବେ direct old login allow
-                         */
-
-                        if (
-                            migrationError.code ===
-                            "auth/email-already-in-use"
-                        ) {
 
                             localStorage.setItem(
                                 "isLoggedIn",
                                 "true"
                             );
+
 
                             localStorage.setItem(
                                 "userEmail",
@@ -720,13 +743,166 @@ document
                             window.location.href =
                                 "index.html";
 
+                        })
+
+
+                        .catch((error) => {
+
+                            console.error(error);
+
+
+                            alert(
+                                "Firebase Authentication Login ସମସ୍ୟା:\n" +
+                                error.message
+                            );
+
+                        });
+
+
+                        return;
+                    }
+
+
+
+                    /*
+                     * Create Firebase Authentication
+                     * account for old 6+ password user.
+                     */
+
+                    auth.createUserWithEmailAndPassword(
+                        email,
+                        enteredPassword
+                    )
+
+
+                    .then((userCredential) => {
+
+
+                        /*
+                         * Update SAME Firestore document.
+                         *
+                         * Random document ID remains unchanged.
+                         */
+
+                        return doc.ref.update({
+
+                            authUid:
+                                userCredential
+                                .user
+                                .uid,
+
+                            migratedToAuth:
+                                true
+
+                        });
+
+                    })
+
+
+                    .then(() => {
+
+
+                        localStorage.setItem(
+                            "isLoggedIn",
+                            "true"
+                        );
+
+
+                        localStorage.setItem(
+                            "userEmail",
+                            email
+                        );
+
+
+                        alert(
+
+                            "ପୁରୁଣା Account ସଫଳତାର ସହ update ହୋଇଗଲା!\n\n" +
+
+                            "Login ସଫଳ ହେଲା।"
+
+                        );
+
+
+                        window.location.href =
+                            "index.html";
+
+                    })
+
+
+                    .catch((migrationError) => {
+
+
+                        console.error(
+                            migrationError
+                        );
+
+
+                        /*
+                         * If Firebase Auth account already exists
+                         */
+
+                        if (
+                            migrationError.code ===
+                            "auth/email-already-in-use"
+                        ) {
+
+
+                            /*
+                             * Try Firebase login one more time
+                             */
+
+                            auth.signInWithEmailAndPassword(
+                                email,
+                                enteredPassword
+                            )
+
+                            .then(() => {
+
+
+                                localStorage.setItem(
+                                    "isLoggedIn",
+                                    "true"
+                                );
+
+
+                                localStorage.setItem(
+                                    "userEmail",
+                                    email
+                                );
+
+
+                                alert(
+                                    "Login ସଫଳ ହେଲା!"
+                                );
+
+
+                                window.location.href =
+                                    "index.html";
+
+                            })
+
+
+                            .catch((error) => {
+
+
+                                alert(
+                                    "Login ସମସ୍ୟା:\n" +
+                                    error.message
+                                );
+
+                            });
+
+
                         }
 
                         else {
 
+
                             alert(
-                                "Account update ସମୟରେ ସମସ୍ୟା ହେଲା:\n" +
+
+                                "Account migration ସମୟରେ ସମସ୍ୟା:\n" +
                                 migrationError.message
+
                             );
 
                         }
@@ -738,14 +914,17 @@ document
 
                 .catch((firestoreError) => {
 
+
                     console.error(
                         firestoreError
                     );
 
 
                     alert(
-                        "ସମସ୍ୟା ହେଲା:\n" +
+
+                        "Firestore ସହିତ connection ସମସ୍ୟା:\n" +
                         firestoreError.message
+
                     );
 
                 });
@@ -757,9 +936,11 @@ document
         }
 
 
-        /* =================================================
-           SIGN UP
-        ================================================= */
+
+        // =================================================
+        // NEW SIGN UP
+        // =================================================
+
 
         const name =
             document
@@ -779,7 +960,7 @@ document
 
 
         /*
-         * NEW USER PASSWORD
+         * New account password must be 6+
          */
 
         if (
@@ -794,29 +975,78 @@ document
         }
 
 
+
         /*
-         * CREATE FIREBASE AUTH ACCOUNT
+         * Before creating new account,
+         * check whether this email already
+         * exists in old Firestore users.
          */
 
-        auth.createUserWithEmailAndPassword(
-            email,
-            password
+        db.collection("users")
+
+        .where(
+            "email",
+            "==",
+            email
         )
 
+        .limit(1)
+
+        .get()
+
+
+        .then((existingUserSnapshot) => {
+
+
+            if (
+                !existingUserSnapshot.empty
+            ) {
+
+                alert(
+
+                    "ଏହି Email ରେ ପୂର୍ବରୁ Account ଅଛି।\n\n" +
+
+                    "ଦୟାକରି Login କରନ୍ତୁ।"
+
+                );
+
+                throw new Error(
+                    "EXISTING_USER"
+                );
+
+            }
+
+
+            /*
+             * Create Firebase Auth account
+             */
+
+            return auth
+            .createUserWithEmailAndPassword(
+                email,
+                password
+            );
+
+        })
+
+
         .then((userCredential) => {
+
 
             const uid =
                 userCredential.user.uid;
 
 
             /*
-             * SAVE USER PROFILE
+             * Create Firestore user document.
+             *
+             * Random document ID is used,
+             * same as your existing structure.
              */
 
             return db
             .collection("users")
-            .doc(email)
-            .set({
+            .add({
 
                 name:
                     name,
@@ -835,19 +1065,21 @@ document
                     .FieldValue
                     .serverTimestamp()
 
-            }, {
-
-                merge: true
-
             });
 
         })
 
+
         .then(() => {
 
+
             alert(
-                "Account ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା!\n\n" +
+
+                name +
+                " ଙ୍କ Account ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା!\n\n" +
+
                 "ବର୍ତ୍ତମାନ Login କରନ୍ତୁ।"
+
             );
 
 
@@ -855,15 +1087,33 @@ document
 
         })
 
+
         .then(() => {
+
 
             toggleMode();
 
         })
 
+
         .catch((error) => {
 
+
             console.error(error);
+
+
+            /*
+             * Don't show an extra error for
+             * existing user message.
+             */
+
+            if (
+                error.message ===
+                "EXISTING_USER"
+            ) {
+
+                return;
+            }
 
 
             if (
@@ -872,11 +1122,15 @@ document
             ) {
 
                 alert(
+
                     "ଏହି Email ରେ ପୂର୍ବରୁ Account ଅଛି।\n\n" +
+
                     "ଦୟାକରି Login କରନ୍ତୁ କିମ୍ବା Forgot Password ବ୍ୟବହାର କରନ୍ତୁ।"
+
                 );
 
             }
+
 
             else if (
                 error.code ===
@@ -889,20 +1143,25 @@ document
 
             }
 
+
             else {
 
                 alert(
+
                     "Sign up ସମସ୍ୟା:\n" +
                     error.message
+
                 );
 
             }
 
         });
 
-    });
+    }
+);
 
 </script>
 
 </body>
+
 </html>
