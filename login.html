@@ -152,17 +152,17 @@
                     });
             } else {
                 const name = document.getElementById("name").value;
-                db.collection("users").add({
-                    name: name,
-                    email: email,
-                    password: password,
-                    createdAt: new Date()
-                }).then(() => {
-                    alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ।");
-                    toggleMode();
-                });
-            }
-        });
+                db.collection("users").doc(email).set({
+    name: name,
+    email: email,
+    password: password,
+    createdAt: new Date()
+}, { merge: true })
+.then(() => {
+    alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ");
+    toggleMode();
+});
+                
     </script>
 
 
