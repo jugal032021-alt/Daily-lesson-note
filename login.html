@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login - Daily Lesson Notes</title>
+    <title>User Login - Odishapathasala.in</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .auth-container {
@@ -48,16 +48,24 @@
         .btn-auth:hover {
             background-color: #0056b3;
         }
+        .extra-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .extra-links a {
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
         .toggle-text {
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
-        }
-        .toggle-text a {
-            color: #007bff;
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -82,6 +90,11 @@
                 <input type="password" id="password" required placeholder="********">
             </div>
             <button type="submit" class="btn-auth" id="submitBtn">ଲଗଇନ୍ କରନ୍ତୁ</button>
+            
+            <div class="extra-links" id="forgotPasswordLink">
+                <span></span>
+                <a onclick="forgotPassword()">ପାସୱାର୍ଡ ଭୁଲିଯାଇଛନ୍ତି? (Forgot Password)</a>
+            </div>
         </form>
 
         <div class="toggle-text">
@@ -90,8 +103,9 @@
     </div>
 </div>
 
-    <!-- Firebase App ଏବଂ Firestore ଲାଇବ୍ରେରୀ -->
+    <!-- Firebase App, Auth ଏବଂ Firestore ଲାଇବ୍ରେରୀ -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
@@ -109,6 +123,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
         let isLogin = true;
 
@@ -118,18 +133,38 @@
             const nameGroup = document.getElementById("nameGroup");
             const submitBtn = document.getElementById("submitBtn");
             const toggleMsg = document.getElementById("toggleMsg");
+            const forgotPasswordLink = document.getElementById("forgotPasswordLink");
 
             if (isLogin) {
                 formTitle.innerText = "ୟୁଜର୍ ଲଗଇନ୍ (User Login)";
                 nameGroup.style.display = "none";
                 submitBtn.innerText = "ଲଗଇନ୍ କରନ୍ତୁ";
+                forgotPasswordLink.style.display = "flex";
                 toggleMsg.innerHTML = `ଆକାଉଣ୍ଟ୍ ନାହିଁ? <a onclick="toggleMode()">ସାଇନ୍ ଅପ୍ (Sign up) କରନ୍ତୁ</a>`;
             } else {
                 formTitle.innerText = "ଆକାଉଣ୍ଟ୍ ତିଆରି କରନ୍ତୁ (Sign up)";
                 nameGroup.style.display = "block";
                 submitBtn.innerText = "ରେଜିଷ୍ଟର୍ କରନ୍ତୁ";
+                forgotPasswordLink.style.display = "none";
                 toggleMsg.innerHTML = `ପୂର୍ବରୁ ଆକାଉଣ୍ଟ୍ ଅଛି? <a onclick="toggleMode()">ଲଗଇନ୍ କରନ୍ତୁ</a>`;
             }
+        }
+
+        // ପାସୱାର୍ଡ ରିସେଟ୍ କରିବା ଫଙ୍କସନ୍
+        function forgotPassword() {
+            const email = document.getElementById("email").value;
+            if (!email) {
+                alert("ଦୟାକରି ପ୍ରଥମେ ଉପର ବକ୍ସରେ ଆପଣଙ୍କ ଇମେଲ୍ ଆଇଡି (Email) ଲେଖନ୍ତୁ!");
+                return;
+            }
+
+            auth.sendPasswordResetEmail(email)
+            .then(() => {
+                alert("ପାସୱାର୍ଡ ରିସେଟ୍ ଲିଙ୍କ୍ ଆପଣଙ୍କ ଇମେଲ୍‌କୁ ପଠାଯାଇଛି! ଦୟାକରି ଇମେଲ୍ ଚେକ୍ କରନ୍ତୁ।");
+            })
+            .catch((error) => {
+                alert("ସମସ୍ୟା ହେଲା: " + error.message);
+            });
         }
 
         document.getElementById("authForm").addEventListener("submit", function(e) {
