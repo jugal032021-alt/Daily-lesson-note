@@ -158,21 +158,21 @@
         alert("ସମସ୍ୟା ହେଲା: " + error);
     });
           
-            } else {
-                const name = document.getElementById("name").value;
-                db.collection("users").doc(email).set({
-    name: name,
-    email: email,
-    password: password,
-    createdAt: new Date()
-}, { merge: true })
-.then(() => {
-    alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ");
-    toggleMode();
+                } else {
+        // ସାଇନ୍ ଅପ୍ ପ୍ରୋସେସ୍
+        const name = document.getElementById("name").value;
+        db.collection("users").doc(email).set({
+            name: name,
+            email: email,
+            password: password,
+            createdAt: new Date()
+        }, { merge: true })
+        .then(() => {
+            alert(name + " ଙ୍କ ଆକାଉଣ୍ଟ୍ ସଫଳତାର ସହ ତିଆରି ହୋଇଗଲା! ବର୍ତ୍ତମାନ ଲଗଇନ୍ କରନ୍ତୁ");
+            toggleMode();
+        })
+        .catch((error) => {
+            alert("ସମସ୍ୟା ହେଲା: " + error);
+        });
+    }
 });
-                
-    </script>
-
-
-</body>
-</html>
