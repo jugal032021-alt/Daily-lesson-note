@@ -110,17 +110,18 @@
 
     <script>
         // ଆପଣଙ୍କ ଫାୟାରବେସ୍ କନଫିଗ୍ ତଥ୍ୟ
-        const firebaseConfig = {
-            apiKey: "AIzaSyCq18Y1jPbJ8P3kTjKlQ05O...",
-            authDomain: "daily-lesson-note.firebaseapp.com",
-            databaseURL: "https://daily-lesson-note-default-rtdb.firebaseio.com",
-            projectId: "daily-lesson-note",
-            storageBucket: "daily-lesson-note.appspot.com",
-            messagingSenderId: "902287150468",
-            appId: "1:902287150460:web:90bd366eb30a4ae268f9",
-            measurementId: "G-LRSYL5Y9HF"
-        };
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq05OBILPVDQLYE",
+  authDomain: "daily-lesson-note.firebaseapp.com",
+  databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "daily-lesson-note",
+  storageBucket: "daily-lesson-note.firebasestorage.app",
+  messagingSenderId: "902287150460",
+  appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
+  measurementId: "G-LRSYL5Y9HF"
+};
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
