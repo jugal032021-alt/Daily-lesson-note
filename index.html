@@ -4,65 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ODISHA PATHASALA</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1634717203821923"
-     crossorigin="anonymous"></script>
-    <!-- ସିଏସ୍ଏସ୍ ଫାଇଲ୍ ଏବଂ ଆଇକନ୍ -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1634717203821923" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f4f6f9; display: flex; flex-direction: column; min-height: 100vh; }
+        body { background-color: #f4f6f9; display: flex; flex-direction: column; min-height: 100vh; font-size: 16px; color: #111; }
 
-        /* ହେଡର୍ (Header) ଡିଜାଇନ୍ */
         header { background-color: #003399; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .logo-title { display: flex; align-items: center; gap: 15px; }
         .logo-title i { font-size: 30px; }
         .logo-text h1 { font-size: 22px; margin-bottom: 2px; }
         .logo-text p { font-size: 12px; color: #ffcc00; }
-        .nav-menu { display: flex; gap: 20px; list-style: none; }
+        .nav-menu { display: flex; gap: 20px; list-style: none; align-items: center; margin-bottom: 0; }
         .nav-menu li a { color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 12px; gap: 5px; }
 
-        /* ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ */
-        .main-content { flex: 1; max-width: 1200px; margin: 30px auto; padding: 0 30px; width: 100%; }
-.search-section { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-bottom: 15px; }
-.notice-bar { background: white; display: flex; align-items: center; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eef2ff; }
-        
-.search-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-bottom: 30px; }
-        
-        .page-title { text-align: center; color: #003399; font-size: 24px; margin-bottom: 25px; margin-top: 10px; }
+        /* ========================================= */
+        /* USER PROFILE DROPDOWN MENU STYLES START   */
+        /* ========================================= */
+        .user-dropdown { position: relative; display: inline-block; }
+        .profile-btn { background-color: #ffcc00; color: #003399; padding: 8px 15px; font-size: 14px; font-weight: bold; border: none; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.3s; }
+        .profile-btn:hover { background-color: #ffdb4d; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: #ffffff; min-width: 180px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); border-radius: 5px; overflow: hidden; margin-top: 8px; z-index: 1000; border: 1px solid #ddd; }
+        .dropdown-content a { color: #333 !important; padding: 12px 16px !important; text-decoration: none; display: block; font-size: 14px !important; flex-direction: row !important; border-bottom: 1px solid #eee; cursor: pointer; }
+        .dropdown-content a:hover { background-color: #f8f9fa; color: #0044cc !important; }
+        .dropdown-content a i { color: #555; width: 20px; text-align: center; }
+        .user-dropdown:hover .dropdown-content { display: block; }
+        /* ========================================= */
+        /* USER PROFILE DROPDOWN MENU STYLES END     */
+        /* ========================================= */
 
-        /* ସର୍ଚ୍ଚ ବକ୍ସ ଡିଜାଇନ୍ */
-        .search-section { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eef0f5; margin-bottom: 30px; }
+        .main-content { flex: 1; max-width: 1200px; margin: 5px auto; padding: 0 15px; width: 100%; }
+        .page-title { text-align: center; color: #003399; font-size: 26px; font-weight: bold; margin-bottom: 15px; margin-top: 10px; }
+        
+        .search-section { background: white; padding: 12px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 8px; border: 1px solid #eef0f5; }
         .search-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 20px; }
-        .search-group label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 8px; color: #333; }
-        .search-group input, .search-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none; font-size: 14px; }
+        .search-group label { display: block; font-weight: bold; font-size: 16px; margin-bottom: 8px; color: #000; }
+        .search-group input, .search-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none; font-size: 15px; font-weight: bold; color: #000; }
         .search-btn { width: 100%; background-color: #1a8c3a; color: white; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; }
         .search-btn:hover { background-color: #146c2e; }
 
-        /* ୪ଟି କାର୍ଡ ଡିଜାଇନ୍ */
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; margin-bottom: 8px; }
         .card { background: white; border-radius: 10px; padding: 25px 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eef0f5; }
         .card-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; color: white; font-size: 24px; }
         .card:nth-child(1) .card-icon { background-color: #0044cc; }
         .card:nth-child(2) .card-icon { background-color: #d32f2f; }
         .card:nth-child(3) .card-icon { background-color: #2e7d32; }
         .card:nth-child(4) .card-icon { background-color: #6a1b9a; }
-        .card h3 { color: #333; margin-bottom: 10px; font-size: 18px; }
-        .card p { color: #666; font-size: 13px; margin-bottom: 20px; line-height: 1.5; min-height: 40px; }
+        .card h3 { color: #111; margin-bottom: 10px; font-size: 20px; font-weight: bold; }
+        .card p { color: #333; font-size: 14px; margin-bottom: 20px; line-height: 1.5; min-height: 40px; font-weight: 600; }
         .card a { display: inline-block; padding: 8px 20px; border-radius: 20px; color: white; text-decoration: none; font-size: 13px; font-weight: bold; }
         .card:nth-child(1) a { background-color: #0044cc; }
         .card:nth-child(2) a { background-color: #d32f2f; }
         .card:nth-child(3) a { background-color: #2e7d32; }
         .card:nth-child(4) a { background-color: #6a1b9a; }
 
-        /* ସ୍କ୍ରୋଲିଂ ସୂଚନା ଡିଜାଇନ୍ */
-        .notice-bar { background: white; display: flex; align-items: center; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .notice-bar { background: white; display: flex; align-items: center; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eef2ff; }
         .notice-label { background: #eef2ff; color: #003399; font-weight: bold; padding: 12px 20px; display: flex; align-items: center; gap: 8px; border-right: 1px solid #e2e8f0; white-space: nowrap; }
         .notice-marquee { padding: 0 15px; color: #444; font-size: 14px; width: 100%; min-height: 20px; }
 
-        /* ଫୁଟର୍ ଡିଜାଇନ୍ */
         footer { background-color: #002266; color: #ccc; padding: 20px 20px 10px; margin-top: 20px; }
         .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; margin-bottom: 20px; }
         .footer-col h4 { color: white; font-size: 16px; margin-bottom: 15px; font-weight: bold; }
@@ -77,26 +77,10 @@
         .footer-contact { display: flex; flex-direction: column; gap: 10px; }
         .footer-contact div { display: flex; align-items: center; gap: 10px; font-size: 13px; }
         .copyright { text-align: center; font-size: 12px; }
-        /* ମୁଖ୍ୟ କଣ୍ଟେଣ୍ଟ୍ ଏବଂ ସ୍ପେସିଂ କମାଇବା ପାଇଁ */
-.main-content { flex: 1; max-width: 1200px; margin: 5px auto; padding: 0 15px; width: 100%; }
-.search-section { background: white; padding: 12px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 8px; }
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; margin-bottom: 8px; }
-.notice-bar { background: white; display: flex; align-items: center; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eef2ff; }
-
-/* ଅକ୍ଷରଗୁଡ଼ିକୁ ବଡ଼, ଡାର୍କ ଏବଂ ସ୍ପଷ୍ଟ କରିବା ପାଇଁ */
-body { font-size: 16px; color: #111; }
-.page-title { font-size: 26px; font-weight: bold; color: #003399; margin-bottom: 15px; }
-.search-group label { font-size: 16px; font-weight: bold; color: #000; }
-.search-group input, .search-group select { font-size: 15px; font-weight: bold; color: #000; }
-.search-btn { font-size: 16px; font-weight: bold; }
-.card h3 { font-size: 20px; font-weight: bold; color: #111; }
-.card p { font-size: 14px; font-weight: 600; color: #333; }
-        
     </style>
 </head>
 <body>
 
-    <!-- ହେଡର୍ -->
     <header>
         <div class="logo-title">
             <i class="fa-solid fa-book-open"></i>
@@ -110,22 +94,24 @@ body { font-size: 16px; color: #111; }
             <li><a href="book-library.html"><i class="fa-solid fa-book"></i> Book Library</a></li>
             <li><a href="video-gallery.html"><i class="fa-brands fa-youtube"></i> Video Gallery</a></li>
             <li><a href="Notice.html"><i class="fa-solid fa-bell"></i> Important Notice</a></li>
-            <!-- ଏଠାରେ ଅପଡେଟ୍ ହୋଇଛି -->
             <li><a href="question-bank.html"><i class="fa-solid fa-circle-question"></i> Question Bank</a></li>
-            <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-<li><a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
-    <li>
-    <a href="#" onclick="signOut(); return false;">
-        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-    </a>
-    </li>        
+            
+            <!-- USER PROFILE MENU (ଏଠାରେ ଯୋଡ଼ାଯାଇଛି) -->
+            <li class="user-dropdown">
+                <button class="profile-btn" id="userNameDisplay">
+                    <i class="fa-solid fa-user"></i> Loading...
+                </button>
+                <div class="dropdown-content">
+                    <a href="change-password.html"><i class="fa-solid fa-key"></i> Change Password</a>
+                    <a onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+                </div>
+            </li>
         </ul>
     </header>
 
     <div class="main-content">
         <h2 class="page-title">ଦୈନିକ ଶିକ୍ଷା ପାଠଟୀକା ଖୋଜନ୍ତୁ</h2>
 
-        <!-- ସର୍ଚ୍ଚ ବକ୍ସ -->
         <div class="search-section">
             <div class="search-grid">
                 <div class="search-group">
@@ -161,10 +147,9 @@ body { font-size: 16px; color: #111; }
                 </div>
             </div>
             <button class="search-btn" onclick="checkLogin()"><i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)</button>
-                 <div id="resultArea"></div>
+            <div id="resultArea"></div>
         </div>
 
-        <!-- ୪ଟି ଆକର୍ଷଣୀୟ କାର୍ଡ -->
         <div class="cards-grid">
             <div class="card">
                 <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
@@ -188,12 +173,10 @@ body { font-size: 16px; color: #111; }
                 <div class="card-icon"><i class="fa-solid fa-file-alt"></i></div>
                 <h3>Question Bank</h3>
                 <p>ବିଭିନ୍ନ ପରୀକ୍ଷା ପାଇଁ ପ୍ରଶ୍ନୋତ୍ତର<br>ଏଠାରେ ଅଭ୍ୟାସ କରନ୍ତୁ ।</p>
-                <!-- ଏଠାରେ ଅପଡେଟ୍ ହୋଇଛି -->
                 <a href="question-bank.html">Practice Now →</a>
             </div>
         </div>
 
-        <!-- ସ୍କ୍ରୋଲିଂ ସୂଚନା ଖାଲି ରଖାଯାଇଛି -->
         <div class="notice-bar">
             <div class="notice-label"><i class="fa-solid fa-bullhorn"></i> ସୂଚନା</div>
             <div class="notice-marquee">
@@ -202,85 +185,134 @@ body { font-size: 16px; color: #111; }
                 </marquee>
             </div>
         </div>
-
-   
     </div>
-<!-- ଭିଜିଟର୍ସ ମେସେଜ୍ ଏବଂ ଫିଡବ୍ୟାକ୍ ସେକ୍ସନ୍ -->
-<div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 20px auto; border: 1px solid #eef2ff;">
-    <h3 style="color: #003399; font-size: 20px; margin-bottom: 15px; text-align: center;"><i class="fa-solid fa-comments"></i> ଛାତ୍ରଛାତ୍ରୀ ଓ ଶିକ୍ଷକବନ୍ଧୁଙ୍କ ମତାମତ</h3>
-    
-    <!-- ମେସେଜ୍ ଦେବା ଫର୍ମ -->
-    <form id="feedbackForm" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
-        <input type="text" id="visitorName" placeholder="ଆପଣଙ୍କ ନାମ (Your Name)" required style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;">
-        <textarea id="visitorMessage" rows="3" placeholder="ଆପଣଙ୍କ ମେସେଜ୍ କିମ୍ବା ମତାମତ ଏଠାରେ ଲେଖନ୍ତୁ..." required style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;"></textarea>
-        <button type="submit" id="submitBtn" style="background-color: #1a8c3a; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer;">ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)</button>
-    </form>
 
-    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
-
-    <!-- ଅନୁମୋଦିତ ମେସେଜ୍ ଦେଖାଇବା ଜାଗା (Public Board) -->
-    <h4 style="color: #333; font-size: 16px; margin-bottom: 10px;"><i class="fa-solid fa-bullhorn" style="color: #003399;"></i> ସାଧାରଣ ମତାମତ ବୋର୍ଡ:</h4>
-    <div id="approvedMessagesList" style="display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;">
-        <div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #003399; font-size: 14px;">
-            ଲୋଡ୍ ହେଉଛି... (Loading messages)
+    <!-- ଭିଜିଟର୍ସ ମେସେଜ୍ ସେକ୍ସନ୍ -->
+    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 20px auto; max-width: 1200px; border: 1px solid #eef2ff;">
+        <h3 style="color: #003399; font-size: 20px; margin-bottom: 15px; text-align: center;"><i class="fa-solid fa-comments"></i> ଛାତ୍ରଛାତ୍ରୀ ଓ ଶିକ୍ଷକବନ୍ଧୁଙ୍କ ମତାମତ</h3>
+        <form id="feedbackForm" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+            <input type="text" id="visitorName" placeholder="ଆପଣଙ୍କ ନାମ (Your Name)" required style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;">
+            <textarea id="visitorMessage" rows="3" placeholder="ଆପଣଙ୍କ ମେସେଜ୍ କିମ୍ବା ମତାମତ ଏଠାରେ ଲେଖନ୍ତୁ..." required style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;"></textarea>
+            <button type="submit" id="submitBtn" style="background-color: #1a8c3a; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer;">ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)</button>
+        </form>
+        <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
+        <h4 style="color: #333; font-size: 16px; margin-bottom: 10px;"><i class="fa-solid fa-bullhorn" style="color: #003399;"></i> ସାଧାରଣ ମତାମତ ବୋର୍ଡ:</h4>
+        <div id="approvedMessagesList" style="display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;">
+            <div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #003399; font-size: 14px;">ଲୋଡ୍ ହେଉଛି... (Loading messages)</div>
         </div>
     </div>
-</div>
 
-<script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw05OCkBgtIdEgsuC6G6v1otGliEjZPzCE3OTE7_ggd4qy4-VqyDoT4_Q2nALnk6FIy-Q/exec';
+    <!-- FIREBASE LIBRARIES (USER PROFILE ପାଇଁ ଜରୁରୀ) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-const form = document.getElementById('feedbackForm');
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.innerText = "ପଠାଯାଉଛି...";
-  btn.disabled = true;
+    <script>
+        // FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq05OBILPVDQLYE",
+            authDomain: "daily-lesson-note.firebaseapp.com",
+            databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "daily-lesson-note",
+            storageBucket: "daily-lesson-note.firebasestorage.app",
+            messagingSenderId: "902287150460",
+            appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
+            measurementId: "G-LRSYL5Y9HF"
+        };
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-  const data = {
-    name: document.getElementById('visitorName').value,
-    message: document.getElementById('visitorMessage').value
-  };
+        // USER PROFILE MENU LOGIC (Firebase + Firestore)
+        auth.onAuthStateChanged((user) => {
+            const userNameDisplay = document.getElementById("userNameDisplay");
+            
+            // Check BOTH Firebase Auth AND localStorage (for legacy users)
+            if (user || localStorage.getItem("isLoggedIn") === "true") {
+                
+                // Get Email from either source
+                const userEmail = user ? user.email : localStorage.getItem("userEmail");
+                
+                if(userEmail) {
+                    db.collection("users").where("email", "==", userEmail).get()
+                    .then((snapshot) => {
+                        if (!snapshot.empty) {
+                            const name = snapshot.docs[0].data().name;
+                            userNameDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ${name}`;
+                        } else {
+                            userNameDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ମୋ ପ୍ରୋଫାଇଲ୍`;
+                        }
+                    }).catch(() => {
+                        userNameDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ମୋ ପ୍ରୋଫାଇଲ୍`;
+                    });
+                } else {
+                    userNameDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ମୋ ପ୍ରୋଫାଇଲ୍`;
+                }
+            } else {
+                // Not logged in
+                window.location.href = "login.html";
+            }
+        });
 
-  fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
-    .then(response => {
-      alert('ଆପଣଙ୍କ ମେସେଜ୍ ସଫଳତାପୂର୍ବକ ପଠାଗଲା! ଆପ୍ରୁଭ୍ ହେବା ପରେ ଏହା ୱେବସାଇଟ୍‌ରେ ଦେଖାଯିବ।');
-      form.reset();
-      btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)";
-      btn.disabled = false;
-    })
-    .catch(error => {
-      console.error('Error!', error.message);
-      alert('କିଛି ଭୁଲ୍ ହେଲା, ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ।');
-      btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)";
-      btn.disabled = false;
-    });
-});
+        // LOGOUT LOGIC (Firebase Signout + Clear LocalStorage)
+        function logoutUser() {
+            auth.signOut().then(() => {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("legacyUser");
+                window.location.href = "login.html";
+            }).catch((error) => {
+                // If it's a legacy user, just clear storage
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("legacyUser");
+                window.location.href = "login.html";
+            });
+        }
 
-function loadApprovedMessages() {
-  fetch(scriptURL)
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById('approvedMessagesList');
-      container.innerHTML = "";
-      if(data.length === 0) {
-        container.innerHTML = `<div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #003399; font-size: 14px;">ବର୍ତ୍ତମାନ କୌଣସି ମେସେଜ୍ ନାହିଁ।</div>`;
-        return;
-      }
-      data.reverse().forEach(item => {
-        const div = document.createElement('div');
-        div.style = "background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #1a8c3a; font-size: 14px;";
-        div.innerHTML = `<b>${item.name}:</b> ${item.message}`;
-        container.appendChild(div);
-      });
-    })
-    .catch(err => console.error('Error loading messages', err));
-}
+        // Search check
+        function checkLogin() {
+            if (localStorage.getItem("isLoggedIn") === "true" || auth.currentUser) {
+                if(typeof searchNote === 'function') { searchNote(); }
+            } else {
+                alert("ଦୟାକରି ଲେସନ୍ ନୋଟ୍ ଦେଖିବା ପାଇଁ ପ୍ରଥମେ Login କରନ୍ତୁ!");
+                window.location.href = "login.html";
+            }
+        }
 
-loadApprovedMessages();
-</script>
+        // Messages Logic
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbw05OCkBgtIdEgsuC6G6v1otGliEjZPzCE3OTE7_ggd4qy4-VqyDoT4_Q2nALnk6FIy-Q/exec';
+        const form = document.getElementById('feedbackForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "ପଠାଯାଉଛି..."; btn.disabled = true;
+            const data = { name: document.getElementById('visitorName').value, message: document.getElementById('visitorMessage').value };
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
+            .then(() => {
+                alert('ଆପଣଙ୍କ ମେସେଜ୍ ସଫଳତାପୂର୍ବକ ପଠାଗଲା! ଆପ୍ରୁଭ୍ ହେବା ପରେ ଏହା ୱେବସାଇଟ୍‌ରେ ଦେଖାଯିବ।');
+                form.reset(); btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)"; btn.disabled = false;
+            }).catch(() => {
+                alert('କିଛି ଭୁଲ୍ ହେଲା, ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ।');
+                btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)"; btn.disabled = false;
+            });
+        });
+
+        function loadApprovedMessages() {
+            fetch(scriptURL).then(res => res.json()).then(data => {
+                const container = document.getElementById('approvedMessagesList'); container.innerHTML = "";
+                if(data.length === 0) { container.innerHTML = `<div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #003399; font-size: 14px;">ବର୍ତ୍ତମାନ କୌଣସି ମେସେଜ୍ ନାହିଁ।</div>`; return; }
+                data.reverse().forEach(item => {
+                    const div = document.createElement('div');
+                    div.style = "background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #1a8c3a; font-size: 14px;";
+                    div.innerHTML = `<b>${item.name}:</b> ${item.message}`;
+                    container.appendChild(div);
+                });
+            }).catch(err => console.error('Error loading messages', err));
+        }
+        loadApprovedMessages();
+    </script>
     
-    <!-- ଫୁଟର୍ -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
@@ -299,11 +331,9 @@ loadApprovedMessages();
                     <li><a href="book-library.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Book Library</a></li>
                     <li><a href="video-gallery.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Video Gallery</a></li>
                     <li><a href="Notice.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Important Notice</a></li>
-                    <!-- ଏଠାରେ ଅପଡେଟ୍ ହୋଇଛି -->
                     <li><a href="question-bank.html"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Question Bank</a></li>
                     <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-<li><a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
-                    
+                    <li><a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -320,25 +350,6 @@ loadApprovedMessages();
             © 2026 Odishapathasala.in | All Rights Reserved
         </div>
     </footer>
-    <script>
-        function checkLogin() {
-            if (localStorage.getItem("isLoggedIn") === "true") {
-                searchNote();
-            } else {
-                alert("ଦୟାକରି ଲେସନ୍ ନୋଟ୍ ଦେଖିବା ପାଇଁ ପ୍ରଥମେ Login କରନ୍ତୁ!");
-                window.location.href = "login.html";
-            }
-        }
-        function signOut() {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userEmail");
-
-    alert("ଆପଣ ସଫଳତାର ସହିତ Sign Out ହୋଇଛନ୍ତି!");
-
-    window.location.href = "login.html";
-        }
-    </script>
-
     <script src="app.js"></script>
 </body>
 </html>
