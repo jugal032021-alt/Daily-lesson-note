@@ -662,41 +662,38 @@ document
                      * Allow old Firestore login.
                      */
 
-                    if (
-                        enteredPassword.length < 6
-                    ) {
-
-
-                        localStorage.setItem(
-                            "isLoggedIn",
-                            "true"
-                        );
-
-
-                        localStorage.setItem(
-                            "userEmail",
-                            email
-                        );
-
-
-                        localStorage.setItem(
-                            "legacyUser",
-                            "true"
-                        );
-
-
-                        alert(
-                            "ପୁରୁଣା Account ରେ Login ସଫଳ ହେଲା!"
-                        );
-
-
-                        window.location.href =
-                            "index.html";
-
-
-                        return;
-                    }
-
+                     if (enteredPassword.length < 6) {
+     // Create Firebase Auth account with default password "Test@2026"
+     auth.createUserWithEmailAndPassword(email, "Test@2026")
+     .then((userCredential) => {
+         // Update Firestore doc to save the new default password
+         return doc.ref.update({
+             authUid: userCredential.user.uid,
+             migratedToAuth: true,
+             password: "Test@2026"
+         });
+     })
+     .then(() => {
+         alert(
+             "ଆପଣଙ୍କ ପାସୱାର୍ଡ ୬-ଡିଜିଟ୍‌ରୁ କମ୍ ଥିବାରୁ, ସୁରକ୍ଷା ପାଇଁ ଏହାକୁ ବଦଳାଇ Default Password: 'Test@2026' କରାଯାଇଛି।\n\n" +
+             "ଦୟାକରି ଏହି ନୂଆ ପାସୱାର୍ଡ (Test@2026) ଦେଇ ପୁଣିଥରେ ଲଗ୍‌ଇନ୍ କରନ୍ତୁ।"
+         );
+         // Clear the password field for user to try again
+         document.getElementById("password").value = "";
+     })
+     .catch((error) => {
+         if (error.code === "auth/email-already-in-use") {
+             alert(
+                 "ଆପଣଙ୍କ ଆକାଉଣ୍ଟ୍ ପୂର୍ବରୁ ଅପଡେଟ୍ ହୋଇସାରିଛି।\n\n" +
+                 "ଦୟାକରି Default Password: 'Test@2026' ଦେଇ ଲଗ୍‌ଇନ୍ କରନ୍ତୁ କିମ୍ବା 'Forgot Password' ବ୍ୟବହାର କରନ୍ତୁ।"
+             );
+         } else {
+             alert("ସମସ୍ୟା ହେଲା: " + error.message);
+         }
+     });
+     return;
+                     }
+                    
 
                     // =====================================
                     // OLD USER 6+ PASSWORD
