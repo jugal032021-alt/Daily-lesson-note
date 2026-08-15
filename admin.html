@@ -122,18 +122,90 @@
             <button id="btnDelete" class="btn-delete" onclick="deleteNote()">ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରନ୍ତୁ</button>
         </div>
     </div>
-    <script>
+<script>
 function autoFillPanchpadi() {
     const rawText = document.getElementById('aiRawInput').value;
     if(!rawText.trim()) {
         alert("ଦୟାକରି କିଛି ଲେଖା ପେଷ୍ଟ୍ କରନ୍ତୁ!");
         return;
     }
+
+    const lines = rawText.split('\n');
     
-    // ଏହା ଆପଣଙ୍କ ପେଷ୍ଟ୍ କରାଯାଇଥିବା ଲେଖାକୁ ପଢ଼ି ଅଟୋମେଟିକ୍ ଫର୍ମରେ ଭର୍ତ୍ତି କରିବ
-    alert("ଫର୍ମରେ ଡାଟା ପ୍ରସ୍ତୁତ ଅଛି! ଥରେ ଯାଞ୍ଚ କରି 'Submit' କରନ୍ତୁ।");
+    lines.forEach(line => {
+        const lowerLine = line.toLowerCase();
+        
+        if (lowerLine.includes('ତାରିଖ') || lowerLine.includes('date')) {
+            const val = line.split(':')[1] || line.split('-')[1];
+            if(val) document.getElementById('date').value = val.trim();
+        }
+        else if (lowerLine.includes('ଶ୍ରେଣୀ') || lowerLine.includes('class')) {
+            const val = line.split(':')[1];
+            if(val) document.getElementById('className').value = val.trim();
+        }
+        else if (lowerLine.includes('କାଳାଂଶ') || lowerLine.includes('period')) {
+            const val = line.split(':')[1];
+            if(val) document.getElementById('period').value = val.trim();
+        }
+        else if (lowerLine.includes('ବିଷୟ') || lowerLine.includes('subject')) {
+            const val = line.split(':')[1];
+            if(val) {
+                const subjSelect = document.getElementById('subject');
+                let found = false;
+                for(let opt of subjSelect.options) {
+                    if(opt.value.toLowerCase().includes(val.trim().toLowerCase())) {
+                        subjSelect.value = opt.value;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) {
+                    let opt = document.createElement('option');
+                    opt.value = val.trim();
+                    opt.innerHTML = val.trim();
+                    subjSelect.appendChild(opt);
+                    subjSelect.value = val.trim();
+                }
+            }
+        }
+        else if (lowerLine.includes('ପାଠ୍ୟ ପ୍ରସଙ୍ଗ') || lowerLine.includes('topic')) {
+            const val = line.split(':')[1];
+            if(val) document.getElementById('topic').value = val.trim();
+        }
+        else if (lowerLine.includes('ଶିକ୍ଷଣ ଫଳାଫଳ') || lowerLine.includes('outcomes')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('outcomes').value = val.trim();
+        }
+        else if (lowerLine.includes('ଶିକ୍ଷଣ ସାମଗ୍ରୀ') || lowerLine.includes('tlm')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('tlm').value = val.trim();
+        }
+        else if (lowerLine.includes('ଅଧିତି') || lowerLine.includes('engage')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('adhiti').value = val.trim();
+        }
+        else if (lowerLine.includes('ବୋଧ') || lowerLine.includes('explain')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('bodha').value = val.trim();
+        }
+        else if (lowerLine.includes('ଅଭ୍ୟାସ') || lowerLine.includes('explore')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('abhyasa').value = val.trim();
+        }
+        else if (lowerLine.includes('ପ୍ରୟୋଗ') || lowerLine.includes('elaborate')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('prayoga').value = val.trim();
+        }
+        else if (lowerLine.includes('ପ୍ରସାର') || lowerLine.includes('evaluate')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('prasar').value = val.trim();
+        }
+    });
+
+    alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା! ଥରେ ଚେକ୍ କରି 'Submit' କରନ୍ତୁ।");
 }
-    </script>
+</script>
+
     
     <script src="app.js"></script>
 </body>
