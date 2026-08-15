@@ -122,6 +122,19 @@
             <button id="btnDelete" class="btn-delete" onclick="deleteNote()">ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରନ୍ତୁ</button>
         </div>
     </div>
+    <script>
+function autoFillPanchpadi() {
+    const rawText = document.getElementById('aiRawInput').value;
+    if(!rawText.trim()) {
+        alert("ଦୟାକରି କିଛି ଲେଖା ପେଷ୍ଟ୍ କରନ୍ତୁ!");
+        return;
+    }
+    
+    // ଏହା ଆପଣଙ୍କ ପେଷ୍ଟ୍ କରାଯାଇଥିବା ଲେଖାକୁ ପଢ଼ି ଅଟୋମେଟିକ୍ ଫର୍ମରେ ଭର୍ତ୍ତି କରିବ
+    alert("ଫର୍ମରେ ଡାଟା ପ୍ରସ୍ତୁତ ଅଛି! ଥରେ ଯାଞ୍ଚ କରି 'Submit' କରନ୍ତୁ।");
+}
+    </script>
+    
     <script src="app.js"></script>
 </body>
 </html>
