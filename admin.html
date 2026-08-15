@@ -134,28 +134,27 @@ function autoFillPanchpadi() {
     const lines = rawText.split('\n');
     
     lines.forEach(line => {
-        const text = line.trim();
-        const parts = text.split(':');
-        if(parts.length < 2) return;
+        const lowerLine = line.toLowerCase();
         
-        const key = parts[0].toLowerCase();
-        const val = parts.slice(1).join(':').trim();
-
-        if (key.includes('ତାରିଖ') || key.includes('date')) {
-            if(val) document.getElementById('date').value = val;
+        if (lowerLine.includes('ତାରିଖ') || lowerLine.includes('date')) {
+            const val = line.split(':')[1] || line.split('-')[1];
+            if(val) document.getElementById('date').value = val.trim();
         }
-        else if (key.includes('ଶ୍ରେଣୀ') || key.includes('class')) {
-            if(val) document.getElementById('className').value = val;
+        else if (lowerLine.includes('ଶ୍ରେଣୀ') || lowerLine.includes('class')) {
+            const val = line.split(':')[1];
+            if(val) document.getElementById('className').value = val.trim();
         }
-        else if (key.includes('କାଳାଂଶ') || key.includes('period')) {
-            if(val) document.getElementById('period').value = val;
+        else if (lowerLine.includes('କାଳାଂଶ') || lowerLine.includes('period')) {
+            const val = line.split(':')[1];
+            if(val) document.getElementById('period').value = val.trim();
         }
-        else if (key.includes('ବିଷୟ') || key.includes('subject')) {
+        else if (lowerLine.includes('ବିଷୟ') || lowerLine.includes('subject')) {
+            const val = line.split(':')[1];
             if(val) {
                 const subjSelect = document.getElementById('subject');
                 let found = false;
                 for(let opt of subjSelect.options) {
-                    if(opt.value.includes(val)) {
+                    if(opt.value.toLowerCase().includes(val.trim().toLowerCase())) {
                         subjSelect.value = opt.value;
                         found = true;
                         break;
@@ -163,42 +162,51 @@ function autoFillPanchpadi() {
                 }
                 if(!found) {
                     let opt = document.createElement('option');
-                    opt.value = val;
-                    opt.innerHTML = val;
+                    opt.value = val.trim();
+                    opt.innerHTML = val.trim();
                     subjSelect.appendChild(opt);
-                    subjSelect.value = val;
+                    subjSelect.value = val.trim();
                 }
             }
         }
-        else if (key.includes('ପାଠ୍ୟ ପ୍ରସଙ୍ଗ') || key.includes('topic')) {
-            if(val) document.getElementById('topic').value = val;
+        else if (lowerLine.includes('ପାଠ୍ୟ ପ୍ରସଙ୍ଗ') || lowerLine.includes('topic')) {
+            const val = line.split(':')[1];
+            if(val) document.getElementById('topic').value = val.trim();
         }
-        else if (key.includes('ଶିକ୍ଷଣ ଫଳାଫଳ') || key.includes('outcomes')) {
-            if(val) document.getElementById('learning_outcomes').value = val;
+        else if (lowerLine.includes('ଶିକ୍ଷଣ ଫଳାଫଳ') || lowerLine.includes('outcomes')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('outcomes').value = val.trim();
         }
-        else if (key.includes('ଶିକ୍ଷଣ ସାମଗ୍ରୀ') || key.includes('tlm')) {
-            if(val) document.getElementById('tlm').value = val;
+        else if (lowerLine.includes('ଶିକ୍ଷଣ ସାମଗ୍ରୀ') || lowerLine.includes('tlm')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('tlm').value = val.trim();
         }
-        else if (key.includes('ଅଧିତି') || key.includes('engage')) {
-            if(val) document.getElementById('adhiti').value = val;
+        else if (lowerLine.includes('ଅଧିତି') || lowerLine.includes('engage')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('adhiti').value = val.trim();
         }
-        else if (key.includes('ବୋଧ') || key.includes('explain')) {
-            if(val) document.getElementById('bodha').value = val;
+        else if (lowerLine.includes('ବୋଧ') || lowerLine.includes('explain')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('bodha').value = val.trim();
         }
-        else if (key.includes('ଅଭ୍ୟାସ') || key.includes('explore')) {
-            if(val) document.getElementById('abhyasa').value = val;
+        else if (lowerLine.includes('ଅଭ୍ୟାସ') || lowerLine.includes('explore')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('abhyasa').value = val.trim();
         }
-        else if (key.includes('ପ୍ରୟୋଗ') || key.includes('elaborate')) {
-            if(val) document.getElementById('prayoga').value = val;
+        else if (lowerLine.includes('ପ୍ରୟୋଗ') || lowerLine.includes('elaborate')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('prayoga').value = val.trim();
         }
-        else if (key.includes('ପ୍ରସାର') || key.includes('evaluate')) {
-            if(val) document.getElementById('prasar').value = val;
+        else if (lowerLine.includes('ପ୍ରସାର') || lowerLine.includes('evaluate')) {
+            const val = line.substring(line.indexOf(':') + 1);
+            if(val) document.getElementById('prasar').value = val.trim();
         }
     });
 
-    alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା!");
+    alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା! ଥରେ ଚେକ୍ କରି 'Submit' କରନ୍ତୁ।");
 }
 </script>
+
     
 
 
