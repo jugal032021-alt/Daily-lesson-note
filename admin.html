@@ -137,19 +137,19 @@ function autoFillPanchpadi() {
         const text = line.trim();
         
         if (text.includes('ତାରିଖ') || text.includes('Date')) {
-            const val = text.split(':')[1] || text.split('-')[1];
+            const val = text.includes(':') ? text.split(':')[1] : (text.includes('-') ? text.split('-')[1] : '');
             if(val) document.getElementById('date').value = val.trim();
         }
         else if (text.includes('ଶ୍ରେଣୀ') || text.includes('Class')) {
-            const val = text.split(':')[1];
+            const val = text.includes(':') ? text.split(':')[1] : '';
             if(val) document.getElementById('className').value = val.trim();
         }
         else if (text.includes('କାଳାଂଶ') || text.includes('Period')) {
-            const val = text.split(':')[1];
+            const val = text.includes(':') ? text.split(':')[1] : '';
             if(val) document.getElementById('period').value = val.trim();
         }
         else if (text.includes('ବିଷୟ') || text.includes('Subject')) {
-            const val = text.split(':')[1];
+            const val = text.includes(':') ? text.split(':')[1] : '';
             if(val) {
                 const subjSelect = document.getElementById('subject');
                 let found = false;
@@ -170,7 +170,7 @@ function autoFillPanchpadi() {
             }
         }
         else if (text.includes('ପାଠ୍ୟ ପ୍ରସଙ୍ଗ') || text.includes('Topic')) {
-            const val = text.split(':')[1];
+            const val = text.includes(':') ? text.split(':')[1] : '';
             if(val) document.getElementById('topic').value = val.trim();
         }
         else if (text.includes('ଶିକ୍ଷଣ ଫଳାଫଳ') || text.includes('Outcomes')) {
