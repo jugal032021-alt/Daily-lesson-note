@@ -196,9 +196,12 @@ function autoFillPanchpadi() {
             const val = line.substring(line.indexOf(':') + 1);
             if(val) document.getElementById('prayoga').value = val.trim();
         }
-        else if (lowerLine.includes('ପ୍ରସାର') || lowerLine.includes('evaluate')) {
-            const val = line.substring(line.indexOf(':') + 1);
-            if(val) document.getElementById('evaluate').value = val.trim();
+                else if (lowerLine.includes('ପ୍ରସାର') || lowerLine.includes('evaluate')) {
+            const parts = line.split(':');
+            const val = parts.length > 1 ? parts[1] : line.substring(line.indexOf(')') + 1);
+            if(val) document.getElementById('prasar').value = val.trim();
+        }
+
         }
     });
 
