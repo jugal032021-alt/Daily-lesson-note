@@ -1,20 +1,27 @@
-// ଆପଣଙ୍କର Firebase ଲିଙ୍କ୍
-const baseURL = "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app"; 
+const baseURL = "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app";
 
 // 1. ନୂଆ ନୋଟ୍ ସେଭ୍ କରିବା (Save)
 async function saveNote() {
     let note = getFormData();
-    if (!note.date || !note.className || !note.subject) { alert("ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପୂରଣ କରନ୍ତୁ!"); return; }
-
+    if (!note.date || !note.className || !note.subject) { 
+        alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପୂରଣ କରନ୍ତୁ!"); 
+        return; 
+    }
     try {
         let response = await fetch(`${baseURL}/notes.json`, {
             method: 'POST',
             body: JSON.stringify(note),
             headers: { 'Content-Type': 'application/json' }
         });
-        if(response.ok) { alert("ସଫଳତାର ସହ ଅପଲୋଡ୍ ହୋଇଗଲା!"); window.location.reload(); } 
-        else { alert("କିଛି ଅସୁବିଧା ହେଲା!"); }
-    } catch (error) { alert("ଏରର୍: " + error); }
+        if(response.ok) { 
+            alert("ସଫଳତାର ସହ ଅପଲୋଡ୍ ହୋଇଗଲା!"); 
+            window.location.reload(); 
+        } else { 
+            alert("କିଛି ଅସୁବିଧା ହେଲା!"); 
+        }
+    } catch (error) { 
+        alert("ଏରର୍: " + error); 
+    }
 }
 
 // 2. ଏଡିଟ୍ କରିବା ପାଇଁ ପୁରୁଣା ନୋଟ୍ ଖୋଜିବା (Fetch for Edit)
@@ -22,39 +29,31 @@ async function fetchNoteForEdit() {
     let sDate = document.getElementById('searchEditDate').value;
     let sClass = document.getElementById('searchEditClass').value;
     let sSub = document.getElementById('searchEditSubject').value;
-
-    if (!sDate || !sClass || !sSub) { 
-        alert("ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ସବୁକିଛି ବାଛନ୍ତୁ!"); 
-        return; 
+    if (!sDate || !sClass || !sSub) {
+        alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ସବୁକିଛି ବାଛନ୍ତୁ!");
+        return;
     }
-
     try {
         let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${sDate}"`);
-let data = await response.json();
-
-let foundId = null;
-let foundNote = null;
-
-if(data) {
-    for (let key in data) {
-        // ଏଠାରେ ସର୍ଭରରୁ ଆସିଥିବା ଡାଟା ଭିତରୁ ସଠିକ୍ Class ଏବଂ Subject ମ୍ୟାଚ୍ କରୁଛୁ
-        if (data[key].className === sClass && data[key].subject === sSub) {
-            foundId = key;
-            foundNote = data[key];
-            break;
+        let data = await response.json();
+        let foundId = null;
+        let foundNote = null;
+        if(data) {
+            for (let key in data) {
+                if (data[key].className === sClass && data[key].subject === sSub) {
+                    foundId = key;
+                    foundNote = data[key];
+                    break;
+                }
+            }
         }
-    }
-}
-
-      if (foundNote) {
-            document.getElementById('noteId').value = foundId; 
+        if (foundNote) {
+            document.getElementById('noteId').value = foundId;
             document.getElementById('date').value = foundNote.date;
             document.getElementById('className').value = foundNote.className;
-
-            // ଶ୍ରେଣୀ ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଡ୍ରପ୍-ଡାଉନ୍‌ରେ ଲୋଡ୍ କରିବା
+            
             const adminSubjectSelect = document.getElementById("subject");
             adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-
             if (foundNote.className && classBooks[foundNote.className]) {
                 classBooks[foundNote.className].forEach(function(bookName) {
                     const option = document.createElement("option");
@@ -66,24 +65,17 @@ if(data) {
                     adminSubjectSelect.appendChild(option);
                 });
             }
-
             document.getElementById('subject').value = foundNote.subject;
+            document.getElementById('period').value = foundNote.period || '';
+            document.getElementById('topic').value = foundNote.topic || '';
+            document.getElementById('outcomes').value = foundNote.outcomes || '';
+            document.getElementById('tlm').value = foundNote.tlm || '';
+            document.getElementById('adhiti').value = foundNote.adhiti || '';
+            document.getElementById('bodha').value = foundNote.bodha || '';
+            document.getElementById('abhyasa').value = foundNote.abhyasa || '';
+            document.getElementById('prayoga').value = foundNote.prayoga || '';
+            document.getElementById('prasar').value = foundNote.prasara || foundNote.prasar || '';
             
-            // ଶ୍ରେଣୀ ବଛା ହେବା ପରେ ସେହି ଅନୁସାରେ ବହିଗୁଡ଼ିକୁ ଲୋଡ୍ କରିବା
-            if (typeof updateAdminSubjects === 'function') {
-                updateAdminSubjects();
-            }
-        
-            document.getElementById('period').value = foundNote.period;
-            document.getElementById('topic').value = foundNote.topic;
-            document.getElementById('outcomes').value = foundNote.outcomes;
-            document.getElementById('tlm').value = foundNote.tlm;
-            document.getElementById('adhiti').value = foundNote.adhiti;
-            document.getElementById('bodha').value = foundNote.bodha;
-            document.getElementById('abhyasa').value = foundNote.abhyasa;
-            document.getElementById('prayoga').value = foundNote.prayoga;
-            document.getElementById('prasara').value = foundNote.prasara;
-
             document.getElementById('modeText').innerText = "ନୋଟ୍ କୁ ଏଡିଟ୍ କରନ୍ତୁ";
             document.getElementById('btnSubmit').style.display = 'none';
             document.getElementById('btnUpdate').style.display = 'block';
@@ -93,93 +85,54 @@ if(data) {
         } else {
             alert("କ୍ଷମା କରିବେ, ଏହି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପାଇଁ କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ!");
         }
-    } catch (error) { alert("ଏରର୍: " + error); }
+    } catch (error) { 
+        alert("ଏରର୍: " + error); 
+    }
 }
 
 // 3. ସୁଧାରିବା ପରେ ଅପଡେଟ୍ କରିବା (Update)
 async function updateNote() {
     let noteId = document.getElementById('noteId').value;
     let updatedNote = getFormData();
-    
     try {
         let response = await fetch(`${baseURL}/notes/${noteId}.json`, {
             method: 'PUT',
             body: JSON.stringify(updatedNote),
             headers: { 'Content-Type': 'application/json' }
         });
-        if(response.ok) { alert("ନୋଟ୍ ସଫଳତାର ସହ ଅପଡେଟ୍ ହୋଇଗଲା!"); window.location.reload(); } 
-        else { alert("ଅପଡେଟ୍ କରିବାରେ ଅସୁବିଧା ହେଲା!"); }
-    } catch (error) { alert("ଏରର୍: " + error); }
+        if(response.ok) { 
+            alert("ନୋଟ୍ ସଫଳତାର ସହ ଅପଡେଟ୍ ହୋଇଗଲା!"); 
+            window.location.reload(); 
+        } else { 
+            alert("ଅପଡେଟ୍ କରିବାରେ ଅସୁବିଧା ହେଲା!"); 
+        }
+    } catch (error) { 
+        alert("ଏରର୍: " + error); 
+    }
 }
 
 // 4. ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବା (Delete)
 async function deleteNote() {
     let noteId = document.getElementById('noteId').value;
     let confirmDelete = confirm("ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?");
-    
     if (confirmDelete) {
         try {
             let response = await fetch(`${baseURL}/notes/${noteId}.json`, {
                 method: 'DELETE'
             });
-            if(response.ok) { alert("ନୋଟ୍ ସମ୍ପୂର୍ଣ୍ଣ ରୂପେ ଡିଲିଟ୍ ହୋଇଗଲା!"); window.location.reload(); } 
-            else { alert("ଡିଲିଟ୍ କରିବାରେ ଅସୁବିଧା ହେଲା!"); }
-        } catch (error) { alert("ଏରର୍: " + error); }
-    }
-}
-
-// 5. ଶିକ୍ଷକଙ୍କ ପାଇଁ Index ପେଜ୍ ରୁ ଖୋଜିବା (ଅପଡେଟ୍ ହୋଇଥିବା)
-async function searchNote() {
-    let searchDate = document.getElementById('searchDate').value;
-    let searchClass = document.getElementById('searchClass').value;
-    let searchSubject = document.getElementById('searchSubject').value.trim().toLowerCase(); // ନୂଆ ବିଷୟ ଫିଲ୍ଟର୍
-    let resultArea = document.getElementById('resultArea');
-
-    if (!searchDate || !searchClass || !searchSubject) { 
-        alert("ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ପୂରଣ କରନ୍ତୁ!"); 
-        return; 
-    }
-    
-    resultArea.innerHTML = "<p style='text-align:center;'>ଖୋଜା ଚାଲିଛି...</p>";
-
-    try {
-    let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${searchDate}"`);
-    let data = await response.json();
-
-    if(data) {
-        let foundNote = null;
-        for (let key in data) {
-            let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
-            // ତାରିଖ ପୂର୍ବରୁ ଫିଲ୍ଟର୍ ହୋଇସାରିଥିବାରୁ ଏଠାରେ କେବଳ ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ଯାଞ୍ଚ ହେବ
-            if (data[key].className === searchClass &&
-                noteSub.includes(searchSubject)) {
-                foundNote = data[key];
-                break;
+            if(response.ok) { 
+                alert("ନୋଟ୍ ସମ୍ପୂର୍ଣ୍ଣ ରୂପେ ଡିଲିଟ୍ ହୋଇଗଲା!"); 
+                window.location.reload(); 
+            } else { 
+                alert("ଡିଲିଟ୍ କରିବାରେ ଅସୁବିଧା ହେଲା!"); 
             }
+        } catch (error) { 
+            alert("ଏରର୍: " + error); 
         }
-
-
-            if (foundNote) {
-                resultArea.innerHTML = `
-                    <div class="note-card">
-                        <h3>${foundNote.className} - ${foundNote.subject}</h3>
-                        <div class="note-item"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>ପିରିୟଡ଼:</strong> ${foundNote.period}</div>
-                        <div class="note-item"><strong>ପାଠ୍ୟ ପ୍ରସଙ୍ଗ (Topic):</strong> ${foundNote.topic}</div>
-                        <div class="note-item"><strong>ଶିକ୍ଷଣ ଫଳାଫଳ:</strong> ${foundNote.outcomes}</div>
-                        <div class="note-item"><strong>ଶିକ୍ଷଣ ସାମଗ୍ରୀ (TLM):</strong> ${foundNote.tlm}</div>
-                        <h4 style="color:#0056b3; border-bottom: 1px dashed #ccc;">ପଞ୍ଚପଦୀ:</h4>
-                        <div class="note-item"><strong>୧. ଅଧିତି:</strong> ${foundNote.adhiti}</div>
-                        <div class="note-item"><strong>୨. ବୋଧ:</strong> ${foundNote.bodha}</div>
-                        <div class="note-item"><strong>୩. ଅଭ୍ୟାସ:</strong> ${foundNote.abhyasa}</div>
-                        <div class="note-item"><strong>୪. ପ୍ରୟୋଗ:</strong> ${foundNote.prayoga}</div>
-                        <div class="note-item"><strong>୫. ପ୍ରସାର:</strong> ${foundNote.prasara}</div>
-                    </div>
-                `;
-            } else { resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:20px;">କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ! (ଦୟାକରି ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟର ବନାନ ଠିକ୍ ଅଛି କି ନାହିଁ ଯାଞ୍ଚ କରନ୍ତୁ)</p>`; }
-        } else { resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:20px;">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଡାଟା ଉପଲବ୍ଧ ନାହିଁ!</p>`; }
-    } catch (error) { resultArea.innerHTML = `<p style="color:red; text-align:center;">କିଛି ଅସୁବିଧା ହେଲା!</p>`; }
+    }
 }
 
+// 5. ଫର୍ମର ତଥ୍ୟ ସଂଗ୍ରହ କରିବା
 function getFormData() {
     return {
         date: document.getElementById('date').value,
@@ -216,36 +169,14 @@ const classBooks = {
     "Class 8": ["ସାହିତ୍ୟ ସୁରଭି", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"]
 };
 
-// Index Page Dropdown
-const classSelect = document.getElementById("searchClass");
-const subjectSelect = document.getElementById("searchSubject");
-
-if (classSelect && subjectSelect) {
-    classSelect.addEventListener("change", function() {
-        const selectedClass = this.value;
-        subjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-        if (selectedClass && classBooks[selectedClass]) {
-            classBooks[selectedClass].forEach(function(bookName) {
-                const option = document.createElement("option");
-                option.value = bookName;
-                option.textContent = bookName;
-                subjectSelect.appendChild(option);
-            });
-        } else {
-            subjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
-        }
-    });
-}
-
-// Admin Panel Dropdown (admin.html)
+// Admin Panel Dropdown
 const adminClassSelect = document.getElementById("className");
 const adminSubjectSelect = document.getElementById("subject");
-
 if (adminClassSelect && adminSubjectSelect) {
     adminClassSelect.addEventListener("change", function() {
         const selectedClass = this.value;
         adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-        if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
+        if (selectedClass && classBooks[selectedClass]) {
             classBooks[selectedClass].forEach(function(bookName) {
                 const option = document.createElement("option");
                 option.value = bookName;
@@ -258,26 +189,14 @@ if (adminClassSelect && adminSubjectSelect) {
     });
 }
 
-// Admin Panel Search Edit Dropdown (admin.html)
+// Admin Panel Search Edit Dropdown
 const searchEditClass = document.getElementById("searchEditClass");
 const searchEditSubject = document.getElementById("searchEditSubject");
-
 if (searchEditClass && searchEditSubject) {
-    if (searchEditClass.value && classBooks[searchEditClass.value]) {
-        searchEditSubject.innerHTML = '<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>';
-        classBooks[searchEditClass.value].forEach(function(bookName) {
-            const option = document.createElement("option");
-            option.value = bookName;
-            option.textContent = bookName;
-            searchEditSubject.appendChild(option);
-        });
-    }
-
     searchEditClass.addEventListener("change", function() {
         const selectedClass = this.value;
         searchEditSubject.innerHTML = '<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>';
-        
-        if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
+        if (selectedClass && classBooks[selectedClass]) {
             classBooks[selectedClass].forEach(function(bookName) {
                 const option = document.createElement("option");
                 option.value = bookName;
@@ -288,24 +207,4 @@ if (searchEditClass && searchEditSubject) {
             searchEditSubject.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
         }
     });
-}
-
-
-// Admin Panel Dropdown ଏବଂ Edit ଠିକ୍ କରିବା ପାଇଁ
-function updateAdminSubjects() {
-    const adminClassSelect = document.getElementById("className");
-    const adminSubjectSelect = document.getElementById("subject");
-    const selectedClass = adminClassSelect.value;
-    
-    adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-    if (selectedClass && typeof classBooks !== 'undefined' && classBooks[selectedClass]) {
-        classBooks[selectedClass].forEach(function(bookName) {
-            const option = document.createElement("option");
-            option.value = bookName;
-            option.textContent = bookName;
-            adminSubjectSelect.appendChild(option);
-        });
-    } else {
-        adminSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
-    }
 }
