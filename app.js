@@ -74,7 +74,7 @@ async function fetchNoteForEdit() {
             document.getElementById('bodha').value = foundNote.bodha || '';
             document.getElementById('abhyasa').value = foundNote.abhyasa || '';
             document.getElementById('prayoga').value = foundNote.prayoga || '';
-            document.getElementById('prasar').value = foundNote.prasara || foundNote.prasar || '';
+            document.getElementById('prasara').value = foundNote.prasara || '';
             
             document.getElementById('modeText').innerText = "ନୋଟ୍ କୁ ଏଡିଟ୍ କରନ୍ତୁ";
             document.getElementById('btnSubmit').style.display = 'none';
@@ -132,7 +132,56 @@ async function deleteNote() {
     }
 }
 
-// 5. ଫର୍ମର ତଥ୍ୟ ସଂଗ୍ରହ କରିବା
+// 5. ଶିକ୍ଷକଙ୍କ ପାଇଁ Index ପେଜ୍‌ରୁ ଖୋଜିବା
+async function searchNote() {
+    let searchDate = document.getElementById('searchDate').value;
+    let searchClass = document.getElementById('searchClass').value;
+    let searchSubject = document.getElementById('searchSubject').value.trim().toLowerCase();
+    let resultArea = document.getElementById('resultArea');
+    if (!searchDate || !searchClass || !searchSubject) {
+        alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ପୂରଣ କରନ୍ତୁ!");
+        return;
+    }
+    resultArea.innerHTML = "<p style='text-align:center;'>ଖୋଜା ଚାଲିଛି...</p>";
+    try {
+        let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${searchDate}"`);
+        let data = await response.json();
+        if(data) {
+            let foundNote = null;
+            for (let key in data) {
+                let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
+                if (data[key].className === searchClass && noteSub.includes(searchSubject)) {
+                    foundNote = data[key];
+                    break;
+                }
+            }
+            if (foundNote) {
+                resultArea.innerHTML = `
+                    <div class="note-card">
+                        <h3>${foundNote.className} - ${foundNote.subject}</h3>
+                        <div class="note-item"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>କାଳାଂଶ:</strong> ${foundNote.period}</div>
+                        <div class="note-item"><strong>ପାଠ୍ୟ ପ୍ରସଙ୍ଗ (Topic):</strong> ${foundNote.topic}</div>
+                        <div class="note-item"><strong>ଶିକ୍ଷଣ ଫଳାଫଳ:</strong> ${foundNote.outcomes}</div>
+                        <div class="note-item"><strong>ଶିକ୍ଷଣ ସାମଗ୍ରୀ (TLM):</strong> ${foundNote.tlm}</div>
+                        <h4 style="color:#0056b3; border-bottom: 1px dashed #ccc; margin-top:10px;">ପଞ୍ଚପଦୀ :</h4>
+                        <div class="note-item"><strong>୧. ଅଧିତି:</strong> ${foundNote.adhiti}</div>
+                        <div class="note-item"><strong>୨. ବୋଧ:</strong> ${foundNote.bodha}</div>
+                        <div class="note-item"><strong>୩. ଅଭ୍ୟାସ:</strong> ${foundNote.abhyasa}</div>
+                        <div class="note-item"><strong>୪. ପ୍ରୟୋଗ:</strong> ${foundNote.prayoga}</div>
+                        <div class="note-item"><strong>୫. ପ୍ରସାର:</strong> ${foundNote.prasara}</div>
+                    </div>
+                `;
+            } else {
+                resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:15px;">କ୍ଷମା କରିବେ, ଏହି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପାଇଁ କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ!</p>`;
+            }
+        } else {
+            resultArea.innerHTML = `<p style="color:red; text-align:center; margin-top:15px;">ଏହି ତାରିଖରେ କୌଣସି ନୋଟ୍ ନାହିଁ।</p>`;
+        }
+    } catch (error) { 
+        resultArea.innerHTML = `<p style="color:red; text-align:center;">ଏରର୍: ${error}</p>`; 
+    }
+}
+
 function getFormData() {
     return {
         date: document.getElementById('date').value,
@@ -157,17 +206,36 @@ window.onload = function() {
     if(document.getElementById('searchEditDate')) document.getElementById('searchEditDate').value = today;
 }
 
-// ବହିର ନାମ ତାଲିକା (Class-wise Book List)
 const classBooks = {
     "Class 1": ["ଗଣିତ ଖେଳ", "ଝୁଲଣା-୧"],
     "Class 2": ["ମଜା ମଜାରେ ଗଣିତ", "ଝୁଲଣା-୨"],
     "Class 3": ["ଗଣିତ ମେଳା", "ଭାଷା ମହକ-୧", "Pallavi", "ବିଚିତ୍ର ଆମ ପୃଥିବୀ"],
     "Class 4": ["ଗଣିତ ମେଳା", "ଭାଷା ମହକ-୨", "Pallavi", "ଆମ ବିଚିତ୍ର ବିଶ୍ୱ"],
     "Class 5": ["ଗଣିତ ମେଳା", "ଭାଷା ମହକ-୩", "Pallavi", "ଆମ ବିଚିତ୍ର ବିଶ୍ୱ"],
-    "Class 6": ["ସାହିତ୍ୟ ସୁଧା", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"],
-    "Class 7": ["ସାହିତ୍ୟ ସୁମନ", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"],
-    "Class 8": ["ସାହିତ୍ୟ ସୁରଭି", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭାରତ ଓ ଆମ ପୃଥିବୀ"]
+    "Class 6": ["ସାହିତ୍ୟ ସୁଧା", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭରତ ଓ ଆମ ପୃଥିବୀ"],
+    "Class 7": ["ସାହିତ୍ୟ ସୁମନ", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭରତ ଓ ଆମ ପୃଥିବୀ"],
+    "Class 8": ["ସାହିତ୍ୟ ସୁରଭି", "ଗଣିତ ପ୍ରକାଶ", "Jasmine", "ଜିଜ୍ଞାସା", "ସାମାଜିକ ବିଜ୍ଞାନ - ଭରତ ଓ ଆମ ପୃଥିବୀ"]
 };
+
+// Index Page Dropdown
+const classSelect = document.getElementById("searchClass");
+const subjectSelect = document.getElementById("searchSubject");
+if (classSelect && subjectSelect) {
+    classSelect.addEventListener("change", function() {
+        const selectedClass = this.value;
+        subjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
+        if (selectedClass && classBooks[selectedClass]) {
+            classBooks[selectedClass].forEach(function(bookName) {
+                const option = document.createElement("option");
+                option.value = bookName;
+                option.textContent = bookName;
+                subjectSelect.appendChild(option);
+            });
+        } else {
+            subjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
+        }
+    });
+}
 
 // Admin Panel Dropdown
 const adminClassSelect = document.getElementById("className");
