@@ -485,46 +485,47 @@
             });
         });
  function loadApprovedMessages() {
- fetch(scriptURL).then(res => res.json()).then(data => {
- const container = document.getElementById('approvedMessagesList'); 
- container.innerHTML = "";
- 
- if(data.length === 0) { 
- container.innerHTML = `<div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #1a8c3a; font-size: 13px; grid-column: 1 / -1;">କୌଣସି ମତାମତ ନାହିଁ।</div>`; 
- return; 
- }
- 
- data.reverse().forEach(item => {
- const name = item.name || "Visitor";
- const initial = name.charAt(0).toUpperCase();
- const message = item.message || "";
- const dateStr = item.date ? new Date(item.date).toLocaleDateString() : "ବର୍ତ୍ତମାନ";
+    fetch(scriptURL).then(res => res.json()).then(data => {
+        const container = document.getElementById('approvedMessagesList'); 
+        container.innerHTML = "";
+        
+        if(data.length === 0) { 
+            container.innerHTML = `<div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #1a8c3a; font-size: 13px; grid-column: 1 / -1;">କୌଣସି ମତାମତ ନାହିଁ।</div>`; 
+            return; 
+        }
+        
+        data.reverse().forEach(item => {
+            const name = item.name || "Visitor";
+            const initial = name.charAt(0).toUpperCase();
+            const message = item.message || "";
+            const dateStr = item.date ? new Date(item.date).toLocaleDateString() : "ବର୍ତ୍ତମାନ";
 
- const card = document.createElement('div');
- card.className = 'testimonial-card';
- card.innerHTML = `
- <div>
- <div class="testimonial-header">
- <div class="avatar-circle">${initial}</div>
- <div class="testimonial-info">
- <h5>${name}</h5>
- <span class="testimonial-date"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
- </div>
- </div>
- <div class="testimonial-body">${message}</div>
- </div>
- <div class="testimonial-stars">
- <i class="fa-solid fa-star"></i>
- <i class="fa-solid fa-star"></i>
- <i class="fa-solid fa-star"></i>
- <i class="fa-solid fa-star"></i>
- <i class="fa-solid fa-star"></i>
- </div>
- `;
- container.appendChild(card);
- });
- }).catch(err => console.error('Error loading messages', err));
- }
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+            card.innerHTML = `
+                <div>
+                    <div class="testimonial-header">
+                        <div class="avatar-circle">${initial}</div>
+                        <div class="testimonial-info">
+                            <h5>${name}</h5>
+                            <span class="testimonial-date"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-body">${message}</div>
+                </div>
+                <div class="testimonial-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }).catch(err => console.error('Error loading messages', err));
+}
+
         
     </script>
 
