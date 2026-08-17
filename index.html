@@ -467,66 +467,245 @@
             }
         }
 
-        // Messages Logic
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbw05OCkBgtIdEgsuC6G6v1otGliEjZPzCE3OTE7_ggd4qy4-VqyDoT4_Q2nALmk8FIy-Q/exec';
-        const form = document.getElementById('feedbackForm');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.innerText = "ପଠାଯାଉଛି..."; btn.disabled = true;
-            const data = { name: document.getElementById('visitorName').value, message: document.getElementById('visitorMessage').value };
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
-            .then(() => {
-                alert('ଆପଣଙ୍କ ମେସେଜ୍ ସଫଳତାପୂର୍ବକ ପଠାଗଲା! ଆପ୍ରୁଭ୍ ହେବା ପରେ ଏହା ୱେବସାଇଟ୍ରେ ଦେଖାଯିବ।');
-                form.reset(); btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)"; btn.disabled = false;
-            }).catch(() => {
-                alert('କିଛି ଭୁଲ୍ ହେଲା, ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ।');
-                btn.innerText = "ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)"; btn.disabled = false;
-            });
-        });
- function loadApprovedMessages() {
-    fetch(scriptURL).then(res => res.json()).then(data => {
-        const container = document.getElementById('approvedMessagesList'); 
-        container.innerHTML = "";
-        
-        if(data.length === 0) { 
-            container.innerHTML = `<div style="background: #f9fafb; padding: 12px; border-radius: 6px; border-left: 4px solid #1a8c3a; font-size: 13px; grid-column: 1 / -1;">କୌଣସି ମତାମତ ନାହିଁ।</div>`; 
-            return; 
+        // =============================
+// FEEDBACK / MESSAGE SYSTEM
+// =============================
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw05OCkBgtIdEgsuC6G6v1otGliEjZPzCE3OTE7_ggd4qy4-VqyDoT4_Q2nALmk8FIy-Q/exec';
+
+const form = document.getElementById('feedbackForm');
+const submitBtn = document.getElementById('submitBtn');
+const approvedMessagesList = document.getElementById('approvedMessagesList');
+
+
+// =============================
+// SEND MESSAGE
+// =============================
+
+if (form) {
+
+    form.addEventListener('submit', function(e) {
+
+        e.preventDefault();
+
+        const name = document.getElementById('visitorName').value.trim();
+        const message = document.getElementById('visitorMessage').value.trim();
+
+        if (!name || !message) {
+            alert('ଦୟାକରି ଆପଣଙ୍କ ନାମ ଏବଂ ମତାମତ ଲେଖନ୍ତୁ।');
+            return;
         }
-        
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'ପଠାଯାଉଛି...';
+
+        const data = {
+            name: name,
+            message: message
+        };
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+
+        .then(() => {
+
+            alert(
+                'ଆପଣଙ୍କ ମେସେଜ୍ ସଫଳତାର ସହିତ ପଠାଗଲା!\n\n' +
+                'Admin approval ପରେ ଏହା website ରେ ଦେଖାଯିବ।'
+            );
+
+            form.reset();
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)';
+
+            loadApprovedMessages();
+
+        })
+
+        .catch(error => {
+
+            console.error('Feedback Error:', error);
+
+            alert(
+                'ମେସେଜ୍ ପଠାଇବାରେ ସମସ୍ୟା ହେଲା।\n' +
+                'ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।'
+            );
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'ମେସେଜ୍ ପଠାନ୍ତୁ (Send Message)';
+
+        });
+
+    });
+
+}
+
+
+// =============================
+// LOAD APPROVED MESSAGES
+// =============================
+
+function loadApprovedMessages() {
+
+    if (!approvedMessagesList) return;
+
+    approvedMessagesList.innerHTML = `
+        <div style="
+            background:#f9fafb;
+            padding:15px;
+            border-radius:8px;
+            border-left:4px solid #1a8c3a;
+            font-size:13px;
+            grid-column:1/-1;
+            text-align:center;
+        ">
+            ମତାମତ ଲୋଡ୍ ହେଉଛି...
+        </div>
+    `;
+
+    fetch(scriptURL)
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error('Server Error: ' + response.status);
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        approvedMessagesList.innerHTML = '';
+
+        if (!Array.isArray(data) || data.length === 0) {
+
+            approvedMessagesList.innerHTML = `
+                <div style="
+                    background:#f9fafb;
+                    padding:15px;
+                    border-radius:8px;
+                    border-left:4px solid #1a8c3a;
+                    font-size:13px;
+                    grid-column:1/-1;
+                    text-align:center;
+                ">
+                    କୌଣସି ମତାମତ ନାହିଁ।
+                </div>
+            `;
+
+            return;
+        }
+
+
         data.reverse().forEach(item => {
-            const name = item.name || "Visitor";
-            const initial = name.charAt(0).toUpperCase();
-            const message = item.message || "";
-            const dateStr = item.date ? new Date(item.date).toLocaleDateString() : "ବର୍ତ୍ତମାନ";
+
+            const name = item.name || 'Visitor';
+            const message = item.message || '';
 
             const card = document.createElement('div');
             card.className = 'testimonial-card';
-            card.innerHTML = `
-                <div>
-                    <div class="testimonial-header">
-                        <div class="avatar-circle">${initial}</div>
-                        <div class="testimonial-info">
-                            <h5>${name}</h5>
-                            <span class="testimonial-date"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-body">${message}</div>
-                </div>
-                <div class="testimonial-stars">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
+
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'testimonial-header';
+
+
+            // Avatar
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar-circle';
+            avatar.textContent = name.charAt(0).toUpperCase();
+
+
+            // Name & Date
+            const info = document.createElement('div');
+            info.className = 'testimonial-info';
+
+            const nameElement = document.createElement('h5');
+            nameElement.textContent = name;
+
+            const dateElement = document.createElement('span');
+            dateElement.className = 'testimonial-date';
+
+            dateElement.innerHTML =
+                '<i class="fa-regular fa-clock"></i> ' +
+                (
+                    item.date
+                    ? new Date(item.date).toLocaleDateString('en-IN')
+                    : 'ବର୍ତ୍ତମାନ'
+                );
+
+            info.appendChild(nameElement);
+            info.appendChild(dateElement);
+
+            header.appendChild(avatar);
+            header.appendChild(info);
+
+
+            // Message
+            const body = document.createElement('div');
+            body.className = 'testimonial-body';
+            body.textContent = message;
+
+
+            // Stars
+            const stars = document.createElement('div');
+            stars.className = 'testimonial-stars';
+
+            stars.innerHTML = `
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
             `;
-            container.appendChild(card);
+
+
+            // Add everything
+            card.appendChild(header);
+            card.appendChild(body);
+            card.appendChild(stars);
+
+            approvedMessagesList.appendChild(card);
+
         });
-    }).catch(err => console.error('Error loading messages', err));
+
+    })
+
+    .catch(error => {
+
+        console.error('Load Messages Error:', error);
+
+        approvedMessagesList.innerHTML = `
+            <div style="
+                background:#fff7ed;
+                padding:15px;
+                border-radius:8px;
+                border-left:4px solid #f97316;
+                font-size:13px;
+                grid-column:1/-1;
+                text-align:center;
+                color:#9a3412;
+            ">
+                ମତାମତ ଲୋଡ୍ କରିବାରେ ସମସ୍ୟା ହେଲା।
+            </div>
+        `;
+
+    });
+
 }
 
-        
+
+// =============================
+// LOAD MESSAGES WHEN PAGE OPENS
+// =============================
+
+loadApprovedMessages();
     </script>
 
     <!-- FOOTER -->
