@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 2 Subjects - Study Materials</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        h2 span {
+            color: #0044cc;
+        }
+        .grid-subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .subject-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .subject-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: #0044cc;
+        }
+        .sub-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+        .open-btn {
+            background: #eff6ff;
+            color: #0044cc;
+            padding: 6px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #0044cc;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="classes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Classes</a>
+        
+        <h2>Class 2 <span>Subjects</span></h2>
+        
+        <div class="grid-subjects">
+            <!-- Jhulana - 2 -->
+            <a href="class2-jhulana2-chapters.html" class="subject-card">
+                <div class="sub-name">📖 ଝୁଲଣା -୨</div>[span_4](start_span)[span_4](end_span)
+                <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Maja Majakhar Ganita -->
+            <a href="class2-ganita-chapters.html" class="subject-card">
+                <div class="sub-name">🔢 ମଜା ମଜାରେ ଗଣିତ</div>[span_5](start_span)[span_5](end_span)
+                <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
