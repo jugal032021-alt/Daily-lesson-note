@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 4 EVS (ଆମ ବିଚିତ୍ର ବିଶ୍ୱ) - Chapters</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header Style */
+        header {
+            background-color: #0b192c;
+            color: #ffffff;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            background: #0044cc;
+            color: #ffffff;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .logo-text h1 {
+            font-size: 16px;
+            margin: 0;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .logo-text p {
+            font-size: 10px;
+            margin: 0;
+            color: #94a3b8;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #0044cc;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            text-align: center;
+            color: #1e293b;
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+        h2 span {
+            color: #0044cc;
+        }
+        .chapter-card {
+            background: #ffffff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #f1f5f9;
+            transition: transform 0.2s;
+        }
+        .chapter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .chapter-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .doc-icon {
+            color: #ef4444;
+            font-size: 24px;
+            background: #fef2f2;
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+        .chapter-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-study, .btn-qa {
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+        .btn-study {
+            background: #f0f9ff;
+            color: #0284c7;
+            border: 1px solid #bae6fd;
+        }
+        .btn-study:hover {
+            background: #e0f2fe;
+        }
+        .btn-qa {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        .btn-qa:hover {
+            background: #dcfce7;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #0b192c;
+            color: #94a3b8;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        footer span {
+            color: #ffffff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="../index.html" class="logo-area" style="text-decoration:none;">
+            <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="logo-text">
+                <h1>OdishaPathasala.in</h1>
+                <p>Simple Digital Learning Resource</p>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="../book-library.html"><i class="fa-solid fa-book"></i> Book Library</a>
+            <a href="../video-gallery.html"><i class="fa-solid fa-video"></i> Video Gallery</a>
+            <a href="../question-bank.html"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="../class4-subjects.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Subjects</a>
+        
+        <h2>Class 4 <span>EVS (ଆମ ବିଚିତ୍ର ବିଶ୍ୱ)</span></h2>
+
+        <div class="chapter-list">
+            <!-- Chapter 1 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-1 (ଏକତ୍ର ବାସ କରିବା)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-2 (ଆମ ପଡ଼ୋଶୀମାନଙ୍କୁ ଜାଣିବା)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-3 (ପ୍ରକୃତି ଯାତ୍ରା)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-4 (ପ୍ରକୃତି ସହିତ ବଢ଼ିବା)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-5 (ଖାଦ୍ୟ ଓ ସ୍ୱାସ୍ଥ୍ୟ)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-6 (ଆନନ୍ଦମୟ ସୁସ୍ଥ ଜୀବନଯାପନ)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 7 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-7 (ଜିନିଷଗୁଡ଼ିକ କିପରି କାର୍ଯ୍ୟ କରେ)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 8 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-8 (ଜିନିଷଗୁଡ଼ିକର ଗଠନ ପ୍ରଣାଳୀ)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 9 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-9 (ଭିନ୍ନ ଭୂମି, ଭିନ୍ନ ଜୀବନ)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+
+            <!-- Chapter 10 -->
+            <div class="chapter-card">
+                <div class="chapter-info">
+                    <i class="fa-solid fa-file-pdf doc-icon"></i>
+                    <div class="chapter-title">Chapter-10 (ଆମ ଆକାଶ)</div>
+                </div>
+                <div class="action-btns">
+                    <a href="#" class="btn-study"><i class="fa-solid fa-file-lines"></i> Study Material</a>
+                    <a href="#" class="btn-qa"><i class="fa-solid fa-book-open"></i> Book Q & A</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2026 <span>Odisha Pathasala</span>. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
+
