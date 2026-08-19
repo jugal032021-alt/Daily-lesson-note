@@ -9,6 +9,8 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1634717203821923" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0056b3">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
@@ -281,7 +283,12 @@
             </li>
         </ul>
     </header>
-
+<div style="text-align: center; margin: 15px 0;">
+  <button id="pwaInstallBtn" style="display: none; background: #28a745; color: white; border: none; padding: 10px 20px; font-size: 15px; font-weight: bold; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
+    📲 Install App (ଫୋନ୍‌ରେ ଆପ୍ ଇନ୍ସଟଲ୍ କରନ୍ତୁ)
+  </button>
+</div>
+    
     <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="hero-container">
@@ -758,5 +765,35 @@ loadApprovedMessages();
     </footer>
 
     <script src="app.js"></script>
+    <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+
+  let deferredPrompt;
+  const installBtn = document.getElementById('pwaInstallBtn');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'inline-block';
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installBtn.style.display = 'none';
+      }
+      deferredPrompt = null;
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+  });
+    </script>
+    
 </body>
 </html>
