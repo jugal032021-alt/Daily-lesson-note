@@ -10,6 +10,19 @@
 
   gtag('config', 'G-TNTBPBR6YF');
 </script>
+        <!-- Admin Password Security Script -->
+    <script>
+        if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+            let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ:");
+            if (pass === "12345") { 
+                sessionStorage.setItem("adminLoggedIn", "true");
+            } else {
+                alert("ଭୁଲ୍ ପାସୱାର୍ଡ!");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Upload/Edit Lesson Note</title>
