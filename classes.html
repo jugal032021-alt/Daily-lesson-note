@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="or">
 <head>
 <meta charset="UTF-8">
@@ -18,31 +18,60 @@
         min-height: 100vh;
     }
 
-    /* Header Style */
+    /* Header Style matching main page */
     header {
-        background-color: #ffffff;
-        border-bottom: 1px solid #e2e8f0;
-        padding: 15px 20px;
+        background-color: #0b192c;
+        color: #ffffff;
+        padding: 15px 30px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .logo {
-        font-size: 20px;
-        font-weight: bold;
-        color: #0044cc;
+    .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
         text-decoration: none;
+    }
+    .logo-icon {
+        background: #0044cc;
+        color: #ffffff;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+    .logo-text h1 {
+        font-size: 18px;
+        margin: 0;
+        color: #ffffff;
+        font-weight: bold;
+    }
+    .logo-text p {
+        font-size: 11px;
+        margin: 0;
+        color: #94a3b8;
+    }
+    .nav-links {
+        display: flex;
+        gap: 20px;
     }
     .nav-links a {
         text-decoration: none;
-        color: #475569;
+        color: #cbd5e1;
         font-size: 14px;
         font-weight: 600;
-        margin-left: 15px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.2s;
     }
     .nav-links a:hover {
-        color: #0044cc;
+        color: #ffffff;
     }
 
     .container {
@@ -106,7 +135,7 @@
 
     /* Footer Style */
     footer {
-        background-color: #1e293b;
+        background-color: #0b192c;
         color: #94a3b8;
         text-align: center;
         padding: 20px;
@@ -123,10 +152,18 @@
 
 <!-- Header Section -->
 <header>
-    <a href="index.html" class="logo"><i class="fa-solid fa-graduation-cap"></i> Odisha Pathasala</a>
+    <a href="index.html" class="logo-area">
+        <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="logo-text">
+            <h1>Odisha Pathasala</h1>
+            <p>Simple Digital Learning Resource</p>
+        </div>
+    </a>
     <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="classes.html">Classes</a>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="book-library.html"><i class="fa-solid fa-book"></i> Book Library</a>
+        <a href="video-gallery.html"><i class="fa-solid fa-video"></i> Video Gallery</a>
+        <a href="question-bank.html"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a>
     </div>
 </header>
 
@@ -136,24 +173,6 @@
     <h2>Select Your <span>Class</span></h2>
     
     <div class="grid-classes">
-        <!-- Class 1 -->
-        <a href="class1-subjects.html" class="class-card">
-            <div class="class-title">Class 1</div>
-            <div class="class-sub">ପ୍ରଥମ ଶ୍ରେଣୀ</div>
-        </a>
-
-        <!-- Class 2 -->
-        <a href="class2-subjects.html" class="class-card">
-            <div class="class-title">Class 2</div>
-            <div class="class-sub">ଦ୍ଵିତୀୟ ଶ୍ରେଣୀ</div>
-        </a>
-
-        <!-- Class 3 -->
-        <a href="class3-subjects.html" class="class-card">
-            <div class="class-title">Class 3</div>
-            <div class="class-sub">ତୃତୀୟ ଶ୍ରେଣୀ</div>
-        </a>
-
         <!-- Class 4 -->
         <a href="class4-subjects.html" class="class-card">
             <div class="class-title">Class 4</div>
