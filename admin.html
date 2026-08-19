@@ -199,21 +199,6 @@ function autoFillPanchpadi() {
     alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା!");
 }
 </script>
-    <!-- Admin Security Check Script -->
-    <script>
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // କେବଳ ଆପଣଙ୍କ ଇମେଲ୍ ଥିଲେ ହିଁ ଏହି ପେଜ୍ ଖୋଲିବ
-                if (user.email.toLowerCase() !== "jugal032021@gmail.com") {
-                    alert("Access Denied! You are not authorized as Admin.");
-                    window.location.href = "index.html"; 
-                }
-            } else {
-                // ଯଦି କେହି ଲଗ୍‌ଇନ୍ କରିନାହାନ୍ତି, ତେବେ ଲଗ୍‌ଇନ୍ ପେଜ୍‌କୁ ପଠାଇଦେବ
-                window.location.href = "login.html";
-            }
-        });
-    </script>
 
     <script src="app.js"></script>
 </body>
