@@ -3,109 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 6 Subjects - Study Materials</title>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Class 6 Subjects - Odishapathasala.in</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f8fafc;
             margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-        h2 {
-            text-align: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f7ff, #ffffff);
             color: #1e293b;
-            margin-bottom: 30px;
-            font-size: 28px;
         }
-        h2 span {
-            color: #0044cc;
+
+        /* HEADER */
+        .top-header {
+            background: linear-gradient(135deg, #003b8f, #0066cc);
+            color: white;
+            padding: 18px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
+
+        .top-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .top-header h1 span {
+            color: #ffd43b;
+        }
+
+        .top-header p {
+            margin: 5px 0 0;
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px 15px 40px;
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: 700;
+            background: white;
+            padding: 9px 14px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            border: 1px solid #dbeafe;
+        }
+
+        .back-btn:hover {
+            background: #eff6ff;
+        }
+
+        /* TITLE */
+        .page-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            font-size: 30px;
+            color: #0f172a;
+        }
+
+        .page-title h2 span {
+            color: #0066cc;
+        }
+
+        .page-title p {
+            margin-top: 7px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* SUBJECT GRID */
         .grid-subjects {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
         }
+
+        /* SUBJECT CARD */
         .subject-card {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
+            position: relative;
+            background: white;
+            min-height: 100px;
+            padding: 20px;
+            border-radius: 16px;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
+            gap: 15px;
+
+            transition: all 0.25s ease;
+            overflow: hidden;
         }
+
+        .subject-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(#0066cc, #00a651);
+        }
+
         .subject-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border-color: #0044cc;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,80,160,0.15);
+            border-color: #60a5fa;
         }
-        .sub-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #1e293b;
-        }
-        .open-btn {
+
+        /* ICON */
+        .subject-icon {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
             background: #eff6ff;
-            color: #0044cc;
-            padding: 6px 15px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
         }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #0044cc;
-            font-weight: bold;
-            font-size: 14px;
+
+        /* DIFFERENT ICON COLORS */
+        .sahitya .subject-icon {
+            background: #fff7ed;
+        }
+
+        .ganita .subject-icon {
+            background: #eff6ff;
+        }
+
+        .english .subject-icon {
+            background: #f5f3ff;
+        }
+
+        .science .subject-icon {
+            background: #ecfdf5;
+        }
+
+        .social .subject-icon {
+            background: #f0fdf4;
+        }
+
+        /* TEXT */
+        .subject-info {
+            flex: 1;
+        }
+
+        .sub-name {
+            font-size: 17px;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+
+        .sub-desc {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* OPEN BUTTON */
+        .open-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            background: #eff6ff;
+            color: #0056b3;
+
+            padding: 8px 12px;
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .subject-card:hover .open-btn {
+            background: #0056b3;
+            color: white;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 20px 10px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .footer strong {
+            color: #0056b3;
+        }
+
+        /* MOBILE */
+        @media (max-width: 650px) {
+
+            .top-header h1 {
+                font-size: 21px;
+            }
+
+            .container {
+                padding: 15px 12px 30px;
+            }
+
+            .page-title h2 {
+                font-size: 25px;
+            }
+
+            .grid-subjects {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .subject-card {
+                min-height: 88px;
+                padding: 15px;
+                border-radius: 14px;
+            }
+
+            .subject-icon {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+                font-size: 24px;
+            }
+
+            .sub-name {
+                font-size: 16px;
+            }
+
+            .sub-desc {
+                font-size: 11px;
+            }
+
+            .open-btn {
+                padding: 7px 9px;
+                font-size: 11px;
+            }
+        }
+
+        /* VERY SMALL MOBILE */
+        @media (max-width: 380px) {
+
+            .subject-card {
+                gap: 10px;
+            }
+
+            .subject-icon {
+                width: 45px;
+                height: 45px;
+                min-width: 45px;
+                font-size: 21px;
+            }
+
+            .sub-name {
+                font-size: 14px;
+            }
+
+            .open-btn {
+                padding: 6px 7px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <a href="classes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Classes</a>
-        
+<!-- HEADER -->
+<div class="top-header">
+    <h1>Odishapathasala<span>.in</span></h1>
+    <p>ଶିକ୍ଷା • ଅଧ୍ୟୟନ • ଉନ୍ନତି</p>
+</div>
+
+
+<div class="container">
+
+    <!-- BACK -->
+    <a href="classes.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Classes
+    </a>
+
+
+    <!-- TITLE -->
+    <div class="page-title">
         <h2>Class 6 <span>Subjects</span></h2>
-        
-        <div class="grid-subjects">
-            <!-- Sahitya Sudha -->
-            <a href="class6-sahitya-chapters.html" class="subject-card">
-                <div class="sub-name">📚 ସାହିତ୍ୟ ସୁଧା</div>
-                <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
-            </a>
+        <p>ନିଜର ପସନ୍ଦର ବିଷୟ ବାଛନ୍ତୁ</p>
+    </div>
 
-            <!-- Ganita Prakasha -->
-            <a href="class6-ganita-chapters.html" class="subject-card">
-                <div class="sub-name">🔢 ଗଣିତ ପ୍ରକାଶ</div>
-                <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
-            </a>
 
-            <!-- Jasmine (English) -->
-            <a href="class6-jasmine-chapters.html" class="subject-card">
-                <div class="sub-name">📖 Jasmine</div>
-                <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
-            </a>
+    <!-- SUBJECTS -->
+    <div class="grid-subjects">
 
-            <!-- Jigyasa (Science) -->
-            <a href="class6-jigyasa-chapters.html" class="subject-card">
-                <div class="sub-name">🔬 ଜିଜ୍ଞାସା</div>
-                <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
-            </a>
+        <!-- SAHITYA SUDHA -->
+        <a href="class6-sahitya-chapters.html"
+           class="subject-card sahitya">
 
-            <!-- Social Science -->
-            <a href="class6-social-chapters.html" class="subject-card">
+            <div class="subject-icon">
+                📚
+            </div>
+
+            <div class="subject-info">
+                <div class="sub-name">
+                    ସାହିତ୍ୟ ସୁଧା
+                </div>
+                <div class="sub-desc">
+                    Odia Literature
+                </div>
+            </div>
+
+            <div class="open-btn">
+                Open
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+
+        </a>
+
+
+        <!-- GANITA PRAKASHA -->
+        <a href="class6-ganita-chapters.html"
+           class="subject-card ganita">
+
+            <div class="subject-icon">
+                🔢
+            </div>
+
+            <div class="subject-info">
+                <div class="sub-name">
+                    ଗଣିତ ପ୍ରକାଶ
+                </div>
+                <div class="sub-desc">
+                    Mathematics
+                </div>
+            </div>
+
+            <div class="open-btn">
+                Open
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+
+        </a>
+
+
+        <!-- JASMINE -->
+        <a href="class6-jasmine-chapters.html"
+           class="subject-card english">
+
+            <div class="subject-icon">
+                📖
+            </div>
+
+            <div class="subject-info">
+                <div class="sub-name">
+                    Jasmine
+                </div>
+                <div class="sub-desc">
+                    English
+                </div>
+            </div>
+
+            <div class="open-btn">
+                Open
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+
+        </a>
+
+
+        <!-- JIGYASA -->
+        <a href="class6-jigyasa-chapters.html"
+           class="subject-card science">
+
+            <div class="subject-icon">
+                🔬
+            </div>
+
+            <div class="subject-info">
+                <div class="sub-name">
+                    ଜିଜ୍ଞାସା
+                </div>
+                <div class="sub-desc">
+                    Science
+                </div>
+            </div>
+
+            <div class="open-btn">
+                Open
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+
+        </a>
+
+
+        <!-- SOCIAL SCIENCE -->
+        <a href="class6-social-chapters.html"
+           class="subject-card social">
+
+            <div class="subject-icon">
+                🌍
+            </div>
+
+            <div class="subject-info">
+                <div class="sub-name">
+                    ସାମାଜିକ ବିଜ୍ଞାନ ଅଧ୍ୟୟନ
+                </div>
+                <div class="sub-desc">
+                    Social Science
+                </div>
+            </div>
+
+            <div class="open-btn">
+                Open
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 <strong>Odishapathasala.in</strong>
+    • All Rights Reserved
+</div>
+
+</body>
+</html>            <a href="class6-social-chapters.html" class="subject-card">
                 <div class="sub-name">🌍 ସାମାଜିକ ବିଜ୍ଞାନ ଅଧ୍ୟୟନ</div>
                 <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
             </a>
