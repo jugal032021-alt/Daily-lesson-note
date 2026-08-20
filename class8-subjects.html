@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Class 8 Subjects - Odishapathasala.in</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f7ff, #ffffff);
+            color: #1e293b;
+        }
+
+        .top-header {
+            background: linear-gradient(135deg, #003b8f, #0066cc);
+            color: white;
+            padding: 14px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .top-header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .top-header h1 span {
+            color: #ffd43b;
+        }
+
+        .top-header p {
+            margin: 4px 0 0;
+            font-size: 12px;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px 15px 40px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: 700;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 7px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .back-btn:hover {
+            background: #eaf4ff;
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 5px 0 25px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            font-size: 26px;
+            color: #1e293b;
+        }
+
+        .page-title h2 span {
+            color: #0056b3;
+        }
+
+        .page-title p {
+            margin: 5px 0 0;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .grid-subjects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .subject-card {
+            position: relative;
+            background: #ffffff;
+            min-height: 72px;
+            padding: 14px 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            border: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .subject-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(#0088cc, #20a36a);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border-color: #0071c5;
+        }
+
+        .sub-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .sub-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f8ff;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .sub-text small {
+            display: block;
+            margin-top: 3px;
+            font-size: 10px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .open-btn {
+            background: #eff6ff;
+            color: #0056b3;
+            padding: 7px 11px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 10px;
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        footer strong {
+            color: #0056b3;
+        }
+
+        @media (max-width: 650px) {
+            .grid-subjects {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .page-title h2 {
+                font-size: 23px;
+            }
+
+            .subject-card {
+                min-height: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="top-header">
+        <h1>Odishapathasala.<span>in</span></h1>
+        <p>ଶିକ୍ଷା • ଅଭ୍ୟାସ • ସଫଳତା</p>
+    </div>
+
+    <div class="container">
+
+        <!-- BACK -->
+        <a href="classes.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Classes
+        </a>
+
+        <!-- TITLE -->
+        <div class="page-title">
+            <h2>Class 8 <span>Subjects</span></h2>
+            <p>ଅଷ୍ଟମ ଶ୍ରେଣୀର ବିଷୟ ଚୟନ କରନ୍ତୁ</p>
+        </div>
+
+        <!-- SUBJECTS -->
+        <div class="grid-subjects">
+
+            <!-- SAHITYA SURABHI -->
+            <a href="class8-sahitya-chapters.html"
+               class="subject-card">
+
+                <div class="sub-name">
+                    <div class="sub-icon">📚</div>
+
+                    <div class="sub-text">
+                        ସାହିତ୍ୟ ସୁରଭି
+                        <small>Odia Literature</small>
+                    </div>
+                </div>
+
+                <div class="open-btn">
+                    Open <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </a>
+
+            <!-- GANITA PRAKASH -->
+            <a href="class8-ganita-chapters.html"
+               class="subject-card">
+
+                <div class="sub-name">
+                    <div class="sub-icon">🔢</div>
+
+                    <div class="sub-text">
+                        ଗଣିତ ପ୍ରକାଶ
+                        <small>Mathematics</small>
+                    </div>
+                </div>
+
+                <div class="open-btn">
+                    Open <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </a>
+
+            <!-- JASMINE -->
+            <a href="class8-jasmine-chapters.html"
+               class="subject-card">
+
+                <div class="sub-name">
+                    <div class="sub-icon">📖</div>
+
+                    <div class="sub-text">
+                        Jasmine
+                        <small>English</small>
+                    </div>
+                </div>
+
+                <div class="open-btn">
+                    Open <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </a>
+
+            <!-- JIGYASA -->
+            <a href="class8-jigyasa-chapters.html"
+               class="subject-card">
+
+                <div class="sub-name">
+                    <div class="sub-icon">🔬</div>
+
+                    <div class="sub-text">
+                        ଜିଜ୍ଞାସା
+                        <small>Science</small>
+                    </div>
+                </div>
+
+                <div class="open-btn">
+                    Open <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </a>
+
+            <!-- SOCIAL SCIENCE -->
+            <a href="class8-social-chapters.html"
+               class="subject-card">
+
+                <div class="sub-name">
+                    <div class="sub-icon">🌍</div>
+
+                    <div class="sub-text">
+                        ସାମାଜିକ ବିଜ୍ଞାନ ଅଧ୍ୟୟନ
+                        <small>Social Science</small>
+                    </div>
+                </div>
+
+                <div class="open-btn">
+                    Open <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 <strong>Odishapathasala.in</strong> • All Rights Reserved
+    </footer>
+
+</body>
+</html>
