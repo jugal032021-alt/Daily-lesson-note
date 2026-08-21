@@ -1,64 +1,289 @@
 <!DOCTYPE html>
-<html lang="or">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - OdishaPathshala.in</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f4f6f9; display: flex; flex-direction: column; min-height: 100vh; }
-        header { background-color: #003399; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo-title { display: flex; align-items: center; gap: 15px; }
-        .logo-title i { font-size: 30px; }
-        .logo-text h1 { font-size: 22px; margin-bottom: 2px; }
-        .logo-text p { font-size: 12px; color: #ffcc00; }
-        .nav-menu { display: flex; gap: 15px; list-style: none; flex-wrap: wrap; }
-        .nav-menu li a { color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 11px; gap: 5px; }
-        
-        .main-content { flex: 1; max-width: 900px; margin: 40px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); width: 90%; }
-        .page-title { color: #003399; font-size: 24px; margin-bottom: 20px; border-bottom: 2px solid #eef2ff; padding-bottom: 10px; }
-        .content-body p { color: #444; font-size: 15px; line-height: 1.8; margin-bottom: 15px; }
-        .content-body h3 { color: #6a1b9a; margin-top: 25px; margin-bottom: 10px; font-size: 18px; }
 
-        footer { background-color: #002266; color: #ccc; padding: 30px; text-align: center; font-size: 12px; margin-top: auto; }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #003399;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-title i {
+            font-size: 30px;
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #ffcc00;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            gap: 5px;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: 90%;
+        }
+
+        .page-title {
+            color: #003399;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eef2ff;
+            padding-bottom: 10px;
+        }
+
+        .content-body p {
+            color: #444;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content-body h3 {
+            color: #6a1b9a;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .content-body ul {
+            margin: 10px 0 20px 25px;
+            color: #444;
+            line-height: 1.8;
+        }
+
+        .content-body li {
+            margin-bottom: 7px;
+        }
+
+        footer {
+            background-color: #002266;
+            color: #ccc;
+            padding: 30px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 12px 15px;
+            }
+
+            .nav-menu {
+                gap: 10px;
+                margin-top: 12px;
+            }
+
+            .main-content {
+                margin: 20px auto;
+                padding: 20px;
+                width: 94%;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .content-body p {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="logo-title">
             <i class="fa-solid fa-book-open"></i>
+
             <div class="logo-text">
                 <h1>OdishaPathshala.in</h1>
                 <p>Simple Digital Learning Resource</p>
             </div>
         </div>
+
         <ul class="nav-menu">
-            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a href="book-library.html"><i class="fa-solid fa-book"></i> Book Library</a></li>
-            <li><a href="video-gallery.html"><i class="fa-brands fa-youtube"></i> Video Gallery</a></li>
-            <li><a href="question-bank.html"><i class="fa-solid fa-circle-question"></i> Question Bank</a></li>
-            <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="book-library.html">
+                    <i class="fa-solid fa-book"></i>
+                    Book Library
+                </a>
+            </li>
+
+            <li>
+                <a href="video-gallery.html">
+                    <i class="fa-brands fa-youtube"></i>
+                    Video Gallery
+                </a>
+            </li>
+
+            <li>
+                <a href="question-bank.html">
+                    <i class="fa-solid fa-circle-question"></i>
+                    Question Bank
+                </a>
+            </li>
+
+            <li>
+                <a href="about.html">
+                    <i class="fa-solid fa-circle-info"></i>
+                    About Us
+                </a>
+            </li>
         </ul>
     </header>
 
-    <div class="main-content">
-        <h2 class="page-title"><i class="fa-solid fa-circle-info"></i> ଆମ ସମ୍ପର୍କରେ (About Us)</h2>
-        <div class="content-body">
-            <p><strong>OdishaPathshala.in</strong> କୁ ଆପଣଙ୍କୁ ସ୍ବାଗତ! ଏହା ଏକ ଡିଜିଟାଲ୍ ଶିକ୍ଷାମୂଳକ ପ୍ଲାଟଫର୍ମ, ଯାହା ଓଡ଼ିଶାର ପ୍ରାଥମିକ ଏବଂ ଉଚ୍ଚ ପ୍ରାଥମିକ ବିଦ୍ୟାଳୟର ଛାତ୍ରଛାତ୍ରୀ ଓ ଶିକ୍ଷକମାନଙ୍କ ପାଇଁ ସହଜରେ ପାଠ୍ୟପୁସ୍ତକ, ଲେସନ୍ ନୋଟ୍, ପ୍ରଶ୍ନବ୍ୟାଙ୍କ ଏବଂ ଅନଲାଇନ୍ କୁଇଜ୍ ସୁବିଧା ଦେଉଛି।</p>
-            
-            <h3>ଆମର ଲକ୍ଷ୍ୟ (Our Mission)</h3>
-            <p>ପ୍ରତ୍ୟେକ ପିଲାଙ୍କ ପାଖରେ ଡିଜିଟାଲ୍ ମାଧ୍ୟମରେ ସଠିକ୍ ଶିକ୍ଷା ସମ୍ପଦ ପହଞ୍ଚାଇବା ଏବଂ ଶିକ୍ଷାଦାନକୁ ଅଧିକ ସରଳ ଓ ଆକର୍ଷଣୀୟ କରିବା ଆମର ମୁଖ୍ୟ ଲକ୍ଷ୍ୟ ଅଟେ।</p>
 
-            <h3>ପରିଚାଳନା (Management)</h3>
-            <p>ଏହି ୱେବସାଇଟ୍ ମାଧ୍ୟମରେ ଶିକ୍ଷକ ଏବଂ ଶିକ୍ଷାର୍ଥୀମାନେ ପାଠପଢ଼ା ସମ୍ବନ୍ଧୀୟ ସମସ୍ତ ଜରୁରୀ ସୂଚନା ଏକାଠି ପାଇପାରିବେ।</p>
+    <div class="main-content">
+
+        <h2 class="page-title">
+            <i class="fa-solid fa-circle-info"></i>
+            About Us
+        </h2>
+
+        <div class="content-body">
+
+            <p>
+                <strong>OdishaPathshala.in</strong> is a digital learning platform created to provide useful and accessible educational resources for students and teachers. Our goal is to bring learning materials, educational resources, practice content, and useful information together in one convenient place.
+            </p>
+
+            <p>
+                The platform is designed to support students, teachers, and learners by providing educational books, study materials, practice questions, videos, important notices, and other learning resources.
+            </p>
+
+
+            <h3>Our Mission</h3>
+
+            <p>
+                Our mission is to make quality educational resources easier to access through digital technology. We aim to support students in their learning journey and help teachers with useful teaching-learning resources.
+            </p>
+
+            <p>
+                We believe that digital learning resources can make education more accessible, engaging, and convenient for learners.
+            </p>
+
+
+            <h3>What We Provide</h3>
+
+            <p>
+                OdishaPathshala.in provides a range of educational resources, including:
+            </p>
+
+            <ul>
+                <li>Educational Books and Learning Resources</li>
+                <li>Study Materials</li>
+                <li>Practice Questions and MCQs</li>
+                <li>Educational Videos</li>
+                <li>Important Educational Notices</li>
+                <li>Learning Resources for Students and Teachers</li>
+                <li>Lesson Notes and Teaching Resources</li>
+            </ul>
+
+
+            <h3>Our Goal</h3>
+
+            <p>
+                Our goal is to create a simple and useful digital learning platform where students and teachers can easily find educational resources that support classroom learning, self-study, and examination preparation.
+            </p>
+
+
+            <h3>For Students and Teachers</h3>
+
+            <p>
+                Students can use the platform to explore educational resources, practice questions, videos, and study materials. Teachers can use available resources to support lesson preparation, classroom activities, and teaching-learning processes.
+            </p>
+
+
+            <h3>Management</h3>
+
+            <p>
+                OdishaPathshala.in is managed and maintained with the aim of providing useful educational content and improving the learning experience of its users. We continuously work to improve the website and add useful learning resources.
+            </p>
+
+
+            <h3>Contact Us</h3>
+
+            <p>
+                If you have any questions, suggestions, feedback, or enquiries regarding OdishaPathshala.in, please visit our <strong>Contact Us</strong> page.
+            </p>
+
+
+            <p style="margin-top:30px;">
+                <strong>Last Updated: August 2026</strong>
+            </p>
+
         </div>
     </div>
 
+
     <footer>
         © 2026 OdishaPathshala.in | All Rights Reserved
-    </body>
-</html>
+    </footer>
 
+</body>
+</html>
