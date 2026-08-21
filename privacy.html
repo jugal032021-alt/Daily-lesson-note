@@ -1,64 +1,312 @@
 <!DOCTYPE html>
-<html lang="or">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - OdishaPathshala.in</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: #f4f6f9; display: flex; flex-direction: column; min-height: 100vh; }
-        header { background-color: #003399; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo-title { display: flex; align-items: center; gap: 15px; }
-        .logo-title i { font-size: 30px; }
-        .logo-text h1 { font-size: 22px; margin-bottom: 2px; }
-        .logo-text p { font-size: 12px; color: #ffcc00; }
-        .nav-menu { display: flex; gap: 15px; list-style: none; flex-wrap: wrap; }
-        .nav-menu li a { color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 11px; gap: 5px; }
-        
-        .main-content { flex: 1; max-width: 900px; margin: 40px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); width: 90%; }
-        .page-title { color: #003399; font-size: 24px; margin-bottom: 20px; border-bottom: 2px solid #eef2ff; padding-bottom: 10px; }
-        .content-body p { color: #444; font-size: 15px; line-height: 1.8; margin-bottom: 15px; }
-        .content-body h3 { color: #6a1b9a; margin-top: 25px; margin-bottom: 10px; font-size: 18px; }
 
-        footer { background-color: #002266; color: #ccc; padding: 30px; text-align: center; font-size: 12px; margin-top: auto; }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #003399;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-title i {
+            font-size: 30px;
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #ffcc00;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            gap: 5px;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: 90%;
+        }
+
+        .page-title {
+            color: #003399;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eef2ff;
+            padding-bottom: 10px;
+        }
+
+        .content-body p {
+            color: #444;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content-body h3 {
+            color: #6a1b9a;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        footer {
+            background-color: #002266;
+            color: #ccc;
+            padding: 30px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 12px 15px;
+            }
+
+            .nav-menu {
+                gap: 10px;
+                margin-top: 12px;
+            }
+
+            .main-content {
+                margin: 20px auto;
+                padding: 20px;
+                width: 94%;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .content-body p {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="logo-title">
             <i class="fa-solid fa-book-open"></i>
+
             <div class="logo-text">
                 <h1>OdishaPathshala.in</h1>
                 <p>Simple Digital Learning Resource</p>
             </div>
         </div>
+
         <ul class="nav-menu">
-            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a href="book-library.html"><i class="fa-solid fa-book"></i> Book Library</a></li>
-            <li><a href="video-gallery.html"><i class="fa-brands fa-youtube"></i> Video Gallery</a></li>
-            <li><a href="question-bank.html"><i class="fa-solid fa-circle-question"></i> Question Bank</a></li>
-            <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="book-library.html">
+                    <i class="fa-solid fa-book"></i>
+                    Book Library
+                </a>
+            </li>
+
+            <li>
+                <a href="video-gallery.html">
+                    <i class="fa-brands fa-youtube"></i>
+                    Video Gallery
+                </a>
+            </li>
+
+            <li>
+                <a href="question-bank.html">
+                    <i class="fa-solid fa-circle-question"></i>
+                    Question Bank
+                </a>
+            </li>
+
+            <li>
+                <a href="about.html">
+                    <i class="fa-solid fa-circle-info"></i>
+                    About Us
+                </a>
+            </li>
         </ul>
     </header>
 
+
     <div class="main-content">
-        <h2 class="page-title"><i class="fa-solid fa-shield-halved"></i> ଗୋପନୀୟତା ନୀତି (Privacy Policy)</h2>
+
+        <h2 class="page-title">
+            <i class="fa-solid fa-shield-halved"></i>
+            Privacy Policy
+        </h2>
+
         <div class="content-body">
-            <p>ଆପଣଙ୍କର ଗୋପନୀୟତା ଆମ ପାଇଁ अत्यंत ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। <strong>OdishaPathshala.in</strong> ୱେବସାଇଟ୍ ପରିଦର୍ଶନ କରିବା ସମୟରେ ଆମେ ଆପଣଙ୍କର ଗୋପନୀୟତାକୁ ସମ୍ମାନ ଜଣାଉଛୁ।</p>
-            
-            <h3>ତଥ୍ୟ ସଂଗ୍ରହ (Information Collection)</h3>
-            <p>ଆମେ କେବଳ ୱେବସାଇଟ୍ ଲଗଇନ୍ କିମ୍ବା ଆକାଉଣ୍ଟ୍ ସୃଷ୍ଟି ସମୟରେ ଆବଶ୍ୟକୀୟ ସାଧାରଣ ତଥ୍ୟ (ଯେପରିକି ନାମ ଏବଂ ଇମେଲ୍) ସଂଗ୍ରହ କରିଥାଉ, ଯାହା ଆପଣଙ୍କ ଆକାଉଣ୍ଟକୁ ସୁରକ୍ଷିତ ରଖିବାରେ ସାହାଯ୍ୟ କରେ।</p>
 
-            <h3>ତଥ୍ୟର ସୁରକ୍ଷା (Data Security)</h3>
-            <p>ଆପଣଙ୍କ ଦ୍ୱାରା ଦିଆଯାଇଥିବା ସମସ୍ତ ତଥ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ ସୁରକ୍ଷିତ ଭାବରେ ରହେ ଏବଂ ଆମେ କୌଣସି ତୃତୀୟ ପକ୍ଷ (Third Party) ସହିତ ଏହାକୁ ଶେୟାର କରୁନାହିଁ।</p>
+            <p>
+                At <strong>OdishaPathshala.in</strong>, we respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and protect information when you visit or use our website.
+            </p>
 
-            <h3>ପରିବର୍ତ୍ତନ (Changes to Policy)</h3>
-            <p>ଆମର ଗୋପନୀୟତା ନୀତିରେ ଯେକୌଣସି ପରିବର୍ତ୍ତନ ହେଲେ ତାହା ଏହି ପେଜ୍ ମାଧ୍ୟମରେ ଅପଡେଟ୍ କରାଯିବ।</p>
+
+            <h3>1. Information We Collect</h3>
+
+            <p>
+                We may collect information that you voluntarily provide when you create an account, log in to our website, submit a form, or contact us. This information may include your name, email address, and other information necessary to provide our services.
+            </p>
+
+            <p>
+                We may also collect limited technical information such as browser type, device information, pages visited, and general website usage information for improving our website and user experience.
+            </p>
+
+
+            <h3>2. How We Use Your Information</h3>
+
+            <p>
+                The information we collect may be used to provide and improve our educational services, maintain user accounts, respond to questions and feedback, improve website performance, and provide a better user experience.
+            </p>
+
+
+            <h3>3. Account and Login Information</h3>
+
+            <p>
+                Some features of OdishaPathshala.in may require users to create an account and log in. Account information is used to provide access to protected features and services available on the website.
+            </p>
+
+            <p>
+                Users are responsible for keeping their login credentials confidential and should not share their password with others.
+            </p>
+
+
+            <h3>4. Data Security</h3>
+
+            <p>
+                We take reasonable measures to protect the information provided by users against unauthorized access, alteration, disclosure, or misuse.
+            </p>
+
+            <p>
+                However, no method of transmission or electronic storage is completely secure, and we cannot guarantee absolute security of information.
+            </p>
+
+
+            <h3>5. Cookies and Similar Technologies</h3>
+
+            <p>
+                Our website may use cookies and similar technologies to improve website functionality, understand website traffic, remember user preferences, and provide a better browsing experience.
+            </p>
+
+
+            <h3>6. Google AdSense and Advertising</h3>
+
+            <p>
+                We may use Google AdSense and other advertising services to display advertisements on our website.
+            </p>
+
+            <p>
+                Third-party advertising providers, including Google, may use cookies or similar technologies to display advertisements based on users' visits to this and other websites. Users may learn more about how Google uses information and manage available advertising settings through Google's services.
+            </p>
+
+
+            <h3>7. Third-Party Links</h3>
+
+            <p>
+                Our website may contain links to third-party websites, services, videos, or other external resources. These websites have their own privacy policies and terms of use.
+            </p>
+
+            <p>
+                OdishaPathshala.in is not responsible for the privacy practices, security, or content of third-party websites.
+            </p>
+
+
+            <h3>8. Children's Privacy</h3>
+
+            <p>
+                OdishaPathshala.in provides educational resources for students and teachers. We do not knowingly request unnecessary personal information from children. Parents, guardians, and teachers are encouraged to supervise children's use of online services.
+            </p>
+
+
+            <h3>9. User Feedback and Comments</h3>
+
+            <p>
+                If users voluntarily submit feedback, comments, reviews, or messages through our website, the information provided may be displayed or used to improve our services, subject to applicable policies.
+            </p>
+
+
+            <h3>10. Changes to This Privacy Policy</h3>
+
+            <p>
+                We may update this Privacy Policy from time to time to reflect changes in our services, website features, or applicable requirements. Any changes will be published on this page with an updated date.
+            </p>
+
+
+            <h3>11. Contact Us</h3>
+
+            <p>
+                If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us through the <strong>Contact Us</strong> section of our website.
+            </p>
+
+
+            <p style="margin-top:30px;">
+                <strong>Last Updated: August 2026</strong>
+            </p>
+
         </div>
     </div>
+
 
     <footer>
         © 2026 OdishaPathshala.in | All Rights Reserved
@@ -66,4 +314,3 @@
 
 </body>
 </html>
-
