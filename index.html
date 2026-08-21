@@ -431,7 +431,7 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // USER PROFILE MENU LOGIC
+                // USER PROFILE MENU LOGIC
         auth.onAuthStateChanged((user) => {
             const userNameDisplay = document.getElementById("userNameDisplay");
             if (user || localStorage.getItem("isLoggedIn") === "true") {
@@ -452,9 +452,12 @@
                     userNameDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ମୋ ପ୍ରୋଫାଇଲ୍`;
                 }
             } else {
-                window.location.href = "login.html";
+                // ଯଦି ଲଗଇନ୍ ନାହାଁନ୍ତି, ତେବେ ସିଧା ଲଗଇନ୍ ପେଜ୍ କୁ ନଯାଇ ଉପରେ "Login" ବଟନ୍ ଦେଖାଇବ
+                userNameDisplay.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Login`;
+                userNameDisplay.onclick = () => window.location.href = "login.html";
             }
         });
+
 
         // LOGOUT LOGIC
         function logoutUser() {
