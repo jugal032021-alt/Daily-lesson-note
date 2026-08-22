@@ -231,19 +231,26 @@ function autoFillPanchpadi() {
     firebase.initializeApp(firebaseConfig);
   }
 
-  // ଫାୟାରବେସ୍ ଲଗଇନ୍ ଚେକ୍ (Firebase Auth Check)
-  firebase.auth().onAuthStateChanged(user => {
+// Firebase Auth Check
+firebase.auth().onAuthStateChanged(user => {
+
     if (!user) {
-      let pass = prompt("ଡାଟାବେସ୍ ସହ କନେକ୍ଟ କରିବା ପାଇଁ ଆପଣଙ୍କ ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ:");
-      if(pass) {
-        firebase.auth().signInWithEmailAndPassword("jugal032021@gmail.com", pass)
-          .then(() => alert("ସଫଳତାର ସହ ଡାଟାବେସ୍ କନେକ୍ଟ ହୋଇଗଲା! ଏବେ ଆପଣ ନୋଟ୍ ସେଭ୍ ବା ଅପଡେଟ୍ କରିପାରିବେ।"))
-          .catch(err => { 
-            alert("ପାସୱାର୍ଡ ଭୁଲ୍ ଅଛି କିମ୍ବା କିଛି ଅସୁବିଧା ହେଲା!"); 
-          });
-      }
+        alert("ଦୟା କରି ପ୍ରଥମେ Login କରନ୍ତୁ!");
+        window.location.href = "login.html";
+        return;
     }
-  });
+
+    const adminEmail = "jugal032021@gmail.com";
+
+    if (user.email.toLowerCase() !== adminEmail.toLowerCase()) {
+        alert("କ୍ଷମା କରିବେ, ଏହି ପେଜ୍ କେବଳ Admin ଙ୍କ ପାଇଁ ଅଟେ!");
+        window.location.href = "index.html";
+        return;
+    }
+
+    console.log("Admin Firebase Authentication successful.");
+
+});
 </script>
 <script src="app.js"></script>
 </body>
