@@ -10,20 +10,46 @@
 
   gtag('config', 'G-TNTBPBR6YF');
 </script>
-<!-- Admin Login & Role Check Script -->
-<script>
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const userEmail = localStorage.getItem("userEmail");
-  const adminEmail = "jugal032021@gmail.com"; // କେବଳ ଏହି ଇମେଲ୍ ଆଡମିନ୍ ପେଜ୍ ଖୋଲିପାରିବ
+<!-- Firebase SDK Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-  if (isLoggedIn !== "true") {
-    alert("ଦୟା କରି ଆଡମିନ୍ ପ୍ୟାନେଲ୍ ଖୋଲିବା ପାଇଁ ପ୍ରଥମେ Login କରନ୍ତୁ!");
-    window.location.href = "login.html";
-  } else if (userEmail !== adminEmail) {
-    alert("କ୍ଷମା କରିବେ, ଏହି ପେଜ୍ କେବଳ Admin ଙ୍କ ପାଇଁ ଅଟେ!");
-    window.location.href = "index.html"; 
+<!-- Admin Password & Firebase Auth Security Script -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq050BILPVDQLYE",
+    authDomain: "daily-lesson-note.firebaseapp.com",
+    databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "daily-lesson-note",
+    storageBucket: "daily-lesson-note.firebasestorage.app",
+    messagingSenderId: "902287150460",
+    appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
+    measurementId: "G-LRSYL5Y9HF"
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const auth = firebase.auth();
+
+  if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+    let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
+    if (pass) {
+      auth.signInWithEmailAndPassword("jugal032021@gmail.com", pass)
+        .then(() => {
+          sessionStorage.setItem("adminLoggedIn", "true");
+        })
+        .catch((error) => {
+          alert("ଭୁଲ୍ ପାସୱାର୍ଡ କିମ୍ବା ଲଗଇନ୍ ସମସ୍ୟା: " + error.message);
+          window.location.href = "index.html";
+        });
+    } else {
+      window.location.href = "index.html";
+    }
   }
 </script>
+
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Upload/Edit Lesson Note</title>
@@ -213,97 +239,7 @@ function autoFillPanchpadi() {
     alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା!");
 }
 </script>
-<!-- Firebase SDK Scripts -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq050BILPVDQLYE",
-    authDomain: "daily-lesson-note.firebaseapp.com",
-    databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "daily-lesson-note",
-    storageBucket: "daily-lesson-note.firebasestorage.app",
-    messagingSenderId: "902287150460",
-    appId: "1:902287150460:web:90bd366eb30a4aeae268f9"
-  };
-  
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
 
-// =============================
-// ADMIN AUTH CHECK
-// =============================
-
-firebase.auth().onAuthStateChanged(user => {
-
-    const adminEmail = "jugal032021@gmail.com";
-
-    // Firebase user ମିଳିଲେ
-    if (user) {
-
-        const loggedEmail =
-            user.email.trim().toLowerCase();
-
-        if (loggedEmail === adminEmail.toLowerCase()) {
-
-            console.log(
-                "Admin Login Successful:",
-                loggedEmail
-            );
-
-            return;
-
-        } else {
-
-            alert("ଆପଣ Admin ନୁହନ୍ତି!");
-
-            firebase.auth().signOut();
-
-            window.location.href = "index.html";
-
-            return;
-        }
-    }
-
-
-    // Firebase user ନ ମିଳିଲେ
-    // localStorage ରୁ check
-
-    const savedLogin =
-        localStorage.getItem("isLoggedIn");
-
-    const savedEmail =
-        localStorage.getItem("userEmail");
-
-
-    if (
-        savedLogin === "true" &&
-        savedEmail &&
-        savedEmail.trim().toLowerCase() ===
-        adminEmail.toLowerCase()
-    ) {
-
-        console.log(
-            "Admin login verified from localStorage:",
-            savedEmail
-        );
-
-        return;
-
-    }
-
-
-    // କେଉଁଠି login ନାହିଁ
-
-    alert(
-        "ଦୟାକରି ପ୍ରଥମେ Admin Login କରନ୍ତୁ!"
-    );
-
-    window.location.href = "login.html";
-
-});
-</script>
     <script src="app.js"></script>
 </body>
 </html>
