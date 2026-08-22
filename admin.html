@@ -10,18 +10,45 @@
 
   gtag('config', 'G-TNTBPBR6YF');
 </script>
-        <!-- Admin Password Security Script -->
-    <script>
-        if (sessionStorage.getItem("adminLoggedIn") !== "true") {
-            let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ:");
-            if (pass === "adwika@2025") { 
-                sessionStorage.setItem("adminLoggedIn", "true");
-            } else {
-                alert("ଭୁଲ୍ ପାସୱାର୍ଡ!");
-                window.location.href = "index.html";
-            }
-        }
-    </script>
+<!-- Firebase SDK Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<!-- Admin Password & Firebase Auth Security Script -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq050BILPVDQLYE",
+    authDomain: "daily-lesson-note.firebaseapp.com",
+    databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "daily-lesson-note",
+    storageBucket: "daily-lesson-note.firebasestorage.app",
+    messagingSenderId: "902287150460",
+    appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
+    measurementId: "G-LRSYL5Y9HF"
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const auth = firebase.auth();
+
+  if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+    let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
+    if (pass) {
+      auth.signInWithEmailAndPassword("jugal032021@gmail.com", pass)
+        .then(() => {
+          sessionStorage.setItem("adminLoggedIn", "true");
+        })
+        .catch((error) => {
+          alert("ଭୁଲ୍ ପାସୱାର୍ଡ କିମ୍ବା ଲଗଇନ୍ ସମସ୍ୟା: " + error.message);
+          window.location.href = "index.html";
+        });
+    } else {
+      window.location.href = "index.html";
+    }
+  }
+</script>
+
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
