@@ -10,46 +10,20 @@
 
   gtag('config', 'G-TNTBPBR6YF');
 </script>
-<!-- Firebase SDK Scripts -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-<!-- Admin Password & Firebase Auth Security Script -->
+<!-- Admin Login & Role Check Script -->
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq050BILPVDQLYE",
-    authDomain: "daily-lesson-note.firebaseapp.com",
-    databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "daily-lesson-note",
-    storageBucket: "daily-lesson-note.firebasestorage.app",
-    messagingSenderId: "902287150460",
-    appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
-    measurementId: "G-LRSYL5Y9HF"
-  };
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-  const auth = firebase.auth();
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const userEmail = localStorage.getItem("userEmail");
+  const adminEmail = "jugal032021@gmail.com"; // କେବଳ ଏହି ଇମେଲ୍ ଆଡମିନ୍ ପେଜ୍ ଖୋଲିପାରିବ
 
-  if (sessionStorage.getItem("adminLoggedIn") !== "true") {
-    let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
-    if (pass) {
-      auth.signInWithEmailAndPassword("jugal032021@gmail.com", pass)
-        .then(() => {
-          sessionStorage.setItem("adminLoggedIn", "true");
-        })
-        .catch((error) => {
-          alert("ଭୁଲ୍ ପାସୱାର୍ଡ କିମ୍ବା ଲଗଇନ୍ ସମସ୍ୟା: " + error.message);
-          window.location.href = "index.html";
-        });
-    } else {
-      window.location.href = "index.html";
-    }
+  if (isLoggedIn !== "true") {
+    alert("ଦୟା କରି ଆଡମିନ୍ ପ୍ୟାନେଲ୍ ଖୋଲିବା ପାଇଁ ପ୍ରଥମେ Login କରନ୍ତୁ!");
+    window.location.href = "login.html";
+  } else if (userEmail !== adminEmail) {
+    alert("କ୍ଷମା କରିବେ, ଏହି ପେଜ୍ କେବଳ Admin ଙ୍କ ପାଇଁ ଅଟେ!");
+    window.location.href = "index.html"; 
   }
 </script>
-
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Upload/Edit Lesson Note</title>
