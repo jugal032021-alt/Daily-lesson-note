@@ -1,251 +1,212 @@
 <!DOCTYPE html>
 <html lang="or">
 <head>
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNTBPBR6YF"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TNTBPBR6YF');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TNTBPBR6YF');
 </script>
-<!-- Firebase SDK Scripts -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-<!-- Admin Password & Firebase Auth Security Script -->
+<!-- Admin Password Security Script -->
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq050BILPVDQLYE",
-    authDomain: "daily-lesson-note.firebaseapp.com",
-    databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "daily-lesson-note",
-    storageBucket: "daily-lesson-note.firebasestorage.app",
-    messagingSenderId: "902287150460",
-    appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
-    measurementId: "G-LRSYL5Y9HF"
-  };
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-  const auth = firebase.auth();
-
-  if (sessionStorage.getItem("adminLoggedIn") !== "true") {
-    let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
-    if (pass) {
-      auth.signInWithEmailAndPassword("jugal032021@gmail.com", pass)
-        .then(() => {
-          sessionStorage.setItem("adminLoggedIn", "true");
-        })
-        .catch((error) => {
-          alert("ଭୁଲ୍ ପାସୱାର୍ଡ କିମ୍ବା ଲଗଇନ୍ ସମସ୍ୟା: " + error.message);
-          window.location.href = "index.html";
-        });
-    } else {
-      window.location.href = "index.html";
-    }
-  }
-</script>
-
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Upload/Edit Lesson Note</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .edit-section { background-color: #ffebd6; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ff9900; }
-        .edit-section h3 { margin-top: 0; color: #cc6600; font-size: 16px; }
-        .btn-search { background-color: #007bff; }
-        .btn-update { background-color: #ff9900; display: none; }
-        .btn-delete { background-color: #dc3545; display: none; }
-        .btn-submit { display: block; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h2>ଶିକ୍ଷକ ଆଡମିନ୍ ପ୍ୟାନେଲ୍</h2>
-            <p>ଆଜିର ନୋଟ୍ ଅପଲୋଡ୍ କିମ୍ବା ପୁରୁଣା ନୋଟ୍ ଏଡିଟ୍ କରନ୍ତୁ</p>
-        </div>
-            <!-- AI Auto-Fill Section -->
-    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed #4CAF50;">
-        <h3 style="color: #2e7d32; margin-top: 0;">✨ ଫାଷ୍ଟ୍ ଅଟୋ-ଫିଲ୍ (Copy-Paste)</h3>
-        <p style="font-size: 13px; color: #555; margin-bottom: 8px;">ଆପଣଙ୍କ ପଞ୍ଚପଦି ନୋଟ୍ ଏଠାରେ ପେଷ୍ଟ୍ କରନ୍ତୁ:</p>
-        <textarea id="aiRawInput" rows="5" placeholder="ଏଠାରେ ପଞ୍ଚପଦି ନୋଟ୍ ପେଷ୍ଟ୍ କରନ୍ତୁ..." style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-family: inherit;"></textarea>
-        <button type="button" onclick="autoFillPanchpadi()" style="background: #4CAF50; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-top: 8px; font-weight: bold;">
-            🚀 ଫର୍ମରେ ଭର୍ତ୍ତି କରନ୍ତୁ
-        </button>
-    </div>
-
-        <div class="content">
-            
-            <!-- ପୁରୁଣା ଖୋଜିବା ବିଭାଗ (ଏଡିଟ୍ ପାଇଁ) -->
-            <div class="edit-section">
-                <h3>ସୁଧାରିବା ପାଇଁ ପୁରୁଣା ନୋଟ୍ ଖୋଜନ୍ତୁ</h3>
-                <div class="form-group">
-                    <label>ତାରିଖ:</label>
-                    <input type="date" id="searchEditDate">
-                </div>
-                <div class="form-group">
-                    <label>ଶ୍ରେଣୀ:</label>
-                    <select id="searchEditClass">
-                        <option value="">ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
-                        <option value="Class 1">Class 1</option>
-                        <option value="Class 2">Class 2</option>
-                        <option value="Class 3">Class 3</option>
-                        <option value="Class 4">Class 4</option>
-                        <option value="Class 5">Class 5</option>
-                        <option value="Class 6">Class 6</option>
-                        <option value="Class 7">Class 7</option>
-                        <option value="Class 8">Class 8</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>ବିଷୟ (Subject):</label>
-                    <select id="searchEditSubject">
-                        <option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
-                    </select>
-                </div>
-                <button class="btn-search" onclick="fetchNoteForEdit()">ନୋଟ୍ ଖୋଜନ୍ତୁ</button>
-            </div>
-
-            <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid #ccc;">
-
-            <!-- ମୁଖ୍ୟ ଫର୍ମ ବିଭାଗ -->
-            <p style="text-align:center; font-weight:bold; color:#0056b3;" id="modeText">ନୂଆ ଲେସନ୍ ନୋଟ୍ ଟାଇପ୍ କରନ୍ତୁ</p>
-            <input type="hidden" id="noteId">
-
-            <div class="form-group"><label>ତାରିଖ:</label><input type="date" id="date" required></div>
-            <div class="form-group">
-                <label>ଶ୍ରେଣୀ :</label>
-                <select id="className" onchange="updateAdminSubjects()" required>
-                    <option value="">ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
-                    <option value="Class 1">Class 1</option>
-                    <option value="Class 2">Class 2</option>
-                    <option value="Class 3">Class 3</option>
-                    <option value="Class 4">Class 4</option>
-                    <option value="Class 5">Class 5</option>
-                    <option value="Class 6">Class 6</option>
-                    <option value="Class 7">Class 7</option>
-                    <option value="Class 8">Class 8</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>କାଳାଂଶ (Period):</label>
-                <input type="text" id="period" required>
-            </div>
-            
-            <div class="form-group">
-                <label>ବିଷୟ (Subject):</label>
-                <select id="subject" required>
-                    <option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
-                </select>
-            </div>
-                
-            <div class="form-group"><label>ପାଠ୍ୟ ପ୍ରସଙ୍ଗ (Topic):</label><input type="text" id="topic"></div>
-            <div class="form-group"><label>ଶିକ୍ଷଣ ଫଳାଫଳ (Learning Outcomes):</label><textarea id="outcomes"></textarea></div>
-            <div class="form-group"><label>ଶିକ୍ଷଣ ସାମଗ୍ରୀ (TLM):</label><textarea id="tlm"></textarea></div>
-
-            <div class="section-title">ପଞ୍ଚପଦୀ ଶିକ୍ଷାଦାନ (5-Steps)</div>
-            <div class="form-group"><label>୧. ଅଧିତି (Engage):</label><textarea id="adhiti"></textarea></div>
-            <div class="form-group"><label>୨. ବୋଧ (Explain):</label><textarea id="bodha"></textarea></div>
-            <div class="form-group"><label>୩. ଅଭ୍ୟାସ (Explore):</label><textarea id="abhyasa"></textarea></div>
-            <div class="form-group"><label>୪. ପ୍ରୟୋଗ (Elaborate):</label><textarea id="prayoga"></textarea></div>
-            <div class="form-group"><label>୫. ପ୍ରସାର (Evaluate):</label><textarea id="prasara"></textarea></div>
-
-            <!-- ବଟନ୍ ଗୁଡିକ -->
-            <button id="btnSubmit" class="btn-submit" onclick="saveNote()">ନୂଆ ନୋଟ୍ ଅପଲୋଡ୍ କରନ୍ତୁ</button>
-            <button id="btnUpdate" class="btn-update" onclick="updateNote()">ପରିବର୍ତ୍ତନ କୁ ସେଭ୍ କରନ୍ତୁ (Update)</button>
-            <button id="btnDelete" class="btn-delete" onclick="deleteNote()">ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରନ୍ତୁ</button>
-        </div>
-    </div>
-    
-<script>
-function autoFillPanchpadi() {
-    const rawText = document.getElementById('aiRawInput').value;
-    if(!rawText.trim()) {
-        alert("ଦୟାକରି କିଛି ଲେଖା ପେଷ୍ଟ୍ କରନ୍ତୁ!");
-        return;
-    }
-
-    const lines = rawText.split('\n');
-    
-    lines.forEach(line => {
-        const text = line.trim();
-        const parts = text.split(':');
-        if(parts.length < 2) return;
-        
-        const key = parts[0].trim();
-        const val = parts.slice(1).join(':').trim();
-
-        if (key.includes('ତାରିଖ') || key.toLowerCase().includes('date')) {
-            if(val) document.getElementById('date').value = val;
-        }
-        else if (key.includes('ଶ୍ରେଣୀ') || key.toLowerCase().includes('class')) {
-            if(val) document.getElementById('className').value = val;
-        }
-        else if (key.includes('କାଳାଂଶ') || key.toLowerCase().includes('period')) {
-            if(val) document.getElementById('period').value = val;
-        }
-        else if (key.includes('ବିଷୟ') || key.toLowerCase().includes('subject')) {
-            if(val) {
-                const subjSelect = document.getElementById('subject');
-                let found = false;
-                for(let opt of subjSelect.options) {
-                    if(opt.value.includes(val)) {
-                        subjSelect.value = opt.value;
-                        found = true;
-                        break;
-                    }
-                }
-                if(!found) {
-                    let opt = document.createElement('option');
-                    opt.value = val;
-                    opt.innerHTML = val;
-                    subjSelect.appendChild(opt);
-                    subjSelect.value = val;
-                }
-            }
-        }
-        else if (key.includes('ପାଠ୍ୟ ପ୍ରସଙ୍ଗ') || key.toLowerCase().includes('topic')) {
-            if(val) document.getElementById('topic').value = val;
-        }
-        else if (key.includes('ଶିକ୍ଷଣ ଫଳାଫଳ') || key.toLowerCase().includes('outcomes')) {
-            if(val) document.getElementById('outcomes').value = val;
-        }
-        else if (key.includes('ଶିକ୍ଷଣ ସାମଗ୍ରୀ') || key.toLowerCase().includes('tlm')) {
-            if(val) document.getElementById('tlm').value = val;
-        }
-        else if (key.includes('ଅଧିତି') || key.toLowerCase().includes('engage')) {
-            if(val) document.getElementById('adhiti').value = val;
-        }
-        else if (key.includes('ବୋଧ') || key.toLowerCase().includes('explain')) {
-            if(val) document.getElementById('bodha').value = val;
-        }
-        else if (key.includes('ଅଭ୍ୟାସ') || key.toLowerCase().includes('explore')) {
-            if(val) document.getElementById('abhyasa').value = val;
-        }
-        else if (key.includes('ପ୍ରୟୋଗ') || key.toLowerCase().includes('elaborate')) {
-            if(val) document.getElementById('prayoga').value = val;
-        }
-        else if (key.includes('ପ୍ରସାର') || key.toLowerCase().includes('evaluate')) {
-            if(val) document.getElementById('prasara').value = val;
-        }
-    });
-
-    alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା!");
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
+if (pass === "adwika@2025") {
+sessionStorage.setItem("adminLoggedIn", "true");
+} else {
+alert("ଭୁଲ୍ ପାସୱାର୍ଡ ! ");
+window.location.href = "index.html";
+}
 }
 </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Upload/Edit Lesson Note</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.edit-section { background-color: #ffebd6; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+.edit-section h3 { margin-top: 0; color: #cc6600; font-size: 16px; }
+.btn-search { background-color: #007bff; }
+.btn-update { background-color: #ff9900; display: none; }
+.btn-delete { background-color: #dc3545; display: none; }
+.btn-submit { display: block; }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h2>ଶିକ୍ଷକ ଆଡମିନ୍ ପ୍ୟାନେଲ୍‌</h2>
+<p>ଆଜିର ନୋଟ୍ ଅପଲୋଡ଼ କିମ୍ବା ପୁରୁଣା ନୋଟ୍ ଏଡିଟ୍ କରନ୍ତୁ</p>
+</div>
+<!-- AI Auto-Fill Section -->
+<div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+<h3 style="color: #2e7d32; margin-top: 0;">AI ଅଟୋ-ଫିଲ୍ (Copy-Paste)</h3>
+<p style="font-size: 13px; color: #555; margin-bottom: 8px;">ନିଜର ଲେଖା ଏଠାରେ ପେଷ୍ଟ୍ କରନ୍ତୁ</p>
+<textarea id="aiRawInput" rows="5" placeholder="ଏଠାରେ ଲେଖା ପେଷ୍ଟ୍ କରନ୍ତୁ..." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; margin-bottom:8px;"></textarea>
+<button type="button" onclick="autoFillPanchpadi()" style="background: #4CAF50; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+ଫର୍ମରେ ଭର୍ତ୍ତି କରନ୍ତୁ
+</button>
+</div>
 
-    <script src="app.js"></script>
+<div class="content">
+<!-- ପୁରୁଣା ଖୋଜିବା ବିଭାଗ (ଏଡିଟ୍ ପାଇଁ) -->
+<div class="edit-section">
+<h3>ସୁଧାରିବା ପାଇଁ ପୁରୁଣା ନୋଟ୍ ଖୋଜନ୍ତୁ</h3>
+<div class="form-group">
+<label>ତାରିଖ:</label>
+<input type="date" id="searchEditDate">
+</div>
+<div class="form-group">
+<label>ଶ୍ରେଣୀ:</label>
+<select id="searchEditClass">
+<option value="">ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
+<option value="Class 1">Class 1</option>
+<option value="Class 2">Class 2</option>
+<option value="Class 3">Class 3</option>
+<option value="Class 4">Class 4</option>
+<option value="Class 5">Class 5</option>
+<option value="Class 6">Class 6</option>
+<option value="Class 7">Class 7</option>
+<option value="Class 8">Class 8</option>
+</select>
+</div>
+<div class="form-group">
+<label>ବିଷୟ (Subject):</label>
+<select id="searchEditSubject">
+<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>
+</select>
+</div>
+<button class="btn-search" onclick="fetchNoteForEdit()">ଖୋଜନ୍ତୁ</button>
+</div>
+
+<hr style="margin-bottom: 20px; border: 0; border-top: 1px solid #ccc;">
+
+<!-- ମୁଖ୍ୟ ଫର୍ମ ବିଭାଗ -->
+<p style="text-align:center; font-weight: bold; color: #0056b3;" id="modeText">ନୂତନ ନୋଟ୍ ଅପଲୋଡ଼ ଫର୍ମ</p>
+<input type="hidden" id="noteId">
+
+<div class="form-group"><label>ତାରିଖ:</label><input type="date" id="date" required></div>
+<div class="form-group">
+<label>ଶ୍ରେଣୀ:</label>
+<select id="className" onchange="updateAdminSubjects()" required>
+<option value="">ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
+<option value="Class 1">Class 1</option>
+<option value="Class 2">Class 2</option>
+<option value="Class 3">Class 3</option>
+<option value="Class 4">Class 4</option>
+<option value="Class 5">Class 5</option>
+<option value="Class 6">Class 6</option>
+<option value="Class 7">Class 7</option>
+<option value="Class 8">Class 8</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>କାଳାଂଶ (Period):</label>
+<input type="text" id="period" required>
+</div>
+
+<div class="form-group">
+<label>ବିଷୟ (Subject):</label>
+<select id="subject" required>
+<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>
+</select>
+</div>
+
+<div class="form-group"><label>ପାଠ୍ୟ ପ୍ରସଙ୍ଗ (Topic):</label><input type="text" id="topic" required></div>
+<div class="form-group"><label>ଶିକ୍ଷଣ ଫଳାଫଳ (Learning Outcomes):</label><textarea id="outcomes" rows="3"></textarea></div>
+<div class="form-group"><label>ଶିକ୍ଷଣ ସାମଗ୍ରୀ (TLM):</label><textarea id="tlm" rows="2"></textarea></div>
+
+<div class="section-title" style="font-weight:bold; margin: 15px 0 5px; color:#0056b3;">ପଞ୍ଚପଦୀ (5-Steps)</div>
+<div class="form-group"><label>୧. ଅଧିତି (Engage):</label><textarea id="adhiti" rows="2"></textarea></div>
+<div class="form-group"><label>୨. ବୋଧ (Explain):</label><textarea id="bodha" rows="2"></textarea></div>
+<div class="form-group"><label>୩. ଅଭ୍ୟାସ (Explore):</label><textarea id="abhyasa" rows="2"></textarea></div>
+<div class="form-group"><label>୪. ପ୍ରୟୋଗ (Elaborate):</label><textarea id="prayoga" rows="2"></textarea></div>
+<div class="form-group"><label>୫. ପ୍ରସାର (Evaluate):</label><textarea id="prasara" rows="2"></textarea></div>
+
+<!-- ବଟନ୍ ଗୁଡିକ -->
+<button id="btnSubmit" class="btn-submit" onclick="saveNote()">ନୋଟ୍ ସେଭ୍ କରନ୍ତୁ</button>
+<button id="btnUpdate" class="btn-update" onclick="updateNote()">ପରିବର୍ତ୍ତନ ସେଭ୍ କରନ୍ତୁ</button>
+<button id="btnDelete" class="btn-delete" onclick="deleteNote()">ନୋଟ୍ ଡିଲିଟ୍ କରନ୍ତୁ</button>
+</div>
+</div>
+
+<script>
+function autoFillPanchpadi() {
+const rawText = document.getElementById('aiRawInput').value;
+if(!rawText.trim()) {
+alert("ଦୟାକରି କିଛି ଲେଖା ପେଷ୍ଟ୍ କରନ୍ତୁ!");
+return;
+}
+
+const lines = rawText.split('\n');
+lines.forEach(line => {
+const text = line.trim();
+const parts = text.split(':');
+if(parts.length < 2) return;
+const key = parts[0].trim();
+const val = parts.slice(1).join(':').trim();
+
+if (key.includes('ତାରିଖ') || key.toLowerCase().includes('date')) {
+if(val) document.getElementById('date').value = val;
+}
+else if (key.includes('ଶ୍ରେଣୀ') || key.toLowerCase().includes('class')) {
+if(val) document.getElementById('className').value = val;
+}
+else if (key.includes('କାଳାଂଶ') || key.toLowerCase().includes('period')) {
+if(val) document.getElementById('period').value = val;
+}
+else if (key.includes('ବିଷୟ') || key.toLowerCase().includes('subject')) {
+if(val) {
+const subjSelect = document.getElementById('subject');
+let found = false;
+for(let opt of subjSelect.options) {
+if(opt.value.includes(val)) {
+subjSelect.value = opt.value;
+found = true;
+break;
+}
+}
+if(!found) {
+let opt = document.createElement('option');
+opt.value = val;
+opt.innerHTML = val;
+subjSelect.appendChild(opt);
+subjSelect.value = val;
+}
+}
+}
+else if (key.includes('ପାଠ୍ୟ ପ୍ରସଙ୍ଗ') || key.toLowerCase().includes('topic')) {
+if(val) document.getElementById('topic').value = val;
+}
+else if (key.includes('ଶିକ୍ଷଣ ଫଳାଫଳ') || key.toLowerCase().includes('outcomes')) {
+if(val) document.getElementById('outcomes').value = val;
+}
+else if (key.includes('ଶିକ୍ଷଣ ସାମଗ୍ରୀ') || key.toLowerCase().includes('tlm')) {
+if(val) document.getElementById('tlm').value = val;
+}
+else if (key.includes('ଅଧିତି') || key.toLowerCase().includes('engage')) {
+if(val) document.getElementById('adhiti').value = val;
+}
+else if (key.includes('ବୋଧ') || key.toLowerCase().includes('explain')) {
+if(val) document.getElementById('bodha').value = val;
+}
+else if (key.includes('ଅଭ୍ୟାସ') || key.toLowerCase().includes('explore')) {
+if(val) document.getElementById('abhyasa').value = val;
+}
+else if (key.includes('ପ୍ରୟୋଗ') || key.toLowerCase().includes('elaborate')) {
+if(val) document.getElementById('prayoga').value = val;
+}
+else if (key.includes('ପ୍ରସାର') || key.toLowerCase().includes('evaluate')) {
+if(val) document.getElementById('prasara').value = val;
+}
+});
+
+alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା !");
+}
+</script>
+<script src="app.js"></script>
 </body>
 </html>
-
-    
-
-
-    
-    
