@@ -237,26 +237,73 @@ function autoFillPanchpadi() {
 
 firebase.auth().onAuthStateChanged(user => {
 
-    if (!user) {
-        alert("ଦୟାକରି ପ୍ରଥମେ Admin Login କରନ୍ତୁ!");
-        window.location.href = "login.html";
-        return;
-    }
-
     const adminEmail = "jugal032021@gmail.com";
 
-    if (user.email.toLowerCase() !== adminEmail.toLowerCase()) {
-        alert("ଆପଣ Admin ନୁହଁନ୍ତି!");
-        firebase.auth().signOut();
-        window.location.href = "index.html";
-        return;
+    // Firebase user ମିଳିଲେ
+    if (user) {
+
+        const loggedEmail =
+            user.email.trim().toLowerCase();
+
+        if (loggedEmail === adminEmail.toLowerCase()) {
+
+            console.log(
+                "Admin Login Successful:",
+                loggedEmail
+            );
+
+            return;
+
+        } else {
+
+            alert("ଆପଣ Admin ନୁହନ୍ତି!");
+
+            firebase.auth().signOut();
+
+            window.location.href = "index.html";
+
+            return;
+        }
     }
 
-    console.log("Admin Login Successful:", user.email);
+
+    // Firebase user ନ ମିଳିଲେ
+    // localStorage ରୁ check
+
+    const savedLogin =
+        localStorage.getItem("isLoggedIn");
+
+    const savedEmail =
+        localStorage.getItem("userEmail");
+
+
+    if (
+        savedLogin === "true" &&
+        savedEmail &&
+        savedEmail.trim().toLowerCase() ===
+        adminEmail.toLowerCase()
+    ) {
+
+        console.log(
+            "Admin login verified from localStorage:",
+            savedEmail
+        );
+
+        return;
+
+    }
+
+
+    // କେଉଁଠି login ନାହିଁ
+
+    alert(
+        "ଦୟାକରି ପ୍ରଥମେ Admin Login କରନ୍ତୁ!"
+    );
+
+    window.location.href = "login.html";
 
 });
 </script>
-<script src="app.js"></script>
 </body>
 </html>
 
