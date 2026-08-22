@@ -213,8 +213,24 @@ function autoFillPanchpadi() {
     alert("ସଫଳତାର ସହ ସବୁ ଘର ଭର୍ତ୍ତି ହୋଇଗଲା!");
 }
 </script>
-
-    <script src="app.js"></script>
+<!-- Firebase SDK Scripts -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq050BILPVDQLYE",
+    authDomain: "daily-lesson-note.firebaseapp.com",
+    databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "daily-lesson-note",
+    storageBucket: "daily-lesson-note.firebasestorage.app",
+    messagingSenderId: "902287150460",
+    appId: "1:902287150460:web:90bd366eb30a4aeae268f9"
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+</script>
+<script src="app.js"></script>
 </body>
 </html>
 
