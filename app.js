@@ -91,7 +91,7 @@ async function fetchNoteForEdit() {
   }
 }
 
-// 3. ସୁଧାରିବା ପରେ ଅପଡେଟ୍ କରିବା (Update)
+// 3. ସୁଧାରିବା ପରେ ଅପଡେଟ୍ କରିବା (Update using PATCH)
 async function updateNote() {
   let noteId = document.getElementById('noteId').value;
   if (!noteId) {
@@ -105,7 +105,7 @@ async function updateNote() {
     const token = await user.getIdToken();
 
     let response = await fetch(`${baseURL}/notes/${noteId}.json?auth=${token}`, {
-      method: 'PUT',
+      method: 'PATCH',
       body: JSON.stringify(updatedNote),
       headers: { 'Content-Type': 'application/json' }
     });
