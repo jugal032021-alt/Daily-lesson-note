@@ -38,13 +38,13 @@ async function fetchNoteForEdit() {
     return;
   }
   try {
-    let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${sDate}"`);
+    let response = await fetch(`${baseURL}/notes.json`);
     let data = await response.json();
     let foundId = null;
     let foundNote = null;
     if(data) {
       for (let key in data) {
-        if (data[key].className === sClass && data[key].subject === sSub) {
+        if (data[key].date === sDate && data[key].className === sClass && data[key].subject === sSub) {
           foundId = key;
           foundNote = data[key];
           break;
@@ -57,7 +57,7 @@ async function fetchNoteForEdit() {
       document.getElementById('className').value = foundNote.className;
 
       const adminSubjectSelect = document.getElementById("subject");
-      adminSubjectSelect.innerHTML = '<option value=""> </option>';
+      adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
       if (foundNote.className && classBooks[foundNote.className]) {
         classBooks[foundNote.className].forEach(function(bookName) {
           const option = document.createElement("option");
@@ -94,6 +94,10 @@ async function fetchNoteForEdit() {
 // 3. ସୁଧାରିବା ପରେ ଅପଡେଟ୍ କରିବା (Update)
 async function updateNote() {
   let noteId = document.getElementById('noteId').value;
+  if (!noteId) {
+    alert("ଅପଡେଟ୍ କରିବା ପାଇଁ ପ୍ରଥମେ ଉପରୁ ନୋଟ୍ ଖୋଜନ୍ତୁ!");
+    return;
+  }
   let updatedNote = getFormData();
   try {
     const user = firebase.auth().currentUser;
@@ -119,6 +123,10 @@ async function updateNote() {
 // 4. ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବା (Delete)
 async function deleteNote() {
   let noteId = document.getElementById('noteId').value;
+  if (!noteId) {
+    alert("ଡିଲିଟ୍ କରିବା ପାଇଁ ପ୍ରଥମେ ଉପରୁ ନୋଟ୍ ଖୋଜନ୍ତୁ!");
+    return;
+  }
   let confirmDelete = confirm("ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?");
   if (confirmDelete) {
     try {
@@ -153,13 +161,13 @@ async function searchNote() {
     }
     resultArea.innerHTML = "<p style='text-align:center;'>ଖୋଜା ଚାଲିଛି...</p>";
     try {
-        let response = await fetch(`${baseURL}/notes.json?orderBy="date"&equalTo="${searchDate}"`);
+        let response = await fetch(`${baseURL}/notes.json`);
         let data = await response.json();
         if(data) {
             let foundNote = null;
             for (let key in data) {
                 let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
-                if (data[key].className === searchClass && noteSub.includes(searchSubject)) {
+                if (data[key].date === searchDate && data[key].className === searchClass && noteSub.includes(searchSubject)) {
                     foundNote = data[key];
                     break;
                 }
