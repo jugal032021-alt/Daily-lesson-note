@@ -231,28 +231,29 @@ function autoFillPanchpadi() {
     firebase.initializeApp(firebaseConfig);
   }
 
-// Firebase Auth Check
+// =============================
+// ADMIN AUTH CHECK
+// =============================
+
 firebase.auth().onAuthStateChanged(user => {
 
-    // Login ହୋଇନଥିଲେ Login Page କୁ ପଠାଇବ
     if (!user) {
-        alert("ଦୟା କରି ପ୍ରଥମେ Login କରନ୍ତୁ!");
+        alert("ଦୟାକରି ପ୍ରଥମେ Admin Login କରନ୍ତୁ!");
         window.location.href = "login.html";
         return;
     }
 
-    // Admin Email
     const adminEmail = "jugal032021@gmail.com";
 
-    // Admin email ନୁହେଁ ହେଲେ Main Page କୁ ପଠାଇବ
     if (user.email.toLowerCase() !== adminEmail.toLowerCase()) {
         alert("ଆପଣ Admin ନୁହଁନ୍ତି!");
+        firebase.auth().signOut();
         window.location.href = "index.html";
         return;
     }
 
-    // Admin Login Successful
-    console.log("Admin Firebase Authentication successful.");
+    console.log("Admin Login Successful:", user.email);
+
 });
 </script>
 <script src="app.js"></script>
