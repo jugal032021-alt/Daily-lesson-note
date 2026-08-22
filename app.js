@@ -8,9 +8,21 @@ async function saveNote() {
     return;
   }
   try {
-    const user = firebase.auth().currentUser;
-    if (!user) { alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!"); return; }
-    const token = await user.getIdToken();
+    const token = await new Promise((resolve, reject) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+        unsubscribe();
+        if (user) {
+          user.getIdToken().then(resolve).catch(reject);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+
+    if (!token) {
+      alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!");
+      return;
+    }
 
     let response = await fetch(`${baseURL}/notes.json?auth=${token}`, {
       method: 'POST',
@@ -96,9 +108,21 @@ async function updateNote() {
   let noteId = document.getElementById('noteId').value;
   let updatedNote = getFormData();
   try {
-    const user = firebase.auth().currentUser;
-    if (!user) { alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!"); return; }
-    const token = await user.getIdToken();
+    const token = await new Promise((resolve, reject) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+        unsubscribe();
+        if (user) {
+          user.getIdToken().then(resolve).catch(reject);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+
+    if (!token) {
+      alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!");
+      return;
+    }
 
     let response = await fetch(`${baseURL}/notes/${noteId}.json?auth=${token}`, {
       method: 'PUT',
@@ -122,9 +146,21 @@ async function deleteNote() {
   let confirmDelete = confirm("ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?");
   if (confirmDelete) {
     try {
-      const user = firebase.auth().currentUser;
-      if (!user) { alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!"); return; }
-      const token = await user.getIdToken();
+      const token = await new Promise((resolve, reject) => {
+        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+          unsubscribe();
+          if (user) {
+            user.getIdToken().then(resolve).catch(reject);
+          } else {
+            resolve(null);
+          }
+        });
+      });
+
+      if (!token) {
+        alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!");
+        return;
+      }
 
       let response = await fetch(`${baseURL}/notes/${noteId}.json?auth=${token}`, {
         method: 'DELETE'
