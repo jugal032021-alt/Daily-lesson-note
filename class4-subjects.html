@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 4 Subjects - Study Materials</title>
+    <title>Class 4 Subjects - WithTeachers.in</title>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -13,62 +13,90 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
         }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #0066cc;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
         h2 {
             text-align: center;
-            color: #1e293b;
+            color: #1a298b;
             margin-bottom: 30px;
             font-size: 28px;
         }
+
         h2 span {
-            color: #0044cc;
+            color: #0066cc;
         }
+
         .grid-subjects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
+
         .subject-card {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
         }
+
         .subject-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border-color: #0044cc;
+            transform: translateY(-4px);
         }
+
+        /* କାର୍ଡ଼ର ବିଭିନ୍ନ ରଙ୍ଗ (Gradient) */
+        .card-red { background: linear-gradient(135deg, #ff6b6b, #ee5253); }
+        .card-purple { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+        .card-blue { background: linear-gradient(135deg, #48dbfb, #0abde3); }
+        .card-green { background: linear-gradient(135deg, #1dd1a1, #10ac84); }
+
+        .card-content {
+            display: flex;
+            align-items: center;
+        }
+
+        /* ବହି ଫଟୋର ଆକାର ଏବଂ ଡିଜାଇନ୍ */
+        .book-cover-img {
+            width: 50px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            background: #fff;
+        }
+
         .sub-name {
             font-size: 18px;
             font-weight: bold;
-            color: #1e293b;
+            color: #ffffff;
         }
+
         .open-btn {
-            background: #eff6ff;
-            color: #0044cc;
-            padding: 6px 15px;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 13px;
             font-weight: bold;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #0044cc;
-            font-weight: bold;
-            font-size: 14px;
+            backdrop-filter: blur(5px);
         }
     </style>
 </head>
@@ -76,33 +104,47 @@
 
     <div class="container">
         <a href="classes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Classes</a>
-        
+
         <h2>Class 4 <span>Subjects</span></h2>
-        
+
         <div class="grid-subjects">
-            <!-- Bhasha Mahaka - 2 -->
-            <a href="class4-bhasha-chapters.html" class="subject-card">
-                <div class="sub-name">📚 ଭାଷା ମହକ-୨</div>
+            
+            <!-- 1. Bhasa Mahak -->
+            <a href="class4-bhasa-chapters.html" class="subject-card card-purple">
+                <div class="card-content">
+                    <img src="images/bhasa-mahak.jpg" alt="Book" class="book-cover-img">
+                    <span class="sub-name">ଭାଷା ମହକ - ୪</span>
+                </div>
                 <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <!-- Ganita Khamala -->
-            <a href="class4-ganita-chapters.html" class="subject-card">
-                <div class="sub-name">🔢 ଗଣିତ ଖେଳ</div>
+            <!-- 2. Ganita Khela -->
+            <a href="class4-ganita-chapters.html" class="subject-card card-blue">
+                <div class="card-content">
+                    <img src="images/ganita.jpg" alt="Book" class="book-cover-img">
+                    <span class="sub-name">ଗଣିତ ଖେଳ</span>
+                </div>
                 <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <!-- Pallavi -->
-            <a href="class4-pallavi-chapters.html" class="subject-card">
-                <div class="sub-name">📖 Pallavi</div>
+            <!-- 3. Pallavi -->
+            <a href="class4-pallavi-chapters.html" class="subject-card card-red">
+                <div class="card-content">
+                    <img src="images/pallavi.jpg" alt="Book" class="book-cover-img">
+                    <span class="sub-name">Pallavi</span>
+                </div>
                 <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <!-- Ama Vichitra Biswa -->
-            <a href="class4-world-chapters.html" class="subject-card">
-                <div class="sub-name">🌍 ଆମ ବିଚିତ୍ର ବିଶ୍ଵ</div>
+            <!-- 4. Ama Bichitra Biswa -->
+            <a href="class4-world-chapters.html" class="subject-card card-green">
+                <div class="card-content">
+                    <img src="images/ama-biswa.jpg" alt="Book" class="book-cover-img">
+                    <span class="sub-name">ଆମ ବିଚିତ୍ର ବିଶ୍ୱ</span>
+                </div>
                 <div class="open-btn">Open <i class="fa-solid fa-arrow-right"></i></div>
             </a>
+
         </div>
     </div>
 
