@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Select Class Study Materials</title>
+<title>Select Class Study Materials - odishapathasala.in</title>
 <!-- FontAwesome Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -27,6 +27,8 @@
         justify-content: space-between;
         align-items: center;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        flex-wrap: wrap;
+        gap: 15px;
     }
     .logo-area {
         display: flex;
@@ -59,6 +61,7 @@
     .nav-links {
         display: flex;
         gap: 20px;
+        flex-wrap: wrap;
     }
     .nav-links a {
         text-decoration: none;
@@ -91,36 +94,51 @@
     h2 span {
         color: #0044cc;
     }
+
+    /* Grid and Colorful Cards */
     .grid-classes {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 20px;
     }
+    
     .class-card {
-        background: #ffffff;
-        padding: 30px 20px;
-        border-radius: 12px;
+        padding: 28px 20px;
+        border-radius: 16px;
         text-align: center;
         text-decoration: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        border: 1px solid #e2e8f0;
-        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
+
     .class-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        border-color: #0044cc;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     }
+
+    /* ପ୍ରତ୍ୟେକ କ୍ଲାସ ପାଇଁ ଆକର୍ଷକ ଗ୍ରାଡିଏଣ୍ଟ୍ ରଙ୍ଗ */
+    .card-purple { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+    .card-blue   { background: linear-gradient(135deg, #48dbfb, #0abde3); }
+    .card-red    { background: linear-gradient(135deg, #ff6b6b, #ee5253); }
+    .card-green  { background: linear-gradient(135deg, #1dd1a1, #10ac84); }
+    .card-orange { background: linear-gradient(135deg, #ff9f43, #ff6348); }
+
     .class-title {
-        font-size: 20px;
+        font-size: 22px;
         font-weight: bold;
-        color: #003399;
-        margin-bottom: 5px;
+        color: #ffffff;
+        margin-bottom: 6px;
     }
     .class-sub {
-        color: #64748b;
-        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 15px;
+        font-weight: 500;
     }
+
     .back-btn {
         display: inline-block;
         margin-bottom: 20px;
@@ -167,6 +185,7 @@
     </div>
 </header>
 
+<!-- Main Content Section -->
 <div class="container">
     <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
     
@@ -174,31 +193,31 @@
     
     <div class="grid-classes">
         <!-- Class 4 -->
-        <a href="class4-subjects.html" class="class-card">
+        <a href="class4-subjects.html" class="class-card card-purple">
             <div class="class-title">Class 4</div>
             <div class="class-sub">ଚତୁର୍ଥ ଶ୍ରେଣୀ</div>
         </a>
 
         <!-- Class 5 -->
-        <a href="class5-subjects.html" class="class-card">
+        <a href="class5-subjects.html" class="class-card card-blue">
             <div class="class-title">Class 5</div>
             <div class="class-sub">ପଞ୍ଚମ ଶ୍ରେଣୀ</div>
         </a>
 
         <!-- Class 6 -->
-        <a href="class6-subjects.html" class="class-card">
+        <a href="class6-subjects.html" class="class-card card-red">
             <div class="class-title">Class 6</div>
             <div class="class-sub">ଷଷ୍ଠ ଶ୍ରେଣୀ</div>
         </a>
 
         <!-- Class 7 -->
-        <a href="class7-subjects.html" class="class-card">
+        <a href="class7-subjects.html" class="class-card card-green">
             <div class="class-title">Class 7</div>
             <div class="class-sub">ସପ୍ତମ ଶ୍ରେଣୀ</div>
         </a>
 
         <!-- Class 8 -->
-        <a href="class8-subjects.html" class="class-card">
+        <a href="class8-subjects.html" class="class-card card-orange">
             <div class="class-title">Class 8</div>
             <div class="class-sub">ଅଷ୍ଟମ ଶ୍ରେଣୀ</div>
         </a>
