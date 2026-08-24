@@ -751,31 +751,38 @@ function loadApprovedMessages() {
             header.appendChild(info);
 
 
-            // Message
-            const body = document.createElement('div');
-            body.className = 'testimonial-body';
-            body.textContent = message;
+                    // Message
+        const body = document.createElement('div');
+        body.className = 'testimonial-body';
+        body.textContent = message;
 
+        // Admin Reply Box
+        let replyBox = null;
+        if (item.reply && item.reply.trim() !== "") {
+            replyBox = document.createElement('div');
+            replyBox.style.cssText = "background: #f0f7ff; border-left: 3px solid #0056b3; border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 13px; color: #1e293b;";
+            replyBox.innerHTML = `<strong style="color: #0044cc; display: block; margin-bottom: 3px;"><i class="fa-solid fa-reply"></i> Admin Reply:</strong> ${item.reply}`;
+        }
 
-            // Stars
-            const stars = document.createElement('div');
-            stars.className = 'testimonial-stars';
+        // Stars
+        const stars = document.createElement('div');
+        stars.className = 'testimonial-stars';
+        stars.innerHTML = `
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+        `;
 
-            stars.innerHTML = `
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-            `;
+        // Add everything
+        card.appendChild(header);
+        card.appendChild(body);
+        if (replyBox) card.appendChild(replyBox);
+        card.appendChild(stars);
 
+        approvedMessagesList.appendChild(card);
 
-            // Add everything
-            card.appendChild(header);
-            card.appendChild(body);
-            card.appendChild(stars);
-
-            approvedMessagesList.appendChild(card);
 
         });
 
