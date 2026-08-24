@@ -367,15 +367,18 @@
                     <label>ବିଷୟ ଚୟନ କରନ୍ତୁ (Subject):</label>
                     <select id="searchSubject">
                         <option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>
-                    </select>
-                </div>
-                <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 15px;">
-    <button class="search-btn" onclick="checkLogin()" style="width: auto !important; min-width: 200px !important; margin: 0 0 0 auto !important; display: inline-flex !important; align-items: center; justify-content: center; gap: 8px;">
-        <i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)
-    </button>
-</div>
-            <div id="resultArea" style="margin-top: 15px;"></div>
+                                </select>
         </div>
+    </div>
+
+    <!-- BUTTON OUTSIDE GRID FOR RIGHT ALIGNMENT -->
+    <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 15px;">
+        <button class="search-btn" onclick="checkLogin()" style="width: auto !important; min-width: 200px !important; margin: 0 !important;">
+            <i class="fa-solid fa-magnifying-glass"></i> ଖୋଜନ୍ତୁ (Search)
+        </button>
+    </div>
+
+    <div id="resultArea" style="margin-top: 15px;"></div>
 
         <!-- CARDS GRID -->
         <div class="cards-grid">
