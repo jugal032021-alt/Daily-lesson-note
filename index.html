@@ -751,14 +751,14 @@ function loadApprovedMessages() {
             header.appendChild(info);
 
 
-                    // Message
+                            // Message
         const body = document.createElement('div');
         body.className = 'testimonial-body';
         body.textContent = message;
 
-        // Admin Reply Box
+        // Safe Admin Reply Check
         let replyBox = null;
-        if (item.reply && item.reply.trim() !== "") {
+        if (item && item.reply && typeof item.reply === 'string' && item.reply.trim() !== '') {
             replyBox = document.createElement('div');
             replyBox.style.cssText = "background: #f0f7ff; border-left: 3px solid #0056b3; border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 13px; color: #1e293b;";
             replyBox.innerHTML = `<strong style="color: #0044cc; display: block; margin-bottom: 3px;"><i class="fa-solid fa-reply"></i> Admin Reply:</strong> ${item.reply}`;
@@ -782,6 +782,7 @@ function loadApprovedMessages() {
         card.appendChild(stars);
 
         approvedMessagesList.appendChild(card);
+
 
 
         });
