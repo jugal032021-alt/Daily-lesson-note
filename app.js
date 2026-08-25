@@ -93,31 +93,29 @@ async function fetchNoteForEdit() {
 
 // 3. ସୁଧାରିବା ପରେ ଅପଡେଟ୍ କରିବା (Update using PATCH)
 async function updateNote() {
-  let noteId = document.getElementById('noteId').value;
-  if (!noteId) {
-    alert("ଅପଡେଟ୍ କରିବା ପାଇଁ ପ୍ରଥମେ ଉପରୁ ନୋଟ୍ ଖୋଜନ୍ତୁ!");
-    return;
-  }
-  let updatedNote = getFormData();
-  try {
-    const user = firebase.auth().currentUser;
-    if (!user) { alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!"); return; }
-    const token = await user.getIdToken();
-
-    let response = await fetch(`${baseURL}/notes/${noteId}.json?auth=${token}`, {
-      method: 'PATCH',
-      body: JSON.stringify(updatedNote),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    if (response.ok) {
-      alert("ନୋଟ୍ ସଫଳତାର ସହ ଅପଡେଟ୍ ହୋଇଗଲା!");
-      window.location.reload();
-    } else {
-      alert("ଅପଡେଟ୍ କରିବାରେ ଅସୁବିଧା ହେଲା!");
+    let noteId = document.getElementById('noteId').value;
+    if (!noteId) {
+        alert("ଅପଡେଟ୍ କରିବା ପାଇଁ ପ୍ରଥମେ ନୋଟ୍ ଖୋଜନ୍ତୁ!");
+        return;
     }
-  } catch (error) {
-    alert("ଏରର୍: " + error);
-  }
+    let updatedNote = getFormData();
+    try {
+        let response = await fetch(`${baseURL}/notes/${noteId}.json`, {
+            method: 'PATCH',
+            body: JSON.stringify(updatedNote),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok) {
+            alert("ନୋଟ୍ ସଫଳତା ସହ ଅପଡେଟ୍ ହୋଇଗଲା!");
+            window.location.reload();
+        } else {
+            alert("ଅପଡେଟ୍ କରିବାରେ ଅସୁବିଧା ହେଲା!");
+        }
+    } catch (error) {
+        alert("ଏରର୍: " + error);
+    }
+}
+
 }
 
 // 4. ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବା (Delete)
