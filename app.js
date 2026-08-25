@@ -8,11 +8,7 @@ async function saveNote() {
     return;
   }
   try {
-    const user = firebase.auth().currentUser;
-    if (!user) { alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!"); return; }
-    const token = await user.getIdToken();
-
-    let response = await fetch(`${baseURL}/notes.json?auth=${token}`, {
+    let response = await fetch(`${baseURL}/notes.json`, {
       method: 'POST',
       body: JSON.stringify(note),
       headers: { 'Content-Type': 'application/json' }
@@ -116,8 +112,6 @@ async function updateNote() {
     }
 }
 
-}
-
 // 4. ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବା (Delete)
 async function deleteNote() {
   let noteId = document.getElementById('noteId').value;
@@ -128,11 +122,7 @@ async function deleteNote() {
   let confirmDelete = confirm("ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?");
   if (confirmDelete) {
     try {
-      const user = firebase.auth().currentUser;
-      if (!user) { alert("ଦୟାକରି ଆଡମିନ୍ ଲଗଇନ୍ କରନ୍ତୁ!"); return; }
-      const token = await user.getIdToken();
-
-      let response = await fetch(`${baseURL}/notes/${noteId}.json?auth=${token}`, {
+      let response = await fetch(`${baseURL}/notes/${noteId}.json`, {
         method: 'DELETE'
       });
       if(response.ok) {
