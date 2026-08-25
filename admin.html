@@ -11,15 +11,18 @@ gtag('config', 'G-TNTBPBR6YF');
 </script>
 <!-- Admin Password Security Script -->
 <script>
-if (sessionStorage.getItem("adminLoggedIn") !== "true") {
-let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
-if (pass === "adwika@2025") {
-sessionStorage.setItem("adminLoggedIn", "true");
-} else {
-alert("ଭୁଲ୍ ପାସୱାର୍ଡ ! ");
-window.location.href = "index.html";
+if (sessionStorage.getItem("adminLoggedIn") !== "true" && localStorage.getItem("adminLoggedIn") !== "true") {
+    let pass = prompt("ଆଡମିନ୍ ପାସୱାର୍ଡ ଦିଅନ୍ତୁ :");
+    if (pass === "adwika@2025") {
+        sessionStorage.setItem("adminLoggedIn", "true");
+        localStorage.setItem("adminLoggedIn", "true");
+    } else {
+        alert("ଭୁଲ୍ ପାସୱାର୍ଡ !");
+        window.location.href = "index.html";
+    }
 }
-}
+</script>
+
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
