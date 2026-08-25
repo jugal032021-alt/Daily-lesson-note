@@ -278,9 +278,36 @@
             .hero-image { display: none; }
             .hero-stats { justify-content: center; }
             .search-section { margin-top: 15px; }
-            .nav-menu { display: none; } /* Mobile navbar handling */
-        }
-    </style>
+            ..nav-menu { display: none; } /* Mobile navbar handling */
+}
+
+/* DAILY LESSON NOTE */
+.daily-note-title {
+    width: 100%;
+    text-align: center;
+    margin: 10px auto 15px;
+    padding: 12px 10px;
+    box-sizing: border-box;
+    color: #003399;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.daily-note-title i {
+    color: #1a8c3a;
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .daily-note-title {
+        font-size: 18px;
+        margin: 8px auto 12px;
+        padding: 9px 5px;
+    }
+}
+
+</style>
 </head>
 <body>
 
@@ -339,7 +366,10 @@
             </div>
         </div>
     </section>
-
+<div class="daily-note-title">
+    <i class="fa-solid fa-book-open"></i>
+    DAILY LESSON NOTE
+</div>
     <!-- MAIN BODY -->
     <div class="main-content">
         <!-- SEARCH SECTION -->
