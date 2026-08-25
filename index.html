@@ -890,6 +890,51 @@ if ("serviceWorker" in navigator) {
     installBtn.style.display = 'none';
   });
     </script>
-    
+    </script>
+
+<style>
+/* FEEDBACK HORIZONTAL SCROLL */
+
+.testimonial-grid {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: calc((100% - 45px) / 4) !important;
+    grid-template-rows: 1fr !important;
+    gap: 15px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 5px 5px 15px !important;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+.testimonial-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    scroll-snap-align: start;
+}
+
+.testimonial-grid::-webkit-scrollbar {
+    height: 7px;
+}
+
+.testimonial-grid::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .testimonial-grid {
+        grid-auto-columns: calc((100% - 15px) / 2) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial-grid {
+        grid-auto-columns: 85% !important;
+    }
+}
+</style>
 </body>
 </html>
+
