@@ -3,8 +3,8 @@ const baseURL = "https://daily-lesson-note-default-rtdb.asia-southeast1.firebase
 // 1. ନୂଆ ନୋଟ୍ ସେଭ୍ କରିବା (Save)
 async function saveNote() {
   let note = getFormData();
-  if (!note.date || !note.className || !note.subject) {
-    alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପୂରଣ କରନ୍ତୁ!");
+  if (!note.date || !note.className || !note.subject || !note.fullContent) {
+    alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ, ବିଷୟ ଏବଂ ନୋଟ୍ ଲେଖା ପୂରଣ କରନ୍ତୁ!");
     return;
   }
   try {
@@ -24,74 +24,11 @@ async function saveNote() {
   }
 }
 
-// 2. ଏଡିଟ୍ କରିବା ପାଇଁ ପୁରୁଣା ନୋଟ୍ ଖୋଜିବା (Fetch for Edit)
-async function fetchNoteForEdit() {
-  let sDate = document.getElementById('searchEditDate').value;
-  let sClass = document.getElementById('searchEditClass').value;
-  let sSub = document.getElementById('searchEditSubject').value;
-  if (!sDate || !sClass || !sSub) {
-    alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ସବୁକିଛି ବାଛନ୍ତୁ!");
-    return;
-  }
-  try {
-    let response = await fetch(`${baseURL}/notes.json`);
-    let data = await response.json();
-    let foundId = null;
-    let foundNote = null;
-    if(data) {
-      for (let key in data) {
-        if (data[key].date === sDate && data[key].className === sClass && data[key].subject === sSub) {
-          foundId = key;
-          foundNote = data[key];
-          break;
-        }
-      }
-    }
-    if (foundNote) {
-      document.getElementById('noteId').value = foundId;
-      document.getElementById('date').value = foundNote.date;
-      document.getElementById('className').value = foundNote.className;
-
-      const adminSubjectSelect = document.getElementById("subject");
-      adminSubjectSelect.innerHTML = '<option value="">ବହି ବାଛନ୍ତୁ</option>';
-      if (foundNote.className && classBooks[foundNote.className]) {
-        classBooks[foundNote.className].forEach(function(bookName) {
-          const option = document.createElement("option");
-          option.value = bookName;
-          option.textContent = bookName;
-          if (bookName === foundNote.subject) { option.selected = true; }
-          adminSubjectSelect.appendChild(option);
-        });
-      }
-      document.getElementById('subject').value = foundNote.subject;
-      document.getElementById('period').value = foundNote.period || '';
-      document.getElementById('topic').value = foundNote.topic || '';
-      document.getElementById('outcomes').value = foundNote.outcomes || '';
-      document.getElementById('tlm').value = foundNote.tlm || '';
-      document.getElementById('adhiti').value = foundNote.adhiti || '';
-      document.getElementById('bodha').value = foundNote.bodha || '';
-      document.getElementById('abhyasa').value = foundNote.abhyasa || '';
-      document.getElementById('prayoga').value = foundNote.prayoga || '';
-      document.getElementById('prasara').value = foundNote.prasara || '';
-
-      document.getElementById('modeText').innerText = "ଏଡିଟ୍ ମୋଡ୍ (Edit Mode)";
-      document.getElementById('btnSubmit').style.display = 'none';
-      document.getElementById('btnUpdate').style.display = 'block';
-      document.getElementById('btnDelete').style.display = 'block';
-      alert("ନୋଟ୍ ମିଳିଗଲା! ତଳକୁ ଯାଇ ଏଡିଟ୍ କରନ୍ତୁ");
-    } else {
-      alert("କ୍ଷମା କରିବେ, ଏହି ତାରିଖ, ଶ୍ରେଣୀ ଏବଂ ବିଷୟ ପାଇଁ କୌଣସି ନୋଟ୍ ମିଳିଲା ନାହିଁ!");
-    }
-  } catch (error) {
-    alert("ଏରର୍: " + error);
-  }
-}
-
-// 3. ସୁଧାରିବା ପରେ ଅପଡେଟ୍ କରିବା (Update using PATCH)
+// 3. ଅପଡେଟ୍ କରିବା (Update using PATCH)
 async function updateNote() {
     let noteId = document.getElementById('noteId').value;
     if (!noteId) {
-        alert("ଅପଡେଟ୍ କରିବା ପାଇଁ ପ୍ରଥମେ ନୋଟ୍ ଖୋଜନ୍ତୁ!");
+        alert("ଅପଡେଟ୍ କରିବା ପାଇଁ କୌଣସି ନୋଟ୍ ଚୟନ ହୋଇନାହିଁ!");
         return;
     }
     let updatedNote = getFormData();
@@ -112,11 +49,11 @@ async function updateNote() {
     }
 }
 
-// 4. ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବା (Delete)
+// 4. ନୋଟ୍ ଡିଲିଟ୍ କରିବା (Delete)
 async function deleteNote() {
   let noteId = document.getElementById('noteId').value;
   if (!noteId) {
-    alert("ଡିଲିଟ୍ କରିବା ପାଇଁ ପ୍ରଥମେ ଉପରୁ ନୋଟ୍ ଖୋଜନ୍ତୁ!");
+    alert("ଡିଲିଟ୍ କରିବା ପାଇଁ କୌଣସି ନୋଟ୍ ଚୟନ ହୋଇନାହିଁ!");
     return;
   }
   let confirmDelete = confirm("ଆପଣ ନିଶ୍ଚିତ ଭାବରେ ଏହି ନୋଟ୍ କୁ ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?");
@@ -135,6 +72,67 @@ async function deleteNote() {
       alert("ଏରର୍: " + error);
     }
   }
+}
+
+// ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ବାଛିବା ମାତ୍ରେ ପୁରୁଣା/ନୂଆ ନୋଟ୍ ଅଟୋ-ଲୋଡ୍ ହେବା
+async function checkExistingNote() {
+    let sDate = document.getElementById('date').value;
+    let sClass = document.getElementById('className').value;
+    let sSub = document.getElementById('subject').value;
+    
+    if (!sDate || !sClass || !sSub) return;
+
+    try {
+        let response = await fetch(`${baseURL}/notes.json`);
+        let data = await response.json();
+        let foundId = null;
+        let foundNote = null;
+        if(data) {
+            for (let key in data) {
+                if (data[key].date === sDate && data[key].className === sClass && data[key].subject === sSub) {
+                    foundId = key;
+                    foundNote = data[key];
+                    break;
+                }
+            }
+        }
+        if (foundNote) {
+            document.getElementById('noteId').value = foundId;
+            document.getElementById('period').value = foundNote.period || '';
+            
+            // ଯଦି ନୂଆ ଫର୍ମାଟ୍ ଥାଏ (fullContent) ତେବେ ତାହା ଦେଖାବ, ନହଲେ ପୁରୁଣା ଫିଲ୍ଡଗୁଡ଼ିକୁ ମିଶାଇ ଦେଖାବ
+            if (foundNote.fullContent) {
+                document.getElementById('fullContent').value = foundNote.fullContent;
+            } else {
+                let oldText = `ପାଠ୍ୟ ପ୍ରସଙ୍ଗ: ${foundNote.topic || ''}\n` +
+                              `ଶିକ୍ଷଣ ଫଳାଫଳ: ${foundNote.outcomes || ''}\n` +
+                              `ଶିକ୍ଷଣ ସାମଗ୍ରୀ: ${foundNote.tlm || ''}\n\n` +
+                              `ପଞ୍ଚପଦୀ:\n` +
+                              `୧. ଅଧିତି: ${foundNote.adhiti || ''}\n` +
+                              `୨. ବୋଧ: ${foundNote.bodha || ''}\n` +
+                              `୩. ଅଭ୍ୟାସ: ${foundNote.abhyasa || ''}\n` +
+                              `୪. ପ୍ରୟୋଗ: ${foundNote.prayoga || ''}\n` +
+                              `୫. ପ୍ରସାର: ${foundNote.prasara || ''}`;
+                document.getElementById('fullContent').value = oldText;
+            }
+
+            document.getElementById('modeText').innerText = "ଏଡିଟ୍ ମୋଡ୍ (ପୁରୁଣା ନୋଟ୍ ଅଟୋ-ଲୋଡ୍ ହେଲା)";
+            document.getElementById('btnSubmit').style.display = 'none';
+            document.getElementById('btnUpdate').style.display = 'block';
+            document.getElementById('btnDelete').style.display = 'block';
+        } else {
+            document.getElementById('noteId').value = '';
+            document.getElementById('period').value = '';
+            document.getElementById('fullContent').value = '';
+
+            document.getElementById('modeText').innerText = "ନୂତନ ନୋଟ୍ ଅପଲୋଡ଼ ଫର୍ମ";
+            document.getElementById('btnSubmit').style.display = 'block';
+            document.getElementById('btnUpdate').style.display = 'none';
+            document.getElementById('btnDelete').style.display = 'none';
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 // 5. ଶିକ୍ଷକଙ୍କ ପାଇଁ Index ପେଜ୍‌ରୁ ଖୋଜିବା
@@ -161,19 +159,14 @@ async function searchNote() {
                 }
             }
             if (foundNote) {
+                let contentToShow = foundNote.fullContent ? foundNote.fullContent : 
+                    (`ପାଠ୍ୟ ପ୍ରସଙ୍ଗ: ${foundNote.topic || ''}\nଶିକ୍ଷଣ ଫଳାଫଳ: ${foundNote.outcomes || ''}\nଶିକ୍ଷଣ ସାମଗ୍ରୀ: ${foundNote.tlm || ''}\n\nପଞ୍ଚପଦୀ:\n୧. ଅଧିତି: ${foundNote.adhiti || ''}\n୨. ବୋଧ: ${foundNote.bodha || ''}\n୩. ଅଭ୍ୟାସ: ${foundNote.abhyasa || ''}\n୪. ପ୍ରୟୋଗ: ${foundNote.prayoga || ''}\n୫. ପ୍ରସାର: ${foundNote.prasara || ''}`);
+
                 resultArea.innerHTML = `
                     <div class="note-card">
                         <h3>${foundNote.className} - ${foundNote.subject}</h3>
                         <div class="note-item"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>କାଳାଂଶ:</strong> ${foundNote.period}</div>
-                        <div class="note-item"><strong>ପାଠ୍ୟ ପ୍ରସଙ୍ଗ (Topic):</strong> ${foundNote.topic}</div>
-                        <div class="note-item"><strong>ଶିକ୍ଷଣ ଫଳାଫଳ:</strong> ${foundNote.outcomes}</div>
-                        <div class="note-item"><strong>ଶିକ୍ଷଣ ସାମଗ୍ରୀ (TLM):</strong> ${foundNote.tlm}</div>
-                        <h4 style="color:#0056b3; border-bottom: 1px dashed #ccc; margin-top:10px;">ପଞ୍ଚପଦୀ :</h4>
-                        <div class="note-item"><strong>୧. ଅଧିତି:</strong> ${foundNote.adhiti}</div>
-                        <div class="note-item"><strong>୨. ବୋଧ:</strong> ${foundNote.bodha}</div>
-                        <div class="note-item"><strong>୩. ଅଭ୍ୟାସ:</strong> ${foundNote.abhyasa}</div>
-                        <div class="note-item"><strong>୪. ପ୍ରୟୋଗ:</strong> ${foundNote.prayoga}</div>
-                        <div class="note-item"><strong>୫. ପ୍ରସାର:</strong> ${foundNote.prasara}</div>
+                        <div class="note-item" style="white-space: pre-wrap; margin-top: 10px; line-height: 1.6; background: #f9f9f9; padding: 12px; border-radius: 5px; border-left: 4px solid #0056b3;">${contentToShow}</div>
                     </div>
                 `;
             } else {
@@ -193,14 +186,7 @@ function getFormData() {
         className: document.getElementById('className').value,
         period: document.getElementById('period').value,
         subject: document.getElementById('subject').value,
-        topic: document.getElementById('topic').value,
-        outcomes: document.getElementById('outcomes').value,
-        tlm: document.getElementById('tlm').value,
-        adhiti: document.getElementById('adhiti').value,
-        bodha: document.getElementById('bodha').value,
-        abhyasa: document.getElementById('abhyasa').value,
-        prayoga: document.getElementById('prayoga').value,
-        prasara: document.getElementById('prasara').value
+        fullContent: document.getElementById('fullContent').value
     };
 }
 
@@ -208,7 +194,10 @@ window.onload = function() {
     let today = new Date().toISOString().split('T')[0];
     if(document.getElementById('date')) document.getElementById('date').value = today;
     if(document.getElementById('searchDate')) document.getElementById('searchDate').value = today;
-    if(document.getElementById('searchEditDate')) document.getElementById('searchEditDate').value = today;
+    
+    if(document.getElementById('date')) document.getElementById('date').addEventListener('change', checkExistingNote);
+    if(document.getElementById('className')) document.getElementById('className').addEventListener('change', checkExistingNote);
+    if(document.getElementById('subject')) document.getElementById('subject').addEventListener('change', checkExistingNote);
 }
 
 const classBooks = {
@@ -242,7 +231,7 @@ if (classSelect && subjectSelect) {
     });
 }
 
-// Admin Panel Dropdown
+// Admin Panel Main Dropdown
 const adminClassSelect = document.getElementById("className");
 const adminSubjectSelect = document.getElementById("subject");
 if (adminClassSelect && adminSubjectSelect) {
@@ -259,25 +248,6 @@ if (adminClassSelect && adminSubjectSelect) {
         } else {
             adminSubjectSelect.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
         }
-    });
-}
-
-// Admin Panel Search Edit Dropdown
-const searchEditClass = document.getElementById("searchEditClass");
-const searchEditSubject = document.getElementById("searchEditSubject");
-if (searchEditClass && searchEditSubject) {
-    searchEditClass.addEventListener("change", function() {
-        const selectedClass = this.value;
-        searchEditSubject.innerHTML = '<option value="">ବିଷୟ ବାଛନ୍ତୁ</option>';
-        if (selectedClass && classBooks[selectedClass]) {
-            classBooks[selectedClass].forEach(function(bookName) {
-                const option = document.createElement("option");
-                option.value = bookName;
-                option.textContent = bookName;
-                searchEditSubject.appendChild(option);
-            });
-        } else {
-            searchEditSubject.innerHTML = '<option value="">ପ୍ରଥମେ ଶ୍ରେଣୀ ବାଛନ୍ତୁ</option>';
-        }
+        checkExistingNote();
     });
 }
