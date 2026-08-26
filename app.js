@@ -74,7 +74,7 @@ async function deleteNote() {
   }
 }
 
-// 4. ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ବାଛିବା ମାତ୍ରେ ପୁରୁଣା/ନୂଆ ନୋଟ୍ ଅଟୋ-ଲୋଡ୍ ହେବା
+// 4. ଅପ୍ଟିମାଇଜ୍ଡ୍: କେବଳ ସେହି ତାରିଖର ଡାଟା ଫେଚ୍ କରିବା (ଡାଉନଲୋଡ୍ କମାଇବା ପାଇଁ)
 async function checkExistingNote() {
     let sDate = document.getElementById('date').value;
     let sClass = document.getElementById('className').value;
@@ -83,13 +83,15 @@ async function checkExistingNote() {
     if (!sDate || !sClass || !sSub) return;
 
     try {
-        let response = await fetch(`${baseURL}/notes.json`);
+        let queryURL = `${baseURL}/notes.json?orderBy="date"&equalTo="${sDate}"`;
+        let response = await fetch(queryURL);
         let data = await response.json();
+        
         let foundId = null;
         let foundNote = null;
         if(data) {
             for (let key in data) {
-                if (data[key].date === sDate && data[key].className === sClass && data[key].subject === sSub) {
+                if (data[key].className === sClass && data[key].subject === sSub) {
                     foundId = key;
                     foundNote = data[key];
                     break;
@@ -134,25 +136,28 @@ async function checkExistingNote() {
     }
 }
 
-// 5. ଶିକ୍ଷକଙ୍କ ପାଇଁ Index ପେଜ୍‌ରୁ ଖୋଜିବା
+// 5. ଅପ୍ଟିମାଇଜ୍ଡ୍: ଇଣ୍ଡେକ୍ସ ପେଜ୍ ସର୍ଚ୍ଚ (ଡାଉନଲୋଡ୍ ବଞ୍ଚାଇବା ପାଇଁ)
 async function searchNote() {
     let searchDate = document.getElementById('searchDate').value;
     let searchClass = document.getElementById('searchClass').value;
-    let searchSubject = document.getElementById('searchSubject').value.trim().toLowerCase();
+    let searchSubject = document.getElementById('searchSubject').value.trim();
     let resultArea = document.getElementById('resultArea');
+    
     if (!searchDate || !searchClass || !searchSubject) {
         alert("ଦୟା କରି ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ପୂରଣ କରନ୍ତୁ!");
         return;
     }
     resultArea.innerHTML = "<p style='text-align:center;'>ଖୋଜା ଚାଲିଛି...</p>";
     try {
-        let response = await fetch(`${baseURL}/notes.json`);
+        let queryURL = `${baseURL}/notes.json?orderBy="date"&equalTo="${searchDate}"`;
+        let response = await fetch(queryURL);
         let data = await response.json();
+        
         if(data) {
             let foundNote = null;
             for (let key in data) {
-                let noteSub = data[key].subject ? data[key].subject.toLowerCase() : "";
-                if (data[key].date === searchDate && data[key].className === searchClass && noteSub.includes(searchSubject)) {
+                let noteSub = data[key].subject ? data[key].subject.trim() : "";
+                if (data[key].className === searchClass && noteSub === searchSubject) {
                     foundNote = data[key];
                     break;
                 }
@@ -174,10 +179,10 @@ async function searchNote() {
                 }
 
                 resultArea.innerHTML = `
-                    <div class="note-card">
-                        <h3>${foundNote.className} - ${foundNote.subject}</h3>
-                        <div class="note-item"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>କାଳାଂଶ:</strong> ${foundNote.period || ''}</div>
-                        <div class="note-item" style="white-space: pre-wrap; margin-top: 10px; line-height: 1.6; background: #f9f9f9; padding: 12px; border-radius: 5px; border-left: 4px solid #0056b3;">${contentToShow}</div>
+                    <div class="note-card" style="background: transparent !important; background-color: transparent !important; border: none !important; box-shadow: none !important; padding: 15px;">
+                        <h3 style="font-size: 20px; font-weight: bold; color: #b30000; border-bottom: 1px solid #ccc; padding-bottom: 5px;">${foundNote.className} - ${foundNote.subject}</h3>
+                        <div class="note-item" style="font-size: 16px; line-height: 1.8; margin-bottom: 8px;"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>କାଳାଂଶ:</strong> ${foundNote.period || ''}</div>
+                        <div class="note-item" style="font-size: 16px; line-height: 1.8; white-space: pre-wrap; margin-top: 10px; background: rgba(255,255,255,0.8); padding: 12px; border-radius: 5px; border-left: 4px solid #0056b3;">${contentToShow}</div>
                     </div>
                 `;
             } else {
