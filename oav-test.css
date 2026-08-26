@@ -1,51 +1,483 @@
-/* OAV-2026 Custom Responsive Styles */
-.oav-card {
-    background: #ffffff;
-    border: 1px solid #e1e8ed;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    transition: all 0.3s ease;
+/* =========================================================
+   OAV-2026 TEST CSS
+   Mobile + Desktop Responsive
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
 }
-.oav-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
 }
-.option-label {
+
+
+/* ================= HEADER ================= */
+
+.oav-header {
+    background: linear-gradient(135deg, #003399, #0066cc);
+    color: white;
+    padding: 14px 20px;
+
     display: flex;
     align-items: center;
-    background: #f8f9fa;
-    border: 2px solid #e9ecef;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.oav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.oav-logo > span {
+    font-size: 30px;
+}
+
+.oav-logo h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.oav-logo small {
+    opacity: 0.9;
+}
+
+
+#timerDisplay {
+    background: white;
+    color: #003399;
+
+    padding: 9px 15px;
+
+    border-radius: 25px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* ================= MAIN ================= */
+
+.oav-test-container {
+
+    width: 100%;
+    max-width: 900px;
+
+    margin: 25px auto;
+
+    padding: 0 15px;
+}
+
+
+/* ================= TEST INFO ================= */
+
+#testInfoBar {
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 15px 20px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    font-weight: bold;
+}
+
+#lblTestName {
+    color: #003399;
+}
+
+#lblSubject {
+    color: #15803d;
+}
+
+#lblTotalMarks {
+    color: #7e22ce;
+}
+
+
+/* ================= STATUS ================= */
+
+#testStatusMsg {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.07);
+
+    color: #475569;
+}
+
+
+/* ================= QUESTION BOX ================= */
+
+#questionBox {
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 4px 18px rgba(0,0,0,0.08);
+}
+
+
+/* ================= QUESTION HEADER ================= */
+
+.question-header {
+
+    border-bottom: 1px solid #e2e8f0;
+
+    padding-bottom: 12px;
+
+    margin-bottom: 20px;
+}
+
+.question-header h3 {
+
+    margin: 0;
+
+    color: #003399;
+
+    font-size: 17px;
+}
+
+
+/* ================= QUESTION ================= */
+
+.question-area {
+
+    background: #f8fafc;
+
+    border-left: 5px solid #003399;
+
     border-radius: 8px;
-    padding: 12px 15px;
+
+    padding: 18px;
+
+    margin-bottom: 20px;
+}
+
+#qText {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    font-weight: 600;
+}
+
+
+/* ================= OPTIONS ================= */
+
+#optionsContainer {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.option-label {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 9px;
+
     cursor: pointer;
-    font-size: 16px;
-    transition: all 0.2s ease;
+
+    transition: 0.2s;
+
+    background: white;
+
+    line-height: 1.5;
 }
+
+
 .option-label:hover {
-    background: #f1f3f5;
-    border-color: #0044cc;
+
+    background: #eff6ff;
+
+    border-color: #2563eb;
 }
-.option-label input[type="radio"] {
-    margin-right: 12px;
-    transform: scale(1.2);
+
+
+.option-label input {
+
+    margin-top: 4px;
+
+    accent-color: #003399;
+
+    transform: scale(1.15);
 }
-.option-label.selected {
-    background: #e8f0fe;
-    border-color: #0044cc;
-    font-weight: 500;
+
+
+.option-label:has(input:checked) {
+
+    background: #eff6ff;
+
+    border-color: #003399;
+
+    box-shadow:
+        0 0 0 1px #003399;
 }
-/* Mobile optimizations */
+
+
+/* ================= BUTTONS ================= */
+
+.test-buttons {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+
+.test-buttons button {
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 11px 20px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    color: white;
+
+    background: #003399;
+
+    transition: 0.2s;
+}
+
+
+.test-buttons button:hover {
+
+    opacity: 0.9;
+
+    transform: translateY(-1px);
+}
+
+
+#btnPrev {
+
+    background: #64748b;
+}
+
+
+#btnNext {
+
+    background: #2563eb;
+}
+
+
+#btnSubmitTest {
+
+    background: #16a34a;
+
+    display: none;
+}
+
+
+/* ================= ALREADY ATTEMPTED ================= */
+
+.already-attempted {
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+.already-attempted h3 {
+
+    color: #dc2626;
+}
+
+
+.already-attempted a {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 10px 18px;
+
+    border-radius: 7px;
+
+    background: #003399;
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* ================= TABLET ================= */
+
 @media (max-width: 768px) {
-    .container {
-        padding: 15px !important;
-        margin: 10px !important;
+
+    .oav-header {
+
+        padding: 12px 15px;
     }
-    p, label, input, button {
-        font-size: 16px !important;
+
+    .oav-logo h2 {
+
+        font-size: 18px;
     }
+
+    #timerDisplay {
+
+        font-size: 13px;
+
+        padding: 8px 11px;
+    }
+
+    #questionBox {
+
+        padding: 20px;
+    }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 480px) {
+
+    .oav-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        text-align: center;
+    }
+
+
+    .oav-logo {
+
+        justify-content: center;
+    }
+
+
+    #timerDisplay {
+
+        width: 100%;
+
+        text-align: center;
+    }
+
+
+    .oav-test-container {
+
+        margin-top: 15px;
+
+        padding: 0 10px;
+    }
+
+
+    #testInfoBar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        text-align: center;
+
+        padding: 13px;
+    }
+
+
+    #questionBox {
+
+        padding: 15px;
+
+        border-radius: 10px;
+    }
+
+
+    #qText {
+
+        font-size: 15px;
+    }
+
+
     .option-label {
-        padding: 14px;
-        font-size: 16px !important;
+
+        padding: 12px;
+
+        font-size: 14px;
     }
+
+
+    .test-buttons {
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    .test-buttons button {
+
+        flex: 1;
+
+        min-width: 100px;
+
+        padding: 10px 12px;
+    }
+
 }
