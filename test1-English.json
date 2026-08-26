@@ -1,0 +1,22 @@
+[
+  {
+    "questionNumber": 1,
+    "question": "Choose the correct plural form of 'Child'.",
+    "optionA": "Childs",
+    "optionB": "Children",
+    "optionC": "Childes",
+    "optionD": "Childrens",
+    "correctAnswer": "B",
+    "explanation": "'Children' is the correct plural form of 'Child'."
+  },
+  {
+    "questionNumber": 2,
+    "question": "Choose the correct word: She ___ to school every day.",
+    "optionA": "go",
+    "optionB": "going",
+    "optionC": "goes",
+    "optionD": "gone",
+    "correctAnswer": "C",
+    "explanation": "With 'She', we use 'goes' in the simple present tense."
+  }
+]
