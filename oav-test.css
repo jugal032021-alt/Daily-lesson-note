@@ -1,0 +1,51 @@
+/* OAV-2026 Custom Responsive Styles */
+.oav-card {
+    background: #ffffff;
+    border: 1px solid #e1e8ed;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+}
+.oav-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.option-label {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+.option-label:hover {
+    background: #f1f3f5;
+    border-color: #0044cc;
+}
+.option-label input[type="radio"] {
+    margin-right: 12px;
+    transform: scale(1.2);
+}
+.option-label.selected {
+    background: #e8f0fe;
+    border-color: #0044cc;
+    font-weight: 500;
+}
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px !important;
+        margin: 10px !important;
+    }
+    p, label, input, button {
+        font-size: 16px !important;
+    }
+    .option-label {
+        padding: 14px;
+        font-size: 16px !important;
+    }
+}
