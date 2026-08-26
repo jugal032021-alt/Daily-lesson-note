@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// ==================== 1. REGISTRATION & DASHBOARD LOGIC ====================
+// ==================== 1. REGISTRATION & DASHBOARD LOGIC ==================
 function checkSession() {
     let savedMobile = localStorage.getItem("oav_student_mobile");
     if (savedMobile) {
@@ -32,7 +32,7 @@ function checkSession() {
                 let data = doc.data();
                 document.getElementById("regSection").style.display = "none";
                 document.getElementById("dashboardSection").style.display = "block";
-                document.getElementById("welcomeMsg").innerText = `Welcome, ${data.name}!`;
+                document.getElementById("welcomeMsginnerText = `Welcome, ${data.name}!`;
                 document.getElementById("studentMeta").innerText = `School: ${data.school} | City: ${data.city} | Mobile: ${data.mobile}`;
                 loadDashboardTests(savedMobile);
             } else {
@@ -83,7 +83,7 @@ async function loadDashboardTests(mobile) {
     try {
         let testsSnap = await oavDb.collection("oav_tests").where("isPublished", "==", true).get();
         let attemptsSnap = await oavDb.collection("oav_attempts").where("studentMobile", "==", mobile).get();
-        
+
         let attemptedMap = {};
         attemptsSnap.forEach(doc => {
             let d = doc.data();
@@ -91,7 +91,7 @@ async function loadDashboardTests(mobile) {
         });
 
         if (testsSnap.empty) {
-            container.innerHTML = "<p style='text-align:center; color:#777;'>No practice tests published yet. Check back soon!</p>";
+            container.innerHTML = "<p style='text-align: center; color:#777;'>No practice tests available right now.</p>";
             return;
         }
 
@@ -108,45 +108,37 @@ async function loadDashboardTests(mobile) {
         let html = "";
         for (let tNum in testsMap) {
             let testObj = testsMap[tNum];
-            html += `
-                <div style="background: #fdfdfd; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                    <h4 style="margin: 0 0 12px 0; color: #0044cc; font-size: 18px;">📌 ${testObj.testName}</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
-            `;
+            html += `<div style="background: #fdfdfd; border: 1px solid #e2e8f0; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                <h4 style="margin: 0 0 12px 0; color: #0044cc; font-size: 18px;">${testObj.testName}</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">`;
 
             ['Mathematics', 'EVS', 'English'].forEach(sub => {
                 let testId = testObj.subjects[sub];
                 let isAttempted = testId ? attemptedMap[`${testId}_${sub}`] : false;
-                
+
                 if (testId) {
                     if (isAttempted) {
-                        html += `
-                            <div style="background: #f1f3f5; padding: 12px; border-radius: 8px; border-left: 4px solid #6c757d; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <div style="font-weight: bold; color: #333;">${sub} (30 Marks)</div>
-                                    <div style="font-size: 12px; color: #28a745; margin-top: 3px;">✅ Attempted</div>
-                                </div>
-                                <a href="oav-result.html?test=${testId}&subject=${sub}" style="background: #6c757d; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 12px; font-weight: bold;">View Result</a>
+                        html += `<div style="background: #f1f3f5; padding: 12px; border-radius: 8px; border: 1px solid #dcdcdc; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: bold; color: #333;">${sub} (30 Marks)</div>
+                                <div style="font-size: 12px; color: #28a745; margin-top: 3px;">✔ Completed</div>
                             </div>
-                        `;
+                            <a href="oav-result.html?test=${testId}&subject=${sub}" style="background: #6c757d; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">View Result</a>
+                        </div>`;
                     } else {
-                        html += `
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border-left: 4px solid #0044cc; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <div style="font-weight: bold; color: #333;">${sub} (30 Marks)</div>
-                                    <div style="font-size: 12px; color: #0044cc; margin-top: 3px;">🟢 Free Test</div>
-                                </div>
-                                <a href="oav-test.html?test=${testId}&subject=${sub}" style="background: #28a745; color: white; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold;">START TEST</a>
+                        html += `<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #cce5ff; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: bold; color: #333;">${sub} (30 Marks)</div>
+                                <div style="font-size: 12px; color: #0044cc; margin-top: 3px;">Ready to Take</div>
                             </div>
-                        `;
+                            <a href="oav-test.html?test=${testId}&subject=${sub}" style="background: #0044cc; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold;">Start Test</a>
+                        </div>`;
                     }
                 } else {
-                    html += `
-                        <div style="background: #fafafa; padding: 12px; border-radius: 8px; border-left: 4px solid #ccc; opacity: 0.6;">
-                            <div style="font-weight: bold; color: #777;">${sub} (30 Marks)</div>
-                            <div style="font-size: 12px; color: #999; margin-top: 3px;">Coming Soon</div>
-                        </div>
-                    `;
+                    html += `<div style="background: #fafafa; padding: 12px; border-radius: 8px; border: 1px solid #eee;">
+                        <div style="font-weight: bold; color: #777;">${sub} (30 Marks)</div>
+                        <div style="font-size: 12px; color: #999; margin-top: 3px;">Coming Soon</div>
+                    </div>`;
                 }
             });
 
@@ -159,7 +151,6 @@ async function loadDashboardTests(mobile) {
         container.innerHTML = `<p style="color:red; text-align:center;">Error loading tests: ${err.message}</p>`;
     }
 }
-
 
 // ==================== 2. TEST EXECUTION & OPTIMIZED CACHED LOGIC ====================
 async function initializeTestPage() {
@@ -180,10 +171,8 @@ async function initializeTestPage() {
     }
 
     try {
-        // Check browser session cache first to save Firestore reads/bandwidth
         let cacheKey = `oav_questions_${currentTestId}_${currentSubject}`;
         let cachedQuestions = sessionStorage.getItem(cacheKey);
-
         if (cachedQuestions) {
             testQuestions = JSON.parse(cachedQuestions);
             document.getElementById("testStatusMsg").style.display = "none";
@@ -193,7 +182,6 @@ async function initializeTestPage() {
             return;
         }
 
-        // Secure One-Attempt Validation Check
         let attemptDoc = await oavDb.collection("oav_attempts")
             .where("studentMobile", "==", mobile)
             .where("testId", "==", currentTestId)
@@ -204,24 +192,21 @@ async function initializeTestPage() {
             document.getElementById("questionBox").style.display = "none";
             document.getElementById("timerDisplay").style.display = "none";
             document.getElementById("testStatusMsg").innerHTML = `
-                <div style="background: #ffebee; color: #c62828; padding: 20px; border-radius: 8px; border: 1px solid #ef9a9a;">
+                <div style="background: #ffebee; color: #c62828; padding: 20px; border-radius: 8px; text-align:center;">
                     <h3>⚠️ You have already attempted this test!</h3>
                     <p>One-attempt rule applies. You cannot attempt this test again.</p>
-                    <a href="oav-result.html?test=${currentTestId}&subject=${currentSubject}" style="background: #0044cc; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px; font-weight: bold;">View Your Result & Solutions</a>
-                </div>
-            `;
+                    <a href="oav-result.html?test=${currentTestId}&subject=${currentSubject}" style="background:#c62828; color:white; padding:8px 15px; border-radius:4px; text-decoration:none; font-weight:bold;">View Previous Result</a>
+                </div>`;
             return;
         }
 
-        // Fetch Test Details & Duration
         let testDoc = await oavDb.collection("oav_tests").doc(currentTestId).get();
         let testData = testDoc.exists ? testDoc.data() : { testName: "Practice Test", duration: 30 };
         testDurationSeconds = (testData.duration || 30) * 60;
-
+        
         document.getElementById("lblTestName").innerText = `Test: ${testData.testName}`;
         document.getElementById("lblSubject").innerText = `Subject: ${currentSubject}`;
 
-        // Fetch Questions once
         let qSnap = await oavDb.collection("oav_questions")
             .where("testId", "==", currentTestId)
             .where("subject", "==", currentSubject)
@@ -229,7 +214,7 @@ async function initializeTestPage() {
             .get();
 
         if (qSnap.empty) {
-            document.getElementById("testStatusMsg").innerText = "No questions found for this test yet.";
+            document.getElementById("testStatusMsg").innerText = "No questions found for this test.";
             return;
         }
 
@@ -240,12 +225,9 @@ async function initializeTestPage() {
             testQuestions.push(q);
         });
 
-        // Store in sessionStorage to prevent repeat Firestore reads during the test
         sessionStorage.setItem(cacheKey, JSON.stringify(testQuestions));
-
         document.getElementById("testStatusMsg").style.display = "none";
         document.getElementById("questionBox").style.display = "block";
-
         startTestTimer();
         renderQuestion();
 
@@ -290,20 +272,20 @@ function renderQuestion() {
         let isChecked = studentAnswers[currentQuestionIndex] === opt.key ? "checked" : "";
         let selectedClass = studentAnswers[currentQuestionIndex] === opt.key ? "selected" : "";
         html += `
-            <label class="option-label ${selectedClass}">
-                <input type="radio" name="examOption" value="${opt.key}" ${isChecked} onclick="selectAnswer('${opt.key}')">
-                <span><b>${opt.key}.</b> ${opt.text}</span>
-            </label>
-        `;
+        <label class="option-label ${selectedClass}" style="display:block; padding:10px; margin-bottom:8px; border:1px solid #ccc; border-radius:5px; cursor:pointer;">
+            <input type="radio" name="examOption" value="${opt.key}" ${isChecked} onclick="selectAnswer('${opt.key}')">
+            <span><b>${opt.key}.</b> ${opt.text}</span>
+        </label>`;
     });
+
     optContainer.innerHTML = html;
 
-    document.getElementById("btnPrev").style.display = currentQuestionIndex === 0 ? "none" : "block";
+    document.getElementById("btnPrev").style.display = currentQuestionIndex === 0 ? "none" : "inline-block";
     if (currentQuestionIndex === testQuestions.length - 1) {
         document.getElementById("btnNext").style.display = "none";
-        document.getElementById("btnSubmitTest").style.display = "block";
+        document.getElementById("btnSubmitTest").style.display = "inline-block";
     } else {
-        document.getElementById("btnNext").style.display = "block";
+        document.getElementById("btnNext").style.display = "inline-block";
         document.getElementById("btnSubmitTest").style.display = "none";
     }
 }
@@ -339,11 +321,10 @@ async function submitTest(isAutoSubmit) {
     if (!mobile) return;
 
     let studentDoc = await oavDb.collection("oav_students").doc(mobile).get();
-    let studentInfo = studentDoc.data() || { name: "Student", school: "", city: "" };
+    let studentInfo = studentDoc.exists ? studentDoc.data() : { name: "Student", school: "", city: "" };
 
     let correctCount = 0;
     let wrongCount = 0;
-
     testQuestions.forEach((q, idx) => {
         let ans = studentAnswers[idx];
         if (ans && ans === q.correctAnswer) {
@@ -356,7 +337,7 @@ async function submitTest(isAutoSubmit) {
     let score = correctCount;
     let totalMarks = testQuestions.length;
     let percentage = Math.round((score / totalMarks) * 100);
-    let timeTakenSecs = testDurationSeconds - parseInt(document.getElementById("timeRemaining").innerText.split(':')[0]) * 60;
+    let timeTakenSecs = testDurationSeconds - parseInt(document.getElementById("timeRemaining").innerText.split(':')[0]) * 60 - parseInt(document.getElementById("timeRemaining").innerText.split(':')[1]);
     let timeTakenFormatted = `${Math.floor(timeTakenSecs / 60)} mins`;
 
     let attemptData = {
@@ -385,19 +366,17 @@ async function submitTest(isAutoSubmit) {
 
     try {
         await oavDb.collection("oav_attempts").add(attemptData);
-        let resRef = await oavDb.collection("oav_results").add(resultData);
-
+        await oavDb.collection("oav_results").add(resultData);
         sessionStorage.setItem("oav_last_submission", JSON.stringify({
             studentAnswers: studentAnswers,
             questions: testQuestions
         }));
 
-        window.location.href = `oav-result.html?test=${currentTestId}&subject=${currentSubject}&resId=${resRef.id}`;
+        window.location.href = `oav-result.html?test=${currentTestId}&subject=${currentSubject}`;
     } catch (err) {
         alert("Error submitting test: " + err.message);
     }
 }
-
 
 // ==================== 3. RESULT & LEADERBOARD LOGIC ====================
 async function loadResultPage() {
@@ -407,7 +386,6 @@ async function loadResultPage() {
     let mobile = localStorage.getItem("oav_student_mobile");
 
     if (!testId || !subject) return;
-
     document.getElementById("leaderboardTitle").innerText = subject;
 
     try {
@@ -437,23 +415,20 @@ async function loadResultPage() {
         let rank = 1;
         topSnap.forEach(doc => {
             let d = doc.data();
-            lbRows += `
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 10px; font-weight: bold;">#${rank}</td>
-                    <td style="padding: 10px;">${d.studentName}</td>
-                    <td style="padding: 10px;">${d.school || 'N/A'}</td>
-                    <td style="padding: 10px;">${d.city || 'N/A'}</td>
-                    <td style="padding: 10px; font-weight: bold; color: #28a745;">${d.score}/${d.totalMarks}</td>
-                    <td style="padding: 10px; color: #666;">${d.timeTaken}</td>
-                </tr>
-            `;
+            lbRows += `<tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 10px; font-weight: bold;">#${rank}</td>
+                <td style="padding: 10px;">${d.studentName}</td>
+                <td style="padding: 10px;">${d.school || 'N/A'}</td>
+                <td style="padding: 10px;">${d.city || 'N/A'}</td>
+                <td style="padding: 10px; font-weight: bold; color: #28a745;">${d.score}/${d.totalMarks}</td>
+                <td style="padding: 10px; color: #666;">${d.timeTaken}</td>
+            </tr>`;
             rank++;
         });
-        document.getElementById("leaderboardRows").style.display = topSnap.empty ? "none" : "";
+
+        document.getElementById("leaderboardRows").style.display = topSnap.empty ? "none" : "table-row-group";
         if (!topSnap.empty) {
             document.getElementById("leaderboardRows").innerHTML = lbRows;
-        } else {
-            document.getElementById("leaderboardRows").innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px; color:#666;">No leaderboard entries yet.</td></tr>`;
         }
 
         let qSnap = await oavDb.collection("oav_questions")
@@ -464,30 +439,28 @@ async function loadResultPage() {
 
         let subData = JSON.parse(sessionStorage.getItem("oav_last_submission") || "{}");
         let studentAnsMap = subData.studentAnswers || {};
-
         let reviewHtml = "";
         let idx = 0;
+
         qSnap.forEach(doc => {
             let q = doc.data();
             let userAns = studentAnsMap[idx] || "Not Answered";
             let isCorrect = userAns === q.correctAnswer;
             let statusColor = isCorrect ? "#d4edda" : "#f8d7da";
             let borderColor = isCorrect ? "#28a745" : "#dc3545";
-            let statusText = isCorrect ? "✅ Correct" : "❌ Incorrect";
+            let statusText = isCorrect ? "✔ Correct" : "❌ Incorrect";
 
-            reviewHtml += `
-                <div style="background: ${statusColor}; border-left: 5px solid ${borderColor}; padding: 15px; border-radius: 8px;">
-                    <div style="font-weight: bold; margin-bottom: 5px; color: #333;">Q${idx + 1}: ${q.question}</div>
-                    <div style="font-size: 14px; margin-bottom: 5px;">Your Answer: <b>${userAns}</b> | Correct Answer: <b>${q.correctAnswer}</b> (${statusText})</div>
-                    <div style="font-size: 13px; color: #555; background: rgba(255,255,255,0.7); padding: 8px; border-radius: 4px; margin-top: 8px;">
-                        <b>Explanation:</b> ${q.explanation || 'No explanation provided.'}
-                    </div>
+            reviewHtml += `<div style="background: ${statusColor}; border-left: 5px solid ${borderColor}; padding: 12px; margin-bottom: 10px; border-radius: 4px;">
+                <div style="font-weight: bold; margin-bottom: 5px; color: #333;">Q${idx + 1}: ${q.question}</div>
+                <div style="font-size: 14px; margin-bottom: 5px;">Your Answer: <b>${userAns}</b> | Correct Answer: <b>${q.correctAnswer}</b> (${statusText})</div>
+                <div style="font-size: 13px; color: #555; background: rgba(255,255,255,0.7); padding: 8px; border-radius: 4px; margin-top: 5px;">
+                    <b>Explanation:</b> ${q.explanation || 'No explanation provided.'}
                 </div>
-            `;
+            </div>`;
             idx++;
         });
 
-        document.getElementById("reviewContainer").innerHTML = reviewHtml || "<p>Review data not available in session.</p>";
+        document.getElementById("reviewContainer").innerHTML = reviewHtml || "<p>Review data not available.</p>";
 
     } catch (err) {
         console.error("Error loading results:", err);
