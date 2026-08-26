@@ -1,468 +1,1084 @@
-// Firebase Initialization & Core Logic for OAV-2026 (Optimized for Storage & Performance)
+/* =========================================================
+   OAV-2026 TEST SYSTEM
+   Questions = Local JSON
+   Firebase = Registration + Attempt + Result + Leaderboard
+   ========================================================= */
 
 const oavDb = firebase.firestore();
 
-// Global State Variables for Test Session
 let currentTestId = null;
 let currentSubject = null;
 let testQuestions = [];
 let currentQuestionIndex = 0;
 let studentAnswers = {};
 let timerInterval = null;
-let testDurationSeconds = 1800; // default 30 mins
+let testDurationSeconds = 30 * 60;
+
+
+/* =========================================================
+   PAGE START
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (document.getElementById("regSection")) {
-        checkSession();
-    }
+
     if (document.getElementById("questionBox")) {
         initializeTestPage();
     }
+
     if (document.getElementById("resScore")) {
         loadResultPage();
     }
+
 });
 
-// ==================== 1. REGISTRATION & DASHBOARD LOGIC ==================
-function checkSession() {
-    let savedMobile = localStorage.getItem("oav_student_mobile");
-    if (savedMobile) {
-        oavDb.collection("oav_students").doc(savedMobile).get().then((doc) => {
-            if (doc.exists) {
-                let data = doc.data();
-                document.getElementById("regSection").style.display = "none";
-                document.getElementById("dashboardSection").style.display = "block";
-                document.getElementById("welcomeMsginnerText = `Welcome, ${data.name}!`;
-                document.getElementById("studentMeta").innerText = `School: ${data.school} | City: ${data.city} | Mobile: ${data.mobile}`;
-                loadDashboardTests(savedMobile);
-            } else {
-                localStorage.removeItem("oav_student_mobile");
-            }
-        });
-    }
-}
 
-function registerStudent(e) {
-    e.preventDefault();
-    let name = document.getElementById("regName").value.trim();
-    let school = document.getElementById("regSchool").value.trim();
-    let city = document.getElementById("regCity").value.trim();
-    let mobile = document.getElementById("regMobile").value.trim();
+/* =========================================================
+   LOAD QUESTIONS FROM JSON
+   ========================================================= */
 
-    if (mobile.length !== 10) {
-        alert("Please enter a valid 10-digit mobile number.");
-        return;
-    }
+async function loadQuestionsFromJSON(testId, subject) {
 
-    let studentData = {
-        name: name,
-        school: school,
-        city: city,
-        mobile: mobile,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+    const fileName =
+        `oav-data/${encodeURIComponent(testId)}-${encodeURIComponent(subject)}.json`;
 
-    oavDb.collection("oav_students").doc(mobile).set(studentData, { merge: true }).then(() => {
-        localStorage.setItem("oav_student_mobile", mobile);
-        alert("Registration Successful!");
-        checkSession();
-    }).catch((err) => {
-        alert("Registration error: " + err.message);
+    console.log("Loading questions:", fileName);
+
+    const response = await fetch(fileName, {
+        cache: "force-cache"
     });
-}
 
-function logoutStudent() {
-    localStorage.removeItem("oav_student_mobile");
-    location.reload();
-}
-
-async function loadDashboardTests(mobile) {
-    let container = document.getElementById("testsListContainer");
-    container.innerHTML = "<p style='text-align:center; color:#666;'>Loading tests...</p>";
-
-    try {
-        let testsSnap = await oavDb.collection("oav_tests").where("isPublished", "==", true).get();
-        let attemptsSnap = await oavDb.collection("oav_attempts").where("studentMobile", "==", mobile).get();
-
-        let attemptedMap = {};
-        attemptsSnap.forEach(doc => {
-            let d = doc.data();
-            attemptedMap[`${d.testId}_${d.subject}`] = true;
-        });
-
-        if (testsSnap.empty) {
-            container.innerHTML = "<p style='text-align: center; color:#777;'>No practice tests available right now.</p>";
-            return;
-        }
-
-        let testsMap = {};
-        testsSnap.forEach(doc => {
-            let t = doc.data();
-            t.id = doc.id;
-            if (!testsMap[t.testNumber]) {
-                testsMap[t.testNumber] = { testName: t.testName, duration: t.duration || 30, subjects: {} };
-            }
-            testsMap[t.testNumber].subjects[t.subject] = t.id;
-        });
-
-        let html = "";
-        for (let tNum in testsMap) {
-            let testObj = testsMap[tNum];
-            html += `<div style="background: #fdfdfd; border: 1px solid #e2e8f0; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                <h4 style="margin: 0 0 12px 0; color: #0044cc; font-size: 18px;">${testObj.testName}</h4>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">`;
-
-            ['Mathematics', 'EVS', 'English'].forEach(sub => {
-                let testId = testObj.subjects[sub];
-                let isAttempted = testId ? attemptedMap[`${testId}_${sub}`] : false;
-
-                if (testId) {
-                    if (isAttempted) {
-                        html += `<div style="background: #f1f3f5; padding: 12px; border-radius: 8px; border: 1px solid #dcdcdc; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: bold; color: #333;">${sub} (30 Marks)</div>
-                                <div style="font-size: 12px; color: #28a745; margin-top: 3px;">✔ Completed</div>
-                            </div>
-                            <a href="oav-result.html?test=${testId}&subject=${sub}" style="background: #6c757d; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">View Result</a>
-                        </div>`;
-                    } else {
-                        html += `<div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #cce5ff; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: bold; color: #333;">${sub} (30 Marks)</div>
-                                <div style="font-size: 12px; color: #0044cc; margin-top: 3px;">Ready to Take</div>
-                            </div>
-                            <a href="oav-test.html?test=${testId}&subject=${sub}" style="background: #0044cc; color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold;">Start Test</a>
-                        </div>`;
-                    }
-                } else {
-                    html += `<div style="background: #fafafa; padding: 12px; border-radius: 8px; border: 1px solid #eee;">
-                        <div style="font-weight: bold; color: #777;">${sub} (30 Marks)</div>
-                        <div style="font-size: 12px; color: #999; margin-top: 3px;">Coming Soon</div>
-                    </div>`;
-                }
-            });
-
-            html += `</div></div>`;
-        }
-
-        container.innerHTML = html;
-
-    } catch (err) {
-        container.innerHTML = `<p style="color:red; text-align:center;">Error loading tests: ${err.message}</p>`;
+    if (!response.ok) {
+        throw new Error(
+            "Question file not found: " + fileName
+        );
     }
+
+    const questions = await response.json();
+
+    if (!Array.isArray(questions)) {
+        throw new Error("Invalid question JSON format.");
+    }
+
+    if (questions.length === 0) {
+        throw new Error("No questions available.");
+    }
+
+    return questions;
 }
 
-// ==================== 2. TEST EXECUTION & OPTIMIZED CACHED LOGIC ====================
+
+/* =========================================================
+   INITIALIZE TEST
+   ========================================================= */
+
 async function initializeTestPage() {
-    let urlParams = new URLSearchParams(window.location.search);
-    currentTestId = urlParams.get("test");
-    currentSubject = urlParams.get("subject");
-    let mobile = localStorage.getItem("oav_student_mobile");
+
+    const params = new URLSearchParams(window.location.search);
+
+    currentTestId = params.get("test");
+    currentSubject = params.get("subject");
+
+    const mobile =
+        localStorage.getItem("oav_student_mobile");
 
     if (!mobile) {
-        alert("Please register first!");
-        window.location.href = "oav-2026.html";
+
+        alert("Please register first.");
+
+        window.location.href =
+            "oav-2026.html";
+
         return;
     }
+
 
     if (!currentTestId || !currentSubject) {
-        document.getElementById("testStatusMsg").innerText = "Invalid Test Parameters.";
+
+        showStatus(
+            "Invalid test information."
+        );
+
         return;
     }
 
+
     try {
-        let cacheKey = `oav_questions_${currentTestId}_${currentSubject}`;
-        let cachedQuestions = sessionStorage.getItem(cacheKey);
-        if (cachedQuestions) {
-            testQuestions = JSON.parse(cachedQuestions);
-            document.getElementById("testStatusMsg").style.display = "none";
-            document.getElementById("questionBox").style.display = "block";
-            startTestTimer();
-            renderQuestion();
+
+        /* -----------------------------------------
+           CHECK ALREADY ATTEMPTED
+           ----------------------------------------- */
+
+        const attemptSnapshot =
+            await oavDb
+                .collection("oav_attempts")
+                .where(
+                    "studentMobile",
+                    "==",
+                    mobile
+                )
+                .where(
+                    "testId",
+                    "==",
+                    currentTestId
+                )
+                .where(
+                    "subject",
+                    "==",
+                    currentSubject
+                )
+                .limit(1)
+                .get();
+
+
+        if (!attemptSnapshot.empty) {
+
+            document.getElementById(
+                "questionBox"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "timerDisplay"
+            ).style.display = "none";
+
+
+            showStatus(`
+                <div class="already-attempted">
+
+                    <h3>
+                        ⚠️ You have already attempted this test.
+                    </h3>
+
+                    <p>
+                        You can attempt each subject only once.
+                    </p>
+
+                    <a href="oav-result.html?test=${encodeURIComponent(currentTestId)}&subject=${encodeURIComponent(currentSubject)}">
+                        View Result →
+                    </a>
+
+                </div>
+            `);
+
             return;
         }
 
-        let attemptDoc = await oavDb.collection("oav_attempts")
-            .where("studentMobile", "==", mobile)
-            .where("testId", "==", currentTestId)
-            .where("subject", "==", currentSubject)
-            .get();
 
-        if (!attemptDoc.empty) {
-            document.getElementById("questionBox").style.display = "none";
-            document.getElementById("timerDisplay").style.display = "none";
-            document.getElementById("testStatusMsg").innerHTML = `
-                <div style="background: #ffebee; color: #c62828; padding: 20px; border-radius: 8px; text-align:center;">
-                    <h3>⚠️ You have already attempted this test!</h3>
-                    <p>One-attempt rule applies. You cannot attempt this test again.</p>
-                    <a href="oav-result.html?test=${currentTestId}&subject=${currentSubject}" style="background:#c62828; color:white; padding:8px 15px; border-radius:4px; text-decoration:none; font-weight:bold;">View Previous Result</a>
-                </div>`;
-            return;
+        /* -----------------------------------------
+           LOAD TEST INFORMATION
+           ----------------------------------------- */
+
+        const testDoc =
+            await oavDb
+                .collection("oav_tests")
+                .doc(currentTestId)
+                .get();
+
+
+        if (testDoc.exists) {
+
+            const data = testDoc.data();
+
+            testDurationSeconds =
+                (data.duration || 30) * 60;
+
+
+            const nameElement =
+                document.getElementById(
+                    "lblTestName"
+                );
+
+            if (nameElement) {
+
+                nameElement.innerText =
+                    "Test: " +
+                    (data.testName ||
+                    "OAV Practice Test");
+
+            }
+
         }
 
-        let testDoc = await oavDb.collection("oav_tests").doc(currentTestId).get();
-        let testData = testDoc.exists ? testDoc.data() : { testName: "Practice Test", duration: 30 };
-        testDurationSeconds = (testData.duration || 30) * 60;
-        
-        document.getElementById("lblTestName").innerText = `Test: ${testData.testName}`;
-        document.getElementById("lblSubject").innerText = `Subject: ${currentSubject}`;
 
-        let qSnap = await oavDb.collection("oav_questions")
-            .where("testId", "==", currentTestId)
-            .where("subject", "==", currentSubject)
-            .orderBy("questionNumber", "asc")
-            .get();
+        const subjectElement =
+            document.getElementById(
+                "lblSubject"
+            );
 
-        if (qSnap.empty) {
-            document.getElementById("testStatusMsg").innerText = "No questions found for this test.";
-            return;
+        if (subjectElement) {
+
+            subjectElement.innerText =
+                "Subject: " +
+                currentSubject;
+
         }
 
-        testQuestions = [];
-        qSnap.forEach(doc => {
-            let q = doc.data();
-            q.id = doc.id;
-            testQuestions.push(q);
-        });
 
-        sessionStorage.setItem(cacheKey, JSON.stringify(testQuestions));
-        document.getElementById("testStatusMsg").style.display = "none";
-        document.getElementById("questionBox").style.display = "block";
-        startTestTimer();
+        const marksElement =
+            document.getElementById(
+                "lblTotalMarks"
+            );
+
+        if (marksElement) {
+
+            marksElement.innerText =
+                "Marks: 30";
+
+        }
+
+
+        /* -----------------------------------------
+           LOAD QUESTIONS FROM LOCAL JSON
+           ----------------------------------------- */
+
+        testQuestions =
+            await loadQuestionsFromJSON(
+                currentTestId,
+                currentSubject
+            );
+
+
+        /* Only maximum 30 questions */
+
+        testQuestions =
+            testQuestions.slice(0, 30);
+
+
+        if (testQuestions.length === 0) {
+
+            throw new Error(
+                "No questions found."
+            );
+
+        }
+
+
+        /* -----------------------------------------
+           START TEST
+           ----------------------------------------- */
+
+        const status =
+            document.getElementById(
+                "testStatusMsg"
+            );
+
+        if (status) {
+
+            status.style.display =
+                "none";
+
+        }
+
+
+        document.getElementById(
+            "questionBox"
+        ).style.display = "block";
+
+
+        startTimer();
+
         renderQuestion();
 
-    } catch (err) {
-        document.getElementById("testStatusMsg").innerText = "Error loading test: " + err.message;
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Error loading test: " +
+            error.message
+        );
+
     }
+
 }
 
-function startTestTimer() {
-    let remaining = testDurationSeconds;
-    let timerEl = document.getElementById("timeRemaining");
 
-    timerInterval = setInterval(() => {
-        let mins = Math.floor(remaining / 60);
-        let secs = remaining % 60;
-        timerEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+/* =========================================================
+   SHOW STATUS
+   ========================================================= */
 
-        if (remaining <= 0) {
-            clearInterval(timerInterval);
-            alert("Time is up! Submitting your test automatically.");
-            submitTest(true);
-        }
-        remaining--;
-    }, 1000);
+function showStatus(message) {
+
+    const element =
+        document.getElementById(
+            "testStatusMsg"
+        );
+
+    if (!element) return;
+
+    element.innerHTML = message;
+
+    element.style.display =
+        "block";
+
 }
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function startTimer() {
+
+    let remaining =
+        testDurationSeconds;
+
+
+    const timer =
+        document.getElementById(
+            "timeRemaining"
+        );
+
+
+    timerInterval =
+        setInterval(function () {
+
+            const minutes =
+                Math.floor(
+                    remaining / 60
+                );
+
+            const seconds =
+                remaining % 60;
+
+
+            timer.innerText =
+                String(minutes)
+                .padStart(2, "0")
+                +
+                ":"
+                +
+                String(seconds)
+                .padStart(2, "0");
+
+
+            if (remaining <= 0) {
+
+                clearInterval(
+                    timerInterval
+                );
+
+                submitTest(true);
+
+                return;
+
+            }
+
+
+            remaining--;
+
+        }, 1000);
+
+}
+
+
+/* =========================================================
+   DISPLAY QUESTION
+   ========================================================= */
 
 function renderQuestion() {
-    let q = testQuestions[currentQuestionIndex];
-    document.getElementById("qNumberTitle").innerText = `Question ${currentQuestionIndex + 1} of ${testQuestions.length}`;
-    document.getElementById("qText").innerText = q.question;
 
-    let optContainer = document.getElementById("optionsContainer");
-    let options = [
-        { key: 'A', text: q.optionA },
-        { key: 'B', text: q.optionB },
-        { key: 'C', text: q.optionC },
-        { key: 'D', text: q.optionD }
+    const question =
+        testQuestions[
+            currentQuestionIndex
+        ];
+
+
+    if (!question) return;
+
+
+    const numberTitle =
+        document.getElementById(
+            "qNumberTitle"
+        );
+
+
+    if (numberTitle) {
+
+        numberTitle.innerText =
+            `Question ${currentQuestionIndex + 1} of ${testQuestions.length}`;
+
+    }
+
+
+    const questionText =
+        document.getElementById(
+            "qText"
+        );
+
+
+    if (questionText) {
+
+        questionText.innerText =
+            question.question;
+
+    }
+
+
+    const options =
+        document.getElementById(
+            "optionsContainer"
+        );
+
+
+    if (!options) return;
+
+
+    options.innerHTML = "";
+
+
+    const optionList = [
+
+        ["A", question.optionA],
+
+        ["B", question.optionB],
+
+        ["C", question.optionC],
+
+        ["D", question.optionD]
+
     ];
 
-    let html = "";
-    options.forEach(opt => {
-        let isChecked = studentAnswers[currentQuestionIndex] === opt.key ? "checked" : "";
-        let selectedClass = studentAnswers[currentQuestionIndex] === opt.key ? "selected" : "";
-        html += `
-        <label class="option-label ${selectedClass}" style="display:block; padding:10px; margin-bottom:8px; border:1px solid #ccc; border-radius:5px; cursor:pointer;">
-            <input type="radio" name="examOption" value="${opt.key}" ${isChecked} onclick="selectAnswer('${opt.key}')">
-            <span><b>${opt.key}.</b> ${opt.text}</span>
-        </label>`;
-    });
 
-    optContainer.innerHTML = html;
+    optionList.forEach(
+        function ([key, text]) {
 
-    document.getElementById("btnPrev").style.display = currentQuestionIndex === 0 ? "none" : "inline-block";
-    if (currentQuestionIndex === testQuestions.length - 1) {
-        document.getElementById("btnNext").style.display = "none";
-        document.getElementById("btnSubmitTest").style.display = "inline-block";
-    } else {
-        document.getElementById("btnNext").style.display = "inline-block";
-        document.getElementById("btnSubmitTest").style.display = "none";
-    }
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+
+            label.className =
+                "option-label";
+
+
+            label.innerHTML = `
+
+                <input
+                    type="radio"
+                    name="examOption"
+                    value="${key}"
+                >
+
+                <span>
+                    <b>${key}.</b>
+                    ${escapeHTML(text || "")}
+                </span>
+
+            `;
+
+
+            const radio =
+                label.querySelector(
+                    "input"
+                );
+
+
+            radio.checked =
+                studentAnswers[
+                    currentQuestionIndex
+                ] === key;
+
+
+            radio.onclick =
+                function () {
+
+                    selectAnswer(key);
+
+                };
+
+
+            options.appendChild(
+                label
+            );
+
+        }
+    );
+
+
+    updateButtons();
+
 }
 
-function selectAnswer(optKey) {
-    studentAnswers[currentQuestionIndex] = optKey;
+
+/* =========================================================
+   SELECT ANSWER
+   ========================================================= */
+
+function selectAnswer(answer) {
+
+    studentAnswers[
+        currentQuestionIndex
+    ] = answer;
+
+
     renderQuestion();
+
 }
+
+
+/* =========================================================
+   NEXT QUESTION
+   ========================================================= */
 
 function nextQuestion() {
-    if (currentQuestionIndex < testQuestions.length - 1) {
+
+    if (
+        currentQuestionIndex <
+        testQuestions.length - 1
+    ) {
+
         currentQuestionIndex++;
+
         renderQuestion();
+
     }
+
 }
+
+
+/* =========================================================
+   PREVIOUS QUESTION
+   ========================================================= */
 
 function prevQuestion() {
-    if (currentQuestionIndex > 0) {
+
+    if (
+        currentQuestionIndex > 0
+    ) {
+
         currentQuestionIndex--;
+
         renderQuestion();
+
     }
+
 }
+
+
+/* =========================================================
+   BUTTON CONTROL
+   ========================================================= */
+
+function updateButtons() {
+
+    const previous =
+        document.getElementById(
+            "btnPrev"
+        );
+
+    const next =
+        document.getElementById(
+            "btnNext"
+        );
+
+    const submit =
+        document.getElementById(
+            "btnSubmitTest"
+        );
+
+
+    if (previous) {
+
+        previous.style.display =
+            currentQuestionIndex === 0
+            ? "none"
+            : "inline-block";
+
+    }
+
+
+    if (next) {
+
+        next.style.display =
+            currentQuestionIndex ===
+            testQuestions.length - 1
+            ? "none"
+            : "inline-block";
+
+    }
+
+
+    if (submit) {
+
+        submit.style.display =
+            currentQuestionIndex ===
+            testQuestions.length - 1
+            ? "inline-block"
+            : "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   CONFIRM SUBMIT
+   ========================================================= */
 
 function confirmSubmitTest() {
-    if (confirm("Are you sure you want to submit your test?")) {
-        clearInterval(timerInterval);
+
+    const answerCount =
+        Object.keys(
+            studentAnswers
+        ).length;
+
+
+    const message =
+        `You answered ${answerCount} of ${testQuestions.length} questions.\n\nSubmit test?`;
+
+
+    if (
+        confirm(message)
+    ) {
+
+        clearInterval(
+            timerInterval
+        );
+
         submitTest(false);
+
     }
+
 }
 
-async function submitTest(isAutoSubmit) {
-    let mobile = localStorage.getItem("oav_student_mobile");
-    if (!mobile) return;
 
-    let studentDoc = await oavDb.collection("oav_students").doc(mobile).get();
-    let studentInfo = studentDoc.exists ? studentDoc.data() : { name: "Student", school: "", city: "" };
+/* =========================================================
+   SUBMIT TEST
+   ========================================================= */
 
-    let correctCount = 0;
-    let wrongCount = 0;
-    testQuestions.forEach((q, idx) => {
-        let ans = studentAnswers[idx];
-        if (ans && ans === q.correctAnswer) {
-            correctCount++;
-        } else {
-            wrongCount++;
-        }
-    });
+async function submitTest(autoSubmit) {
 
-    let score = correctCount;
-    let totalMarks = testQuestions.length;
-    let percentage = Math.round((score / totalMarks) * 100);
-    let timeTakenSecs = testDurationSeconds - parseInt(document.getElementById("timeRemaining").innerText.split(':')[0]) * 60 - parseInt(document.getElementById("timeRemaining").innerText.split(':')[1]);
-    let timeTakenFormatted = `${Math.floor(timeTakenSecs / 60)} mins`;
+    const mobile =
+        localStorage.getItem(
+            "oav_student_mobile"
+        );
 
-    let attemptData = {
-        studentMobile: mobile,
-        testId: currentTestId,
-        subject: currentSubject,
-        attempted: true,
-        submittedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
 
-    let resultData = {
-        studentMobile: mobile,
-        studentName: studentInfo.name,
-        school: studentInfo.school,
-        city: studentInfo.city,
-        testId: currentTestId,
-        subject: currentSubject,
-        score: score,
-        totalMarks: totalMarks,
-        percentage: percentage,
-        correct: correctCount,
-        wrong: wrongCount,
-        timeTaken: timeTakenFormatted,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+    if (!mobile) {
+
+        alert(
+            "Student information not found."
+        );
+
+        return;
+
+    }
+
 
     try {
-        await oavDb.collection("oav_attempts").add(attemptData);
-        await oavDb.collection("oav_results").add(resultData);
-        sessionStorage.setItem("oav_last_submission", JSON.stringify({
-            studentAnswers: studentAnswers,
-            questions: testQuestions
-        }));
 
-        window.location.href = `oav-result.html?test=${currentTestId}&subject=${currentSubject}`;
-    } catch (err) {
-        alert("Error submitting test: " + err.message);
+        /* -----------------------------------------
+           GET STUDENT
+           ----------------------------------------- */
+
+        const studentDoc =
+            await oavDb
+                .collection("oav_students")
+                .doc(mobile)
+                .get();
+
+
+        const student =
+            studentDoc.exists
+            ? studentDoc.data()
+            : {
+                name: "Student",
+                school: "N/A",
+                city: "N/A"
+            };
+
+
+        /* -----------------------------------------
+           CALCULATE SCORE
+           ----------------------------------------- */
+
+        let correct = 0;
+
+
+        testQuestions.forEach(
+            function (question, index) {
+
+                if (
+                    studentAnswers[index] ===
+                    question.correctAnswer
+                ) {
+
+                    correct++;
+
+                }
+
+            }
+        );
+
+
+        const total =
+            testQuestions.length;
+
+
+        const wrong =
+            total - correct;
+
+
+        const percentage =
+            Math.round(
+                (correct / total) * 100
+            );
+
+
+        /* -----------------------------------------
+           SAVE ATTEMPT
+           ----------------------------------------- */
+
+        await oavDb
+            .collection("oav_attempts")
+            .add({
+
+                studentMobile:
+                    mobile,
+
+                testId:
+                    currentTestId,
+
+                subject:
+                    currentSubject,
+
+                attempted:
+                    true,
+
+                submittedAt:
+                    firebase.firestore
+                    .FieldValue
+                    .serverTimestamp()
+
+            });
+
+
+        /* -----------------------------------------
+           SAVE RESULT
+           ----------------------------------------- */
+
+        await oavDb
+            .collection("oav_results")
+            .add({
+
+                studentMobile:
+                    mobile,
+
+                studentName:
+                    student.name,
+
+                school:
+                    student.school,
+
+                city:
+                    student.city,
+
+                testId:
+                    currentTestId,
+
+                subject:
+                    currentSubject,
+
+                score:
+                    correct,
+
+                totalMarks:
+                    total,
+
+                percentage:
+                    percentage,
+
+                correct:
+                    correct,
+
+                wrong:
+                    wrong,
+
+                createdAt:
+                    firebase.firestore
+                    .FieldValue
+                    .serverTimestamp()
+
+            });
+
+
+        /* -----------------------------------------
+           SAVE QUESTIONS TEMPORARILY IN BROWSER
+           ----------------------------------------- */
+
+        sessionStorage.setItem(
+            "oav_last_submission",
+            JSON.stringify({
+
+                testId:
+                    currentTestId,
+
+                subject:
+                    currentSubject,
+
+                questions:
+                    testQuestions,
+
+                studentAnswers:
+                    studentAnswers
+
+            })
+        );
+
+
+        /* -----------------------------------------
+           GO TO RESULT
+           ----------------------------------------- */
+
+        window.location.href =
+            `oav-result.html?test=${encodeURIComponent(currentTestId)}&subject=${encodeURIComponent(currentSubject)}`;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Submit error: " +
+            error.message
+        );
+
     }
+
 }
 
-// ==================== 3. RESULT & LEADERBOARD LOGIC ====================
+
+/* =========================================================
+   RESULT PAGE
+   ========================================================= */
+
 async function loadResultPage() {
-    let urlParams = new URLSearchParams(window.location.search);
-    let testId = urlParams.get("test");
-    let subject = urlParams.get("subject");
-    let mobile = localStorage.getItem("oav_student_mobile");
 
-    if (!testId || !subject) return;
-    document.getElementById("leaderboardTitle").innerText = subject;
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const testId =
+        params.get("test");
+
+
+    const subject =
+        params.get("subject");
+
+
+    const mobile =
+        localStorage.getItem(
+            "oav_student_mobile"
+        );
+
+
+    if (
+        !testId ||
+        !subject ||
+        !mobile
+    ) {
+
+        return;
+
+    }
+
 
     try {
-        let resSnap = await oavDb.collection("oav_results")
-            .where("studentMobile", "==", mobile)
-            .where("testId", "==", testId)
-            .where("subject", "==", subject)
-            .get();
 
-        if (!resSnap.empty) {
-            let resData = resSnap.docs[0].data();
-            document.getElementById("resTestDetails").innerText = `Subject: ${subject} | Test ID: ${testId}`;
-            document.getElementById("resScore").innerText = `${resData.score} / ${resData.totalMarks}`;
-            document.getElementById("resPercentage").innerText = `${resData.percentage}%`;
-            document.getElementById("resCorrectWrong").innerText = `${resData.correct} / ${resData.wrong}`;
-            document.getElementById("resTimeTaken").innerText = resData.timeTaken;
+        /* -----------------------------------------
+           MY RESULT
+           ----------------------------------------- */
+
+        const myResult =
+            await oavDb
+                .collection("oav_results")
+                .where(
+                    "studentMobile",
+                    "==",
+                    mobile
+                )
+                .where(
+                    "testId",
+                    "==",
+                    testId
+                )
+                .where(
+                    "subject",
+                    "==",
+                    subject
+                )
+                .limit(1)
+                .get();
+
+
+        if (!myResult.empty) {
+
+            const data =
+                myResult.docs[0].data();
+
+
+            setText(
+                "resTestDetails",
+                "Subject: " + subject
+            );
+
+
+            setText(
+                "resScore",
+                `${data.score} / ${data.totalMarks}`
+            );
+
+
+            setText(
+                "resPercentage",
+                `${data.percentage}%`
+            );
+
+
+            setText(
+                "resCorrectWrong",
+                `${data.correct} / ${data.wrong}`
+            );
+
+
         }
 
-        let topSnap = await oavDb.collection("oav_results")
-            .where("testId", "==", testId)
-            .where("subject", "==", subject)
-            .orderBy("score", "desc")
-            .limit(10)
-            .get();
 
-        let lbRows = "";
+        /* -----------------------------------------
+           TOP 10 LEADERBOARD
+           ----------------------------------------- */
+
+        const leaderboard =
+            await oavDb
+                .collection("oav_results")
+                .where(
+                    "testId",
+                    "==",
+                    testId
+                )
+                .where(
+                    "subject",
+                    "==",
+                    subject
+                )
+                .orderBy(
+                    "score",
+                    "desc"
+                )
+                .limit(10)
+                .get();
+
+
+        const rows =
+            document.getElementById(
+                "leaderboardRows"
+            );
+
+
+        if (!rows) return;
+
+
+        rows.innerHTML = "";
+
+
         let rank = 1;
-        topSnap.forEach(doc => {
-            let d = doc.data();
-            lbRows += `<tr style="border-bottom: 1px solid #eee;">
-                <td style="padding: 10px; font-weight: bold;">#${rank}</td>
-                <td style="padding: 10px;">${d.studentName}</td>
-                <td style="padding: 10px;">${d.school || 'N/A'}</td>
-                <td style="padding: 10px;">${d.city || 'N/A'}</td>
-                <td style="padding: 10px; font-weight: bold; color: #28a745;">${d.score}/${d.totalMarks}</td>
-                <td style="padding: 10px; color: #666;">${d.timeTaken}</td>
-            </tr>`;
-            rank++;
-        });
 
-        document.getElementById("leaderboardRows").style.display = topSnap.empty ? "none" : "table-row-group";
-        if (!topSnap.empty) {
-            document.getElementById("leaderboardRows").innerHTML = lbRows;
-        }
 
-        let qSnap = await oavDb.collection("oav_questions")
-            .where("testId", "==", testId)
-            .where("subject", "==", subject)
-            .orderBy("questionNumber", "asc")
-            .get();
+        leaderboard.forEach(
+            function (doc) {
 
-        let subData = JSON.parse(sessionStorage.getItem("oav_last_submission") || "{}");
-        let studentAnsMap = subData.studentAnswers || {};
-        let reviewHtml = "";
-        let idx = 0;
+                const data =
+                    doc.data();
 
-        qSnap.forEach(doc => {
-            let q = doc.data();
-            let userAns = studentAnsMap[idx] || "Not Answered";
-            let isCorrect = userAns === q.correctAnswer;
-            let statusColor = isCorrect ? "#d4edda" : "#f8d7da";
-            let borderColor = isCorrect ? "#28a745" : "#dc3545";
-            let statusText = isCorrect ? "✔ Correct" : "❌ Incorrect";
 
-            reviewHtml += `<div style="background: ${statusColor}; border-left: 5px solid ${borderColor}; padding: 12px; margin-bottom: 10px; border-radius: 4px;">
-                <div style="font-weight: bold; margin-bottom: 5px; color: #333;">Q${idx + 1}: ${q.question}</div>
-                <div style="font-size: 14px; margin-bottom: 5px;">Your Answer: <b>${userAns}</b> | Correct Answer: <b>${q.correctAnswer}</b> (${statusText})</div>
-                <div style="font-size: 13px; color: #555; background: rgba(255,255,255,0.7); padding: 8px; border-radius: 4px; margin-top: 5px;">
-                    <b>Explanation:</b> ${q.explanation || 'No explanation provided.'}
-                </div>
-            </div>`;
-            idx++;
-        });
+                rows.innerHTML += `
 
-        document.getElementById("reviewContainer").innerHTML = reviewHtml || "<p>Review data not available.</p>";
+                    <tr>
 
-    } catch (err) {
-        console.error("Error loading results:", err);
+                        <td>${rank}</td>
+
+                        <td>
+                            ${escapeHTML(
+                                data.studentName ||
+                                "Student"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                data.school ||
+                                "N/A"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                data.city ||
+                                "N/A"
+                            )}
+                        </td>
+
+                        <td>
+                            <b>
+                                ${data.score}/${data.totalMarks}
+                            </b>
+                        </td>
+
+                    </tr>
+
+                `;
+
+
+                rank++;
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Result error:",
+            error
+        );
+
     }
+
+}
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function setText(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (element) {
+
+        element.innerText =
+            value;
+
+    }
+
+}
+
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
 }
