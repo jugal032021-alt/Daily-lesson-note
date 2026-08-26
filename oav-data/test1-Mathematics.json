@@ -1,0 +1,22 @@
+[
+  {
+    "questionNumber": 1,
+    "question": "25 + 15 = ?",
+    "optionA": "30",
+    "optionB": "35",
+    "optionC": "40",
+    "optionD": "45",
+    "correctAnswer": "C",
+    "explanation": "25 + 15 = 40."
+  },
+  {
+    "questionNumber": 2,
+    "question": "10 × 5 = ?",
+    "optionA": "40",
+    "optionB": "50",
+    "optionC": "60",
+    "optionD": "70",
+    "correctAnswer": "B",
+    "explanation": "10 × 5 = 50."
+  }
+]
