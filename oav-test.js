@@ -1,5 +1,4 @@
-// Firebase Initialization & Core Logic for OAV-2026
-// Uses existing Firebase project configuration from OdishaPathasala
+// Firebase Initialization & Core Logic for OAV-2026 (Optimized for Storage & Performance)
 
 const oavDb = firebase.firestore();
 
@@ -13,7 +12,6 @@ let timerInterval = null;
 let testDurationSeconds = 1800; // default 30 mins
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Check page context and execute appropriate functions
     if (document.getElementById("regSection")) {
         checkSession();
     }
@@ -163,7 +161,7 @@ async function loadDashboardTests(mobile) {
 }
 
 
-// ==================== 2. TEST EXECUTION & TIMER LOGIC ====================
+// ==================== 2. TEST EXECUTION & OPTIMIZED CACHED LOGIC ====================
 async function initializeTestPage() {
     let urlParams = new URLSearchParams(window.location.search);
     currentTestId = urlParams.get("test");
@@ -182,6 +180,20 @@ async function initializeTestPage() {
     }
 
     try {
+        // Check browser session cache first to save Firestore reads/bandwidth
+        let cacheKey = `oav_questions_${currentTestId}_${currentSubject}`;
+        let cachedQuestions = sessionStorage.getItem(cacheKey);
+
+        if (cachedQuestions) {
+            testQuestions = JSON.parse(cachedQuestions);
+            document.getElementById("testStatusMsg").style.display = "none";
+            document.getElementById("questionBox").style.display = "block";
+            startTestTimer();
+            renderQuestion();
+            return;
+        }
+
+        // Secure One-Attempt Validation Check
         let attemptDoc = await oavDb.collection("oav_attempts")
             .where("studentMobile", "==", mobile)
             .where("testId", "==", currentTestId)
@@ -201,6 +213,7 @@ async function initializeTestPage() {
             return;
         }
 
+        // Fetch Test Details & Duration
         let testDoc = await oavDb.collection("oav_tests").doc(currentTestId).get();
         let testData = testDoc.exists ? testDoc.data() : { testName: "Practice Test", duration: 30 };
         testDurationSeconds = (testData.duration || 30) * 60;
@@ -208,6 +221,7 @@ async function initializeTestPage() {
         document.getElementById("lblTestName").innerText = `Test: ${testData.testName}`;
         document.getElementById("lblSubject").innerText = `Subject: ${currentSubject}`;
 
+        // Fetch Questions once
         let qSnap = await oavDb.collection("oav_questions")
             .where("testId", "==", currentTestId)
             .where("subject", "==", currentSubject)
@@ -225,6 +239,9 @@ async function initializeTestPage() {
             q.id = doc.id;
             testQuestions.push(q);
         });
+
+        // Store in sessionStorage to prevent repeat Firestore reads during the test
+        sessionStorage.setItem(cacheKey, JSON.stringify(testQuestions));
 
         document.getElementById("testStatusMsg").style.display = "none";
         document.getElementById("questionBox").style.display = "block";
