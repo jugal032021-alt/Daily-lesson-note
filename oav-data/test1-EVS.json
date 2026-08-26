@@ -1,0 +1,22 @@
+[
+  {
+    "questionNumber": 1,
+    "question": "ଗଛର କେଉଁ ଅଂଶ ମାଟିରୁ ପାଣି ଶୋଷଣ କରେ?",
+    "optionA": "ପତ୍ର",
+    "optionB": "ଫୁଲ",
+    "optionC": "ଚେର",
+    "optionD": "ଫଳ",
+    "correctAnswer": "C",
+    "explanation": "ଗଛର ଚେର ମାଟିରୁ ପାଣି ଓ ଖଣିଜ ଲବଣ ଶୋଷଣ କରେ।"
+  },
+  {
+    "questionNumber": 2,
+    "question": "ନିମ୍ନଲିଖିତ ମଧ୍ୟରୁ କେଉଁଟି ସ୍ୱଚ୍ଛ ପାଣିର ଉତ୍ସ?",
+    "optionA": "ଆବର୍ଜନା ଥିବା ପୋଖରୀ",
+    "optionB": "ନାଳ",
+    "optionC": "ସ୍ୱଚ୍ଛ କୂଅ",
+    "optionD": "ନର୍ଦ୍ଦମା",
+    "correctAnswer": "C",
+    "explanation": "ସ୍ୱଚ୍ଛ କୂଅରୁ ସ୍ୱଚ୍ଛ ପାଣି ମିଳିପାରେ।"
+  }
+]
