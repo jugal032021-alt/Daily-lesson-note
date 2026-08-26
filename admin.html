@@ -95,5 +95,91 @@ projectId: "daily-lesson-note"
 if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 </script>
 <script src="app.js"></script>
+    <!-- OAV-2026 Admin Management Section -->
+<div id="oavAdminSection" style="background: white; padding: 20px; border-radius: 8px; margin-top: 20px; border-top: 4px solid #0044cc; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <h3 style="color: #0044cc; margin-top: 0;">OAV-2026 Test Series Administration</h3>
+    <p style="color: #666; font-size: 14px;">Manage tests, publish subjects, and add 30-mark MCQ questions for Mathematics, EVS, and English.</p>
+    
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #ddd; margin-top: 15px;">
+        <h4 style="margin-top: 0; color: #333;">Add OAV Question Form</h4>
+        <form id="oavQuestionAddForm" onsubmit="adminSaveOAVQuestion(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <div>
+                    <label style="font-weight: bold; font-size: 13px;">Test ID (e.g., test_01):</label>
+                    <input type="text" id="admTestId" required placeholder="test_01" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div>
+                    <label style="font-weight: bold; font-size: 13px;">Subject:</label>
+                    <select id="admSubject" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="EVS">EVS</option>
+                        <option value="English">English</option>
+                    </select>
+                </div>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="font-weight: bold; font-size: 13px;">Question Text:</label>
+                <textarea id="admQuestion" required rows="2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter question text..."></textarea>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                <input type="text" id="admOptA" required placeholder="Option A" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <input type="text" id="admOptB" required placeholder="Option B" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <input type="text" id="admOptC" required placeholder="Option C" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <input type="text" id="admOptD" required placeholder="Option D" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label style="font-weight: bold; font-size: 13px;">Correct Answer:</label>
+                    <select id="admCorrect" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-weight: bold; font-size: 13px;">Question Number:</label>
+                    <input type="number" id="admQNum" required value="1" min="1" max="30" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div>
+                    <label style="font-weight: bold; font-size: 13px;">Marks:</label>
+                    <input type="number" id="admMarks" required value="1" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold; font-size: 13px;">Explanation:</label>
+                <textarea id="admExplanation" rows="2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Explanation for student review page..."></textarea>
+            </div>
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer;">Save OAV Question</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function adminSaveOAVQuestion(e) {
+    e.preventDefault();
+    let qData = {
+        testId: document.getElementById("admTestId").value.trim(),
+        subject: document.getElementById("admSubject").value,
+        question: document.getElementById("admQuestion").value.trim(),
+        optionA: document.getElementById("admOptA").value.trim(),
+        optionB: document.getElementById("admOptB").value.trim(),
+        optionC: document.getElementById("admOptC").value.trim(),
+        optionD: document.getElementById("admOptD").value.trim(),
+        correctAnswer: document.getElementById("admCorrect").value,
+        questionNumber: parseInt(document.getElementById("admQNum").value),
+        marks: parseInt(document.getElementById("admMarks").value),
+        explanation: document.getElementById("admExplanation").value.trim()
+    };
+
+    firebase.firestore().collection("oav_questions").add(qData).then(() => {
+        alert("OAV Question saved successfully to Firestore!");
+        document.getElementById("oavQuestionAddForm").reset();
+    }).catch(err => {
+        alert("Error saving question: " + err.message);
+    });
+}
+</script>
+    
 </body>
 </html>
