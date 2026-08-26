@@ -1,92 +1,369 @@
 <!DOCTYPE html>
 <html lang="or">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Result & Solutions - Odisha Pathasala</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="oav-test.css">
-    <!-- Firebase SDKs -->
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>OAV-2026 Result - Odisha Pathasala</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="stylesheet"
+          href="oav-test.css">
+
+
+    <!-- FIREBASE -->
+
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
 </head>
-<body style="background-color: #f0f4f8;">
 
-    <div class="top-navbar">
-        <div class="logo-section">
-            <span class="logo-icon">📊</span>
-            <div class="site-title">
-                <h1>OAV-2026 Test Scorecard</h1>
-            </div>
-        </div>
-        <div class="menu-section">
-            <ul>
-                <li><a href="oav-2026.html" style="color:white; text-decoration:none;">Dashboard</a></li>
-            </ul>
-        </div>
-    </div>
 
-    <div class="container" style="max-width: 850px; margin: 20px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        
-        <div style="text-align: center; border-bottom: 2px solid #e9ecef; padding-bottom: 20px; margin-bottom: 25px;">
-            <h2 style="color: #28a745; margin-bottom: 5px;">Test Submitted Successfully! 🎉</h2>
-            <p id="resTestDetails" style="color: #666; font-size: 16px; margin: 0;"></p>
-        </div>
+<body>
 
-        <!-- Score Summary Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 30px;">
-            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 13px; color: #1565c0; font-weight: bold;">MARKS OBTAINED</div>
-                <div id="resScore" style="font-size: 26px; font-weight: bold; color: #0d47a1; margin-top: 5px;">-- / 30</div>
-            </div>
-            <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 13px; color: #2e7d32; font-weight: bold;">PERCENTAGE</div>
-                <div id="resPercentage" style="font-size: 26px; font-weight: bold; color: #1b5e20; margin-top: 5px;">--%</div>
-            </div>
-            <div style="background: #fff3e0; padding: 15px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 13px; color: #ef6c00; font-weight: bold;">CORRECT / WRONG</div>
-                <div id="resCorrectWrong" style="font-size: 20px; font-weight: bold; color: #e65100; margin-top: 8px;">-- / --</div>
-            </div>
-            <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 13px; color: #7b1fa2; font-weight: bold;">TIME TAKEN</div>
-                <div id="resTimeTaken" style="font-size: 20px; font-weight: bold; color: #4a148c; margin-top: 8px;">-- min</div>
-            </div>
-        </div>
 
-        <!-- Top 10 Leaderboard Section -->
-        <div style="margin-bottom: 35px; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0;">
-            <h3 style="margin-top: 0; color: #0044cc; display: flex; align-items: center; gap: 8px;">🏆 Top 10 Leaderboard (<span id="leaderboardTitle">Subject</span>)</h3>
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; background: white;">
-                    <thead>
-                        <tr style="background: #0044cc; color: white; text-align: left;">
-                            <th style="padding: 10px;">Rank</th>
-                            <th style="padding: 10px;">Student Name</th>
-                            <th style="padding: 10px;">School</th>
-                            <th style="padding: 10px;">City</th>
-                            <th style="padding: 10px;">Score</th>
-                            <th style="padding: 10px;">Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboardRows">
-                        <tr><td colspan="6" style="text-align: center; padding: 15px; color: #666;">Loading leaderboard rankings...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<!-- ================= HEADER ================= -->
 
-        <!-- Question Review Section -->
-        <h3 style="color: #333; border-bottom: 2px solid #0044cc; padding-bottom: 8px; margin-bottom: 20px;">Detailed Question Review & Explanations</h3>
-        <div id="reviewContainer" style="display: flex; flex-direction: column; gap: 20px;">
-            <!-- Review cards injected dynamically -->
-        </div>
+<header class="oav-header">
 
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="oav-2026.html" style="background: #0044cc; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Back to Test Dashboard</a>
+    <div class="oav-logo">
+
+        <span>🏆</span>
+
+        <div>
+
+            <h2>OAV-2026</h2>
+
+            <small>Test Result</small>
+
         </div>
 
     </div>
 
-    <script src="oav-test.js"></script>
+
+    <a href="oav-2026.html"
+       style="
+       color:white;
+       text-decoration:none;
+       font-weight:bold;
+       ">
+
+        🏠 Dashboard
+
+    </a>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="oav-result-container">
+
+
+    <!-- RESULT HEADER -->
+
+    <div class="result-heading">
+
+        <h2>
+            🎉 Test Completed Successfully!
+        </h2>
+
+
+        <p id="resTestDetails">
+            Loading result...
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= SCORE ================= -->
+
+    <div class="score-grid">
+
+
+        <div>
+
+            <small>
+                MARKS OBTAINED
+            </small>
+
+            <strong id="resScore">
+                -
+            </strong>
+
+        </div>
+
+
+
+        <div>
+
+            <small>
+                PERCENTAGE
+            </small>
+
+            <strong id="resPercentage">
+                -
+            </strong>
+
+        </div>
+
+
+
+        <div>
+
+            <small>
+                CORRECT / WRONG
+            </small>
+
+            <strong id="resCorrectWrong">
+                -
+            </strong>
+
+        </div>
+
+
+
+        <div>
+
+            <small>
+                TIME TAKEN
+            </small>
+
+            <strong id="resTimeTaken">
+                -
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= TOP 10 ================= -->
+
+    <section
+        style="
+        margin-top:30px;
+        "
+    >
+
+        <h3
+            style="
+            color:#003399;
+            border-bottom:2px solid #003399;
+            padding-bottom:8px;
+            "
+        >
+
+            🏆 Top 10 Scorers
+
+        </h3>
+
+
+        <div
+            style="
+            overflow-x:auto;
+            "
+        >
+
+            <table
+                class="leaderboard"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Rank
+                        </th>
+
+                        <th>
+                            Student Name
+                        </th>
+
+                        <th>
+                            School
+                        </th>
+
+                        <th>
+                            City
+                        </th>
+
+                        <th>
+                            Score
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="leaderboardRows"
+                >
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            style="
+                            text-align:center;
+                            padding:20px;
+                            "
+                        >
+
+                            Loading Top 10...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= REVIEW ================= -->
+
+    <section
+        style="
+        margin-top:35px;
+        "
+    >
+
+        <h3
+            style="
+            color:#003399;
+            border-bottom:2px solid #003399;
+            padding-bottom:8px;
+            "
+        >
+
+            📚 Question Review & Solutions
+
+        </h3>
+
+
+        <div
+            id="reviewContainer"
+        >
+
+            <p
+                style="
+                text-align:center;
+                color:#777;
+                "
+            >
+
+                Loading questions...
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= BACK BUTTON ================= -->
+
+    <div
+        style="
+        text-align:center;
+        margin-top:35px;
+        "
+    >
+
+        <a
+            href="oav-2026.html"
+            style="
+            display:inline-block;
+            background:#003399;
+            color:white;
+            padding:12px 22px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+            "
+        >
+
+            ← Back to OAV Test Series
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ================= FIREBASE CONFIG ================= -->
+
+<script>
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCq18Y1jPbJ8P3kTpiKlq05OBILPVDQLYE",
+
+    authDomain:
+        "daily-lesson-note.firebaseapp.com",
+
+    databaseURL:
+        "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId:
+        "daily-lesson-note",
+
+    storageBucket:
+        "daily-lesson-note.firebasestorage.app",
+
+    messagingSenderId:
+        "902287150460",
+
+    appId:
+        "1:902287150460:web:90bd366eb30a4aeae268f9",
+
+    measurementId:
+        "G-LRSYL5Y9HF"
+
+};
+
+
+if (!firebase.apps.length) {
+
+    firebase.initializeApp(
+        firebaseConfig
+    );
+
+}
+
+</script>
+
+
+
+<!-- ================= JS ================= -->
+
+<script src="oav-test.js"></script>
+
+
 </body>
+
 </html>
