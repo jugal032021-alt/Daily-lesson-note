@@ -24,7 +24,7 @@ async function saveNote() {
   }
 }
 
-// 3. ଅପଡେଟ୍ କରିବା (Update using PATCH)
+// 2. ଅପଡେଟ୍ କରିବା (Update using PATCH)
 async function updateNote() {
     let noteId = document.getElementById('noteId').value;
     if (!noteId) {
@@ -49,7 +49,7 @@ async function updateNote() {
     }
 }
 
-// 4. ନୋଟ୍ ଡିଲିଟ୍ କରିବା (Delete)
+// 3. ନୋଟ୍ ଡିଲିଟ୍ କରିବା (Delete)
 async function deleteNote() {
   let noteId = document.getElementById('noteId').value;
   if (!noteId) {
@@ -74,7 +74,7 @@ async function deleteNote() {
   }
 }
 
-// ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ବାଛିବା ମାତ୍ରେ ପୁରୁଣା/ନୂଆ ନୋଟ୍ ଅଟୋ-ଲୋଡ୍ ହେବା
+// 4. ତାରିଖ, ଶ୍ରେଣୀ ଓ ବିଷୟ ବାଛିବା ମାତ୍ରେ ପୁରୁଣା/ନୂଆ ନୋଟ୍ ଅଟୋ-ଲୋଡ୍ ହେବା
 async function checkExistingNote() {
     let sDate = document.getElementById('date').value;
     let sClass = document.getElementById('className').value;
@@ -100,7 +100,6 @@ async function checkExistingNote() {
             document.getElementById('noteId').value = foundId;
             document.getElementById('period').value = foundNote.period || '';
             
-            // ଯଦି ନୂଆ ଫର୍ମାଟ୍ ଥାଏ (fullContent) ତେବେ ତାହା ଦେଖାବ, ନହଲେ ପୁରୁଣା ଫିଲ୍ଡଗୁଡ଼ିକୁ ମିଶାଇ ଦେଖାବ
             if (foundNote.fullContent) {
                 document.getElementById('fullContent').value = foundNote.fullContent;
             } else {
@@ -159,13 +158,25 @@ async function searchNote() {
                 }
             }
             if (foundNote) {
-                let contentToShow = foundNote.fullContent ? foundNote.fullContent : 
-                    (`ପାଠ୍ୟ ପ୍ରସଙ୍ଗ: ${foundNote.topic || ''}\nଶିକ୍ଷଣ ଫଳାଫଳ: ${foundNote.outcomes || ''}\nଶିକ୍ଷଣ ସାମଗ୍ରୀ: ${foundNote.tlm || ''}\n\nପଞ୍ଚପଦୀ:\n୧. ଅଧିତି: ${foundNote.adhiti || ''}\n୨. ବୋଧ: ${foundNote.bodha || ''}\n୩. ଅଭ୍ୟାସ: ${foundNote.abhyasa || ''}\n୪. ପ୍ରୟୋଗ: ${foundNote.prayoga || ''}\n୫. ପ୍ରସାର: ${foundNote.prasara || ''}`);
+                let contentToShow = "";
+                if (foundNote.fullContent) {
+                    contentToShow = foundNote.fullContent;
+                } else {
+                    contentToShow = `ପାଠ୍ୟ ପ୍ରସଙ୍ଗ: ${foundNote.topic || ''}\n` +
+                                    `ଶିକ୍ଷଣ ଫଳାଫଳ: ${foundNote.outcomes || ''}\n` +
+                                    `ଶିକ୍ଷଣ ସାମଗ୍ରୀ: ${foundNote.tlm || ''}\n\n` +
+                                    `ପଞ୍ଚପଦୀ:\n` +
+                                    `୧. ଅଧିତି: ${foundNote.adhiti || ''}\n` +
+                                    `୨. ବୋଧ: ${foundNote.bodha || ''}\n` +
+                                    `୩. ଅଭ୍ୟାସ: ${foundNote.abhyasa || ''}\n` +
+                                    `୪. ପ୍ରୟୋଗ: ${foundNote.prayoga || ''}\n` +
+                                    `୫. ପ୍ରସାର: ${foundNote.prasara || ''}`;
+                }
 
                 resultArea.innerHTML = `
                     <div class="note-card">
                         <h3>${foundNote.className} - ${foundNote.subject}</h3>
-                        <div class="note-item"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>କାଳାଂଶ:</strong> ${foundNote.period}</div>
+                        <div class="note-item"><strong>ତାରିଖ:</strong> ${foundNote.date} | <strong>କାଳାଂଶ:</strong> ${foundNote.period || ''}</div>
                         <div class="note-item" style="white-space: pre-wrap; margin-top: 10px; line-height: 1.6; background: #f9f9f9; padding: 12px; border-radius: 5px; border-left: 4px solid #0056b3;">${contentToShow}</div>
                     </div>
                 `;
