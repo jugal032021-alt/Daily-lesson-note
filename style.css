@@ -216,3 +216,22 @@ button:hover {
         font-size: 15px !important;
     }
 }
+/* ଲେସନ୍ ନୋଟ୍ କାର୍ଡକୁ ଟ୍ରାନ୍ସପରେଣ୍ଟ ଏବଂ ବଡ଼ ଅକ୍ଷର କରିବା ପାଇଁ */
+.note-card {
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 15px;
+}
+
+.note-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.note-card .note-item {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 8px;
+}
