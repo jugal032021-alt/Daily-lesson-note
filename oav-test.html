@@ -1,64 +1,227 @@
 <!DOCTYPE html>
 <html lang="or">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAV-2026 Online Test - Odisha Pathasala</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="oav-test.css">
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>OAV-2026 Online Test</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="oav-test.css">
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
 </head>
-<body style="background-color: #f0f4f8;">
 
-    <div class="top-navbar">
-        <div class="logo-section">
-            <span class="logo-icon">📝</span>
-            <div class="site-title">
-                <h1>OAV-2026 Examination Portal</h1>
-            </div>
-        </div>
-        <div id="timerDisplay" style="background: #ffc107; color: #000; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 15px;">
-            ⏳ Time Left: <span id="timeRemaining">--:--</span>
-        </div>
-    </div>
 
-    <div class="container" style="max-width: 800px; margin: 20px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        
-        <div id="testInfoBar" style="display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; font-weight: bold; color: #444;">
-            <span id="lblTestName">Test: Loading...</span>
-            <span id="lblSubject">Subject: Loading...</span>
-            <span id="lblTotalMarks">Marks: 30</span>
-        </div>
+<body>
 
-        <!-- Question Container -->
-        <div id="questionBox">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h4 id="qNumberTitle" style="margin: 0; color: #0044cc;">Question 1 of 30</h4>
-                <span style="background: #e9ecef; padding: 4px 10px; border-radius: 4px; font-size: 13px;">1 Mark</span>
-            </div>
-            
-            <p id="qText" style="font-size: 18px; font-weight: 500; color: #222; line-height: 1.5; margin-bottom: 20px;"></p>
 
-            <div id="optionsContainer" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
-                <!-- Options injected dynamically -->
-            </div>
+<!-- ================= HEADER ================= -->
 
-            <div style="display: flex; justify-content: space-between; gap: 10px;">
-                <button id="btnPrev" onclick="prevQuestion()" style="background: #6c757d; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">⬅️ Previous</button>
-                <button id="btnNext" onclick="nextQuestion()" style="background: #0044cc; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Next ➡</button>
-                <button id="btnSubmitTest" onclick="confirmSubmitTest()" style="background: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; display: none;">Submit Test ✅</button>
-            </div>
-        </div>
+<header class="oav-header">
 
-        <!-- Loading / Error message area -->
-        <div id="testStatusMsg" style="text-align: center; padding: 40px; font-size: 18px; color: #555;">
-            Initializing test environment...
+    <div class="oav-logo">
+
+        <span>📝</span>
+
+        <div>
+
+            <h2>OAV-2026</h2>
+
+            <small>Online Practice Test</small>
+
         </div>
 
     </div>
 
-    <script src="oav-test.js"></script>
+
+    <div id="timerDisplay">
+
+        ⏳ Time Left:
+
+        <strong id="timeRemaining">
+            30:00
+        </strong>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="oav-test-container">
+
+
+    <!-- TEST INFORMATION -->
+
+    <div id="testInfoBar">
+
+        <div id="lblTestName">
+            Test: Loading...
+        </div>
+
+        <div id="lblSubject">
+            Subject: Loading...
+        </div>
+
+        <div id="lblTotalMarks">
+            Marks: 30
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= STATUS ================= -->
+
+    <div id="testStatusMsg">
+
+        Test loading...
+
+    </div>
+
+
+
+    <!-- ================= QUESTION ================= -->
+
+    <div id="questionBox"
+         style="display:none;">
+
+
+        <div class="question-header">
+
+            <h3 id="qNumberTitle">
+                Question 1 of 30
+            </h3>
+
+        </div>
+
+
+
+        <!-- QUESTION -->
+
+        <div class="question-area">
+
+            <p id="qText">
+                Question loading...
+            </p>
+
+        </div>
+
+
+
+        <!-- OPTIONS -->
+
+        <div id="optionsContainer">
+
+        </div>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="test-buttons">
+
+
+            <button
+                id="btnPrev"
+                onclick="prevQuestion()">
+
+                ← Previous
+
+            </button>
+
+
+
+            <button
+                id="btnNext"
+                onclick="nextQuestion()">
+
+                Next →
+
+            </button>
+
+
+
+            <button
+                id="btnSubmitTest"
+                onclick="confirmSubmitTest()">
+
+                Submit Test
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script>
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCq18Y1jPbJ8P3kTpiKlq05OBILPVDQLYE",
+
+    authDomain:
+        "daily-lesson-note.firebaseapp.com",
+
+    databaseURL:
+        "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+    projectId:
+        "daily-lesson-note",
+
+    storageBucket:
+        "daily-lesson-note.firebasestorage.app",
+
+    messagingSenderId:
+        "902287150460",
+
+    appId:
+        "1:902287150460:web:90bd366eb30a4aeae268f9",
+
+    measurementId:
+        "G-LRSYL5Y9HF"
+
+};
+
+
+if (!firebase.apps.length) {
+
+    firebase.initializeApp(
+        firebaseConfig
+    );
+
+}
+
+</script>
+
+
+
+<!-- ================= TEST JS ================= -->
+
+<script src="oav-test.js"></script>
+
+
 </body>
+
 </html>
