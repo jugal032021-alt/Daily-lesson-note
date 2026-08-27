@@ -396,9 +396,7 @@ async function loadQuestionsFromJSON(testId, subject) {
 
     console.log("Loading questions:", fileName);
 
-    const response = await fetch(fileName, {
-        cache: "no-store"
-    });
+    const response = await fetch(fileName);
 
     if (!response.ok) {
         throw new Error(
