@@ -2,367 +2,574 @@
 <html lang="or">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OAV-2026 Result - Odisha Pathasala</title>
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="oav-test.css">
 
-    <link rel="stylesheet"
-          href="oav-test.css">
-
-
-    <!-- FIREBASE -->
-
+    <!-- ================= FIREBASE ================= -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-</head>
+    <style>
+        /* =================================================
+           RESULT PAGE
+        ================================================= */
+        * {
+            box-sizing: border-box;
+        }
 
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans", sans-serif;
+            background: #f3f6fb;
+            color: #172033;
+        }
+
+        /* =================================================
+           HEADER
+        ================================================= */
+        .oav-header {
+            background: linear-gradient(135deg, #003399, #0066cc);
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .oav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .oav-logo>span {
+            font-size: 38px;
+        }
+
+        .oav-logo h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .oav-logo small {
+            font-size: 16px;
+        }
+
+        /* =================================================
+           MAIN
+        ================================================= */
+        .oav-result-container {
+            max-width: 1100px;
+            margin: 22px auto 50px;
+            padding: 0 15px;
+        }
+
+        /* =================================================
+           SUCCESS BOX
+        ================================================= */
+        .result-heading {
+            background: #effcf2;
+            border: 1px solid #c8e9ce;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .result-heading h2 {
+            margin: 0;
+            color: #19733a;
+            font-size: 27px;
+        }
+
+        .result-heading p {
+            margin: 10px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1769d1;
+        }
+
+        /* =================================================
+           SCORE GRID
+        ================================================= */
+        .score-grid {
+            background: white;
+            border-radius: 15px;
+            padding: 18px 8px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-bottom: 30px;
+        }
+
+        .score-grid>div {
+            text-align: center;
+            padding: 8px 10px;
+            border-right: 1px solid #dddddd;
+        }
+
+        .score-grid>div:last-child {
+            border-right: none;
+        }
+
+        .score-grid small {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .score-grid strong {
+            display: block;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        #resTestDetails {
+            color: #1769d1;
+        }
+
+        #resScore {
+            color: #d62828;
+        }
+
+        #resPercentage {
+            color: #198754;
+        }
+
+        #resCorrectWrong {
+            color: #7030a0;
+        }
+
+        /* =================================================
+           REVIEW TITLE
+        ================================================= */
+        .review-title {
+            font-size: 25px;
+            color: #003399;
+            font-weight: bold;
+            border-bottom: 3px solid #003399;
+            padding-bottom: 9px;
+            margin-bottom: 20px;
+        }
+
+        /* =================================================
+           REVIEW QUESTION CARD
+        ================================================= */
+        .review-question-card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .review-question-title {
+            font-size: 19px;
+            line-height: 1.65;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #172033;
+        }
+
+        /* =================================================
+           OPTIONS
+        ================================================= */
+        .review-options-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .review-option {
+            min-height: 90px;
+            border: 1px solid #d8dde6;
+            border-radius: 10px;
+            padding: 10px;
+            background: #f8fafc;
+        }
+
+        .review-option-letter {
+            font-size: 20px;
+            font-weight: bold;
+            color: #003399;
+            margin-bottom: 5px;
+        }
+
+        .review-option-text {
+            font-size: 15px;
+            line-height: 1.45;
+        }
+
+        /* =================================================
+           CORRECT OPTION
+        ================================================= */
+        .review-correct {
+            background: #effbf1;
+            border: 2px solid #2e9d50;
+        }
+
+        .review-correct .review-option-letter {
+            color: #16843b;
+        }
+
+        /* =================================================
+           WRONG STUDENT OPTION
+        ================================================= */
+        .review-wrong {
+            background: #fff1f1;
+            border: 2px solid #d93025;
+        }
+
+        .review-wrong .review-option-letter {
+            color: #d93025;
+        }
+
+        /* =================================================
+           MARKS
+        ================================================= */
+        .correct-mark {
+            display: block;
+            margin-top: 6px;
+            color: #16843b;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .wrong-mark {
+            display: block;
+            margin-top: 6px;
+            color: #d93025;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* =================================================
+           ANSWER STATUS
+        ================================================= */
+        .answer-correct,
+        .answer-wrong,
+        .answer-not-answered {
+            margin-top: 13px;
+            padding: 10px 13px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .answer-correct {
+            background: #effbf1;
+            color: #16843b;
+        }
+
+        .answer-wrong {
+            background: #fff1f1;
+            color: #d93025;
+        }
+
+        .answer-not-answered {
+            background: #fff8e6;
+            color: #b36b00;
+        }
+
+        /* =================================================
+           SOLUTION
+        ================================================= */
+        .solution-box {
+            margin-top: 14px;
+            padding: 14px;
+            background: #f1fae9;
+            border-left: 5px solid #42a85f;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .solution-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #247238;
+        }
+
+        /* =================================================
+           BACK BUTTON
+        ================================================= */
+        .back-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #003399;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background: #002477;
+        }
+
+        /* =================================================
+           MOBILE
+        ================================================= */
+        @media (max-width: 700px) {
+            .oav-header {
+                padding: 12px 10px;
+            }
+
+            .oav-logo>span {
+                font-size: 30px;
+            }
+
+            .oav-logo h2 {
+                font-size: 23px;
+            }
+
+            .oav-logo small {
+                font-size: 14px;
+            }
+
+            .oav-header>a {
+                font-size: 13px;
+            }
+
+            .oav-result-container {
+                margin-top: 14px;
+                padding: 0 7px;
+            }
+
+            .result-heading {
+                padding: 16px;
+            }
+
+            .result-heading h2 {
+                font-size: 21px;
+                line-height: 1.4;
+            }
+
+            .result-heading p {
+                font-size: 15px;
+            }
+
+            .score-grid {
+                grid-template-columns: repeat(4, 1fr);
+                padding: 10px 2px;
+                border-radius: 12px;
+            }
+
+            .score-grid>div {
+                padding: 6px 2px;
+            }
+
+            .score-grid small {
+                font-size: 9px;
+                line-height: 1.25;
+                min-height: 25px;
+                margin-bottom: 5px;
+            }
+
+            .score-grid strong {
+                font-size: 18px;
+            }
+
+            .review-title {
+                font-size: 21px;
+                margin-top: 25px;
+            }
+
+            .review-question-card {
+                padding: 12px;
+                border-radius: 11px;
+            }
+
+            .review-question-title {
+                font-size: 17px;
+                line-height: 1.6;
+            }
+
+            .review-options-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+
+            .review-option {
+                min-height: 105px;
+                padding: 7px 4px;
+                text-align: center;
+            }
+
+            .review-option-letter {
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+
+            .review-option-text {
+                font-size: 12px;
+                line-height: 1.35;
+                word-break: break-word;
+            }
+
+            .correct-mark,
+            .wrong-mark {
+                font-size: 10px;
+                line-height: 1.25;
+            }
+
+            .answer-correct,
+            .answer-wrong,
+            .answer-not-answered {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .solution-box {
+                font-size: 14px;
+                line-height: 1.7;
+                padding: 11px;
+            }
+
+            .solution-title {
+                font-size: 17px;
+            }
+        }
+
+        /* =================================================
+           VERY SMALL MOBILE
+        ================================================= */
+        @media (max-width: 380px) {
+            .score-grid small {
+                font-size: 8px;
+            }
+
+            .score-grid strong {
+                font-size: 16px;
+            }
+
+            .review-option {
+                min-height: 100px;
+            }
+
+            .review-option-text {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
-
-<!-- ================= HEADER ================= -->
-
-<header class="oav-header">
-
-    <div class="oav-logo">
-
-        <span>🏆</span>
-
-        <div>
-
-            <h2>OAV-2026</h2>
-
-            <small>Test Result</small>
-
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+    <header class="oav-header">
+        <div class="oav-logo">
+            <span>🏆</span>
+            <div>
+                <h2>OAV-2026</h2>
+                <small>Test Result</small>
+            </div>
         </div>
-
-    </div>
-
-
-    <a href="oav-2026.html"
-       style="
-       color:white;
-       text-decoration:none;
-       font-weight:bold;
-       ">
-
-        🏠 Dashboard
-
-    </a>
-
-</header>
-
-
-
-<!-- ================= MAIN ================= -->
-
-<main class="oav-result-container">
-
-
-    <!-- RESULT HEADER -->
-
-    <div class="result-heading">
-
-        <h2>
-            🎉 Test Completed Successfully!
-        </h2>
-
-
-        <p id="resTestDetails">
-            Loading result...
-        </p>
-
-    </div>
-
-
-
-    <!-- ================= SCORE ================= -->
-
-    <div class="score-grid">
-
-
-        <div>
-
-            <small>
-                MARKS OBTAINED
-            </small>
-
-            <strong id="resScore">
-                -
-            </strong>
-
-        </div>
-
-
-
-        <div>
-
-            <small>
-                PERCENTAGE
-            </small>
-
-            <strong id="resPercentage">
-                -
-            </strong>
-
-        </div>
-
-
-
-        <div>
-
-            <small>
-                CORRECT / WRONG
-            </small>
-
-            <strong id="resCorrectWrong">
-                -
-            </strong>
-
-        </div>
-
-
-
-        <div>
-
-            <small>
-                TIME TAKEN
-            </small>
-
-            <strong id="resTimeTaken">
-                -
-            </strong>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- ================= TOP 10 ================= -->
-
-    <section
-        style="
-        margin-top:30px;
-        "
-    >
-
-        <h3
-            style="
-            color:#003399;
-            border-bottom:2px solid #003399;
-            padding-bottom:8px;
-            "
-        >
-
-            🏆 Top 10 Scorers
-
-        </h3>
-
-
-        <div
-            style="
-            overflow-x:auto;
-            "
-        >
-
-            <table
-                class="leaderboard"
-            >
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Rank
-                        </th>
-
-                        <th>
-                            Student Name
-                        </th>
-
-                        <th>
-                            School
-                        </th>
-
-                        <th>
-                            City
-                        </th>
-
-                        <th>
-                            Score
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody
-                    id="leaderboardRows"
-                >
-
-                    <tr>
-
-                        <td
-                            colspan="5"
-                            style="
-                            text-align:center;
-                            padding:20px;
-                            "
-                        >
-
-                            Loading Top 10...
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= REVIEW ================= -->
-
-    <section
-        style="
-        margin-top:35px;
-        "
-    >
-
-        <h3
-            style="
-            color:#003399;
-            border-bottom:2px solid #003399;
-            padding-bottom:8px;
-            "
-        >
-
-            📚 Question Review & Solutions
-
-        </h3>
-
-
-        <div
-            id="reviewContainer"
-        >
-
-            <p
-                style="
-                text-align:center;
-                color:#777;
-                "
-            >
-
-                Loading questions...
-
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= BACK BUTTON ================= -->
-
-    <div
-        style="
-        text-align:center;
-        margin-top:35px;
-        "
-    >
-
-        <a
-            href="oav-2026.html"
-            style="
-            display:inline-block;
-            background:#003399;
-            color:white;
-            padding:12px 22px;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-            "
-        >
-
-            ← Back to OAV Test Series
-
+        <a href="oav-2026.html" style="color:white; text-decoration:none; font-weight:bold;">
+            🏠 Dashboard
         </a>
+    </header>
 
-    </div>
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+    <main class="oav-result-container">
 
+        <!-- SUCCESS -->
+        <div class="result-heading">
+            <h2>🎉 Test Completed Successfully!</h2>
+            <p id="resTestDetails">Loading result...</p>
+        </div>
 
-</main>
+        <!-- =================================================
+             SCORE
+        ================================================= -->
+        <div class="score-grid">
+            <!-- SUBJECT -->
+            <div>
+                <small>SUBJECT</small>
+                <strong id="resSubject">-</strong>
+            </div>
+            <!-- MARKS -->
+            <div>
+                <small>MARKS</small>
+                <strong id="resScore">-</strong>
+            </div>
+            <!-- PERCENTAGE -->
+            <div>
+                <small>PERCENTAGE</small>
+                <strong id="resPercentage">-</strong>
+            </div>
+            <!-- CORRECT / WRONG -->
+            <div>
+                <small>CORRECT / WRONG</small>
+                <strong id="resCorrectWrong">-</strong>
+            </div>
+        </div>
 
+        <!-- =================================================
+             QUESTION REVIEW
+        ================================================= -->
+        <div class="review-title">
+            📚 Question Review & Solutions
+        </div>
 
+        <div id="reviewContainer">
+            <p style="text-align:center; color:#777; padding:20px; font-size:16px;">
+                Loading questions...
+            </p>
+        </div>
 
-<!-- ================= FIREBASE CONFIG ================= -->
+        <!-- =================================================
+             BACK
+        ================================================= -->
+        <div class="back-area">
+            <a href="oav-2026.html" class="back-button">
+                ← Back to OAV Test Series
+            </a>
+        </div>
 
-<script>
+    </main>
 
-const firebaseConfig = {
+    <!-- =================================================
+         FIREBASE CONFIG
+    ================================================= -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCq18Y1jPbJ8P3kTpiKlq05OBILPVDQLYE",
+            authDomain: "daily-lesson-note.firebaseapp.com",
+            databaseURL: "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "daily-lesson-note",
+            storageBucket: "daily-lesson-note.firebasestorage.app",
+            messagingSenderId: "902287150460",
+            appId: "1:902287150460:web:90bd366eb30a4aeae268f9",
+            measurementId: "G-LRSYL5Y9HF"
+        };
 
-    apiKey:
-        "AIzaSyCq18Y1jPbJ8P3kTpiKlq05OBILPVDQLYE",
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+    </script>
 
-    authDomain:
-        "daily-lesson-note.firebaseapp.com",
-
-    databaseURL:
-        "https://daily-lesson-note-default-rtdb.asia-southeast1.firebasedatabase.app",
-
-    projectId:
-        "daily-lesson-note",
-
-    storageBucket:
-        "daily-lesson-note.firebasestorage.app",
-
-    messagingSenderId:
-        "902287150460",
-
-    appId:
-        "1:902287150460:web:90bd366eb30a4aeae268f9",
-
-    measurementId:
-        "G-LRSYL5Y9HF"
-
-};
-
-
-if (!firebase.apps.length) {
-
-    firebase.initializeApp(
-        firebaseConfig
-    );
-
-}
-
-</script>
-
-
-
-<!-- ================= JS ================= -->
-
-<script src="oav-test.js"></script>
-
+    <!-- =================================================
+         OAV TEST JS
+    ================================================= -->
+    <script src="oav-test.js"></script>
 
 </body>
 
