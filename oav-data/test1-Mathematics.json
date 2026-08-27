@@ -1,1 +1,303 @@
 
+[
+  {
+    "questionNumber": 1,
+    "question": "What is the place value of 7 in 57,34,216?",
+    "optionA": "7,000",
+    "optionB": "70,000",
+    "optionC": "7,00,000",
+    "optionD": "70,00,000",
+    "correctAnswer": "B",
+    "explanation": "In 57,34,216, 7 is in the ten-thousands place, so its place value is 70,000."
+  },
+  {
+    "questionNumber": 2,
+    "question": "Which is the greatest number?",
+    "optionA": "4,98,765",
+    "optionB": "4,89,765",
+    "optionC": "4,97,856",
+    "optionD": "4,98,675",
+    "correctAnswer": "A",
+    "explanation": "Comparing the numbers from left to right, 4,98,765 is the greatest."
+  },
+  {
+    "questionNumber": 3,
+    "question": "Which number is equal to 6,00,000 + 40,000 + 3,000 + 500 + 20 + 7?",
+    "optionA": "6,43,527",
+    "optionB": "6,43,572",
+    "optionC": "6,45,327",
+    "optionD": "6,40,357",
+    "correctAnswer": "A",
+    "explanation": "Adding the place-value parts gives 6,43,527."
+  },
+  {
+    "questionNumber": 4,
+    "question": "What is the expanded form of 8,05,304?",
+    "optionA": "8,00,000 + 5,000 + 300 + 4",
+    "optionB": "8,00,000 + 50,000 + 300 + 4",
+    "optionC": "8,00,000 + 5,000 + 30 + 4",
+    "optionD": "8,00,000 + 500 + 300 + 4",
+    "correctAnswer": "A",
+    "explanation": "The digits represent 8 lakhs, 5 thousand, 3 hundred and 4."
+  },
+  {
+    "questionNumber": 5,
+    "question": "A number has 7 in the lakhs place, 2 in the ten-thousands place, 0 in the thousands place, 5 in the hundreds place, 4 in the tens place and 9 in the ones place. What is the number?",
+    "optionA": "7,20,549",
+    "optionB": "7,25,049",
+    "optionC": "7,20,459",
+    "optionD": "7,02,549",
+    "correctAnswer": "A",
+    "explanation": "The place values form 7,20,549."
+  },
+  {
+    "questionNumber": 6,
+    "question": "Which number lies between 3,40,000 and 3,50,000?",
+    "optionA": "3,04,000",
+    "optionB": "3,45,900",
+    "optionC": "3,54,900",
+    "optionD": "3,05,490",
+    "correctAnswer": "B",
+    "explanation": "3,45,900 is greater than 3,40,000 and less than 3,50,000."
+  },
+  {
+    "questionNumber": 7,
+    "question": "What is 1,00,000 more than 4,75,890?",
+    "optionA": "4,85,890",
+    "optionB": "5,75,890",
+    "optionC": "5,85,890",
+    "optionD": "4,76,890",
+    "correctAnswer": "B",
+    "explanation": "Adding 1,00,000 changes the lakhs digit: 4,75,890 + 1,00,000 = 5,75,890."
+  },
+  {
+    "questionNumber": 8,
+    "question": "What is 10,000 less than 6,04,250?",
+    "optionA": "5,04,250",
+    "optionB": "5,94,250",
+    "optionC": "6,03,250",
+    "optionD": "6,14,250",
+    "correctAnswer": "B",
+    "explanation": "6,04,250 − 10,000 = 5,94,250."
+  },
+  {
+    "questionNumber": 9,
+    "question": "Which number is the smallest?",
+    "optionA": "2,09,999",
+    "optionB": "2,90,999",
+    "optionC": "2,09,909",
+    "optionD": "2,09,990",
+    "correctAnswer": "C",
+    "explanation": "All begin with 2,09; comparing the remaining digits gives 2,09,909 as the smallest."
+  },
+  {
+    "questionNumber": 10,
+    "question": "On a number line marked at every 10,000, which number comes immediately after 4,70,000?",
+    "optionA": "4,71,000",
+    "optionB": "4,75,000",
+    "optionC": "4,80,000",
+    "optionD": "4,90,000",
+    "correctAnswer": "C",
+    "explanation": "Each step is 10,000, so the next marked number is 4,80,000."
+  },
+  {
+    "questionNumber": 11,
+    "question": "A school has 2,75,450 books. It receives 34,875 more books. How many books does it have now?",
+    "optionA": "3,00,325",
+    "optionB": "3,10,325",
+    "optionC": "3,20,325",
+    "optionD": "3,10,225",
+    "correctAnswer": "B",
+    "explanation": "2,75,450 + 34,875 = 3,10,325."
+  },
+  {
+    "questionNumber": 12,
+    "question": "A town has 5,00,000 people. If 1,27,650 people move away, how many remain?",
+    "optionA": "3,72,350",
+    "optionB": "3,82,350",
+    "optionC": "4,72,350",
+    "optionD": "3,73,250",
+    "correctAnswer": "A",
+    "explanation": "5,00,000 − 1,27,650 = 3,72,350."
+  },
+  {
+    "questionNumber": 13,
+    "question": "A bus travels 248 km in the morning and 176 km in the afternoon. How far does it travel altogether?",
+    "optionA": "414 km",
+    "optionB": "424 km",
+    "optionC": "434 km",
+    "optionD": "444 km",
+    "correctAnswer": "B",
+    "explanation": "248 + 176 = 424 km."
+  },
+  {
+    "questionNumber": 14,
+    "question": "A journey is 650 km long. After travelling 378 km, how much distance is left?",
+    "optionA": "262 km",
+    "optionB": "272 km",
+    "optionC": "282 km",
+    "optionD": "292 km",
+    "correctAnswer": "B",
+    "explanation": "650 − 378 = 272 km."
+  },
+  {
+    "questionNumber": 15,
+    "question": "A vehicle travels 125 km each day for 6 days. What distance does it cover?",
+    "optionA": "650 km",
+    "optionB": "700 km",
+    "optionC": "750 km",
+    "optionD": "800 km",
+    "correctAnswer": "C",
+    "explanation": "125 × 6 = 750 km."
+  },
+  {
+    "questionNumber": 16,
+    "question": "A train covers 960 km in 8 equal parts. How many kilometres are in each part?",
+    "optionA": "110 km",
+    "optionB": "120 km",
+    "optionC": "130 km",
+    "optionD": "140 km",
+    "correctAnswer": "B",
+    "explanation": "960 ÷ 8 = 120 km."
+  },
+  {
+    "questionNumber": 17,
+    "question": "Which statement is true?",
+    "optionA": "7,45,210 > 7,54,210",
+    "optionB": "7,54,210 > 7,45,210",
+    "optionC": "7,45,210 = 7,54,210",
+    "optionD": "7,45,210 > 8,00,000",
+    "correctAnswer": "B",
+    "explanation": "Both have 7 lakhs, but 54 thousand is greater than 45 thousand."
+  },
+  {
+    "questionNumber": 18,
+    "question": "If 1 lakh is divided into 10 equal parts, each part is equal to:",
+    "optionA": "1,000",
+    "optionB": "10,000",
+    "optionC": "1,00,000",
+    "optionD": "10,00,000",
+    "correctAnswer": "B",
+    "explanation": "1,00,000 ÷ 10 = 10,000."
+  },
+  {
+    "questionNumber": 19,
+    "question": "Which number has 9 in the thousands place?",
+    "optionA": "4,92,105",
+    "optionB": "4,29,105",
+    "optionC": "4,09,215",
+    "optionD": "9,42,105",
+    "correctAnswer": "B",
+    "explanation": "In 4,29,105, the digit 9 is in the thousands place."
+  },
+  {
+    "questionNumber": 20,
+    "question": "The difference between 8,00,000 and 6,75,325 is:",
+    "optionA": "1,14,675",
+    "optionB": "1,24,675",
+    "optionC": "1,34,675",
+    "optionD": "1,25,675",
+    "correctAnswer": "B",
+    "explanation": "8,00,000 − 6,75,325 = 1,24,675."
+  },
+  {
+    "questionNumber": 21,
+    "question": "A number is 25,000 more than 3,75,000. What is the number?",
+    "optionA": "3,90,000",
+    "optionB": "4,00,000",
+    "optionC": "4,25,000",
+    "optionD": "3,50,000",
+    "correctAnswer": "B",
+    "explanation": "3,75,000 + 25,000 = 4,00,000."
+  },
+  {
+    "questionNumber": 22,
+    "question": "Which pair has a difference of exactly 10,000?",
+    "optionA": "3,45,000 and 3,54,000",
+    "optionB": "5,20,000 and 5,30,000",
+    "optionC": "6,05,000 and 6,25,000",
+    "optionD": "7,10,000 and 7,19,000",
+    "correctAnswer": "B",
+    "explanation": "5,30,000 − 5,20,000 = 10,000."
+  },
+  {
+    "questionNumber": 23,
+    "question": "A shop sold 3,485 notebooks on Monday and 2,975 on Tuesday. How many notebooks were sold in the two days?",
+    "optionA": "6,360",
+    "optionB": "6,460",
+    "optionC": "6,560",
+    "optionD": "6,460",
+    "correctAnswer": "B",
+    "explanation": "3,485 + 2,975 = 6,460."
+  },
+  {
+    "questionNumber": 24,
+    "question": "A farmer has 9,250 kg of grain and sells 3,675 kg. How much grain is left?",
+    "optionA": "5,475 kg",
+    "optionB": "5,575 kg",
+    "optionC": "5,675 kg",
+    "optionD": "6,575 kg",
+    "correctAnswer": "B",
+    "explanation": "9,250 − 3,675 = 5,575 kg."
+  },
+  {
+    "questionNumber": 25,
+    "question": "If 4 boxes contain 2,400 pencils equally, how many pencils are in each box?",
+    "optionA": "500",
+    "optionB": "550",
+    "optionC": "600",
+    "optionD": "650",
+    "correctAnswer": "C",
+    "explanation": "2,400 ÷ 4 = 600 pencils."
+  },
+  {
+    "questionNumber": 26,
+    "question": "Which number should replace the blank? 1,25,000, 1,35,000, 1,45,000, ______, 1,65,000",
+    "optionA": "1,50,000",
+    "optionB": "1,55,000",
+    "optionC": "1,60,000",
+    "optionD": "1,70,000",
+    "correctAnswer": "B",
+    "explanation": "The pattern increases by 10,000 each time, so the missing number is 1,55,000."
+  },
+  {
+    "questionNumber": 27,
+    "question": "A distance is 1,250 km. A traveller covers 475 km on the first day and 325 km on the second day. How much remains?",
+    "optionA": "350 km",
+    "optionB": "400 km",
+    "optionC": "450 km",
+    "optionD": "500 km",
+    "correctAnswer": "C",
+    "explanation": "475 + 325 = 800; 1,250 − 800 = 450 km."
+  },
+  {
+    "questionNumber": 28,
+    "question": "Which is the correct ascending order?",
+    "optionA": "4,50,005 < 4,05,500 < 4,55,000",
+    "optionB": "4,05,500 < 4,50,005 < 4,55,000",
+    "optionC": "4,55,000 < 4,50,005 < 4,05,500",
+    "optionD": "4,50,005 < 4,55,000 < 4,05,500",
+    "correctAnswer": "B",
+    "explanation": "Comparing the place values gives 4,05,500, 4,50,005, 4,55,000."
+  },
+  {
+    "questionNumber": 29,
+    "question": "A number has 5 lakhs, 8 thousands, 6 hundreds, 0 tens and 4 ones. Which number is it?",
+    "optionA": "5,80,604",
+    "optionB": "5,08,604",
+    "optionC": "5,08,064",
+    "optionD": "5,08,640",
+    "correctAnswer": "B",
+    "explanation": "5 lakhs + 8 thousand + 6 hundred + 4 = 5,08,604."
+  },
+  {
+    "questionNumber": 30,
+    "question": "A school collected ₹2,45,750 in one year and ₹1,78,950 in the next year. How much more was collected in the first year?",
+    "optionA": "₹66,800",
+    "optionB": "₹67,800",
+    "optionC": "₹68,800",
+    "optionD": "₹69,800",
+    "correctAnswer": "A",
+    "explanation": "₹2,45,750 − ₹1,78,950 = ₹66,800. Therefore the correct answer is ₹66,800."
+  }
+]
