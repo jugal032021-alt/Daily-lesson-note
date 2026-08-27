@@ -31,6 +31,156 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+/* =====================================================
+   STUDENT REGISTRATION
+   Firebase: ONLY ONE WRITE
+   ===================================================== */
+
+async function registerStudent(event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("regName").value.trim();
+
+    const school =
+        document.getElementById("regSchool").value.trim();
+
+    const city =
+        document.getElementById("regCity").value.trim();
+
+    const mobile =
+        document.getElementById("regMobile").value.trim();
+
+
+    /* VALIDATION */
+
+    if (!name || !school || !city || !mobile) {
+
+        alert("Please fill all details.");
+
+        return;
+    }
+
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+
+        alert("Please enter a valid 10-digit mobile number.");
+
+        return;
+    }
+
+
+    try {
+
+        /* SAVE STUDENT */
+
+        await oavDb
+            .collection("oav_students")
+            .doc(mobile)
+            .set({
+
+                name: name,
+                school: school,
+                city: city,
+                mobile: mobile,
+
+                registeredAt:
+                    firebase.firestore.FieldValue.serverTimestamp()
+
+            }, {
+                merge: true
+            });
+
+
+        /* SAVE MOBILE LOCALLY */
+
+        localStorage.setItem(
+            "oav_student_mobile",
+            mobile
+        );
+
+
+        /* HIDE REGISTRATION */
+
+        const regSection =
+            document.getElementById("regSection");
+
+        const dashboardSection =
+            document.getElementById("dashboardSection");
+
+
+        if (regSection) {
+
+            regSection.style.display = "none";
+
+        }
+
+
+        if (dashboardSection) {
+
+            dashboardSection.style.display = "block";
+
+        }
+
+
+        /* WELCOME MESSAGE */
+
+        const welcomeMsg =
+            document.getElementById("welcomeMsg");
+
+        if (welcomeMsg) {
+
+            welcomeMsg.innerText =
+                "Welcome, " + name + "!";
+
+        }
+
+
+        /* STUDENT DETAILS */
+
+        const studentMeta =
+            document.getElementById("studentMeta");
+
+        if (studentMeta) {
+
+            studentMeta.innerText =
+                school + " • " + city;
+
+        }
+
+
+        /* CLEAR FORM */
+
+        const form =
+            document.getElementById("studentRegForm");
+
+        if (form) {
+
+            form.reset();
+
+        }
+
+
+        alert(
+            "Registration successful! You can now start the practice tests."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Registration error:",
+            error
+        );
+
+        alert(
+            "Registration failed. Please check your internet connection and try again."
+        );
+
+    }
+
+}
 
 /* =========================================================
    LOAD QUESTIONS FROM JSON
