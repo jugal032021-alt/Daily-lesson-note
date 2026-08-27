@@ -1,22 +1,302 @@
 [
   {
     "questionNumber": 1,
-    "question": "25 + 15 = ?",
-    "optionA": "30",
-    "optionB": "35",
-    "optionC": "40",
-    "optionD": "45",
-    "correctAnswer": "C",
-    "explanation": "25 + 15 = 40."
+    "question": "What is Grandpa searching for?",
+    "optionA": "His books",
+    "optionB": "His glasses",
+    "optionC": "His shoes",
+    "optionD": "His bag",
+    "correctAnswer": "B",
+    "explanation": "Grandpa is searching everywhere for his lost glasses."
   },
   {
     "questionNumber": 2,
-    "question": "10 × 5 = ?",
-    "optionA": "40",
-    "optionB": "50",
-    "optionC": "60",
-    "optionD": "70",
+    "question": "How many glasses does Grandpa have?",
+    "optionA": "Only one pair",
+    "optionB": "Two pairs",
+    "optionC": "Three pairs",
+    "optionD": "No glasses",
+    "correctAnswer": "A",
+    "explanation": "The poem says he has his only pair."
+  },
+  {
+    "questionNumber": 3,
+    "question": "What can't Grandpa read without his glasses?",
+    "optionA": "A letter",
+    "optionB": "A storybook",
+    "optionC": "The newspaper",
+    "optionD": "A notice",
+    "correctAnswer": "C",
+    "explanation": "Grandpa cannot read the newspaper without his glasses."
+  },
+  {
+    "questionNumber": 4,
+    "question": "What can't Grandpa watch without his glasses?",
+    "optionA": "A movie",
+    "optionB": "TV",
+    "optionC": "A play",
+    "optionD": "A video",
     "correctAnswer": "B",
-    "explanation": "10 × 5 = 50."
+    "explanation": "Grandpa cannot watch TV without his glasses."
+  },
+  {
+    "questionNumber": 5,
+    "question": "What can't Grandpa cut without his glasses?",
+    "optionA": "Paper",
+    "optionB": "Fruits",
+    "optionC": "Flowers",
+    "optionD": "Vegetables",
+    "correctAnswer": "D",
+    "explanation": "Grandpa cannot cut the vegetables without his glasses."
+  },
+  {
+    "questionNumber": 6,
+    "question": "Where did Grandpa search for his glasses?",
+    "optionA": "Only in his room",
+    "optionB": "Inside his pockets, near the window and under his chair",
+    "optionC": "Only in the kitchen",
+    "optionD": "Only outside",
+    "correctAnswer": "B",
+    "explanation": "He checked his pockets and searched near the window and under his chair."
+  },
+  {
+    "questionNumber": 7,
+    "question": "Where were Grandpa's glasses at last?",
+    "optionA": "On the table",
+    "optionB": "In his pocket",
+    "optionC": "On his head",
+    "optionD": "Under the chair",
+    "correctAnswer": "C",
+    "explanation": "His glasses were right there on his head."
+  },
+  {
+    "questionNumber": 8,
+    "question": "Who told Grandpa where his glasses were?",
+    "optionA": "Mili",
+    "optionB": "Safina",
+    "optionC": "David",
+    "optionD": "Amir",
+    "correctAnswer": "A",
+    "explanation": "Mili told Grandpa that his glasses were on his head."
+  },
+  {
+    "questionNumber": 9,
+    "question": "What does the word 'glance' mean?",
+    "optionA": "A quick look",
+    "optionB": "A long search",
+    "optionC": "A loud sound",
+    "optionD": "A careful walk",
+    "correctAnswer": "A",
+    "explanation": "The New Words section defines glance as quick look."
+  },
+  {
+    "questionNumber": 10,
+    "question": "What does the word 'search' mean?",
+    "optionA": "Hide",
+    "optionB": "Look for",
+    "optionC": "Throw away",
+    "optionD": "Remember",
+    "correctAnswer": "B",
+    "explanation": "The New Words section defines search as look for."
+  },
+  {
+    "questionNumber": 11,
+    "question": "What does the word 'pair' mean?",
+    "optionA": "A single thing",
+    "optionB": "A set of two things used together",
+    "optionC": "A group of three",
+    "optionD": "A large collection",
+    "correctAnswer": "B",
+    "explanation": "The lesson defines pair as a set of two things used together."
+  },
+  {
+    "questionNumber": 12,
+    "question": "Which word means 'not found'?",
+    "optionA": "Lost",
+    "optionB": "Search",
+    "optionC": "Glance",
+    "optionD": "Pair",
+    "correctAnswer": "A",
+    "explanation": "The New Words section gives lost as meaning not found."
+  },
+  {
+    "questionNumber": 13,
+    "question": "Which spelling is correct?",
+    "optionA": "watter",
+    "optionB": "weter",
+    "optionC": "water",
+    "optionD": "wattere",
+    "correctAnswer": "C",
+    "explanation": "The correct spelling is water."
+  },
+  {
+    "questionNumber": 14,
+    "question": "Which spelling is correct?",
+    "optionA": "vegetables",
+    "optionB": "vegetebles",
+    "optionC": "vegatables",
+    "optionD": "vegitables",
+    "correctAnswer": "A",
+    "explanation": "The correct spelling is vegetables."
+  },
+  {
+    "questionNumber": 15,
+    "question": "Which spelling is correct?",
+    "optionA": "ballon",
+    "optionB": "baloon",
+    "optionC": "balloon",
+    "optionD": "balon",
+    "correctAnswer": "C",
+    "explanation": "The correct spelling is balloon."
+  },
+  {
+    "questionNumber": 16,
+    "question": "Which spelling is correct?",
+    "optionA": "elefant",
+    "optionB": "elephant",
+    "optionC": "elliphant",
+    "optionD": "elephent",
+    "correctAnswer": "B",
+    "explanation": "The correct spelling is elephant."
+  },
+  {
+    "questionNumber": 17,
+    "question": "Which spelling is correct?",
+    "optionA": "spectacls",
+    "optionB": "spectacles",
+    "optionC": "specticles",
+    "optionD": "specktacles",
+    "correctAnswer": "B",
+    "explanation": "The correct spelling is spectacles."
+  },
+  {
+    "questionNumber": 18,
+    "question": "Sir Isaac Newton was a great ______.",
+    "optionA": "pilot",
+    "optionB": "scientist",
+    "optionC": "teacher",
+    "optionD": "farmer",
+    "correctAnswer": "B",
+    "explanation": "The story says Sir Isaac Newton was a great scientist."
+  },
+  {
+    "questionNumber": 19,
+    "question": "What did Sir Isaac Newton want to have?",
+    "optionA": "Eggs for supper",
+    "optionB": "Fruit for lunch",
+    "optionC": "Soup for dinner",
+    "optionD": "Bread for breakfast",
+    "correctAnswer": "A",
+    "explanation": "The story says he wanted to have eggs in supper."
+  },
+  {
+    "questionNumber": 20,
+    "question": "What did Newton drop into the boiling water?",
+    "optionA": "A spoon",
+    "optionB": "His watch",
+    "optionC": "A book",
+    "optionD": "His glasses",
+    "correctAnswer": "B",
+    "explanation": "He dropped his watch into the boiling water."
+  },
+  {
+    "questionNumber": 21,
+    "question": "Why did Newton laugh?",
+    "optionA": "He found his watch in his hand",
+    "optionB": "He cooked the eggs",
+    "optionC": "He saw Grandpa",
+    "optionD": "He found a book",
+    "correctAnswer": "A",
+    "explanation": "He found his watch in his hand when he looked for the eggs."
+  },
+  {
+    "questionNumber": 22,
+    "question": "The story says that great thinkers are often ______.",
+    "optionA": "careful",
+    "optionB": "forgetful",
+    "optionC": "silent",
+    "optionD": "angry",
+    "correctAnswer": "B",
+    "explanation": "The story concludes that great thinkers are often forgetful."
+  },
+  {
+    "questionNumber": 23,
+    "question": "Which phrase is correct?",
+    "optionA": "a pair of shoe",
+    "optionB": "a pair of shoes",
+    "optionC": "a pairs of shoes",
+    "optionD": "pair of shoe",
+    "correctAnswer": "B",
+    "explanation": "The lesson gives the phrase a pair of shoes."
+  },
+  {
+    "questionNumber": 24,
+    "question": "Which of these is normally used as a pair?",
+    "optionA": "Glasses",
+    "optionB": "Book",
+    "optionC": "Ball",
+    "optionD": "Bottle",
+    "correctAnswer": "A",
+    "explanation": "The lesson uses glasses as an example of something used as a pair."
+  },
+  {
+    "questionNumber": 25,
+    "question": "Choose the correct preposition: Grandpa keeps his glasses ______ different places.",
+    "optionA": "among",
+    "optionB": "in",
+    "optionC": "for",
+    "optionD": "after",
+    "correctAnswer": "B",
+    "explanation": "The sentence is 'keeping his glasses in different places.'"
+  },
+  {
+    "questionNumber": 26,
+    "question": "Choose the correct preposition: He looked ______ the window.",
+    "optionA": "near",
+    "optionB": "after",
+    "optionC": "for",
+    "optionD": "above",
+    "correctAnswer": "A",
+    "explanation": "The lesson says he searched near the window."
+  },
+  {
+    "questionNumber": 27,
+    "question": "Choose the correct word: Not inside, play ______.",
+    "optionA": "under",
+    "optionB": "outside",
+    "optionC": "above",
+    "optionD": "after",
+    "correctAnswer": "B",
+    "explanation": "The crossword clue gives outside for 'Not inside, play ______.'"
+  },
+  {
+    "questionNumber": 28,
+    "question": "Which word pair is given in the lesson?",
+    "optionA": "pair - peer",
+    "optionB": "pair - pain",
+    "optionC": "pair - park",
+    "optionD": "pair - pen",
+    "correctAnswer": "A",
+    "explanation": "The Let us listen and Speak activity includes pair - peer."
+  },
+  {
+    "questionNumber": 29,
+    "question": "Which activity asks learners to arrange objects from the smallest or lightest to the biggest or heaviest?",
+    "optionA": "Let us Read",
+    "optionB": "Let us Write",
+    "optionC": "Let us Do",
+    "optionD": "Mental Talk",
+    "correctAnswer": "B",
+    "explanation": "The Let us Write section asks learners to arrange each group in ascending order."
+  },
+  {
+    "questionNumber": 30,
+    "question": "What is the main idea of the poem 'Grandpa's Glasses'?",
+    "optionA": "Grandpa buys a new chair",
+    "optionB": "Grandpa searches for his glasses and finds them on his head",
+    "optionC": "Grandpa goes to the market",
+    "optionD": "Grandpa loses his newspaper",
+    "correctAnswer": "B",
+    "explanation": "The poem describes Grandpa searching everywhere and finally finding his glasses on his head."
   }
 ]
