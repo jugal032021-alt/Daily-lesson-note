@@ -1385,7 +1385,194 @@ async function loadResultPage() {
     }
 
 }
+/* ==================================================
+   QUESTION REVIEW & SOLUTIONS
+================================================== */
 
+function loadQuestionReview() {
+
+    const reviewContainer =
+        document.getElementById("reviewContainer");
+
+    if (!reviewContainer) return;
+
+    const saved =
+        sessionStorage.getItem("oav_last_submission");
+
+    if (!saved) {
+        reviewContainer.innerHTML =
+            "<p>No question review available.</p>";
+        return;
+    }
+
+    try {
+
+        const reviewData =
+            JSON.parse(saved);
+
+        const questions =
+            reviewData.questions || [];
+
+        const answers =
+            reviewData.studentAnswers || {};
+
+        if (!questions.length) {
+            reviewContainer.innerHTML =
+                "<p>No questions found.</p>";
+            return;
+        }
+
+        reviewContainer.innerHTML = "";
+
+        questions.forEach(function(q, index) {
+
+            const correct =
+                q.correctAnswer;
+
+            const selected =
+                answers[index];
+
+            const isCorrect =
+                selected === correct;
+
+            const card =
+                document.createElement("div");
+
+            card.style.cssText =
+                "border:1px solid #ddd;" +
+                "border-radius:10px;" +
+                "padding:15px;" +
+                "margin-bottom:15px;" +
+                "background:#fff;" +
+                "box-shadow:0 2px 6px rgba(0,0,0,0.08);";
+
+            const options = [
+                ["A", q.optionA],
+                ["B", q.optionB],
+                ["C", q.optionC],
+                ["D", q.optionD]
+            ];
+
+            let optionsHTML = "";
+
+            options.forEach(function(item) {
+
+                const letter = item[0];
+                const text = item[1];
+
+                let mark = "";
+
+                if (letter === correct) {
+                    mark =
+                        '<span style="color:green;font-weight:bold;">' +
+                        ' ✅ Correct Answer' +
+                        '</span>';
+                }
+
+                if (
+                    letter === selected &&
+                    letter !== correct
+                ) {
+                    mark =
+                        '<span style="color:red;font-weight:bold;">' +
+                        ' ❌ Your Answer' +
+                        '</span>';
+                }
+
+                optionsHTML +=
+                    `<div style="
+                        padding:9px;
+                        margin:5px 0;
+                        border-radius:6px;
+                        background:#f8f9fa;
+                    ">
+                        <b>${letter}.</b>
+                        ${escapeHTML(text || "")}
+                        ${mark}
+                    </div>`;
+            });
+
+            let resultHTML = "";
+
+            if (isCorrect) {
+
+                resultHTML =
+                    `<div style="
+                        margin-top:10px;
+                        color:green;
+                        font-weight:bold;
+                    ">
+                        ✅ Correct
+                    </div>`;
+
+            } else {
+
+                resultHTML =
+                    `<div style="
+                        margin-top:10px;
+                        color:red;
+                        font-weight:bold;
+                    ">
+                        ❌ Wrong
+                    </div>`;
+            }
+
+            card.innerHTML = `
+
+                <div style="
+                    font-size:17px;
+                    font-weight:bold;
+                    margin-bottom:12px;
+                    color:#123;
+                ">
+                    Q${index + 1}. 
+                    ${escapeHTML(q.question || "")}
+                </div>
+
+                ${optionsHTML}
+
+                ${resultHTML}
+
+                <div style="
+                    margin-top:12px;
+                    padding:12px;
+                    background:#f1f8e9;
+                    border-left:4px solid #4caf50;
+                    border-radius:6px;
+                ">
+                    <b>💡 Solution:</b><br>
+                    ${escapeHTML(
+                        q.explanation ||
+                        "No explanation available."
+                    )}
+                </div>
+            `;
+
+            reviewContainer.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Question review error:",
+            error
+        );
+
+        reviewContainer.innerHTML =
+            "<p>Unable to load question review.</p>";
+    }
+}
+
+
+/* LOAD REVIEW AFTER PAGE LOAD */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+        loadQuestionReview();
+    }
+);
 
 /* =========================================================
    HELPERS
