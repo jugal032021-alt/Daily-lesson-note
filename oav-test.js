@@ -715,133 +715,115 @@ function startTimer() {
 /* =========================================================
    DISPLAY QUESTION
    ========================================================= */
-
 function renderQuestion() {
 
-    const question =
-        testQuestions[
-            currentQuestionIndex
-        ];
-
-
-    if (!question) return;
-
-
     const numberTitle =
-        document.getElementById(
-            "qNumberTitle"
-        );
-
-
-    if (numberTitle) {
-
-        numberTitle.innerText =
-            `Question ${currentQuestionIndex + 1} of ${testQuestions.length}`;
-
-    }
-
+        document.getElementById("qNumberTitle");
 
     const questionText =
-        document.getElementById(
-            "qText"
-        );
-
-
-    if (questionText) {
-
-        questionText.innerText =
-            question.question;
-
-    }
-
+        document.getElementById("qText");
 
     const options =
-        document.getElementById(
-            "optionsContainer"
-        );
-
+        document.getElementById("optionsContainer");
 
     if (!options) return;
 
+    // Header
+    if (numberTitle) {
+        numberTitle.innerText =
+            "All Questions (" + testQuestions.length + ")";
+    }
+
+    if (questionText) {
+        questionText.innerHTML = "";
+    }
 
     options.innerHTML = "";
 
+    // Show ALL questions on one page
+    testQuestions.forEach(function (question, index) {
 
-    const optionList = [
+        const questionDiv =
+            document.createElement("div");
 
-        ["A", question.optionA],
+        questionDiv.className = "all-question";
 
-        ["B", question.optionB],
+        const title =
+            document.createElement("div");
 
-        ["C", question.optionC],
+        title.className = "all-question-title";
 
-        ["D", question.optionD]
+        title.innerHTML =
+            "<strong>Question " +
+            (index + 1) +
+            ".</strong> " +
+            (question.question || "");
 
-    ];
+        questionDiv.appendChild(title);
 
+        const optionList = [
+            ["A", question.optionA],
+            ["B", question.optionB],
+            ["C", question.optionC],
+            ["D", question.optionD]
+        ];
 
-    optionList.forEach(
-        function ([key, text]) {
+        optionList.forEach(function(item) {
 
             const label =
-                document.createElement(
-                    "label"
-                );
+                document.createElement("label");
 
+            label.className = "option-label";
 
-            label.className =
-                "option-label";
-
-
-            label.innerHTML = `
-
-                <input
-                    type="radio"
-                    name="examOption"
-                    value="${key}"
-                >
-
-                <span>
-                    <b>${key}.</b>
-                    ${escapeHTML(text || "")}
-                </span>
-
-            `;
-
+            label.innerHTML =
+                '<input type="radio" ' +
+                'name="question_' + index + '" ' +
+                'value="' + item[0] + '">' +
+                '<span><b>' + item[0] +
+                '.</b> ' + (item[1] || "") +
+                '</span>';
 
             const radio =
-                label.querySelector(
-                    "input"
-                );
-
+                label.querySelector("input");
 
             radio.checked =
-                studentAnswers[
-                    currentQuestionIndex
-                ] === key;
+                studentAnswers[index] === item[0];
 
+            radio.addEventListener("change", function() {
+                studentAnswers[index] = item[0];
+            });
 
-            radio.onclick =
-                function () {
+            questionDiv.appendChild(label);
 
-                    selectAnswer(key);
+        });
 
-                };
+        options.appendChild(questionDiv);
 
+    });
 
-            options.appendChild(
-                label
-            );
+    // Hide Previous / Next
+    const previous =
+        document.getElementById("btnPrev");
 
-        }
-    );
+    const next =
+        document.getElementById("btnNext");
 
+    if (previous) {
+        previous.style.display = "none";
+    }
 
-    updateButtons();
+    if (next) {
+        next.style.display = "none";
+    }
 
+    // Show Submit button
+    const submit =
+        document.getElementById("btnSubmitTest");
+
+    if (submit) {
+        submit.style.display = "inline-block";
+    }
 }
-
-
 /* =========================================================
    SELECT ANSWER
    ========================================================= */
