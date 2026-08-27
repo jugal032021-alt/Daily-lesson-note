@@ -1,22 +1,302 @@
 [
   {
     "questionNumber": 1,
-    "question": "ଗଛର କେଉଁ ଅଂଶ ମାଟିରୁ ପାଣି ଶୋଷଣ କରେ?",
-    "optionA": "ପତ୍ର",
-    "optionB": "ଫୁଲ",
-    "optionC": "ଚେର",
-    "optionD": "ଫଳ",
+    "question": "ନିମ୍ନୋକ୍ତ କେଉଁ ଗ୍ରହରେ ଏ ପର୍ଯ୍ୟନ୍ତ ଜଳର ଉପସ୍ଥିତି ନିଶ୍ଚିତ ଭାବେ ଦେଖିବାକୁ ମିଳିଛି?",
+    "optionA": "ବୁଧ",
+    "optionB": "ଶୁକ୍ର",
+    "optionC": "ପୃଥିବୀ",
+    "optionD": "ଶନି",
     "correctAnswer": "C",
-    "explanation": "ଗଛର ଚେର ମାଟିରୁ ପାଣି ଓ ଖଣିଜ ଲବଣ ଶୋଷଣ କରେ।"
+    "explanation": "ଜଳର ଉପସ୍ଥିତି ନିଶ୍ଚିତ ଭାବେ ପୃଥିବୀରେ ଦେଖିବାକୁ ମିଳିଛି।"
   },
   {
     "questionNumber": 2,
-    "question": "ନିମ୍ନଲିଖିତ ମଧ୍ୟରୁ କେଉଁଟି ସ୍ୱଚ୍ଛ ପାଣିର ଉତ୍ସ?",
-    "optionA": "ଆବର୍ଜନା ଥିବା ପୋଖରୀ",
-    "optionB": "ନାଳ",
-    "optionC": "ସ୍ୱଚ୍ଛ କୂଅ",
-    "optionD": "ନର୍ଦ୍ଦମା",
+    "question": "ପୃଥିବୀପୃଷ୍ଠର ପ୍ରାୟ କେତେ ଶତକଡ଼ା ଭାଗ ଜଳ ଦ୍ୱାରା ଆବୃତ?",
+    "optionA": "୯୭%",
+    "optionB": "୭୧%",
+    "optionC": "୫୧%",
+    "optionD": "୬୧%",
+    "correctAnswer": "B",
+    "explanation": "ପୃଥିବୀପୃଷ୍ଠର ପ୍ରାୟ ୭୧% ଭାଗ ଜଳ ଦ୍ୱାରା ଆବୃତ।"
+  },
+  {
+    "questionNumber": 3,
+    "question": "ପୃଥିବୀର ସମସ୍ତ ଜଳର ପ୍ରାୟ କେତେ ଶତକଡ଼ା ଭାଗ ଲୁଣିଆ ଜଳ?",
+    "optionA": "୯୭%",
+    "optionB": "୮୭%",
+    "optionC": "୨୭%",
+    "optionD": "୭୭%",
+    "correctAnswer": "A",
+    "explanation": "ପୃଥିବୀର ମୋଟ ଜଳର ପ୍ରାୟ ୯୭% ଲୁଣିଆ ଜଳ।"
+  },
+  {
+    "questionNumber": 4,
+    "question": "ପୃଥିବୀର ସମସ୍ତ ଜଳର ପ୍ରାୟ କେତେ ଶତକଡ଼ା ଭାଗ ମଧୁର ଜଳ?",
+    "optionA": "୩%",
+    "optionB": "୬%",
+    "optionC": "୯୩%",
+    "optionD": "୯୭%",
+    "correctAnswer": "A",
+    "explanation": "ପୃଥିବୀର ମୋଟ ଜଳର ପ୍ରାୟ ୩% ମଧୁର ଜଳ।"
+  },
+  {
+    "questionNumber": 5,
+    "question": "କୃଷିକାର୍ଯ୍ୟରେ କେଉଁ ପ୍ରକାର ଜଳ ବ୍ୟବହୃତ ହୁଏ?",
+    "optionA": "ଲୁଣିଆ ଜଳ",
+    "optionB": "କ୍ଷାରୀୟ ଜଳ",
+    "optionC": "ମଧୁର ଜଳ",
+    "optionD": "ସମୁଦ୍ର ଜଳ",
     "correctAnswer": "C",
-    "explanation": "ସ୍ୱଚ୍ଛ କୂଅରୁ ସ୍ୱଚ୍ଛ ପାଣି ମିଳିପାରେ।"
+    "explanation": "କୃଷିକାର୍ଯ୍ୟରେ ମଧୁର ଜଳ ବ୍ୟବହୃତ ହୁଏ।"
+  },
+  {
+    "questionNumber": 6,
+    "question": "ମଧୁର ଜଳର ପ୍ରଧାନ ବ୍ୟବହାର କ'ଣ?",
+    "optionA": "ରହିବା",
+    "optionB": "ପାନୀୟ",
+    "optionC": "କୃଷିକାର୍ଯ୍ୟ",
+    "optionD": "ଉପରୋକ୍ତ ସମସ୍ତ",
+    "correctAnswer": "D",
+    "explanation": "ମଧୁର ଜଳ ପାନୀୟ, କୃଷିକାର୍ଯ୍ୟ ଓ ଅନ୍ୟାନ୍ୟ କାମରେ ବ୍ୟବହୃତ ହୁଏ।"
+  },
+  {
+    "questionNumber": 7,
+    "question": "ଲୁଣିଆ ଜଳ କେଉଁଠି ଅଧିକ ମିଳେ?",
+    "optionA": "ନଦୀ",
+    "optionB": "ପୋଖରୀ",
+    "optionC": "ସମୁଦ୍ର",
+    "optionD": "ଝରଣା",
+    "correctAnswer": "C",
+    "explanation": "ସମୁଦ୍ରରେ ଲୁଣିଆ ଜଳ ଅଧିକ ମିଳେ।"
+  },
+  {
+    "questionNumber": 8,
+    "question": "ମଧୁର ଜଳ କାହା ପାଇଁ ଅତ୍ୟନ୍ତ ଆବଶ୍ୟକ?",
+    "optionA": "କେବଳ ମଣିଷ",
+    "optionB": "କେବଳ ପଶୁ",
+    "optionC": "ସମସ୍ତ ଜୀବଜନ୍ତୁ ଓ ଉଦ୍ଭିଦ",
+    "optionD": "କେବଳ ଗଛ",
+    "correctAnswer": "C",
+    "explanation": "ମଧୁର ଜଳ ସମସ୍ତ ଜୀବଜନ୍ତୁ ଓ ଉଦ୍ଭିଦ ପାଇଁ ଆବଶ୍ୟକ।"
+  },
+  {
+    "questionNumber": 9,
+    "question": "ନିମ୍ନୋକ୍ତ ମଧ୍ୟରୁ କେଉଁ ଉଦ୍ଭିଦଟି ମଧୁର ଜଳରେ ଦେଖିବାକୁ ମିଳେ?",
+    "optionA": "ବିଲାତିଦଳ",
+    "optionB": "ଚିଙ୍ଗୁଡ଼ିଆ ଦଳ",
+    "optionC": "ପଦ୍ମ",
+    "optionD": "ଉପରୋକ୍ତ ସମସ୍ତ",
+    "correctAnswer": "D",
+    "explanation": "ଦିଆଯାଇଥିବା ଉଦ୍ଭିଦଗୁଡ଼ିକ ମଧୁର ଜଳ ସହ ଜଡ଼ିତ।"
+  },
+  {
+    "questionNumber": 10,
+    "question": "ସମୁଦ୍ର ଜଳ ମଣିଷ ଓ କିଛି ଜୀବଜନ୍ତୁଙ୍କ ପାଇଁ ପାନୀୟ ଭାବେ ଉପଯୋଗୀ ନୁହେଁ। ଏହାର ପ୍ରଧାନ କାରଣ କ'ଣ?",
+    "optionA": "ଅମ୍ଳ",
+    "optionB": "ବାଲି",
+    "optionC": "ଲବଣ",
+    "optionD": "ମାଟି",
+    "correctAnswer": "C",
+    "explanation": "ସମୁଦ୍ର ଜଳରେ ଅଧିକ ଲବଣ ଥିବାରୁ ଏହା ସାଧାରଣତଃ ପାନୀୟ ଭାବେ ଉପଯୋଗୀ ନୁହେଁ।"
+  },
+  {
+    "questionNumber": 11,
+    "question": "ସମୁଦ୍ର ଜଳକୁ ଶୁଖାଇଲେ କ'ଣ ସଂଗ୍ରହ କରାଯାଏ?",
+    "optionA": "ଚିନି",
+    "optionB": "ଲୁଣ",
+    "optionC": "ମାଟି",
+    "optionD": "ତେଲ",
+    "correctAnswer": "B",
+    "explanation": "ସମୁଦ୍ର ଜଳ ଶୁଖିଗଲେ ଲୁଣ ଅବଶିଷ୍ଟ ରହେ।"
+  },
+  {
+    "questionNumber": 12,
+    "question": "ଲୁଣ ଉତ୍ପାଦନ ପାଇଁ ସାଧାରଣତଃ କେମିତି ଭୂମି ଉପଯୋଗୀ?",
+    "optionA": "ପାହାଡ଼ିଆ",
+    "optionB": "ଜଙ୍ଗଲ ଭୂମି",
+    "optionC": "ବିସ୍ତୃତ ସମତଳ ଭୂମି",
+    "optionD": "ମରୁଭୂମି",
+    "correctAnswer": "C",
+    "explanation": "ଲୁଣ ଉତ୍ପାଦନ ପାଇଁ ବିସ୍ତୃତ ସମତଳ ଭୂମି ଉପଯୋଗୀ।"
+  },
+  {
+    "questionNumber": 13,
+    "question": "ଭାରତର ସବୁଠାରୁ ବୃହତ୍ ଲୁଣ ଉତ୍ପାଦନ ଅଞ୍ଚଳ ମଧ୍ୟରୁ କେଉଁଟି ଗୋଟିଏ?",
+    "optionA": "ଓଡ଼ିଶା",
+    "optionB": "ପଞ୍ଜାବ",
+    "optionC": "ଗୁଜରାଟ",
+    "optionD": "ବିହାର",
+    "correctAnswer": "C",
+    "explanation": "ଗୁଜରାଟ ଭାରତର ପ୍ରମୁଖ ଲୁଣ ଉତ୍ପାଦନ ଅଞ୍ଚଳ ମଧ୍ୟରୁ ଗୋଟିଏ।"
+  },
+  {
+    "questionNumber": 14,
+    "question": "ଓଡ଼ିଶାର କେଉଁ ଜିଲ୍ଲାରେ ଲୁଣ ଉତ୍ପାଦନ କରାଯାଏ?",
+    "optionA": "କଟକ",
+    "optionB": "ଗଞ୍ଜାମ",
+    "optionC": "ଅନୁଗୁଳ",
+    "optionD": "ଖୋର୍ଦ୍ଧା",
+    "correctAnswer": "B",
+    "explanation": "ଦିଆଯାଇଥିବା ବିକଳ୍ପ ମଧ୍ୟରୁ ଗଞ୍ଜାମ ଲୁଣ ଉତ୍ପାଦନ ସହ ଜଡ଼ିତ।"
+  },
+  {
+    "questionNumber": 15,
+    "question": "ଲୁଣ ସଂଗ୍ରହ ପାଇଁ ସମୁଦ୍ର ଜଳକୁ କ'ଣ କରାଯାଏ?",
+    "optionA": "ପୁଟାଯାଏ",
+    "optionB": "ଜମାଯାଏ",
+    "optionC": "ଶୁଖାଯାଏ",
+    "optionD": "ଛଣାଯାଏ",
+    "correctAnswer": "C",
+    "explanation": "ସମୁଦ୍ର ଜଳକୁ ଶୁଖାଇଲେ ଲୁଣ ଅବଶିଷ୍ଟ ରହେ।"
+  },
+  {
+    "questionNumber": 16,
+    "question": "ନିମ୍ନୋକ୍ତ ମଧ୍ୟରୁ କେଉଁଗୁଡ଼ିକ ଲୁଣ ଉତ୍ପାଦନ ସହ ଜଡ଼ିତ?",
+    "optionA": "ସମୁଦ୍ର ଜଳ",
+    "optionB": "ଶୁଖିଲା ପାଣିପାଗ",
+    "optionC": "ସମତଳ ଭୂମି",
+    "optionD": "ଉପରୋକ୍ତ ସମସ୍ତ",
+    "correctAnswer": "D",
+    "explanation": "ଲୁଣ ଉତ୍ପାଦନରେ ସମୁଦ୍ର ଜଳ, ଶୁଖିଲା ପାଣିପାଗ ଓ ସମତଳ ଭୂମି ଉପଯୋଗୀ।"
+  },
+  {
+    "questionNumber": 17,
+    "question": "ପୃଥିବୀରେ ଜଳର ମୁଖ୍ୟ ଉତ୍ସ କ'ଣ?",
+    "optionA": "ନଦୀ",
+    "optionB": "ପୋଖରୀ",
+    "optionC": "ସମୁଦ୍ର",
+    "optionD": "ବର୍ଷାଜଳ",
+    "correctAnswer": "D",
+    "explanation": "ବର୍ଷାଜଳ ପୃଥିବୀର ଜଳଚକ୍ରର ମୁଖ୍ୟ ଉତ୍ସ।"
+  },
+  {
+    "questionNumber": 18,
+    "question": "ମଧୁର ଜଳର ଏକ ମୁଖ୍ୟ ଉତ୍ସ କ'ଣ?",
+    "optionA": "ସମୁଦ୍ର",
+    "optionB": "ଭୂତଳ ଜଳ",
+    "optionC": "ମରୁଭୂମି",
+    "optionD": "ଲୁଣିଆ ଜଳ",
+    "correctAnswer": "B",
+    "explanation": "ଭୂତଳ ଜଳ ମଧୁର ଜଳର ଏକ ମୁଖ୍ୟ ଉତ୍ସ।"
+  },
+  {
+    "questionNumber": 19,
+    "question": "କୂଅ ଓ ନଳକୂପ କେଉଁ ପ୍ରକାର ଜଳର ଉତ୍ସ?",
+    "optionA": "ଲୁଣିଆ ଜଳ",
+    "optionB": "ବର୍ଷାଜଳ",
+    "optionC": "ମଧୁର ଜଳ",
+    "optionD": "ସମୁଦ୍ର ଜଳ",
+    "correctAnswer": "C",
+    "explanation": "କୂଅ ଓ ନଳକୂପରୁ ସାଧାରଣତଃ ଭୂତଳ ମଧୁର ଜଳ ମିଳେ।"
+  },
+  {
+    "questionNumber": 20,
+    "question": "ମଧୁର ଜଳର ପ୍ରାୟ କେତେ ଶତାଂଶ ବରଫାବୃତ ପାହାଡ଼ ଓ ପର୍ବତରେ ରହିଛି?",
+    "optionA": "୧.୯%",
+    "optionB": "୭୦%",
+    "optionC": "୭୧%",
+    "optionD": "୫୦%",
+    "correctAnswer": "B",
+    "explanation": "ମଧୁର ଜଳର ପ୍ରାୟ ୭୦% ବରଫ ଓ ହିମ ଆକାରରେ ରହିଛି।"
+  },
+  {
+    "questionNumber": 21,
+    "question": "ନଦୀ, ନାଳ, ଝରଣା ଓ ପୋଖରୀ କେଉଁ ଶ୍ରେଣୀରେ ପଡ଼େ?",
+    "optionA": "ଭୂତଳ ଜଳ",
+    "optionB": "ଭୂପୃଷ୍ଠ ଜଳ",
+    "optionC": "ବାୟୁମଣ୍ଡଳ",
+    "optionD": "ସମୁଦ୍ର",
+    "correctAnswer": "B",
+    "explanation": "ନଦୀ, ନାଳ, ଝରଣା ଓ ପୋଖରୀ ଭୂପୃଷ୍ଠ ଜଳର ଉଦାହରଣ।"
+  },
+  {
+    "questionNumber": 22,
+    "question": "ମଧୁର ଜଳର କେତେ ଶତାଂଶ ଭାଗ ନଦୀ, ନାଳ, ପୋଖରୀ ଓ ଝରଣାରେ ମିଳେ?",
+    "optionA": "୯୭.୫%",
+    "optionB": "୭୧%",
+    "optionC": "୭୦%",
+    "optionD": "୧.୯%",
+    "correctAnswer": null,
+    "explanation": "ଦିଆଯାଇଥିବା ଚିତ୍ରର ବିକଳ୍ପଗୁଡ଼ିକରେ ପ୍ରଚଳିତ ତଥ୍ୟ (ପ୍ରାୟ ୦.୩%) ମିଳୁନାହିଁ; ତେଣୁ ଏହି ପ୍ରଶ୍ନର ଉତ୍ତରକୁ ନିଶ୍ଚିତ ଭାବେ ଚିହ୍ନଟ କରାଯାଇନାହିଁ।"
+  },
+  {
+    "questionNumber": 23,
+    "question": "ବାୟୁମଣ୍ଡଳରେ ଜଳ କେଉଁ ଆକାରରେ ରହେ?",
+    "optionA": "ପଥର",
+    "optionB": "ବରଫ",
+    "optionC": "ଜଳୀୟ ବାଷ୍ପ ଓ ମେଘ",
+    "optionD": "ଲୁଣ",
+    "correctAnswer": "C",
+    "explanation": "ବାୟୁମଣ୍ଡଳରେ ଜଳ ମୁଖ୍ୟତଃ ଜଳୀୟ ବାଷ୍ପ ଓ ମେଘ ଆକାରରେ ରହେ।"
+  },
+  {
+    "questionNumber": 24,
+    "question": "ନିମ୍ନୋକ୍ତ ମଧ୍ୟରୁ କେଉଁଟି ଭୂତଳ ଜଳର ଉଦାହରଣ?",
+    "optionA": "ସମୁଦ୍ର",
+    "optionB": "ନଳକୂପ",
+    "optionC": "ମେଘ",
+    "optionD": "ନଦୀ",
+    "correctAnswer": "B",
+    "explanation": "ନଳକୂପରୁ ଭୂତଳ ଜଳ ମିଳେ।"
+  },
+  {
+    "questionNumber": 25,
+    "question": "ନିମ୍ନୋକ୍ତ ମଧ୍ୟରୁ କେଉଁଟି ଜଳାଶୟ ନୁହେଁ?",
+    "optionA": "ପୋଖରୀ",
+    "optionB": "ଝରଣା",
+    "optionC": "ମେଘ",
+    "optionD": "ନଦୀ",
+    "correctAnswer": "C",
+    "explanation": "ମେଘ ଜଳର ଏକ ଆକାର, କିନ୍ତୁ ଏହା ଜଳାଶୟ ନୁହେଁ।"
+  },
+  {
+    "questionNumber": 26,
+    "question": "ଜଳ ପୃଥିବୀରେ କେତୋଟି ଅବସ୍ଥାରେ ଦେଖାଯାଏ?",
+    "optionA": "୨ଟି",
+    "optionB": "୩ଟି",
+    "optionC": "୪ଟି",
+    "optionD": "୫ଟି",
+    "correctAnswer": "B",
+    "explanation": "ଜଳ ତିନୋଟି ଅବସ୍ଥାରେ—କଠିନ, ତରଳ ଓ ଗ୍ୟାସୀୟ—ଦେଖାଯାଏ।"
+  },
+  {
+    "questionNumber": 27,
+    "question": "କଠିନ ଅବସ୍ଥାରେ ଜଳକୁ କ'ଣ କୁହାଯାଏ?",
+    "optionA": "ବାଷ୍ପ",
+    "optionB": "ଜଳୀୟ ବାଷ୍ପ",
+    "optionC": "ବରଫ",
+    "optionD": "ମେଘ",
+    "correctAnswer": "C",
+    "explanation": "କଠିନ ଅବସ୍ଥାରେ ଜଳକୁ ବରଫ କୁହାଯାଏ।"
+  },
+  {
+    "questionNumber": 28,
+    "question": "ତରଳ ଅବସ୍ଥାରେ ଜଳର ଉଦାହରଣ କ'ଣ?",
+    "optionA": "ବରଫ",
+    "optionB": "ଜଳ",
+    "optionC": "ବାଷ୍ପ",
+    "optionD": "ମେଘ",
+    "correctAnswer": "B",
+    "explanation": "ତରଳ ଅବସ୍ଥାରେ ଜଳ ନିଜେ ଏକ ଉଦାହରଣ।"
+  },
+  {
+    "questionNumber": 29,
+    "question": "ବରଫକୁ ଗରମ କଲେ କ'ଣ ହୁଏ?",
+    "optionA": "ବାଷ୍ପ ହୁଏ",
+    "optionB": "ଜଳ ହୁଏ",
+    "optionC": "ମେଘ ହୁଏ",
+    "optionD": "ତୁଷାର ହୁଏ",
+    "correctAnswer": "B",
+    "explanation": "ବରଫ ଗରମ ହେଲେ ତରଳ ଜଳରେ ପରିଣତ ହୁଏ।"
+  },
+  {
+    "questionNumber": 30,
+    "question": "ଜଳକୁ ଗରମ କଲେ କ'ଣ ହୁଏ?",
+    "optionA": "ବରଫ ହୁଏ",
+    "optionB": "ତୁଷାର ହୁଏ",
+    "optionC": "ବାଷ୍ପରେ ପରିଣତ ହୁଏ",
+    "optionD": "ଲୁଣ ହୁଏ",
+    "correctAnswer": "C",
+    "explanation": "ଜଳକୁ ଗରମ କଲେ ଏହା ବାଷ୍ପରେ ପରିଣତ ହୁଏ।"
   }
 ]
