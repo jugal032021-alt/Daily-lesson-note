@@ -21,13 +21,20 @@ let testDurationSeconds = 30 * 60;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    if (document.getElementById("questionBox")) {
-        initializeTestPage();
-    }
+  // RESTORE REGISTERED STUDENT
+  if (document.getElementById("regSection")) {
+    restoreRegisteredStudent();
+  }
 
-    if (document.getElementById("resScore")) {
-        loadResultPage();
-    }
+  // TEST PAGE
+  if (document.getElementById("questionBox")) {
+    initializeTestPage();
+  }
+
+  // RESULT PAGE
+  if (document.getElementById("resScore")) {
+    loadResultPage();
+  }
 
 });
 
@@ -35,6 +42,71 @@ document.addEventListener("DOMContentLoaded", function () {
    STUDENT REGISTRATION
    Firebase: ONLY ONE WRITE
    ===================================================== */
+async function restoreRegisteredStudent() {
+
+  const mobile = localStorage.getItem("oav_student_mobile");
+
+  if (!mobile) {
+    return;
+  }
+
+  try {
+
+    const studentDoc = await oavDb
+      .collection("oav_students")
+      .doc(mobile)
+      .get();
+
+    if (!studentDoc.exists) {
+      localStorage.removeItem("oav_student_mobile");
+      return;
+    }
+
+    const student = studentDoc.data();
+
+    const regSection =
+      document.getElementById("regSection");
+
+    const dashboardSection =
+      document.getElementById("dashboardSection");
+
+    if (regSection) {
+      regSection.style.display = "none";
+    }
+
+    if (dashboardSection) {
+      dashboardSection.style.display = "block";
+    }
+
+    const welcomeMsg =
+      document.getElementById("welcomeMsg");
+
+    if (welcomeMsg) {
+      welcomeMsg.innerText =
+        "Welcome, " + (student.name || "Student") + "!";
+    }
+
+    const studentMeta =
+      document.getElementById("studentMeta");
+
+    if (studentMeta) {
+      studentMeta.innerText =
+        (student.school || "") +
+        " • " +
+        (student.city || "");
+    }
+
+    loadAvailableTests();
+
+  } catch (error) {
+
+    console.error(
+      "Restore student error:",
+      error
+    );
+
+  }
+}
 
 async function registerStudent(event) {
 
