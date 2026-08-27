@@ -165,7 +165,7 @@ async function registerStudent(event) {
         alert(
             "Registration successful! You can now start the practice tests."
         );
-
+loadAvailableTests();
 
     } catch (error) {
 
