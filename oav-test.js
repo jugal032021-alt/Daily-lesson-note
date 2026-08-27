@@ -21,10 +21,24 @@ let testDurationSeconds = 30 * 60;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  // RESTORE REGISTERED STUDENT
-  if (document.getElementById("regSection")) {
+// RESTORE REGISTERED STUDENT
+if (document.getElementById("regSection")) {
+
+    const savedMobile = localStorage.getItem("oav_student_mobile");
+
+    if (savedMobile) {
+        document.getElementById("regSection").style.display = "none";
+
+        const dashboardSection =
+            document.getElementById("dashboardSection");
+
+        if (dashboardSection) {
+            dashboardSection.style.display = "block";
+        }
+    }
+
     restoreRegisteredStudent();
-  }
+}
 
   // TEST PAGE
   if (document.getElementById("questionBox")) {
