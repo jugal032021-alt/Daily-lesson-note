@@ -1604,3 +1604,35 @@ function escapeHTML(value) {
         .replaceAll("'", "&#039;");
 
 }
+/* =========================================
+   CHANGE USER
+========================================= */
+
+function changeUser() {
+
+    localStorage.removeItem("oav_student_mobile");
+
+    const regSection =
+        document.getElementById("regSection");
+
+    const dashboardSection =
+        document.getElementById("dashboardSection");
+
+    if (regSection) {
+        regSection.style.display = "block";
+    }
+
+    if (dashboardSection) {
+        dashboardSection.style.display = "none";
+    }
+
+    const name = document.getElementById("regName");
+    const school = document.getElementById("regSchool");
+    const city = document.getElementById("regCity");
+    const mobile = document.getElementById("regMobile");
+
+    if (name) name.value = "";
+    if (school) school.value = "";
+    if (city) city.value = "";
+    if (mobile) mobile.value = "";
+}
