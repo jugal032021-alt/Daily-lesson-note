@@ -169,7 +169,7 @@ async function initializeTestPage() {
                 <div class="already-attempted">
                     <h3>⚠️ You have already attempted this test.</h3>
                     <p>You can attempt each subject only once.</p>
-                    <a href="oav-results.html?test=${encodeURIComponent(currentTestId)}&subject=${encodeURIComponent(currentSubject)}">View Result →</a>
+                    <a href="oav-result.html?test=${encodeURIComponent(currentTestId)}&subject=${encodeURIComponent(currentSubject)}">View Result →</a>
                 </div>`);
             return;
         }
@@ -331,7 +331,7 @@ async function submitTest(autoSubmit) {
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        window.location.href = `oav-results.html?test=${encodeURIComponent(currentTestId)}&subject=${encodeURIComponent(currentSubject)}`;
+        window.location.href = `oav-result.html?test=${encodeURIComponent(currentTestId)}&subject=${encodeURIComponent(currentSubject)}`;
     } catch (error) {
         console.error("Submit error:", error);
         alert("Submit error: " + error.message);
