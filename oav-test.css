@@ -199,6 +199,7 @@ body {
 }
 
 
+
 /* ================= OPTIONS ================= */
 
 #optionsContainer {
@@ -279,7 +280,6 @@ body {
     box-shadow: 0 0 0 2px rgba(0,68,204,0.15);
     transform: scale(1.01);
 }
-
 /* ================= BUTTONS ================= */
 
 .test-buttons {
