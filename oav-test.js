@@ -181,7 +181,124 @@ async function registerStudent(event) {
     }
 
 }
+/* =========================================================
+   LOAD AVAILABLE TESTS
+   ========================================================= */
 
+async function loadAvailableTests() {
+
+    const container =
+        document.getElementById("testsListContainer");
+
+    if (!container) return;
+
+    try {
+
+        const snapshot = await oavDb
+            .collection("oav_tests")
+            .get();
+
+        if (snapshot.empty) {
+
+            container.innerHTML = `
+                <p style="text-align:center;color:#777;">
+                    No practice tests available yet.
+                </p>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        snapshot.forEach(function(doc) {
+
+            const data = doc.data();
+
+            const testId = doc.id;
+
+            const testName =
+                data.testName || "OAV Practice Test";
+
+            const subjects =
+                data.subjects || [
+                    "Mathematics",
+                    "EVS",
+                    "English"
+                ];
+
+            let subjectButtons = "";
+
+            subjects.forEach(function(subject) {
+
+                subjectButtons += `
+                    <a href="oav-test.html?test=${encodeURIComponent(testId)}&subject=${encodeURIComponent(subject)}"
+                       style="
+                       display:inline-block;
+                       margin:5px;
+                       padding:10px 15px;
+                       background:#0044cc;
+                       color:white;
+                       text-decoration:none;
+                       border-radius:6px;
+                       font-weight:bold;
+                       ">
+                       ${subject}
+                    </a>
+                `;
+
+            });
+
+            container.innerHTML += `
+                <div style="
+                    background:#f8f9fa;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    padding:15px;
+                    margin-bottom:15px;
+                ">
+
+                    <h4 style="
+                        margin:0 0 8px 0;
+                        color:#0044cc;
+                    ">
+                        ${escapeHTML(testName)}
+                    </h4>
+
+                    <p style="
+                        margin:5px 0 10px 0;
+                        color:#666;
+                    ">
+                        30 Marks • 30 Minutes
+                    </p>
+
+                    <div>
+                        ${subjectButtons}
+                    </div>
+
+                </div>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Load tests error:",
+            error
+        );
+
+        container.innerHTML = `
+            <p style="
+                text-align:center;
+                color:red;
+            ">
+                Unable to load practice tests.
+            </p>
+        `;
+
+    }
+}
 /* =========================================================
    LOAD QUESTIONS FROM JSON
    ========================================================= */
