@@ -235,3 +235,13 @@ button:hover {
     line-height: 1.8;
     margin-bottom: 8px;
 }
+
+/* =========================================================
+   OAV PRACTICE CARD - FORCE SHOW
+   ========================================================= */
+
+.cards-grid .card:nth-child(6) {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
