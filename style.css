@@ -245,3 +245,9 @@ button:hover {
     visibility: visible !important;
     opacity: 1 !important;
 }
+/* OAV Practice Card */
+#oavPracticeCard {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
