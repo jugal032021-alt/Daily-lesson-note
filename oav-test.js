@@ -68,9 +68,27 @@ async function loadAvailableTests(){
 
 async function loadQuestionsFromJSON(testId,subject){
  const file=`oav-data/${encodeURIComponent(testId)}-${encodeURIComponent(subject)}.json`;
- const r=await fetch(file);if(!r.ok)throw Error("Question file not found: "+file);
- const q=await r.json();if(!Array.isArray(q)||!q.length)throw Error("Invalid or empty question format.");
- return q;
+ const r=await fetch(file);
+ if(!r.ok)throw Error("Question file not found: "+file);
+
+ const data=await r.json();
+ if(!Array.isArray(data)||!data.length)
+  throw Error("Invalid or empty question format.");
+
+ const questions=[];
+
+ data.forEach(item=>{
+  if(Array.isArray(item.questions)){
+   item.questions.forEach(q=>{
+    questions.push({...q,passage:item.passage||""});
+   });
+  }else{
+   questions.push(item);
+  }
+ });
+
+ if(!questions.length)throw Error("No questions found.");
+ return questions;
 }
 
 async function initializeTestPage(){
