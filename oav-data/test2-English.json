@@ -1,0 +1,320 @@
+[
+  {
+    "passage": "Passage 1: Grandpa was looking for his glasses. He searched his pockets, looked near the window and searched under his chair. Without his glasses, he could not read the newspaper properly. He kept looking everywhere. At last, he discovered that his glasses were on his own head.",
+    "questions": [
+      {
+        "questionNumber": 1,
+        "question": "What was Grandpa looking for?",
+        "optionA": "His newspaper",
+        "optionB": "His glasses",
+        "optionC": "His chair",
+        "optionD": "His book",
+        "correctAnswer": "B",
+        "explanation": "Passageର ଆରମ୍ଭରେ Grandpa ନିଜ glasses ଖୋଜୁଥିବା କଥା କୁହାଯାଇଛି। ସେଥିପାଇଁ ସଠିକ୍ ଉତ୍ତର B — His glasses."
+      },
+      {
+        "questionNumber": 2,
+        "question": "Where did Grandpa search for his glasses?",
+        "optionA": "In his pockets",
+        "optionB": "Near the window",
+        "optionC": "Under his chair",
+        "optionD": "All of these",
+        "correctAnswer": "D",
+        "explanation": "Grandpa pockets, window ପାଖରେ ଏବଂ chair ତଳେ glasses ଖୋଜିଥିଲେ। ତେଣୁ ଏହି ସମସ୍ତ ସ୍ଥାନ passageରେ ଅଛି। ସଠିକ୍ ଉତ୍ତର D."
+      },
+      {
+        "questionNumber": 3,
+        "question": "What could Grandpa not read properly without his glasses?",
+        "optionA": "A story",
+        "optionB": "The newspaper",
+        "optionC": "A letter",
+        "optionD": "A notice",
+        "correctAnswer": "B",
+        "explanation": "Passageରେ ସ୍ପଷ୍ଟ ଭାବରେ କୁହାଯାଇଛି ଯେ glasses ନଥିଲେ Grandpa newspaper ଠିକ୍ ଭାବରେ ପଢ଼ିପାରୁନଥିଲେ। ତେଣୁ B ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 4,
+        "question": "Where were Grandpa's glasses finally found?",
+        "optionA": "Under the chair",
+        "optionB": "Near the window",
+        "optionC": "In his pocket",
+        "optionD": "On his head",
+        "correctAnswer": "D",
+        "explanation": "Grandpa ବହୁତ ଜାଗାରେ glasses ଖୋଜିଥିଲେ। କିନ୍ତୁ ଶେଷରେ glasses ତାଙ୍କ ନିଜ ମୁଣ୍ଡ ଉପରେ ଥିବା ଜଣାପଡ଼ିଲା। ତେଣୁ D ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 5,
+        "question": "Why did Grandpa keep searching everywhere?",
+        "optionA": "He had lost his glasses",
+        "optionB": "He wanted a new chair",
+        "optionC": "He wanted to read a book",
+        "optionD": "He wanted to clean the room",
+        "correctAnswer": "A",
+        "explanation": "Grandpa ନିଜ glasses ହଜିଯାଇଛି ବୋଲି ଭାବିଥିଲେ। ସେଥିପାଇଁ ସେ ସବୁଠାରେ glasses ଖୋଜୁଥିଲେ। ତେଣୁ A ସଠିକ୍।"
+      }
+    ]
+  },
+
+  {
+    "passage": "Passage 2: Sir Isaac Newton was a great scientist. One evening he wanted to have eggs for supper. He went to the kitchen and put a pan on the stove. While waiting for the water to boil, Newton became deeply lost in thought. Because he was busy thinking, he accidentally dropped his watch into the boiling water instead of putting the egg into the pan.",
+    "questions": [
+      {
+        "questionNumber": 6,
+        "question": "Who was Sir Isaac Newton?",
+        "optionA": "A farmer",
+        "optionB": "A great scientist",
+        "optionC": "A doctor",
+        "optionD": "A teacher",
+        "correctAnswer": "B",
+        "explanation": "Passageର ପ୍ରଥମ ବାକ୍ୟରେ Newtonଙ୍କୁ ‘a great scientist’ ବୋଲି କୁହାଯାଇଛି। ତେଣୁ B ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 7,
+        "question": "What did Newton want to have for supper?",
+        "optionA": "Rice",
+        "optionB": "Bread",
+        "optionC": "Eggs",
+        "optionD": "Soup",
+        "correctAnswer": "C",
+        "explanation": "Newton supper ପାଇଁ eggs ଖାଇବାକୁ ଚାହୁଁଥିଲେ। Passageରେ ଏହା ସ୍ପଷ୍ଟ ଭାବରେ ଦିଆଯାଇଛି। ତେଣୁ C ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 8,
+        "question": "Where did Newton go to prepare his supper?",
+        "optionA": "To the garden",
+        "optionB": "To the kitchen",
+        "optionC": "To the bedroom",
+        "optionD": "To the classroom",
+        "correctAnswer": "B",
+        "explanation": "Eggs ପ୍ରସ୍ତୁତ କରିବା ପାଇଁ Newton kitchenକୁ ଯାଇଥିଲେ। ତେଣୁ B ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 9,
+        "question": "What did Newton put on the stove?",
+        "optionA": "A pan",
+        "optionB": "A plate",
+        "optionC": "A glass",
+        "optionD": "A cup",
+        "correctAnswer": "A",
+        "explanation": "Passageରେ Newton panକୁ stove ଉପରେ ରଖିଥିବା କୁହାଯାଇଛି। ତେଣୁ A ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 10,
+        "question": "Why did Newton accidentally drop his watch into the boiling water?",
+        "optionA": "He was playing",
+        "optionB": "He was busy thinking",
+        "optionC": "He wanted to clean his watch",
+        "optionD": "He was angry",
+        "correctAnswer": "B",
+        "explanation": "Newton ଗଭୀର ଚିନ୍ତାରେ ବ୍ୟସ୍ତ ଥିଲେ। ସେଥିପାଇଁ egg ବଦଳରେ ଭୁଲରେ watchକୁ boiling waterରେ ପକାଇଦେଲେ। ତେଣୁ B ସଠିକ୍।"
+      }
+    ]
+  },
+
+  {
+    "passage": "Passage 3: Newton soon realised that he had made a strange mistake. He had been thinking so deeply that he forgot what he was doing. Instead of keeping the egg in the pan, he had put his watch into the boiling water. The incident shows that even a very intelligent person can sometimes become absent-minded. Newton understood his mistake and laughed at himself.",
+    "questions": [
+      {
+        "questionNumber": 11,
+        "question": "What kind of mistake did Newton make?",
+        "optionA": "He lost his book",
+        "optionB": "He put his watch into boiling water",
+        "optionC": "He broke the pan",
+        "optionD": "He forgot his house",
+        "correctAnswer": "B",
+        "explanation": "Newton eggର ପରିବର୍ତ୍ତେ ନିଜ watchକୁ boiling waterରେ ପକାଇଦେଇଥିଲେ। ଏହା ହିଁ ତାଙ୍କର ଅଜବ ଭୁଲ। ତେଣୁ B ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 12,
+        "question": "Why did Newton forget what he was doing?",
+        "optionA": "He was sleeping",
+        "optionB": "He was thinking deeply",
+        "optionC": "He was talking",
+        "optionD": "He was eating",
+        "correctAnswer": "B",
+        "explanation": "Passageରେ Newton ‘thinking so deeply’ ଥିବାରୁ ସେ କଣ କରୁଥିଲେ ଭୁଲିଯାଇଥିଲେ। ତେଣୁ B ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 13,
+        "question": "What does 'absent-minded' mean in the passage?",
+        "optionA": "Very angry",
+        "optionB": "Not paying attention to what one is doing",
+        "optionC": "Very hungry",
+        "optionD": "Very tired",
+        "correctAnswer": "B",
+        "explanation": "‘Absent-minded’ର ଅର୍ଥ ହେଉଛି ନିଜେ କଣ କରୁଛନ୍ତି ସେଥିପ୍ରତି ଧ୍ୟାନ ନ ରହିବା। Newton ଗଭୀର ଚିନ୍ତାରେ ଥିବାରୁ ଏପରି ଭୁଲ କରିଥିଲେ। ତେଣୁ B ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 14,
+        "question": "What did Newton do after understanding his mistake?",
+        "optionA": "He cried",
+        "optionB": "He became angry",
+        "optionC": "He laughed at himself",
+        "optionD": "He went outside",
+        "correctAnswer": "C",
+        "explanation": "ନିଜ ଭୁଲ ବୁଝିବା ପରେ Newton ନିଜ ଉପରେ ହସିଥିଲେ। ତେଣୁ C ସଠିକ୍।"
+      },
+      {
+        "questionNumber": 15,
+        "question": "What is the main message of the passage?",
+        "optionA": "Scientists never make mistakes",
+        "optionB": "Intelligent people can also sometimes be absent-minded",
+        "optionC": "Cooking is difficult",
+        "optionD": "Watches are dangerous",
+        "correctAnswer": "B",
+        "explanation": "Passageର ମୁଖ୍ୟ ଶିକ୍ଷା ହେଉଛି—ଜଣେ ବହୁତ ବୁଦ୍ଧିମାନ ଲୋକ ମଧ୍ୟ କେବେ କେବେ ଧ୍ୟାନ ନ ରହିବାରୁ ଭୁଲ କରିପାରନ୍ତି। ତେଣୁ B ସଠିକ୍।"
+      }
+    ]
+  },
+
+  {
+    "questionNumber": 16,
+    "question": "What is the meaning of 'glance'?",
+    "optionA": "A quick look",
+    "optionB": "A long journey",
+    "optionC": "A loud sound",
+    "optionD": "A deep sleep",
+    "correctAnswer": "A",
+    "explanation": "‘Glance’ ଅର୍ଥ ହେଉଛି ଖୁବ ଶୀଘ୍ର କିମ୍ବା ଅଳ୍ପ ସମୟ ପାଇଁ ଦେଖିବା। ତେଣୁ A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 17,
+    "question": "What is the meaning of 'search'?",
+    "optionA": "To hide",
+    "optionB": "To look for",
+    "optionC": "To break",
+    "optionD": "To sleep",
+    "correctAnswer": "B",
+    "explanation": "‘Search’ର ଅର୍ଥ ହେଉଛି କୌଣସି ଜିନିଷକୁ ଖୋଜିବା। ‘Look for’ ମଧ୍ୟ ଖୋଜିବାର ଅର୍ଥ ଦିଏ। ତେଣୁ B ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 18,
+    "question": "Choose the correct spelling.",
+    "optionA": "water",
+    "optionB": "watter",
+    "optionC": "weter",
+    "optionD": "waterr",
+    "correctAnswer": "A",
+    "explanation": "‘Water’ ହେଉଛି ଠିକ୍ spelling। ଅନ୍ୟ ତିନୋଟିରେ spelling ଭୁଲ ଅଛି। ତେଣୁ A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 19,
+    "question": "Choose the correct spelling.",
+    "optionA": "vegetables",
+    "optionB": "vegatables",
+    "optionC": "vegetebles",
+    "optionD": "vegitables",
+    "correctAnswer": "A",
+    "explanation": "‘Vegetables’ ହେଉଛି ଠିକ୍ spelling। ତେଣୁ A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 20,
+    "question": "Choose the correct spelling.",
+    "optionA": "ballon",
+    "optionB": "baloon",
+    "optionC": "balloon",
+    "optionD": "balon",
+    "correctAnswer": "C",
+    "explanation": "‘Balloon’ ଶବ୍ଦରେ ‘ll’ ଏବଂ ‘oo’ ରହେ। ତେଣୁ C ସଠିକ୍ spelling।"
+  },
+  {
+    "questionNumber": 21,
+    "question": "Choose the correct spelling.",
+    "optionA": "elefant",
+    "optionB": "elephant",
+    "optionC": "elephent",
+    "optionD": "elliphant",
+    "correctAnswer": "B",
+    "explanation": "‘Elephant’ ହେଉଛି ଠିକ୍ spelling। ଏହି ଶବ୍ଦରେ ‘ph’ ବ୍ୟବହାର ହୁଏ। ତେଣୁ B ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 22,
+    "question": "Choose the correct spelling.",
+    "optionA": "spectacls",
+    "optionB": "specticles",
+    "optionC": "spectacles",
+    "optionD": "specktacles",
+    "correctAnswer": "C",
+    "explanation": "‘Spectacles’ ହେଉଛି glassesର ଏକ English word ଏବଂ ଏହାର spelling ‘spectacles’। ତେଣୁ C ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 23,
+    "question": "Choose the correct phrase.",
+    "optionA": "a pair of shoe",
+    "optionB": "a pair of shoes",
+    "optionC": "a pairs of shoes",
+    "optionD": "a pair shoes",
+    "correctAnswer": "B",
+    "explanation": "‘A pair of’ ପରେ ସାଧାରଣତଃ plural noun ବ୍ୟବହାର ହୁଏ। ସେଥିପାଇଁ ‘a pair of shoes’ ଠିକ୍। B ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 24,
+    "question": "Which word is normally used with 'a pair of'?",
+    "optionA": "glasses",
+    "optionB": "water",
+    "optionC": "rice",
+    "optionD": "milk",
+    "correctAnswer": "A",
+    "explanation": "Glasses ଦୁଇଟି lens ସହିତ ଏକ pair ଭାବରେ ବ୍ୟବହାର ହୁଏ। ତେଣୁ ‘a pair of glasses’ କୁହାଯାଏ। A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 25,
+    "question": "Choose the correct preposition: The children are playing ______ the house.",
+    "optionA": "outside",
+    "optionB": "after",
+    "optionC": "for",
+    "optionD": "with",
+    "correctAnswer": "A",
+    "explanation": "‘Outside’ର ଅର୍ଥ ହେଉଛି ‘ବାହାରେ’। ତେଣୁ ‘playing outside the house’ ବାକ୍ୟଟି ଠିକ୍। A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 26,
+    "question": "Choose the correct preposition: Grandpa searched ______ the window.",
+    "optionA": "near",
+    "optionB": "after",
+    "optionC": "for",
+    "optionD": "during",
+    "correctAnswer": "A",
+    "explanation": "‘Near’ର ଅର୍ଥ ‘ପାଖରେ’। Grandpa window ପାଖରେ search କରିଥିଲେ। ତେଣୁ ‘near the window’ ଠିକ୍। A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 27,
+    "question": "Choose the opposite of 'far'.",
+    "optionA": "near",
+    "optionB": "high",
+    "optionC": "slow",
+    "optionD": "small",
+    "correctAnswer": "A",
+    "explanation": "‘Far’ର ଅର୍ଥ ଦୂର। ଏହାର ବିପରୀତ ଅର୍ଥ ‘near’, ଅର୍ଥାତ୍ ପାଖରେ। ତେଣୁ A ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 28,
+    "question": "Choose the opposite of 'dirty'.",
+    "optionA": "dark",
+    "optionB": "clean",
+    "optionC": "slow",
+    "optionD": "weak",
+    "correctAnswer": "B",
+    "explanation": "‘Dirty’ର ଅର୍ଥ ମଇଳା। ଏହାର ବିପରୀତ ଅର୍ଥ ‘clean’, ଅର୍ଥାତ୍ ପରିଷ୍କାର। ତେଣୁ B ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 29,
+    "question": "Choose the word that means 'lost'.",
+    "optionA": "Found",
+    "optionB": "Missing",
+    "optionC": "Clean",
+    "optionD": "Near",
+    "correctAnswer": "B",
+    "explanation": "‘Lost’ ମାନେ ହଜିଯାଇଥିବା କିମ୍ବା ମିଳୁନଥିବା। ‘Missing’ର ଅର୍ଥ ମଧ୍ୟ ମିଳୁନଥିବା। ତେଣୁ B ସଠିକ୍।"
+  },
+  {
+    "questionNumber": 30,
+    "question": "Choose the correct word: Newton was a ______ scientist.",
+    "optionA": "great",
+    "optionB": "dirty",
+    "optionC": "lost",
+    "optionD": "near",
+    "correctAnswer": "A",
+    "explanation": "Passageରେ Sir Isaac Newtonଙ୍କୁ ‘a great scientist’ ବୋଲି କୁହାଯାଇଛି। ତେଣୁ blankରେ ‘great’ ବସିବ। A ସଠିକ୍।"
+  }
+]
