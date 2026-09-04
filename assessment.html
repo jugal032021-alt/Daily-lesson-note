@@ -162,6 +162,10 @@ tbody tr:nth-child(even){
 
 .roll{
     font-weight:bold;
+    width:55px;
+    min-width:55px;
+    max-width:55px;
+    padding:5px 3px;
 }
 
 @media(max-width:600px){
@@ -495,12 +499,31 @@ function renderSheet(){
 
             else if(c === 1){
 
-                td.textContent = value;
+    const input =
+        document.createElement("input");
 
-                td.className =
-                    "student-name";
+    input.type = "text";
 
-            }
+    input.value =
+        value === undefined ? "" : value;
+
+    input.className = "student-name-input";
+
+    input.addEventListener(
+        "input",
+        function(){
+
+            currentSheet[address] = {
+                t: "s",
+                v: input.value
+            };
+
+        }
+    );
+
+    td.appendChild(input);
+
+}
 
 
             /* -------------------------
