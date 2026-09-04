@@ -145,8 +145,8 @@ tbody tr:nth-child(even){
     min-width:170px;
 }
     .student-name-input{
-    width:160px;
-    min-width:160px;
+    width:200px;
+    min-width:200px;
     padding:7px;
     border:1px solid #aaa;
     border-radius:5px;
@@ -170,10 +170,10 @@ tbody tr:nth-child(even){
 
 .roll{
     font-weight:bold;
-    width:55px;
-    min-width:55px;
-    max-width:55px;
-    padding:5px 3px;
+    width:45px;
+    min-width:45px;
+    max-width:45px;
+    padding:4px 2px;
 }
 
 @media(max-width:600px){
@@ -540,10 +540,51 @@ function renderSheet(){
 
             else if(c === 2){
 
-                td.textContent = value;
+    const select =
+        document.createElement("select");
 
-            }
+    select.className = "gender-select";
 
+    const boys =
+        document.createElement("option");
+
+    boys.value = "Boys";
+    boys.textContent = "Boys";
+
+    const girls =
+        document.createElement("option");
+
+    girls.value = "Girls";
+    girls.textContent = "Girls";
+
+    select.appendChild(boys);
+    select.appendChild(girls);
+
+    if(
+        String(value).toLowerCase() === "girls" ||
+        String(value).toLowerCase() === "girl"
+    ){
+        select.value = "Girls";
+    }
+    else{
+        select.value = "Boys";
+    }
+
+    select.addEventListener(
+        "change",
+        function(){
+
+            currentSheet[address] = {
+                t:"s",
+                v:select.value
+            };
+
+        }
+    );
+
+    td.appendChild(select);
+
+}
 
             /* -------------------------
                FORMULA CELL
