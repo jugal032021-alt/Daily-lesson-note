@@ -1,284 +1,330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="or">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Assessment Marks Entry</title>
-
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f4f7fb;color:#222}
-.header{background:linear-gradient(135deg,#1565c0,#42a5f5);color:#fff;text-align:center;padding:18px 10px}
-.header h1{margin:0 0 5px;font-size:23px}.header p{margin:0;font-size:14px}
-.container{max-width:1500px;margin:auto;padding:12px}
-.card{background:#fff;border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 3px 12px #0001}
-.controls{display:flex;gap:10px;flex-wrap:wrap}
-select,button{padding:10px 13px;border:1px solid #aaa;border-radius:7px;font-size:15px}
-button{background:#1565c0;color:#fff;border:0;font-weight:bold}
-.green{background:#2e7d32}.orange{background:#ef6c00}
-.info{background:#fff3cd;padding:10px;border-left:5px solid #ff9800;border-radius:5px;margin-bottom:12px;font-size:14px}
-.status{font-weight:bold;margin-top:10px}.hidden{display:none}
-.table-wrap{overflow:auto;max-height:72vh;border:1px solid #ccc}
-table{border-collapse:collapse;width:max-content;min-width:100%;background:#fff}
-th,td{border:1px solid #aaa;padding:5px;text-align:center;white-space:nowrap}
-th{background:#e3f2fd;position:sticky;top:0;z-index:2}
-.roll{width:40px;min-width:40px;max-width:40px;font-weight:bold;padding:3px}
-.student-name-input{width:210px;min-width:210px;padding:7px;border:1px solid #aaa;border-radius:5px}
-.gender-select{width:80px;padding:7px 3px;border:1px solid #aaa;border-radius:5px}
-.mark{width:60px;padding:7px 3px;text-align:center;border:1px solid #aaa;border-radius:5px}
-.calculated{background:#e8f5e9;font-weight:bold;min-width:60px}
-@media(max-width:600px){.controls select,.controls button{width:100%}.header h1{font-size:20px}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
+header{background:#075e9c;color:#fff;text-align:center;padding:12px}
+h2{margin:3px;font-size:21px}.wrap{max-width:1400px;margin:auto;padding:10px}
+.bar{background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px #bbb;margin-bottom:10px}
+select,button{padding:9px 12px;border:1px solid #aaa;border-radius:6px;font-size:14px}
+button{background:#075e9c;color:white;border:0;cursor:pointer;margin:3px}
+button:hover{opacity:.9}.green{background:#16833b}.orange{background:#e67e22}.red{background:#c62828}
+#status{font-size:13px;color:#075e9c;margin:5px}.tablebox{overflow:auto;background:#fff;border-radius:8px;box-shadow:0 2px 8px #bbb}
+table{border-collapse:collapse;min-width:1100px;width:100%;font-size:12px}
+th,td{border:1px solid #aaa;padding:3px;text-align:center;white-space:nowrap}
+th{background:#dceeff;position:sticky;top:0;z-index:2}
+td:first-child,th:first-child{width:45px;min-width:45px}
+.name{width:180px;min-width:180px;text-align:left}.gender{width:90px;min-width:90px}
+input[type=text],input[type=number],td select{width:100%;padding:5px;border:1px solid #bbb;border-radius:4px}
+input[type=number]{width:58px;text-align:center}.total{font-weight:bold;background:#eef8ee}
+.small{font-size:11px;color:#555}
 </style>
 </head>
-
 <body>
+<header><h2>📊 Assessment Marks Entry</h2><div>Class 3 to Class 8</div></header>
 
-<div class="header">
-<h1>Assessment Marks Entry</h1>
-<p>Class III to VIII • Assessment Framework 2026–27</p>
-</div>
-
-<div class="container">
-
-<div class="card">
-<div class="info">
-<b>Assessment Marks Entry</b><br>
-Select Class → Enter Marks → Save / Download Excel.<br>
-No Firebase • No Database • Data remains on your device.
-</div>
-
-<div class="controls">
+<div class="wrap">
+<div class="bar">
 <select id="classSelect">
-<option value="">Select Class</option>
-<option>Class 3</option><option>Class 4</option><option>Class 5</option>
-<option>Class 6</option><option>Class 7</option><option>Class 8</option>
+<option value="">-- Select Class --</option>
+<option value="3">Class 3</option><option value="4">Class 4</option>
+<option value="5">Class 5</option><option value="6">Class 6</option>
+<option value="7">Class 7</option><option value="8">Class 8</option>
 </select>
-
 <button onclick="loadClass()">Load Class</button>
-<button class="green" onclick="saveExcel()">Save / Download Excel</button>
-<button class="orange" onclick="clearMarks()">Clear Marks</button>
+<button onclick="driveLoad()">☁️ Sign in / Load from My Drive</button>
+<button class="green" onclick="driveSave()">☁️ Save to My Drive</button>
+<button class="orange" onclick="downloadExcel()">⬇ Download Excel</button>
+<button class="red" onclick="clearMarks()">Clear Marks</button>
+<div id="status">Please select a class.</div>
 </div>
 
-<div id="status" class="status">Loading Excel...</div>
+<div id="tableBox" class="tablebox"></div>
 </div>
-
-<div id="tableCard" class="card hidden">
-<h2 id="classTitle"></h2>
-
-<div class="info">
-FA / Teacher Observation: <b>0–25</b> &nbsp; | &nbsp;
-SA: <b>0–50</b><br>
-Total marks are calculated automatically.
-</div>
-
-<div class="table-wrap">
-<table id="marksTable"><thead></thead><tbody></tbody></table>
-</div>
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script>
-
 const EXCEL_FILE="Class_3_to_8_Assessment_Marks_Entry-1.xlsx";
+const GOOGLE_CLIENT_ID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com";
+const DRIVE_SCOPE="https://www.googleapis.com/auth/drive.file";
 
-const BOOK_NAMES={
-"Class 3":["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
-"Class 4":["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],
-"Class 5":["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],
-"Class 6":["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],
-"Class 7":["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],
-"Class 8":["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]
+const BOOKS={
+3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
+4:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],
+5:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],
+6:["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],
+7:["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],
+8:["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]
 };
 
-let wb=null,ws=null,sheetName="";
+let wb=null,ws=null,cls="",tokenClient=null,accessToken=null,pendingDriveAction="";
 
-window.onload=()=>{
-fetch(EXCEL_FILE+"?v="+Date.now())
-.then(r=>r.arrayBuffer())
-.then(d=>{
-wb=XLSX.read(d,{type:"array",cellFormula:true,cellStyles:true});
-document.getElementById("status").textContent="✅ Excel Ready";
-})
-.catch(()=>document.getElementById("status").textContent="❌ Excel not found");
-};
+window.addEventListener("load",()=>{
+ try{
+  tokenClient=google.accounts.oauth2.initTokenClient({
+   client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,
+   callback:r=>{
+    if(r.error){setStatus("❌ Google sign-in failed");return}
+    accessToken=r.access_token;
+    setStatus("✅ Google Drive connected");
+    if(pendingDriveAction==="load")loadDriveFile();
+    if(pendingDriveAction==="save")saveDriveWorkbook();
+    pendingDriveAction="";
+   }
+  });
+ }catch(e){setStatus("❌ Google initialization failed")}
+ loadTemplate();
+});
+
+function setStatus(t){document.getElementById("status").textContent=t}
+
+async function loadTemplate(){
+ try{
+  const r=await fetch(EXCEL_FILE+"?v="+Date.now());
+  if(!r.ok)throw Error("Template not found");
+  const b=await r.arrayBuffer();
+  wb=XLSX.read(b,{type:"array",cellFormula:true});
+  setStatus("✅ Excel template loaded");
+ }catch(e){setStatus("❌ Excel template load failed: "+e.message)}
+}
 
 function loadClass(){
-
-if(!wb)return alert("Excel is still loading.");
-
-sheetName=document.getElementById("classSelect").value;
-if(!sheetName)return alert("Select Class first.");
-
-ws=wb.Sheets[sheetName];
-if(!ws)return alert("Class sheet not found.");
-
-let books=BOOK_NAMES[sheetName]||[];
-books.forEach((b,i)=>{
-let a=XLSX.utils.encode_cell({r:1,c:3+i*8});
-ws[a]={t:"s",v:b};
-});
-
-render();
+ const c=document.getElementById("classSelect").value;
+ if(!c)return alert("Select Class first");
+ if(!wb)return alert("Excel template is loading. Please try again.");
+ cls=c;
+ const sn="Class "+c;
+ ws=wb.Sheets[sn];
+ if(!ws)return alert(sn+" sheet not found");
+ applyBookNames();
+ render();
+ setStatus("✅ "+sn+" loaded");
 }
+
+function applyBookNames(){
+ const books=BOOKS[cls]||[];
+ books.forEach((b,i)=>{
+  const col=XLSX.utils.encode_col(3+i*8);
+  if(ws[col+"2"])ws[col+"2"].v=b;
+ });
+}
+
+function cell(r,c){
+ return ws[XLSX.utils.encode_col(c)+r]||{};
+}
+function val(r,c){let x=cell(r,c);return x.v??""}
 
 function render(){
+ let rows=[];
+ for(let r=4;r<=65;r++){
+  let has=false;
+  for(let c=0;c<77;c++)if(val(r,c)!==""){has=true;break}
+  if(has||r<=23)rows.push(r);
+ }
 
-let t=document.getElementById("marksTable"),
-h=t.querySelector("thead"),b=t.querySelector("tbody");
-h.innerHTML="";b.innerHTML="";
+ let n=BOOKS[cls].length;
+ let h='<table><thead><tr><th rowspan="2">Roll</th><th rowspan="2" class="name">Student Name</th><th rowspan="2">Gender</th>';
+ BOOKS[cls].forEach(b=>h+=`<th colspan="8">${b}</th>`);
+ h+='<th rowspan="2">Annual Total</th><th rowspan="2">Term 1 Total</th><th rowspan="2">Term 2 Total</th></tr><tr>';
+ BOOKS[cls].forEach(()=>h+=`<th>FA1<br>25</th><th>Obs.<br>25</th><th>SA1<br>50</th><th>Term1<br>100</th><th>FA2<br>25</th><th>Obs.<br>25</th><th>SA2<br>50</th><th>Term2<br>100</th>`);
+ h+='</tr></thead><tbody>';
 
-let rg=XLSX.utils.decode_range(ws["!ref"]);
-
-for(let r=0;r<3;r++){
-let tr=document.createElement("tr");
-for(let c=0;c<=rg.e.c;c++){
-let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
-let th=document.createElement("th");
-th.textContent=x?.v??"";
-tr.appendChild(th);
-}
-h.appendChild(tr);
-}
-
-for(let r=3;r<=rg.e.r;r++){
-
-let tr=document.createElement("tr");
-
-for(let c=0;c<=rg.e.c;c++){
-
-let a=XLSX.utils.encode_cell({r,c}),x=ws[a],td=document.createElement("td");
-let v=x?.v??"";
-
-if(c==0){
-td.textContent=v;
-td.className="roll";
-}
-
-else if(c==1){
-let i=document.createElement("input");
-i.type="text";i.className="student-name-input";i.value=v;
-i.oninput=()=>ws[a]={t:"s",v:i.value};
-td.appendChild(i);
-}
-
-else if(c==2){
-let s=document.createElement("select");
-s.className="gender-select";
-s.innerHTML='<option>Boys</option><option>Girls</option>';
-s.value=String(v).toLowerCase().includes("girl")?"Girls":"Boys";
-s.onchange=()=>ws[a]={t:"s",v:s.value};
-td.appendChild(s);
+ rows.forEach(r=>{
+  const roll=val(r,0)||r-3,name=val(r,1)||"",gender=val(r,2)||"";
+  h+=`<tr data-row="${r}"><td>${roll}</td><td class="name"><input type="text" value="${esc(name)}" oninput="upd(${r},1,this.value)"></td><td><select onchange="upd(${r},2,this.value)"><option value=""></option><option ${gender==="Boys"?"selected":""}>Boys</option><option ${gender==="Girls"?"selected":""}>Girls</option></select></td>`;
+  for(let s=0;s<n;s++){
+   let base=3+s*8;
+   [25,25,50].forEach((max,k)=>{
+    let v=val(r,base+k);
+    h+=`<td><input type="number" min="0" max="${max}" value="${v}" oninput="mark(${r},${base+k},this,${max})"></td>`;
+   });
+   h+=`<td class="total" id="c${r}_${base+3}">${val(r,base+3)}</td>`;
+   [25,25,50].forEach((max,k)=>{
+    let v=val(r,base+4+k);
+    h+=`<td><input type="number" min="0" max="${max}" value="${v}" oninput="mark(${r},${base+4+k},this,${max})"></td>`;
+   });
+   h+=`<td class="total" id="c${r}_${base+7}">${val(r,base+7)}</td>`;
+  }
+  let annual=val(r,n*8+3),t1=val(r,n*8+4),t2=val(r,n*8+5);
+  h+=`<td class="total" id="annual${r}">${annual}</td><td class="total" id="t1${r}">${t1}</td><td class="total" id="t2${r}">${t2}</td></tr>`;
+ });
+ h+='</tbody></table>';
+ document.getElementById("tableBox").innerHTML=h;
+ recalcAll();
 }
 
-else if(x?.f){
-td.className="calculated";
-td.textContent=calc(a);
+function esc(x){
+ return String(x).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-else{
-let i=document.createElement("input");
-i.type="number";i.className="mark";
-let head=String(ws[XLSX.utils.encode_cell({r:2,c})]?.v||"");
-let max=head.toLowerCase().includes("sa")?50:25;
-i.min=0;i.max=max;i.value=v;
-i.oninput=()=>{
-if(+i.value>max)i.value=max;
-if(+i.value<0)i.value=0;
-ws[a]={t:"n",v:+i.value};
-update(r);
-};
-td.appendChild(i);
+function upd(r,c,v){
+ if(!ws)return;
+ let a=XLSX.utils.encode_col(c)+r;
+ if(!ws[a])ws[a]={t:"s",v:""};
+ ws[a].v=v;ws[a].t="s";
 }
 
-tr.appendChild(td);
+function mark(r,c,input,max){
+ let v=Number(input.value);
+ if(v<0)input.value=0;
+ if(v>max)input.value=max;
+ upd(r,c,input.value===""?"":Number(input.value));
+ recalcRow(r);
 }
 
-b.appendChild(tr);
+function recalcRow(r){
+ let n=BOOKS[cls].length,t1=0,t2=0;
+ for(let s=0;s<n;s++){
+  let b=3+s*8;
+  let a=Number(val(r,b)||0)+Number(val(r,b+1)||0)+Number(val(r,b+2)||0);
+  let d=Number(val(r,b+4)||0)+Number(val(r,b+5)||0)+Number(val(r,b+6)||0);
+  ws[XLSX.utils.encode_col(b+3)+r]={t:"n",v:a};
+  ws[XLSX.utils.encode_col(b+7)+r]={t:"n",v:d};
+  let e1=document.getElementById(`c${r}_${b+3}`),e2=document.getElementById(`c${r}_${b+7}`);
+  if(e1)e1.textContent=a;if(e2)e2.textContent=d;
+  t1+=a;t2+=d;
+ }
+ let annual=t1+t2;
+ let ec=[
+  [n*8+3,annual,"annual"],[n*8+4,t1,"t1"],[n*8+5,t2,"t2"]
+ ];
+ ec.forEach(([c,v,id])=>{
+  ws[XLSX.utils.encode_col(c)+r]={t:"n",v:v};
+  let e=document.getElementById(id+r);if(e)e.textContent=v;
+ });
 }
 
-document.getElementById("tableCard").classList.remove("hidden");
-document.getElementById("classTitle").textContent=sheetName+" – Marks Entry";
-document.getElementById("status").textContent="✅ "+sheetName+" loaded";
-}
-
-function calc(a){
-
-let x=ws[a];
-if(!x)return 0;
-if(!x.f)return Number(x.v)||0;
-
-let f=String(x.f).replace(/^=/,"");
-
-f=f.replace(/SUM\(([A-Z]+\d+):([A-Z]+\d+)\)/gi,(m,s,e)=>{
-let S=XLSX.utils.decode_cell(s),E=XLSX.utils.decode_cell(e),n=0;
-for(let r=S.r;r<=E.r;r++)
-for(let c=S.c;c<=E.c;c++)
-n+=calc(XLSX.utils.encode_cell({r,c}));
-return n;
-});
-
-f=f.replace(/([A-Z]+\d+)/gi,m=>calc(m.toUpperCase()));
-
-if(/^[0-9+\-*/().\s]+$/.test(f)){
-try{return Function("return("+f+")")()}catch(e){}
-}
-return 0;
-}
-
-function update(r){
-
-let rg=XLSX.utils.decode_range(ws["!ref"]);
-
-for(let c=0;c<=rg.e.c;c++){
-let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
-if(x?.f)x.v=calc(a);
-}
-
-let tr=document.querySelectorAll("#marksTable tbody tr")[r-3];
-
-for(let c=0;c<=rg.e.c;c++){
-let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
-if(x?.f)tr.children[c].textContent=Math.round(x.v);
-}
+function recalcAll(){
+ for(let r=4;r<=65;r++)recalcRow(r);
 }
 
 function clearMarks(){
-
-if(!ws)return alert("Load a class first.");
-
-if(!confirm("Clear all marks?"))return;
-
-let rg=XLSX.utils.decode_range(ws["!ref"]);
-
-for(let r=3;r<=rg.e.r;r++)
-for(let c=3;c<=rg.e.c;c++){
-let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
-if(x&&!x.f)delete ws[a];
+ if(!ws)return;
+ if(!confirm("ସମସ୍ତ marks clear କରିବେ କି?"))return;
+ for(let r=4;r<=65;r++){
+  for(let s=0;s<BOOKS[cls].length;s++){
+   let b=3+s*8;
+   [b,b+1,b+2,b+4,b+5,b+6].forEach(c=>{
+    let a=XLSX.utils.encode_col(c)+r;
+    if(ws[a])ws[a].v="";
+   });
+  }
+ }
+ render();setStatus("Marks cleared");
 }
 
-render();
+function downloadExcel(){
+ if(!ws)return alert("First load a class");
+ recalcAll();
+ const out=XLSX.write(wb,{bookType:"xlsx",type:"array"});
+ const blob=new Blob([out],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=`Assessment_Class_${cls}.xlsx`;
+ a.click();
+ setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 
-function saveExcel(){
-
-if(!wb)return alert("Excel is not loaded.");
-
-wb.Workbook=wb.Workbook||{};
-wb.Workbook.CalcPr={fullCalcOnLoad:true,forceFullCalc:true};
-
-XLSX.writeFile(
-wb,
-(sheetName||"Assessment")+"_Marks.xlsx"
-);
-
-document.getElementById("status").textContent=
-"✅ Excel downloaded successfully.";
+function driveLoad(){
+ if(!cls){
+  const c=document.getElementById("classSelect").value;
+  if(!c)return alert("Select Class first");
+  cls=c;ws=wb?.Sheets["Class "+c];
+ }
+ if(!accessToken){
+  pendingDriveAction="load";
+  tokenClient.requestAccessToken({prompt:"consent"});
+ }else loadDriveFile();
 }
 
+async function findDriveFile(name){
+ const q=`name='${name}' and trashed=false`;
+ const u="https://www.googleapis.com/drive/v3/files?spaces=drive&q="+encodeURIComponent(q)+"&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
+ const r=await fetch(u,{headers:{Authorization:"Bearer "+accessToken}});
+ if(!r.ok)throw Error("Drive search failed");
+ const d=await r.json();
+ return d.files&&d.files.length?d.files[0]:null;
+}
+
+async function loadDriveFile(){
+ try{
+  if(!cls)return alert("Select Class first");
+  const name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
+  setStatus("☁️ Searching My Drive...");
+  const f=await findDriveFile(name);
+  if(!f){
+   setStatus("ℹ️ No saved file found. Loading template.");
+   loadClass();return;
+  }
+  setStatus("☁️ Loading from My Drive...");
+  const r=await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`,{headers:{Authorization:"Bearer "+accessToken}});
+  if(!r.ok)throw Error("Drive file download failed");
+  const b=await r.arrayBuffer();
+  wb=XLSX.read(b,{type:"array",cellFormula:true});
+  ws=wb.Sheets["Class "+cls];
+  if(!ws)throw Error("Class sheet not found");
+  applyBookNames();render();
+  localStorage.setItem("assessment_drive_"+cls,f.id);
+  setStatus("✅ Loaded from My Drive");
+ }catch(e){setStatus("❌ "+e.message)}
+}
+
+function driveSave(){
+ if(!cls){
+  const c=document.getElementById("classSelect").value;
+  if(!c)return alert("Select Class first");
+  cls=c;ws=wb?.Sheets["Class "+c];
+ }
+ if(!ws)return alert("Load Class first");
+ if(!accessToken){
+  pendingDriveAction="save";
+  tokenClient.requestAccessToken({prompt:"consent"});
+ }else saveDriveWorkbook();
+}
+
+async function saveDriveWorkbook(){
+ try{
+  recalcAll();
+  const name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
+  setStatus("☁️ Preparing Excel...");
+  const arr=XLSX.write(wb,{bookType:"xlsx",type:"array"});
+  const blob=new Blob([arr],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+  const old=await findDriveFile(name);
+
+  if(old){
+   setStatus("☁️ Updating My Drive file...");
+   const r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${old.id}?uploadType=media`,{
+    method:"PATCH",
+    headers:{Authorization:"Bearer "+accessToken,"Content-Type":blob.type},
+    body:blob
+   });
+   if(!r.ok)throw Error("Drive update failed");
+   localStorage.setItem("assessment_drive_"+cls,old.id);
+  }else{
+   setStatus("☁️ Creating My Drive file...");
+   const meta={name:name,mimeType:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+   const boundary="-------OdishaPathasala"+Date.now();
+   const body=new Blob([
+    "--"+boundary+"\r\nContent-Type:application/json; charset=UTF-8\r\n\r\n",
+    JSON.stringify(meta),"\r\n--"+boundary+"\r\nContent-Type:"+blob.type+"\r\n\r\n",
+    blob,"\r\n--"+boundary+"--"
+   ]);
+   const r=await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",{
+    method:"POST",
+    headers:{Authorization:"Bearer "+accessToken,"Content-Type":"multipart/related; boundary="+boundary},
+    body:body
+   });
+   if(!r.ok)throw Error("Drive create failed");
+   const d=await r.json();
+   localStorage.setItem("assessment_drive_"+cls,d.id);
+  }
+  setStatus("✅ Saved to your Google Drive");
+ }catch(e){setStatus("❌ Save failed: "+e.message)}
+}
 </script>
-
 </body>
 </html>
