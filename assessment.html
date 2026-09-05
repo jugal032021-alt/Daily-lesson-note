@@ -188,7 +188,6 @@ function mark(r,c,input,max){
  if(v>max)input.value=max;
  upd(r,c,input.value===""?"":Number(input.value));recalcRow(r);
 }
-
 function recalcRow(r){
  let n=BOOKS[cls].length,t1=0,t2=0;
  for(let s=0;s<n;s++){
@@ -201,15 +200,29 @@ function recalcRow(r){
   e=document.getElementById(`c${r}_${b+7}`);if(e)e.textContent=d;
   t1+=a;t2+=d;
  }
- ws[XLSX.utils.encode_col(n*8+4)+r]={t:"n",v:t1};
- ws[XLSX.utils.encode_col(n*8+5)+r]={t:"n",v:t2};
- let p1=n?((t1/(n*100))*100).toFixed(2):"0.00";
- let p2=n?((t2/(n*100))*100).toFixed(2):"0.00";
+
+ let annual=t1+t2;
+ let max=n*100;
+ let p1=max?(t1/max*100):0;
+ let p2=max?(t2/max*100):0;
+
+ let cAnnual=n*8+3,cT1=n*8+4,cT2=n*8+5,cP1=n*8+6,cP2=n*8+7;
+
+ ws[XLSX.utils.encode_col(cAnnual)+r]={t:"n",v:annual};
+ ws[XLSX.utils.encode_col(cT1)+r]={t:"n",v:t1};
+ ws[XLSX.utils.encode_col(cT2)+r]={t:"n",v:t2};
+ ws[XLSX.utils.encode_col(cP1)+r]={t:"n",v:p1};
+ ws[XLSX.utils.encode_col(cP2)+r]={t:"n",v:p2};
+
+ ws[XLSX.utils.encode_col(cP1)+r].z='0.00"%"';
+ ws[XLSX.utils.encode_col(cP2)+r].z='0.00"%"';
+
  document.getElementById("t1"+r).textContent=t1;
- document.getElementById("p1"+r).textContent=p1+"%";
+ document.getElementById("p1"+r).textContent=p1.toFixed(2)+"%";
  document.getElementById("t2"+r).textContent=t2;
- document.getElementById("p2"+r).textContent=p2+"%";
+ document.getElementById("p2"+r).textContent=p2.toFixed(2)+"%";
 }
+
 
 function recalcAll(){for(let r=4;r<=65;r++)recalcRow(r)}
 
@@ -228,9 +241,33 @@ function clearMarks(){
 function downloadExcel(){
  if(!ws)return alert("First load a class");
  recalcAll();
- let out=XLSX.write(wb,{bookType:"xlsx",type:"array"});
+
+ let n=BOOKS[cls].length;
+ let ca=n*8+3,ct1=n*8+4,ct2=n*8+5,cp1=n*8+6,cp2=n*8+7;
+
+ ws[XLSX.utils.encode_col(ca)+"3"]={t:"s",v:"Annual Total"};
+ ws[XLSX.utils.encode_col(ct1)+"3"]={t:"s",v:"TERM 1 TOTAL"};
+ ws[XLSX.utils.encode_col(cp1)+"3"]={t:"s",v:"TERM 1 %"};
+ ws[XLSX.utils.encode_col(ct2)+"3"]={t:"s",v:"TERM 2 TOTAL"};
+ ws[XLSX.utils.encode_col(cp2)+"3"]={t:"s",v:"TERM 2 %"};
+
+ for(let r=4;r<=65;r++){
+  let p1=Number(val(r,cp1)||0),p2=Number(val(r,cp2)||0);
+  if(ws[XLSX.utils.encode_col(cp1)+r])ws[XLSX.utils.encode_col(cp1)+r].z='0.00"%"';
+  if(ws[XLSX.utils.encode_col(cp2)+r])ws[XLSX.utils.encode_col(cp2)+r].z='0.00"%"';
+ }
+
+ ws["!ref"]=XLSX.utils.encode_range({
+  s:{r:0,c:0},
+  e:{r:64,c:cp2}
+ });
+
+ let out=XLSX.write(wb,{bookType:"xlsx",type:"array",cellStyles:true});
  let blob=new Blob([out],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
- let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`Assessment_Class_${cls}.xlsx`;a.click();
+ let a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=`Assessment_Class_${cls}.xlsx`;
+ a.click();
  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 
