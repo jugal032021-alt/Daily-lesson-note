@@ -2,1170 +2,280 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Assessment Marks Entry</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f7fb;
-    color:#222;
-}
-
-.header{
-    background:linear-gradient(135deg,#1565c0,#42a5f5);
-    color:white;
-    padding:18px 10px;
-    text-align:center;
-}
-
-.header h1{
-    margin:0 0 5px;
-    font-size:23px;
-}
-
-.header p{
-    margin:0;
-    font-size:14px;
-}
-
-.container{
-    max-width:1500px;
-    margin:18px auto;
-    padding:10px;
-}
-
-.card{
-    background:white;
-    border-radius:12px;
-    padding:16px;
-    margin-bottom:15px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
-}
-
-.controls{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    align-items:center;
-}
-
-select,
-button{
-    padding:11px 14px;
-    border-radius:7px;
-    border:1px solid #bbb;
-    font-size:15px;
-}
-
-select{
-    min-width:150px;
-    background:white;
-}
-
-button{
-    border:none;
-    cursor:pointer;
-    color:white;
-    background:#1565c0;
-    font-weight:bold;
-}
-
-button:hover{
-    opacity:.9;
-}
-
-.btn-green{
-    background:#2e7d32;
-}
-
-.btn-orange{
-    background:#ef6c00;
-}
-
-.info{
-    background:#fff3cd;
-    border-left:5px solid #ff9800;
-    padding:11px;
-    margin-bottom:13px;
-    border-radius:6px;
-    font-size:14px;
-}
-
-.status{
-    margin-top:10px;
-    font-weight:bold;
-}
-
-.hidden{
-    display:none;
-}
-
-.table-wrapper{
-    overflow:auto;
-    max-height:72vh;
-    border:1px solid #ccc;
-}
-
-table{
-    border-collapse:collapse;
-    width:max-content;
-    min-width:100%;
-    background:white;
-}
-
-th,
-td{
-    border:1px solid #aaa;
-    padding:5px;
-    text-align:center;
-    white-space:nowrap;
-}
-
-th{
-    background:#e3f2fd;
-    font-weight:bold;
-    position:sticky;
-    top:0;
-    z-index:5;
-}
-
-tbody tr:nth-child(even){
-    background:#fafafa;
-}
-
-.student-name{
-    text-align:left;
-    min-width:170px;
-}
-    .student-name-input{
-    width:200px;
-    min-width:200px;
-    padding:7px;
-    border:1px solid #aaa;
-    border-radius:5px;
-    font-size:15px;
-    }
-    .gender-select{
-    width:85px;
-    padding:7px 4px;
-    border:1px solid #aaa;
-    border-radius:5px;
-    background:white;
-    font-size:14px;
-    }
-
-.mark{
-    width:65px;
-    padding:7px 4px;
-    text-align:center;
-    border:1px solid #aaa;
-    border-radius:5px;
-    font-size:15px;
-}
-
-.calculated{
-    background:#e8f5e9;
-    font-weight:bold;
-    min-width:65px;
-}
-
-.roll{
-    font-weight:bold;
-    width:45px;
-    min-width:45px;
-    max-width:45px;
-    padding:4px 2px;
-}
-
-@media(max-width:600px){
-
-    .header h1{
-        font-size:20px;
-    }
-
-    .container{
-        padding:6px;
-    }
-
-    .card{
-        padding:10px;
-    }
-
-    select,
-    button{
-        width:100%;
-    }
-
-    .table-wrapper{
-        max-height:68vh;
-    }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f4f7fb;color:#222}
+.header{background:linear-gradient(135deg,#1565c0,#42a5f5);color:#fff;text-align:center;padding:18px 10px}
+.header h1{margin:0 0 5px;font-size:23px}.header p{margin:0;font-size:14px}
+.container{max-width:1500px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 3px 12px #0001}
+.controls{display:flex;gap:10px;flex-wrap:wrap}
+select,button{padding:10px 13px;border:1px solid #aaa;border-radius:7px;font-size:15px}
+button{background:#1565c0;color:#fff;border:0;font-weight:bold}
+.green{background:#2e7d32}.orange{background:#ef6c00}
+.info{background:#fff3cd;padding:10px;border-left:5px solid #ff9800;border-radius:5px;margin-bottom:12px;font-size:14px}
+.status{font-weight:bold;margin-top:10px}.hidden{display:none}
+.table-wrap{overflow:auto;max-height:72vh;border:1px solid #ccc}
+table{border-collapse:collapse;width:max-content;min-width:100%;background:#fff}
+th,td{border:1px solid #aaa;padding:5px;text-align:center;white-space:nowrap}
+th{background:#e3f2fd;position:sticky;top:0;z-index:2}
+.roll{width:40px;min-width:40px;max-width:40px;font-weight:bold;padding:3px}
+.student-name-input{width:210px;min-width:210px;padding:7px;border:1px solid #aaa;border-radius:5px}
+.gender-select{width:80px;padding:7px 3px;border:1px solid #aaa;border-radius:5px}
+.mark{width:60px;padding:7px 3px;text-align:center;border:1px solid #aaa;border-radius:5px}
+.calculated{background:#e8f5e9;font-weight:bold;min-width:60px}
+@media(max-width:600px){.controls select,.controls button{width:100%}.header h1{font-size:20px}}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-    <h1>Assessment Marks Entry</h1>
-    <p>Class III to VIII • Assessment Framework 2026–27</p>
+<h1>Assessment Marks Entry</h1>
+<p>Class III to VIII • Assessment Framework 2026–27</p>
 </div>
-
 
 <div class="container">
 
-    <div class="card">
+<div class="card">
+<div class="info">
+<b>Assessment Marks Entry</b><br>
+Select Class → Enter Marks → Save / Download Excel.<br>
+No Firebase • No Database • Data remains on your device.
+</div>
 
-        <div class="info">
-            <b>Assessment Marks Entry</b><br>
-            Select your class, enter marks and download the updated Excel file.
-            Your marks are processed only on this device.
-            No Firebase or database is used.
-        </div>
+<div class="controls">
+<select id="classSelect">
+<option value="">Select Class</option>
+<option>Class 3</option><option>Class 4</option><option>Class 5</option>
+<option>Class 6</option><option>Class 7</option><option>Class 8</option>
+</select>
 
-        <div class="controls">
+<button onclick="loadClass()">Load Class</button>
+<button class="green" onclick="saveExcel()">Save / Download Excel</button>
+<button class="orange" onclick="clearMarks()">Clear Marks</button>
+</div>
 
-            <select id="classSelect">
-                <option value="">Select Class</option>
-                <option value="Class 3">Class 3</option>
-                <option value="Class 4">Class 4</option>
-                <option value="Class 5">Class 5</option>
-                <option value="Class 6">Class 6</option>
-                <option value="Class 7">Class 7</option>
-                <option value="Class 8">Class 8</option>
-            </select>
+<div id="status" class="status">Loading Excel...</div>
+</div>
 
-            <button onclick="loadSelectedClass()">
-                Load Class
-            </button>
+<div id="tableCard" class="card hidden">
+<h2 id="classTitle"></h2>
 
-            <button class="btn-green" onclick="saveExcel()">
-                Save / Download Excel
-            </button>
+<div class="info">
+FA / Teacher Observation: <b>0–25</b> &nbsp; | &nbsp;
+SA: <b>0–50</b><br>
+Total marks are calculated automatically.
+</div>
 
-            <button class="btn-orange" onclick="clearMarks()">
-                Clear Marks
-            </button>
-
-        </div>
-
-        <div id="status" class="status">
-            Loading assessment file...
-        </div>
-
-    </div>
-
-
-    <div id="tableCard" class="card hidden">
-
-        <h2 id="classTitle"></h2>
-
-        <div class="info">
-            <b>FA / Teacher Observation:</b> 0–25
-            &nbsp;&nbsp; | &nbsp;&nbsp;
-            <b>SA:</b> 0–50
-            <br>
-            Term Total and Annual Total are calculated automatically.
-        </div>
-
-        <div class="table-wrapper">
-
-            <table id="marksTable">
-
-                <thead></thead>
-
-                <tbody></tbody>
-
-            </table>
-
-        </div>
-
-    </div>
+<div class="table-wrap">
+<table id="marksTable"><thead></thead><tbody></tbody></table>
+</div>
+</div>
 
 </div>
 
-
-<!-- SheetJS -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
 
 <script>
 
-let workbook = null;
-let currentSheet = null;
-let currentSheetName = null;
+const EXCEL_FILE="Class_3_to_8_Assessment_Marks_Entry-1.xlsx";
 
+const BOOK_NAMES={
+"Class 3":["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
+"Class 4":["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],
+"Class 5":["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],
+"Class 6":["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],
+"Class 7":["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],
+"Class 8":["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]
+};
 
-/* =====================================
-   EXCEL FILE LOCATION
-===================================== */
-const EXCEL_FILE =
-"Class_3_to_8_Assessment_Marks_Entry-1.xlsx";
+let wb=null,ws=null,sheetName="";
 
+window.onload=()=>{
+fetch(EXCEL_FILE+"?v="+Date.now())
+.then(r=>r.arrayBuffer())
+.then(d=>{
+wb=XLSX.read(d,{type:"array",cellFormula:true,cellStyles:true});
+document.getElementById("status").textContent="✅ Excel Ready";
+})
+.catch(()=>document.getElementById("status").textContent="❌ Excel not found");
+};
 
-/* =====================================
-   LOAD EXCEL AUTOMATICALLY
-===================================== */
+function loadClass(){
 
-window.addEventListener("load", function(){
+if(!wb)return alert("Excel is still loading.");
 
-    fetch(EXCEL_FILE + "?v=" + Date.now())
-    .then(response => {
+sheetName=document.getElementById("classSelect").value;
+if(!sheetName)return alert("Select Class first.");
 
-        if(!response.ok){
-            throw new Error("Excel file not found");
-        }
+ws=wb.Sheets[sheetName];
+if(!ws)return alert("Class sheet not found.");
 
-        return response.arrayBuffer();
-
-    })
-    .then(data => {
-
-        workbook = XLSX.read(data, {
-            type:"array",
-            cellFormula:true,
-            cellStyles:true
-        });
-
-        document.getElementById("status").innerHTML =
-            "✅ Assessment Excel ready.";
-
-    })
-    .catch(error => {
-
-        console.error(error);
-
-        document.getElementById("status").innerHTML =
-            "❌ Assessment Excel could not be loaded.";
-
-    });
-
+let books=BOOK_NAMES[sheetName]||[];
+books.forEach((b,i)=>{
+let a=XLSX.utils.encode_cell({r:1,c:3+i*8});
+ws[a]={t:"s",v:b};
 });
 
-
-/* =====================================
-   LOAD SELECTED CLASS
-===================================== */
-
-function loadSelectedClass(){
-
-    if(!workbook){
-
-        alert(
-            "Assessment Excel is still loading. Please wait a moment."
-        );
-
-        return;
-    }
-
-    const sheetName =
-        document.getElementById("classSelect").value;
-
-    if(!sheetName){
-
-        alert("Please select a class.");
-
-        return;
-    }
-
-    if(!workbook.Sheets[sheetName]){
-
-        alert(
-            sheetName + " sheet not found in Excel."
-        );
-
-        return;
-    }
-
-    currentSheetName = sheetName;
-
-    currentSheet =
-        workbook.Sheets[sheetName];
-
-    renderSheet();
-
+render();
 }
 
+function render(){
 
-/* =====================================
-   RENDER SHEET
-===================================== */
+let t=document.getElementById("marksTable"),
+h=t.querySelector("thead"),b=t.querySelector("tbody");
+h.innerHTML="";b.innerHTML="";
 
-function renderSheet(){
+let rg=XLSX.utils.decode_range(ws["!ref"]);
 
-    const table =
-        document.getElementById("marksTable");
-
-    const thead =
-        table.querySelector("thead");
-
-    const tbody =
-        table.querySelector("tbody");
-
-    thead.innerHTML = "";
-    tbody.innerHTML = "";
-
-    const range =
-        XLSX.utils.decode_range(
-            currentSheet["!ref"]
-        );
-
-
-    /* ---------------------------------
-       HEADER ROWS
-    --------------------------------- */
-
-    for(let r=0; r<3; r++){
-
-        const tr =
-            document.createElement("tr");
-
-        for(
-            let c=0;
-            c<=range.e.c;
-            c++
-        ){
-
-            const address =
-                XLSX.utils.encode_cell({
-                    r:r,
-                    c:c
-                });
-
-            const cell =
-                currentSheet[address];
-
-            const th =
-                document.createElement("th");
-
-            th.textContent =
-                cell && cell.v !== undefined
-                ? cell.v
-                : "";
-
-            tr.appendChild(th);
-
-        }
-
-        thead.appendChild(tr);
-
-    }
-
-
-    /* ---------------------------------
-       STUDENT ROWS
-    --------------------------------- */
-
-    for(
-        let r=3;
-        r<=range.e.r;
-        r++
-    ){
-
-        const tr =
-            document.createElement("tr");
-
-
-        for(
-            let c=0;
-            c<=range.e.c;
-            c++
-        ){
-
-            const address =
-                XLSX.utils.encode_cell({
-                    r:r,
-                    c:c
-                });
-
-            const cell =
-                currentSheet[address];
-
-            const td =
-                document.createElement("td");
-
-            const value =
-                cell && cell.v !== undefined
-                ? cell.v
-                : "";
-
-
-            /* -------------------------
-               ROLL NO
-            ------------------------- */
-
-            if(c === 0){
-
-                td.textContent = value;
-
-                td.className = "roll";
-
-            }
-
-
-            /* -------------------------
-               STUDENT NAME
-            ------------------------- */
-
-            else if(c === 1){
-
-    const input =
-        document.createElement("input");
-
-    input.type = "text";
-
-    input.value =
-        value === undefined ? "" : value;
-
-    input.className = "student-name-input";
-
-    input.addEventListener(
-        "input",
-        function(){
-
-            currentSheet[address] = {
-                t: "s",
-                v: input.value
-            };
-
-        }
-    );
-
-    td.appendChild(input);
-
+for(let r=0;r<3;r++){
+let tr=document.createElement("tr");
+for(let c=0;c<=rg.e.c;c++){
+let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
+let th=document.createElement("th");
+th.textContent=x?.v??"";
+tr.appendChild(th);
+}
+h.appendChild(tr);
 }
 
+for(let r=3;r<=rg.e.r;r++){
 
-            /* -------------------------
-               GENDER
-            ------------------------- */
+let tr=document.createElement("tr");
 
-            else if(c === 2){
+for(let c=0;c<=rg.e.c;c++){
 
-    const select =
-        document.createElement("select");
+let a=XLSX.utils.encode_cell({r,c}),x=ws[a],td=document.createElement("td");
+let v=x?.v??"";
 
-    select.className = "gender-select";
-
-    const boys =
-        document.createElement("option");
-
-    boys.value = "Boys";
-    boys.textContent = "Boys";
-
-    const girls =
-        document.createElement("option");
-
-    girls.value = "Girls";
-    girls.textContent = "Girls";
-
-    select.appendChild(boys);
-    select.appendChild(girls);
-
-    if(
-        String(value).toLowerCase() === "girls" ||
-        String(value).toLowerCase() === "girl"
-    ){
-        select.value = "Girls";
-    }
-    else{
-        select.value = "Boys";
-    }
-
-    select.addEventListener(
-        "change",
-        function(){
-
-            currentSheet[address] = {
-                t:"s",
-                v:select.value
-            };
-
-        }
-    );
-
-    td.appendChild(select);
-
+if(c==0){
+td.textContent=v;
+td.className="roll";
 }
 
-            /* -------------------------
-               FORMULA CELL
-            ------------------------- */
-
-            else if(cell && cell.f){
-
-                td.className =
-                    "calculated";
-
-                td.textContent =
-                    calculateFormula(
-                        address,
-                        new Set()
-                    );
-
-            }
-
-
-            /* -------------------------
-               MARK ENTRY
-            ------------------------- */
-
-            else{
-
-                const input =
-                    document.createElement("input");
-
-                input.type = "number";
-
-                input.className = "mark";
-
-                input.min = 0;
-
-                input.step = 1;
-
-                input.value =
-                    value === ""
-                    ? ""
-                    : value;
-
-
-                const headerAddress =
-                    XLSX.utils.encode_cell({
-                        r:2,
-                        c:c
-                    });
-
-                const headerCell =
-                    currentSheet[
-                        headerAddress
-                    ];
-
-                const headerText =
-                    headerCell &&
-                    headerCell.v !== undefined
-                    ? String(headerCell.v)
-                    : "";
-
-
-                /*
-                 * SA = 50
-                 * Other assessment = 25
-                 */
-
-                let maximum = 25;
-
-                if(
-                    headerText
-                    .toLowerCase()
-                    .includes("sa")
-                ){
-
-                    maximum = 50;
-
-                }
-
-                input.max = maximum;
-
-
-                input.addEventListener(
-                    "input",
-                    function(){
-
-                        let number =
-                            Number(input.value);
-
-                        if(number < 0){
-
-                            input.value = 0;
-
-                        }
-
-                        if(number > maximum){
-
-                            input.value =
-                                maximum;
-
-                        }
-
-                        updateCell(
-                            address,
-                            input.value
-                        );
-
-                        updateRowTotals(r);
-
-                    }
-                );
-
-
-                td.appendChild(input);
-
-            }
-
-
-            tr.appendChild(td);
-
-        }
-
-
-        tbody.appendChild(tr);
-
-    }
-
-
-    document
-        .getElementById("tableCard")
-        .classList.remove("hidden");
-
-
-    document
-        .getElementById("classTitle")
-        .textContent =
-            currentSheetName +
-            " – Marks Entry";
-
-
-    document
-        .getElementById("status")
-        .innerHTML =
-            "✅ " +
-            currentSheetName +
-            " loaded successfully.";
-
+else if(c==1){
+let i=document.createElement("input");
+i.type="text";i.className="student-name-input";i.value=v;
+i.oninput=()=>ws[a]={t:"s",v:i.value};
+td.appendChild(i);
 }
 
-
-/* =====================================
-   UPDATE EXCEL CELL
-===================================== */
-
-function updateCell(address,value){
-
-    if(value === ""){
-
-        delete currentSheet[address];
-
-        return;
-
-    }
-
-    currentSheet[address] = {
-        t:"n",
-        v:Number(value)
-    };
-
+else if(c==2){
+let s=document.createElement("select");
+s.className="gender-select";
+s.innerHTML='<option>Boys</option><option>Girls</option>';
+s.value=String(v).toLowerCase().includes("girl")?"Girls":"Boys";
+s.onchange=()=>ws[a]={t:"s",v:s.value};
+td.appendChild(s);
 }
 
-
-/* =====================================
-   FORMULA CALCULATOR
-===================================== */
-
-function calculateFormula(
-    address,
-    visited
-){
-
-    if(visited.has(address)){
-        return 0;
-    }
-
-    visited.add(address);
-
-    const cell =
-        currentSheet[address];
-
-    if(!cell){
-        return 0;
-    }
-
-
-    /*
-     * Normal numeric cell
-     */
-
-    if(
-        typeof cell.v === "number"
-        &&
-        !cell.f
-    ){
-
-        return cell.v;
-
-    }
-
-
-    /*
-     * Formula
-     */
-
-    if(!cell.f){
-
-        const n =
-            Number(cell.v);
-
-        return isNaN(n) ? 0 : n;
-
-    }
-
-
-    let formula =
-        String(cell.f);
-
-
-    /*
-     * Remove leading =
-     */
-
-    formula =
-        formula.replace(/^=/,"");
-
-
-    /*
-     * Handle SUM(...)
-     */
-
-    formula =
-        formula.replace(
-            /SUM\(([A-Z]+\d+):([A-Z]+\d+)\)/gi,
-            function(match,start,end){
-
-                const s =
-                    XLSX.utils.decode_cell(start);
-
-                const e =
-                    XLSX.utils.decode_cell(end);
-
-                let total = 0;
-
-                for(
-                    let r=s.r;
-                    r<=e.r;
-                    r++
-                ){
-
-                    for(
-                        let c=s.c;
-                        c<=e.c;
-                        c++
-                    ){
-
-                        const a =
-                            XLSX.utils.encode_cell({
-                                r:r,
-                                c:c
-                            });
-
-                        total +=
-                            calculateFormula(
-                                a,
-                                new Set(visited)
-                            );
-
-                    }
-
-                }
-
-                return total;
-
-            }
-        );
-
-
-    /*
-     * Replace cell references
-     */
-
-    formula =
-        formula.replace(
-            /([A-Z]+\d+)/gi,
-            function(match){
-
-                return calculateFormula(
-                    match.toUpperCase(),
-                    new Set(visited)
-                );
-
-            }
-        );
-
-
-    /*
-     * Only simple arithmetic
-     */
-
-    if(
-        /^[0-9+\-*/().\s]+$/.test(formula)
-    ){
-
-        try{
-
-            return Function(
-                '"use strict"; return (' +
-                formula +
-                ')'
-            )();
-
-        }
-        catch(e){
-
-            return 0;
-
-        }
-
-    }
-
-    return 0;
-
+else if(x?.f){
+td.className="calculated";
+td.textContent=calc(a);
 }
 
-
-/* =====================================
-   UPDATE TOTALS FOR ROW
-===================================== */
-
-function updateRowTotals(row){
-
-    const range =
-        XLSX.utils.decode_range(
-            currentSheet["!ref"]
-        );
-
-
-    /*
-     * Recalculate formula cells
-     */
-
-    for(
-        let c=0;
-        c<=range.e.c;
-        c++
-    ){
-
-        const address =
-            XLSX.utils.encode_cell({
-                r:row,
-                c:c
-            });
-
-        const cell =
-            currentSheet[address];
-
-        if(cell && cell.f){
-
-            cell.v =
-                calculateFormula(
-                    address,
-                    new Set()
-                );
-
-            cell.t = "n";
-
-        }
-
-    }
-
-
-    /*
-     * Update visible calculated cells
-     */
-
-    const tableRows =
-        document.querySelector(
-            "#marksTable tbody"
-        ).children;
-
-    const rowIndex = row - 3;
-
-    if(!tableRows[rowIndex]){
-        return;
-    }
-
-    const tr =
-        tableRows[rowIndex];
-
-
-    for(
-        let c=0;
-        c<=range.e.c;
-        c++
-    ){
-
-        const address =
-            XLSX.utils.encode_cell({
-                r:row,
-                c:c
-            });
-
-        const cell =
-            currentSheet[address];
-
-        if(cell && cell.f){
-
-            tr.children[c]
-                .textContent =
-                Math.round(
-                    cell.v
-                );
-
-        }
-
-    }
-
+else{
+let i=document.createElement("input");
+i.type="number";i.className="mark";
+let head=String(ws[XLSX.utils.encode_cell({r:2,c})]?.v||"");
+let max=head.toLowerCase().includes("sa")?50:25;
+i.min=0;i.max=max;i.value=v;
+i.oninput=()=>{
+if(+i.value>max)i.value=max;
+if(+i.value<0)i.value=0;
+ws[a]={t:"n",v:+i.value};
+update(r);
+};
+td.appendChild(i);
 }
 
+tr.appendChild(td);
+}
 
-/* =====================================
-   CLEAR MARKS
-===================================== */
+b.appendChild(tr);
+}
+
+document.getElementById("tableCard").classList.remove("hidden");
+document.getElementById("classTitle").textContent=sheetName+" – Marks Entry";
+document.getElementById("status").textContent="✅ "+sheetName+" loaded";
+}
+
+function calc(a){
+
+let x=ws[a];
+if(!x)return 0;
+if(!x.f)return Number(x.v)||0;
+
+let f=String(x.f).replace(/^=/,"");
+
+f=f.replace(/SUM\(([A-Z]+\d+):([A-Z]+\d+)\)/gi,(m,s,e)=>{
+let S=XLSX.utils.decode_cell(s),E=XLSX.utils.decode_cell(e),n=0;
+for(let r=S.r;r<=E.r;r++)
+for(let c=S.c;c<=E.c;c++)
+n+=calc(XLSX.utils.encode_cell({r,c}));
+return n;
+});
+
+f=f.replace(/([A-Z]+\d+)/gi,m=>calc(m.toUpperCase()));
+
+if(/^[0-9+\-*/().\s]+$/.test(f)){
+try{return Function("return("+f+")")()}catch(e){}
+}
+return 0;
+}
+
+function update(r){
+
+let rg=XLSX.utils.decode_range(ws["!ref"]);
+
+for(let c=0;c<=rg.e.c;c++){
+let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
+if(x?.f)x.v=calc(a);
+}
+
+let tr=document.querySelectorAll("#marksTable tbody tr")[r-3];
+
+for(let c=0;c<=rg.e.c;c++){
+let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
+if(x?.f)tr.children[c].textContent=Math.round(x.v);
+}
+}
 
 function clearMarks(){
 
-    if(!currentSheet){
+if(!ws)return alert("Load a class first.");
 
-        alert(
-            "Please select a class first."
-        );
+if(!confirm("Clear all marks?"))return;
 
-        return;
-    }
+let rg=XLSX.utils.decode_range(ws["!ref"]);
 
-
-    const ok =
-        confirm(
-            "Are you sure you want to clear all marks?"
-        );
-
-    if(!ok){
-        return;
-    }
-
-
-    const range =
-        XLSX.utils.decode_range(
-            currentSheet["!ref"]
-        );
-
-
-    for(
-        let r=3;
-        r<=range.e.r;
-        r++
-    ){
-
-        for(
-            let c=3;
-            c<=range.e.c;
-            c++
-        ){
-
-            const address =
-                XLSX.utils.encode_cell({
-                    r:r,
-                    c:c
-                });
-
-            const cell =
-                currentSheet[address];
-
-
-            /*
-             * Keep formula cells.
-             * Clear only mark-entry cells.
-             */
-
-            if(
-                cell &&
-                !cell.f
-            ){
-
-                delete currentSheet[address];
-
-            }
-
-        }
-
-    }
-
-
-    renderSheet();
-
+for(let r=3;r<=rg.e.r;r++)
+for(let c=3;c<=rg.e.c;c++){
+let a=XLSX.utils.encode_cell({r,c}),x=ws[a];
+if(x&&!x.f)delete ws[a];
 }
 
-
-/* =====================================
-   SAVE / DOWNLOAD
-===================================== */
+render();
+}
 
 function saveExcel(){
 
-    if(!workbook){
+if(!wb)return alert("Excel is not loaded.");
 
-        alert(
-            "Assessment Excel is not loaded yet."
-        );
+wb.Workbook=wb.Workbook||{};
+wb.Workbook.CalcPr={fullCalcOnLoad:true,forceFullCalc:true};
 
-        return;
-    }
+XLSX.writeFile(
+wb,
+(sheetName||"Assessment")+"_Marks.xlsx"
+);
 
-
-    /*
-     * Ask Excel to recalculate formulas
-     * when the downloaded file is opened.
-     */
-
-    if(!workbook.Workbook){
-        workbook.Workbook = {};
-    }
-
-
-    workbook.Workbook.CalcPr = {
-        fullCalcOnLoad:true,
-        forceFullCalc:true
-    };
-
-
-    try{
-
-        const fileName =
-            currentSheetName
-            ? currentSheetName.replace(
-                /[^a-zA-Z0-9]+/g,
-                "_"
-              ) +
-              "_Assessment_Marks.xlsx"
-            : "Assessment_Marks_Updated.xlsx";
-
-
-        XLSX.writeFile(
-            workbook,
-            fileName
-        );
-
-
-        document
-            .getElementById("status")
-            .innerHTML =
-            "✅ Excel saved/downloaded successfully.";
-
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-            "Excel save failed. Please try again."
-        );
-
-    }
-
+document.getElementById("status").textContent=
+"✅ Excel downloaded successfully.";
 }
 
 </script>
