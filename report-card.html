@@ -1,184 +1,20 @@
-<!DOCTYPE html>
-<html lang="or">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Student Assessment Report Card</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://accounts.google.com/gsi/client"></script>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#eef2f7;font-family:Arial,sans-serif;color:#111}
-.top{background:linear-gradient(110deg,#064b96,#087bc1);color:#fff;text-align:center;padding:12px}
-.top h2{margin:2px;font-size:21px}.top small{color:#ffe600;font-weight:bold}
-.panel{max-width:1200px;margin:10px auto;padding:10px;background:#fff;border-radius:9px;box-shadow:0 2px 8px #bbb}
-select,input,button,textarea{padding:8px;border:1px solid #aaa;border-radius:5px;font-size:14px}
-button{background:#075e9c;color:#fff;border:0;font-weight:bold;cursor:pointer;margin:3px}.green{background:#16833b}.orange{background:#e67e22}
-.row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}.row>*{margin:2px}.hide{display:none}
-#status{font-size:12px;color:#075e9c;margin-top:5px}
-.report{position:relative;max-width:900px;min-height:1120px;margin:15px auto;background:#fff;padding:28px 30px;box-shadow:0 2px 10px #aaa;overflow:hidden}
-.water{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
-.water span{font-size:70px;font-weight:bold;color:#000;opacity:.045;transform:rotate(-35deg)}
-.content{position:relative;z-index:1}
-.school{text-align:center;border-bottom:2px solid #075e9c;padding-bottom:8px}
-.school h1{font-size:24px;margin:0 0 4px;color:#075e9c}.school p{margin:2px;font-size:13px;font-weight:bold}
-.title{text-align:center;margin:10px 0}.title h2{margin:2px;font-size:19px;color:#222}.title p{margin:3px;font-weight:bold}
-.info{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}.info td{border:1px solid #888;padding:6px}.lbl{font-weight:bold;background:#edf5ff}
-.marks{width:100%;border-collapse:collapse;font-size:11px}.marks th,.marks td{border:1px solid #777;padding:5px;text-align:center}.marks th{background:#dceeff}.marks .sub{text-align:left;font-weight:bold}
-.term1{background:#ffe0e8}.term2{background:#e6ddff}.annual{background:#dff5df;font-weight:bold}
-.result{display:flex;gap:10px;margin-top:10px}.box{flex:1;border:1px solid #777;padding:8px;text-align:center;background:#f8fbff}.box b{display:block;font-size:18px;margin-top:3px}
-textarea{width:100%;height:60px;resize:none;margin-top:4px}.remarks{margin-top:10px;font-size:13px;font-weight:bold}
-.sign{display:flex;justify-content:space-between;margin-top:65px;text-align:center;font-size:12px}.sig{width:28%}.line{border-top:1px solid #222;margin-bottom:5px}
-.footer{text-align:center;margin-top:20px;font-size:10px;color:#666}
-@media(max-width:600px){.report{padding:18px 12px;min-height:1000px}.school h1{font-size:19px}.marks{font-size:9px}.marks th,.marks td{padding:3px}.title h2{font-size:16px}.result{gap:4px}.box{padding:5px}.box b{font-size:15px}.sign{margin-top:45px}.water span{font-size:45px}}
-@media print{
- body{background:#fff}.top,.panel{display:none!important}.report{margin:0;box-shadow:none;width:210mm;min-height:297mm;padding:12mm;page-break-after:avoid}
- @page{size:A4 portrait;margin:0}
-}
-</style>
-</head>
-<body>
-
-<div class="top">
-<h2>📊 STUDENT ASSESSMENT REPORT CARD</h2>
-<small>OdishaPathasala.in</small>
-</div>
-
-<div class="panel">
-<div class="row">
-<select id="cls">
-<option value="">-- Select Class --</option>
-<option value="3">Class 3</option><option value="4">Class 4</option>
-<option value="5">Class 5</option><option value="6">Class 6</option>
-<option value="7">Class 7</option><option value="8">Class 8</option>
-</select>
-<button onclick="loadDrive()">☁️ Load Assessment</button>
-<select id="student" onchange="makeReport()" style="min-width:220px">
-<option value="">-- Select Student --</option>
-</select>
-<button class="green" onclick="printReport()">🖨️ Print A4</button>
-</div>
-<div class="row">
-<input id="sn" placeholder="School Name" style="min-width:250px">
-<input id="block" placeholder="Block">
-<input id="district" placeholder="District">
-<input id="state" placeholder="State" value="Odisha">
-<input id="udise" placeholder="UDISE Code">
-<button class="orange" onclick="saveSchool()">💾 Save School Details</button>
-</div>
-<div id="status">Select Class and load assessment.</div>
-</div>
-
-<div id="report" class="report">
-<div class="water"><span>odishapathasala.in</span></div>
-<div class="content" id="reportContent">
-<div style="text-align:center;padding-top:300px;color:#777">Student report will appear here.</div>
-</div>
-</div>
-
-<script>
-const CID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com";
-const SCOPE="https://www.googleapis.com/auth/drive.file";
-let token=null,tc=null,wb=null,ws=null,cls="",students=[];
-
-const BOOKS={
-3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
-4:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],
-5:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],
-6:["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],
-7:["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],
-8:["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]
-};
-
-function status(x){document.getElementById("status").textContent=x}
-
-function loadSchool(){
- let d=JSON.parse(localStorage.getItem("school_details")||"{}");
- ["sn","block","district","state","udise"].forEach(x=>document.getElementById(x).value=d[x]||"");
-}
-function saveSchool(){
- let d={};["sn","block","district","state","udise"].forEach(x=>d[x]=document.getElementById(x).value);
- localStorage.setItem("school_details",JSON.stringify(d));
- status("✅ School details saved");
- makeReport();
-}
-loadSchool();
-
-window.addEventListener("load",()=>{
- try{
-  tc=google.accounts.oauth2.initTokenClient({
-   client_id:CID,scope:SCOPE,
-   callback:r=>{
-    if(r.error){status("❌ Google login failed");return}
-    token=r.access_token;status("✅ Google Drive connected");getDriveFile();
-   }
-  });
- }catch(e){status("❌ Google initialization failed")}
-});
-
-function loadDrive(){
- cls=document.getElementById("cls").value;
- if(!cls)return alert("Select Class first");
- if(!token)tc.requestAccessToken({prompt:"consent"});
- else getDriveFile();
-}
-
-async function getDriveFile(){
- try{
-  let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
-  status("☁️ Searching your Drive...");
-  let q=`name='${name}' and trashed=false`;
-  let u="https://www.googleapis.com/drive/v3/files?spaces=drive&q="+encodeURIComponent(q)+"&fields=files(id,name)&pageSize=10";
-  let r=await fetch(u,{headers:{Authorization:"Bearer "+token}});
-  if(!r.ok)throw Error("Drive search failed");
-  let d=await r.json();
-  if(!d.files?.length){status("❌ Assessment file not found in your Drive");return}
-  let f=d.files[0];
-  status("☁️ Loading assessment...");
-  r=await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`,{headers:{Authorization:"Bearer "+token}});
-  if(!r.ok)throw Error("File download failed");
-  wb=XLSX.read(await r.arrayBuffer(),{type:"array"});
-  ws=wb.Sheets["Class "+cls];
-  if(!ws)throw Error("Class sheet not found");
-  fillStudents();status("✅ Assessment loaded. Select student.");
- }catch(e){status("❌ "+e.message)}
-}
-
-function v(r,c){let x=ws[XLSX.utils.encode_col(c)+r];return x?.v??""}
-
-function fillStudents(){
- let s=document.getElementById("student");s.innerHTML='<option value="">-- Select Student --</option>';students=[];
- for(let r=4;r<=65;r++){
-  let name=String(v(r,1)||"").trim();
-  if(name){
-   students.push({r,name,roll:v(r,0)||r-3,gender:v(r,2)||""});
-   let o=document.createElement("option");o.value=r;o.textContent=(v(r,0)||r-3)+" - "+name;s.appendChild(o);
-  }
- }
-}
-
-function makeReport(){
- let r=Number(document.getElementById("student").value);if(!r||!ws)return;
- let books=BOOKS[cls],n=books.length,t1=0,t2=0;
- let html=`<div class="school"><h1>${esc(document.getElementById("sn").value||"SCHOOL NAME")}</h1><p>Block – ${esc(document.getElementById("block").value)} | District – ${esc(document.getElementById("district").value)} | ${esc(document.getElementById("state").value||"Odisha")}</p><p>UDISE Code: ${esc(document.getElementById("udise").value)}</p></div>`;
- html+=`<div class="title"><h2>STUDENT ASSESSMENT REPORT CARD</h2><p>Academic Session: 2026–27</p></div>`;
- html+=`<table class="info"><tr><td class="lbl">Student Name</td><td>${esc(v(r,1))}</td><td class="lbl">Roll No.</td><td>${esc(v(r,0))}</td></tr><tr><td class="lbl">Class</td><td>${cls}</td><td class="lbl">Gender</td><td>${esc(v(r,2))}</td></tr></table>`;
- html+=`<table class="marks"><tr><th>Subject</th><th colspan="4" class="term1">TERM 1</th><th colspan="4" class="term2">TERM 2</th><th class="annual">Annual</th></tr><tr><th></th><th>FA1</th><th>Obs.</th><th>SA1</th><th>Total</th><th>FA2</th><th>Obs.</th><th>SA2</th><th>Total</th><th>Total</th></tr>`;
- books.forEach((b,i)=>{
-  let c=3+i*8,a=+v(r,c)||0,o=+v(r,c+1)||0,s=+v(r,c+2)||0,a2=+v(r,c+4)||0,o2=+v(r,c+5)||0,s2=+v(r,c+6)||0;
-  let x=a+o+s,y=a2+o2+s2;t1+=x;t2+=y;
-  html+=`<tr><td class="sub">${esc(b)}</td><td>${a}</td><td>${o}</td><td>${s}</td><td>${x}</td><td>${a2}</td><td>${o2}</td><td>${s2}</td><td>${y}</td><td>${x+y}</td></tr>`;
- });
- let max=n*100,p1=max?t1/max*100:0,p2=max?t2/max*100:0,annual=t1+t2,amax=n*200,overall=amax?annual/amax*100:0;
- html+=`</table><div class="result"><div class="box">TERM 1 TOTAL<b>${t1}/${max}</b></div><div class="box">TERM 1 %<b>${p1.toFixed(2)}%</b></div><div class="box">TERM 2 TOTAL<b>${t2}/${max}</b></div><div class="box">TERM 2 %<b>${p2.toFixed(2)}%</b></div></div>`;
- html+=`<div class="result"><div class="box">ANNUAL TOTAL<b>${annual}/${amax}</b></div><div class="box">OVERALL PERCENTAGE<b>${overall.toFixed(2)}%</b></div></div>`;
- html+=`<div class="remarks">Teacher's Remarks:<textarea placeholder="Enter remarks before printing..."></textarea></div>`;
- html+=`<div class="sign"><div class="sig"><div class="line"></div>H.M. Signature</div><div class="sig"><div class="line"></div>Teacher's Signature</div><div class="sig"><div class="line"></div>Parent's Signature</div></div>`;
- html+=`<div class="footer">Generated from OdishaPathasala.in</div>`;
- document.getElementById("reportContent").innerHTML=html;
-}
-
-function esc(x){return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
-function printReport(){if(!document.getElementById("student").value)return alert("Select a student first");window.print()}
-</script>
-</body>
-</html>
+<!doctype html><html lang="or"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Student Assessment Report Card</title><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="https://accounts.google.com/gsi/client"></script><style>
+*{box-sizing:border-box}body{margin:0;background:#eef3f8;font-family:Arial,sans-serif}.top{background:linear-gradient(110deg,#0670b5,#078fd0);color:#fff;text-align:center;padding:9px;border-bottom:4px solid #ffd21c}.top h2{margin:0;font-size:19px}.top small{color:#ffe600;font-weight:bold}.panel{max-width:1200px;margin:7px auto;padding:8px;background:#fff;border-radius:8px;box-shadow:0 2px 7px #bbb}.row{display:flex;flex-wrap:wrap;gap:4px;align-items:center}select,input,button,textarea{padding:7px;border:1px solid #aaa;border-radius:5px;font-size:13px}button{background:#0873b9;color:#fff;border:0;font-weight:bold}.green{background:#19853d}.orange{background:#e77b24}#status{font-size:11px;color:#16833b;margin-top:4px}.report{position:relative;width:210mm;min-height:297mm;margin:12px auto;padding:12mm 9mm;background:#fff;border:2px solid #1595d0;box-shadow:0 2px 10px #aaa;overflow:hidden}.report:before,.report:after{content:"";position:absolute;left:0;right:0;height:22px;background:linear-gradient(135deg,#087bc1 0 40%,#ffd21c 40% 48%,#087bc1 48%);z-index:0}.report:before{top:0}.report:after{bottom:0}.content{position:relative;z-index:1}.school{text-align:center;border-bottom:2px solid #267c9f;padding-bottom:7px;margin-top:5px}.head{display:flex;align-items:center;justify-content:space-between}.ico{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;background:#e9f7ff;border:3px solid #087bc1}.ico.r{background:#effbea;border-color:#35a85a}.school h1{margin:0;color:#123f70;font-size:23px}.school p{margin:2px;font-size:11px;font-weight:bold}.title{text-align:center;margin:7px}.title h2{display:inline-block;margin:0;padding:5px 15px;background:linear-gradient(90deg,#d82b79,#b81765);color:#fff;border-radius:7px;font-size:16px}.title p{margin:4px;font-weight:bold;font-size:13px}.info,.marks{width:100%;border-collapse:collapse}.info{font-size:11px;margin:7px 0}.info td{border:1px solid #71828c;padding:5px}.lbl{background:#e9f4ff;font-weight:bold;color:#17385e}.marks{font-size:9px;table-layout:fixed}.marks th,.marks td{border:1px solid #71828c;padding:3px;text-align:center}.marks th:first-child{width:26%}.subject{text-align:left!important;font-weight:bold;padding-left:6px!important;font-size:10px}.a{background:#f5bfd0}.b{background:#b9dcf4}.c{background:#ccebc8}.t1{background:#fff0f4}.t2{background:#edf7ff}.ann{background:#effbea;font-weight:bold}.total td{background:#fff5c9;font-weight:bold}.result{display:flex;gap:6px;margin-top:7px}.box{flex:1;padding:6px;text-align:center;border:1px solid #9aa;background:#f8fbff;font-size:11px;font-weight:bold}.box b{display:block;font-size:16px;color:#102b4d;margin-top:2px}.pink{background:#fff0f4}.blue{background:#edf7ff}.gb{background:#effbea}.remarks{margin-top:8px;padding:7px;border:1px solid #d1b75e;border-radius:6px;background:#fffbea}.remarks b{font-size:12px;color:#17385e}textarea{width:100%;height:55px;margin-top:3px}.sign{display:flex;justify-content:space-between;margin-top:50px;text-align:center;font-size:10px}.sig{width:30%}.line{border-top:1px solid #222;margin-bottom:4px}.motto{text-align:center;margin-top:22px;color:#1c7740;font-weight:bold;font-style:italic}.footer{text-align:center;margin-top:9px;font-size:9px;color:#075e9c;font-weight:bold}.watermark{text-align:center;margin-top:4px;font-size:9px;color:#777;opacity:.45;font-weight:bold}@media(max-width:700px){.report{width:100%;min-height:auto;padding:24px 8px 18px}.school h1{font-size:17px}.ico{width:44px;height:44px;font-size:23px}.school p{font-size:8px}.title h2{font-size:12px}.title p{font-size:10px}.info{font-size:8px}.marks{font-size:6.5px}.marks th,.marks td{padding:2px 1px}.subject{font-size:7px}.box{font-size:8px;padding:4px}.box b{font-size:12px}.sign{margin-top:35px;font-size:8px}}@media print{body{background:#fff}.top,.panel{display:none!important}.report{margin:0;box-shadow:none;width:210mm;min-height:297mm;padding:10mm 9mm}@page{size:A4 portrait;margin:0}}
+</style></head><body><div class="top"><h2>📊 STUDENT ASSESSMENT REPORT CARD</h2><small>OdishaPathasala.in</small></div><div class="panel"><div class="row"><select id="cls"><option value="">-- Select Class --</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select><button onclick="loadDrive()">☁️ Load Assessment</button><select id="student" onchange="makeReport()" style="min-width:210px"><option value="">-- Select Student --</option></select><button class="green" onclick="printReport()">🖨️ Print A4</button></div><div class="row"><input id="sn" placeholder="School Name" style="min-width:230px"><input id="block" placeholder="Block"><input id="district" placeholder="District"><input id="state" value="Odisha" placeholder="State"><input id="udise" placeholder="UDISE Code"><button class="orange" onclick="saveSchool()">💾 Save School Details</button></div><div id="status">Select Class and load assessment.</div></div><div class="report"><div class="content" id="reportContent"><div style="text-align:center;padding-top:280px;color:#777">Student report will appear here.</div></div></div><script>
+const CID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com",SCOPE="https://www.googleapis.com/auth/drive.file";let token,tc,wb,ws,cls;
+const BOOKS={3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],4:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],5:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],6:["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],7:["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],8:["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]};
+const $=id=>document.getElementById(id),V=(r,c)=>ws[XLSX.utils.encode_col(c)+r]?.v??"",E=x=>String(x).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+function status(x){$("status").textContent=x}
+function loadSchool(){let d=JSON.parse(localStorage.school_details||"{}");["sn","block","district","state","udise"].forEach(x=>$(x).value=d[x]||"")}loadSchool();
+function saveSchool(){let d={};["sn","block","district","state","udise"].forEach(x=>d[x]=$(x).value);localStorage.school_details=JSON.stringify(d);status("✅ School details saved");makeReport()}
+addEventListener("load",()=>tc=google.accounts.oauth2.initTokenClient({client_id:CID,scope:SCOPE,callback:r=>{if(r.error)return status("❌ Google login failed");token=r.access_token;status("✅ Google Drive connected");getFile()}}));
+function loadDrive(){cls=$("cls").value;if(!cls)return alert("Select Class first");token?getFile():tc.requestAccessToken({prompt:"consent"})}
+async function getFile(){try{let n=`OdishaPathasala_Assessment_Class_${cls}.xlsx`,q=`name='${n}' and trashed=false`,u="https://www.googleapis.com/drive/v3/files?spaces=drive&q="+encodeURIComponent(q)+"&fields=files(id,name)";status("☁️ Searching your Drive...");let r=await fetch(u,{headers:{Authorization:"Bearer "+token}}),d=await r.json();if(!d.files?.length)return status("❌ Assessment file not found in your Drive");status("☁️ Loading assessment...");r=await fetch(`https://www.googleapis.com/drive/v3/files/${d.files[0].id}?alt=media`,{headers:{Authorization:"Bearer "+token}});wb=XLSX.read(await r.arrayBuffer(),{type:"array"});ws=wb.Sheets["Class "+cls];fill();status("✅ Assessment loaded. Select student.")}catch(e){status("❌ "+e.message)}}
+function fill(){let s=$("student");s.innerHTML='<option value="">-- Select Student --</option>';for(let r=4;r<=65;r++)if(String(V(r,1)).trim()){let o=document.createElement("option");o.value=r;o.textContent=`${V(r,0)||r-3} - ${V(r,1)}`;s.appendChild(o)}}
+function makeReport(){let r=+$("student").value;if(!r||!ws)return;let B=BOOKS[cls],n=B.length,t1=0,t2=0,h=`<div class="school"><div class="head"><div class="ico">📚</div><div style="flex:1"><h1>${E($("sn").value||"SCHOOL NAME")}</h1><p>Block – ${E($("block").value)} | District – ${E($("district").value)} | ${E($("state").value||"Odisha")}</p><p>UDISE Code: ${E($("udise").value)}</p></div><div class="ico r">🎓</div></div></div><div class="title"><h2>STUDENT ASSESSMENT REPORT CARD</h2><p>Academic Session: 2026–27</p></div><table class="info"><tr><td class="lbl">Student Name</td><td><b>${E(V(r,1))}</b></td><td class="lbl">Roll No.</td><td><b>${E(V(r,0))}</b></td></tr><tr><td class="lbl">Class</td><td><b>${cls}</b></td><td class="lbl">Gender</td><td><b>${E(V(r,2))}</b></td></tr></table><table class="marks"><tr><th rowspan="2">Subject</th><th colspan="4" class="a">TERM 1 (100)</th><th colspan="4" class="b">TERM 2 (100)</th><th rowspan="2" class="c">Annual<br>Total<br>(200)</th></tr><tr><th class="a">FA1<br>(25)</th><th class="a">Obs.<br>(25)</th><th class="a">SA1<br>(50)</th><th class="a">Total</th><th class="b">FA2<br>(25)</th><th class="b">Obs.<br>(25)</th><th class="b">SA2<br>(50)</th><th class="b">Total</th></tr>`;
+B.forEach((b,i)=>{let c=3+i*8,a=+V(r,c)||0,o=+V(r,c+1)||0,s=+V(r,c+2)||0,a2=+V(r,c+4)||0,o2=+V(r,c+5)||0,s2=+V(r,c+6)||0,x=a+o+s,y=a2+o2+s2;t1+=x;t2+=y;h+=`<tr><td class="subject">${E(b)}</td><td class="t1">${a}</td><td class="t1">${o}</td><td class="t1">${s}</td><td class="t1"><b>${x}</b></td><td class="t2">${a2}</td><td class="t2">${o2}</td><td class="t2">${s2}</td><td class="t2"><b>${y}</b></td><td class="ann">${x+y}</td></tr>`});
+let m=n*100,p1=t1/m*100,p2=t2/m*100,an=t1+t2,am=n*200,op=an/am*100;
+h+=`<tr class="total"><td>TOTAL</td><td colspan="3"></td><td>${t1}</td><td colspan="3"></td><td>${t2}</td><td>${an}</td></tr></table><div class="result"><div class="box pink">TERM 1 TOTAL<b>${t1}/${m}</b></div><div class="box pink">TERM 1 %<b>${p1.toFixed(2)}%</b></div><div class="box blue">TERM 2 TOTAL<b>${t2}/${m}</b></div><div class="box blue">TERM 2 %<b>${p2.toFixed(2)}%</b></div></div><div class="result"><div class="box gb">ANNUAL TOTAL<b>${an}/${am}</b></div><div class="box gb">OVERALL PERCENTAGE<b>${op.toFixed(2)}%</b></div></div><div class="remarks"><b>Teacher's Remarks:</b><textarea placeholder="Enter remarks before printing..."></textarea></div><div class="sign"><div class="sig"><div class="line"></div>H.M. Signature</div><div class="sig"><div class="line"></div>Teacher's Signature</div><div class="sig"><div class="line"></div>Parent's Signature</div></div><div class="motto">🌿 Keep Learning, Keep Growing! 🌿</div><div class="footer">📖 Better Students | 👨‍🎓 Every Child Matters | 🎯 Small Steps, Big Achievements</div><div class="watermark">odishapathasala.in</div>`;
+$("reportContent").innerHTML=h}
+function printReport(){if(!$("student").value)return alert("Select a student first");print()}
+</script></body></html>
