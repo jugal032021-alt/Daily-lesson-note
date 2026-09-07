@@ -1,0 +1,272 @@
+[
+  {
+    "question": "ନିମ୍ନଲିଖିତ ମଧ୍ୟରୁ ୩/୪ର ସମତୁଲ୍ୟ ଭଗ୍ନସଂଖ୍ୟା କେଉଁଟି?",
+    "optionA": "୬/୧୦",
+    "optionB": "୯/୧୨",
+    "optionC": "୧୨/୨୦",
+    "optionD": "୧୫/୨୪",
+    "correctAnswer": "B",
+    "explanation": "୩/୪କୁ ୩ ଦ୍ୱାରା ଗୁଣ କଲେ ୯/୧୨ ମିଳେ। ତେଣୁ B ସଠିକ୍।"
+  },
+  {
+    "question": "୫/୮ର ହର ୪୦ ହେଲେ ଲବ କେତେ ହେବ?",
+    "optionA": "୨୦",
+    "optionB": "୨୫",
+    "optionC": "୩୦",
+    "optionD": "୩୫",
+    "correctAnswer": "B",
+    "explanation": "୮କୁ ୪୦ କରିବା ପାଇଁ ୫ ଦ୍ୱାରା ଗୁଣ କରିବାକୁ ପଡ଼ିବ। ତେଣୁ ଲବ ୫×୫=୨୫।"
+  },
+  {
+    "question": "୭/୧୨ ଓ ୫/୮ ମଧ୍ୟରୁ ବଡ଼ ଭଗ୍ନସଂଖ୍ୟା କେଉଁଟି?",
+    "optionA": "୭/୧୨",
+    "optionB": "୫/୮",
+    "optionC": "ଉଭୟ ସମାନ",
+    "optionD": "କହିହେବ ନାହିଁ",
+    "correctAnswer": "B",
+    "explanation": "୭/୧୨=୧୪/୨୪ ଏବଂ ୫/୮=୧୫/୨୪। ୧୫/୨୪ ବଡ଼, ତେଣୁ B।"
+  },
+  {
+    "question": "୩/୫ + ୧/୧୦ = ?",
+    "optionA": "୪/୧୫",
+    "optionB": "୭/୧୦",
+    "optionC": "୨/୫",
+    "optionD": "୮/୧୦",
+    "correctAnswer": "B",
+    "explanation": "୩/୫=୬/୧୦। ତେଣୁ ୬/୧୦+୧/୧୦=୭/୧୦।"
+  },
+  {
+    "question": "୭/୮ − ୧/୪ = ?",
+    "optionA": "୩/୮",
+    "optionB": "୫/୮",
+    "optionC": "୬/୮",
+    "optionD": "୧/୨",
+    "correctAnswer": "B",
+    "explanation": "୧/୪=୨/୮। ତେଣୁ ୭/୮−୨/୮=୫/୮।"
+  },
+  {
+    "question": "୨/୩ + ୧/୬ + ୧/୬ = ?",
+    "optionA": "୫/୬",
+    "optionB": "୧",
+    "optionC": "୭/୬",
+    "optionD": "୨/୩",
+    "correctAnswer": "B",
+    "explanation": "୨/୩=୪/୬। ତେଣୁ ୪/୬+୧/୬+୧/୬=୬/୬=୧।"
+  },
+  {
+    "question": "କେଉଁଟି ସବୁଠାରୁ ଛୋଟ?",
+    "optionA": "୩/୪",
+    "optionB": "୫/୮",
+    "optionC": "୨/୩",
+    "optionD": "୭/୧୦",
+    "correctAnswer": "B",
+    "explanation": "ହର ୪୦ ନେଲେ ୩/୪=୩୦/୪୦, ୫/୮=୨୫/୪୦, ୨/୩=୨୬⅔/୪୦ ଏବଂ ୭/୧୦=୨୮/୪୦। ସବୁଠାରୁ ଛୋଟ ୫/୮।"
+  },
+  {
+    "question": "୪/୯ର ସମତୁଲ୍ୟ ଭଗ୍ନସଂଖ୍ୟା ନୁହେଁ କେଉଁଟି?",
+    "optionA": "୮/୧୮",
+    "optionB": "୧୨/୨୭",
+    "optionC": "୧୬/୩୬",
+    "optionD": "୧୯/୪୫",
+    "correctAnswer": "D",
+    "explanation": "୪/୯ର ସମତୁଲ୍ୟ ଭଗ୍ନସଂଖ୍ୟାଗୁଡ଼ିକରେ ଲବ ଓ ହରକୁ ସମାନ ସଂଖ୍ୟାରେ ଗୁଣ କରାଯାଏ। ୧୯/୪୫ ସେହି ନିୟମ ପାଳନ କରେ ନାହିଁ।"
+  },
+  {
+    "question": "୧୧/୧୨ − ୫/୧୨ = ?",
+    "optionA": "୫/୧୨",
+    "optionB": "୬/୧୨",
+    "optionC": "୭/୧୨",
+    "optionD": "୧/୨",
+    "correctAnswer": "B",
+    "explanation": "ହର ସମାନ ଥିବାରୁ ଲବ ବିୟୋଗ କରିବା: ୧୧−୫=୬। ତେଣୁ ୬/୧୨।"
+  },
+  {
+    "question": "୩/୪ + ୨/୫ = ?",
+    "optionA": "୫/୯",
+    "optionB": "୨୩/୨୦",
+    "optionC": "୧୯/୨୦",
+    "optionD": "୭/୧୦",
+    "correctAnswer": "B",
+    "explanation": "ଲ.ସା.ଗୁ. ୨୦। ୩/୪=୧୫/୨୦ ଏବଂ ୨/୫=୮/୨୦। ଯୋଗଫଳ ୨୩/୨୦=୧ ୩/୨୦।"
+  },
+  {
+    "question": "ଗୋଟିଏ କେକ୍‌ର ୩/୮ ଅଂଶ ରମା ଓ ୧/୪ ଅଂଶ ସୀମା ଖାଇଲେ। ମୋଟ କେତେ ଅଂଶ ଖାଇଲେ?",
+    "optionA": "୪/୧୨",
+    "optionB": "୫/୮",
+    "optionC": "୬/୮",
+    "optionD": "୭/୮",
+    "correctAnswer": "B",
+    "explanation": "୧/୪=୨/୮। ତେଣୁ ୩/୮+୨/୮=୫/୮।"
+  },
+  {
+    "question": "ଏକ ସଂଖ୍ୟାର ୨/୫ ଅଂଶ ୧୬। ସଂଖ୍ୟାଟି କେତେ?",
+    "optionA": "୩୦",
+    "optionB": "୩୫",
+    "optionC": "୪୦",
+    "optionD": "୪୫",
+    "correctAnswer": "C",
+    "explanation": "ସଂଖ୍ୟାର ୨/୫=୧୬। ତେଣୁ ସଂଖ୍ୟା=୧୬×୫÷୨=୪୦।"
+  },
+  {
+    "question": "୫/୬ − ୧/୩ + ୧/୬ = ?",
+    "optionA": "୧/୨",
+    "optionB": "୨/୩",
+    "optionC": "୫/୯",
+    "optionD": "୭/୬",
+    "correctAnswer": "B",
+    "explanation": "୧/୩=୨/୬। ତେଣୁ ୫/୬−୨/୬+୧/୬=୪/୬=୨/୩।"
+  },
+  {
+    "question": "୩/୪, ୫/୮, ୭/୧୨କୁ ବଡ଼ରୁ ଛୋଟ କ୍ରମରେ ସଜାଇଲେ—",
+    "optionA": "୩/୪ > ୫/୮ > ୭/୧୨",
+    "optionB": "୫/୮ > ୩/୪ > ୭/୧୨",
+    "optionC": "୭/୧୨ > ୫/୮ > ୩/୪",
+    "optionD": "୩/୪ > ୭/୧୨ > ୫/୮",
+    "correctAnswer": "A",
+    "explanation": "ଦଶମିକ ତୁଳନା କଲେ ୩/୪=୦.୭୫, ୫/୮=୦.୬୨୫ ଏବଂ ୭/୧୨≈୦.୫୮୩। ତେଣୁ A।"
+  },
+  {
+    "question": "୭/୧୦ରେ କେତେ ଯୋଗ କଲେ ୧ ହେବ?",
+    "optionA": "୨/୧୦",
+    "optionB": "୩/୧୦",
+    "optionC": "୪/୧୦",
+    "optionD": "୧/୧୦",
+    "correctAnswer": "B",
+    "explanation": "୧=୧୦/୧୦। ତେଣୁ ୧୦/୧୦−୭/୧୦=୩/୧୦।"
+  },
+  {
+    "question": "୫/୬ + ୭/୯ର ଯୋଗଫଳ କେତେ?",
+    "optionA": "୧୨/୧୫",
+    "optionB": "୨୯/୧୮",
+    "optionC": "୧୧/୧୫",
+    "optionD": "୧୭/୧୮",
+    "correctAnswer": "B",
+    "explanation": "ଲ.ସା.ଗୁ. ୧୮। ୫/୬=୧୫/୧୮ ଏବଂ ୭/୯=୧୪/୧୮। ତେଣୁ ଯୋଗ=୨୯/୧୮=୧ ୧୧/୧୮।"
+  },
+  {
+    "question": "୧୩/୧୫ − ୨/୫ = ?",
+    "optionA": "୭/୧୫",
+    "optionB": "୮/୧୫",
+    "optionC": "୯/୧୫",
+    "optionD": "୧୧/୧୫",
+    "correctAnswer": "A",
+    "explanation": "୨/୫=୬/୧୫। ତେଣୁ ୧୩/୧୫−୬/୧୫=୭/୧୫। ସଠିକ୍ ଉତ୍ତର A।"
+  },
+  {
+    "question": "୨/୩ର ସମତୁଲ୍ୟ ଭଗ୍ନସଂଖ୍ୟାରେ ହର ୨୭ ହେଲେ ଲବ କେତେ?",
+    "optionA": "୧୨",
+    "optionB": "୧୫",
+    "optionC": "୧୮",
+    "optionD": "୨୧",
+    "correctAnswer": "C",
+    "explanation": "୩କୁ ୨୭ କରିବା ପାଇଁ ୯ରେ ଗୁଣ କରିବାକୁ ପଡ଼ିବ। ତେଣୁ ୨×୯=୧୮।"
+  },
+  {
+    "question": "ନିମ୍ନରୁ କେଉଁ ଯୋଡ଼ିର ଭଗ୍ନସଂଖ୍ୟା ଦୁଇଟି ସମାନ?",
+    "optionA": "୩/୫ ଓ ୧୨/୨୦",
+    "optionB": "୪/୭ ଓ ୧୨/୨୦",
+    "optionC": "୫/୮ ଓ ୧୫/୨୦",
+    "optionD": "୨/୩ ଓ ୬/୧୨",
+    "correctAnswer": "A",
+    "explanation": "୩/୫କୁ ୪ରେ ଗୁଣ କଲେ ୧୨/୨୦ ମିଳେ। ତେଣୁ A ସଠିକ୍।"
+  },
+  {
+    "question": "୩/୪ − ୨/୫ = ?",
+    "optionA": "୭/୨୦",
+    "optionB": "୧/୪",
+    "optionC": "୫/୨୦",
+    "optionD": "୧୧/୨୦",
+    "correctAnswer": "A",
+    "explanation": "୩/୪=୧୫/୨୦ ଏବଂ ୨/୫=୮/୨୦। ତେଣୁ ୧୫/୨୦−୮/୨୦=୭/୨୦।"
+  },
+  {
+    "question": "ରାଜୁ ପୁସ୍ତକର ୨/୫ ଅଂଶ ସକାଳେ ଓ ୧/୪ ଅଂଶ ସନ୍ଧ୍ୟାରେ ପଢ଼ିଲା। କେତେ ଅଂଶ ବାକି?",
+    "optionA": "୭/୨୦",
+    "optionB": "୯/୨୦",
+    "optionC": "୧୧/୨୦",
+    "optionD": "୧୩/୨୦",
+    "correctAnswer": "A",
+    "explanation": "ପଢ଼ା ଅଂଶ=୨/୫+୧/୪=୮/୨୦+୫/୨୦=୧୩/୨୦। ବାକି=୨୦/୨୦−୧୩/୨୦=୭/୨୦।"
+  },
+  {
+    "question": "ଟାଙ୍କିର ୩/୭ ଅଂଶ ଭରିଥିଲା। ଆଉ ୨/୭ ଅଂଶ ଭରାଗଲା। କେତେ ଅଂଶ ଖାଲି?",
+    "optionA": "୨/୭",
+    "optionB": "୩/୭",
+    "optionC": "୫/୭",
+    "optionD": "୪/୭",
+    "correctAnswer": "A",
+    "explanation": "ଭରା ଅଂଶ=୩/୭+୨/୭=୫/୭। ଖାଲି=୭/୭−୫/୭=୨/୭। ସଠିକ୍ ଉତ୍ତର A।"
+  },
+  {
+    "question": "୫/୮ + ୩/୪ − ୧/୨ = ?",
+    "optionA": "୫/୮",
+    "optionB": "୬/୮",
+    "optionC": "୭/୮",
+    "optionD": "୯/୮",
+    "correctAnswer": "C",
+    "explanation": "୩/୪=୬/୮ ଏବଂ ୧/୨=୪/୮। ତେଣୁ ୫/୮+୬/୮−୪/୮=୭/୮।"
+  },
+  {
+    "question": "ନିମ୍ନରୁ କେଉଁଟି ୧ ୧/୪ ସହ ସମାନ?",
+    "optionA": "୪/୫",
+    "optionB": "୫/୪",
+    "optionC": "୬/୫",
+    "optionD": "୭/୪",
+    "correctAnswer": "B",
+    "explanation": "୧ ୧/୪=(୧×୪+୧)/୪=୫/୪।"
+  },
+  {
+    "question": "୧୭/୧୨କୁ ମିଶ୍ର ଭଗ୍ନସଂଖ୍ୟାରେ ପ୍ରକାଶ କଲେ—",
+    "optionA": "୧ ୫/୧୨",
+    "optionB": "୧ ୭/୧୨",
+    "optionC": "୨ ୫/୧୨",
+    "optionD": "୨ ୧/୧୨",
+    "correctAnswer": "A",
+    "explanation": "୧୭÷୧୨=୧ ଅବଶିଷ୍ଟ ୫। ତେଣୁ ୧୭/୧୨=୧ ୫/୧୨।"
+  },
+  {
+    "question": "୧ ୨/୩ + ୧/୬ = ?",
+    "optionA": "୧ ୫/୬",
+    "optionB": "୧ ୨/୩",
+    "optionC": "୨ ୧/୬",
+    "optionD": "୨ ୧/୩",
+    "correctAnswer": "A",
+    "explanation": "୨/୩=୪/୬। ତେଣୁ ୧ ୪/୬+୧/୬=୧ ୫/୬।"
+  },
+  {
+    "question": "୨ ୧/୪ − ୫/୮ = ?",
+    "optionA": "୧ ୫/୮",
+    "optionB": "୧ ୩/୪",
+    "optionC": "୧ ୭/୮",
+    "optionD": "୨ ୧/୮",
+    "correctAnswer": "A",
+    "explanation": "୨ ୧/୪=୨ ୨/୮। ତେଣୁ ୨ ୨/୮−୫/୮=୧ ୫/୮।"
+  },
+  {
+    "question": "ମୀନା ଦୌଡ଼ର ୩/୫ ଦୂରତା ଦୌଡ଼ିଲା। ଆଉ ୧/୧୦ ଦୂରତା ଦୌଡ଼ିଲେ ମୋଟ କେତେ ଦୂରତା?",
+    "optionA": "୬/୧୦",
+    "optionB": "୭/୧୦",
+    "optionC": "୮/୧୦",
+    "optionD": "୯/୧୦",
+    "correctAnswer": "B",
+    "explanation": "୩/୫=୬/୧୦। ତେଣୁ ୬/୧୦+୧/୧୦=୭/୧୦।"
+  },
+  {
+    "question": "ଗୋଟିଏ ରସିର ୭/୮ ମିଟର ଥିଲା। ୩/୮ ମିଟର କାଟିଦିଆଗଲା। ବାକି ଲମ୍ବ କେତେ?",
+    "optionA": "୩/୮ ମିଟର",
+    "optionB": "୪/୮ ମିଟର",
+    "optionC": "୫/୮ ମିଟର",
+    "optionD": "୬/୮ ମିଟର",
+    "correctAnswer": "B",
+    "explanation": "୭/୮−୩/୮=୪/୮ ମିଟର।"
+  },
+  {
+    "question": "ଗୋଟିଏ ସଂଖ୍ୟାର ୩/୪ ଅଂଶ ୨୪। ସେହି ସଂଖ୍ୟାର ୫/୮ ଅଂଶ କେତେ?",
+    "optionA": "୧୮",
+    "optionB": "୨୦",
+    "optionC": "୨୨",
+    "optionD": "୨୪",
+    "correctAnswer": "B",
+    "explanation": "୩/୪ ଅଂଶ=୨୪ ହେଲେ ସମ୍ପୂର୍ଣ୍ଣ ସଂଖ୍ୟା=୨୪×୪÷୩=୩୨। ତାହାର ୫/୮=୩୨×୫÷୮=୨୦।"
+  }
+]
