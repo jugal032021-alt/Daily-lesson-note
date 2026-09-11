@@ -59,11 +59,7 @@ function val(r,c){
 }
 
 function esc(x){
- return String(x)
- .replace(/&/g,"&amp;")
- .replace(/"/g,"&quot;")
- .replace(/</g,"&lt;")
- .replace(/>/g,"&gt;")
+ return String(x).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
 }
 
 window.addEventListener("load",()=>{
@@ -92,6 +88,7 @@ window.addEventListener("load",()=>{
   })
 
  }catch(e){
+
   setStatus("❌ Google initialization failed")
  }
 
@@ -185,7 +182,6 @@ function render(){
  h+='<th rowspan="2" class="gender">Gender</th>';
 
  BOOKS[cls].forEach((b,i)=>{
-
   h+=`<th colspan="8" class="sub ${colors[i]}">${b}</th>`
  });
 
@@ -320,11 +316,9 @@ function recalcRow(r){
   };
 
   let e=document.getElementById(`c${r}_${b+3}`);
-
   if(e)e.textContent=a;
 
   e=document.getElementById(`c${r}_${b+7}`);
-
   if(e)e.textContent=d;
 
   t1+=a;
@@ -333,35 +327,8 @@ function recalcRow(r){
 
  let max=n*100;
 
- let p1=max?(t1/max)*100:0;
- let p2=max?(t2/max)*100:0;
-
- let cT1=n*8+3;
- let cP1=n*8+4;
- let cT2=n*8+5;
- let cP2=n*8+6;
-
- ws[XLSX.utils.encode_col(cT1)+r]={
-  t:"n",
-  v:t1
- };
-
- ws[XLSX.utils.encode_col(cP1)+r]={
-  t:"n",
-  v:p1,
-  z:'0.00"%"'
- };
-
- ws[XLSX.utils.encode_col(cT2)+r]={
-  t:"n",
-  v:t2
- };
-
- ws[XLSX.utils.encode_col(cP2)+r]={
-  t:"n",
-  v:p2,
-  z:'0.00"%"'
- };
+ let p1=max?t1/max*100:0;
+ let p2=max?t2/max*100:0;
 
  let e1=document.getElementById("t1"+r);
  if(e1)e1.textContent=t1;
@@ -410,32 +377,66 @@ function clearMarks(){
 }
 
 /* ==========================================================
-   EXCEL FORMAT HELPERS
+   EXCEL FORMULA + STYLE FUNCTIONS
    ========================================================== */
 
-function copyCellStyle(sheet,from,to){
+function cloneStyle(c){
 
- if(sheet[from]&&sheet[from].s){
+ if(!c||c.s===undefined)return undefined;
 
-  sheet[to]=sheet[to]||{};
-
-  sheet[to].s=JSON.parse(JSON.stringify(sheet[from].s))
+ try{
+  return JSON.parse(JSON.stringify(c.s))
+ }catch(e){
+  return c.s
  }
 }
 
-function setWidth(sheet,c,w){
+function copyStyle(sheet,from,to){
 
- if(!sheet["!cols"])sheet["!cols"]=[];
+ let a=sheet[from];
+ if(!a)return;
 
- if(!sheet["!cols"][c])sheet["!cols"][c]={};
-
- sheet["!cols"][c].width=w;
- sheet["!cols"][c].hidden=false
+ if(a.s!==undefined){
+  sheet[to]=sheet[to]||{};
+  sheet[to].s=cloneStyle(a)
+ }
 }
 
-function formatOverallExcel(){
+function setCell(sheet,addr,value,type,styleSource,format){
 
- let n=BOOKS[cls].length;
+ let o={};
+
+ if(type==="f"){
+  o.t="n";
+  o.f=value;
+  o.v=0
+ }else{
+  o.t=type||"s";
+  o.v=value
+ }
+
+ if(styleSource)copyStyle(sheet,styleSource,addr);
+
+ if(format)o.z=format;
+
+ sheet[addr]=Object.assign(sheet[addr]||{},o)
+}
+
+function removeOverallMerges(sheet,start,end){
+
+ if(!sheet["!merges"])return;
+
+ sheet["!merges"]=sheet["!merges"].filter(m=>{
+
+  return !(m.s.r<=1&&m.e.r>=1&&m.s.c<=end&&m.e.c>=start)
+ })
+}
+
+function prepareClassSheet(sheet,classNo){
+
+ if(!sheet)return;
+
+ let n=BOOKS[classNo].length;
 
  let start=n*8+3;
 
@@ -444,249 +445,286 @@ function formatOverallExcel(){
  let cT2=start+2;
  let cP2=start+3;
 
- /*
-  Copy the existing Overall styles.
-  This keeps the downloaded Excel colorful.
- */
+ let T1=XLSX.utils.encode_col(cT1);
+ let P1=XLSX.utils.encode_col(cP1);
+ let T2=XLSX.utils.encode_col(cT2);
+ let P2=XLSX.utils.encode_col(cP2);
 
- let base1=XLSX.utils.encode_col(cT1);
- let base2=XLSX.utils.encode_col(cT2);
-
- let p1=XLSX.utils.encode_col(cP1);
- let p2=XLSX.utils.encode_col(cP2);
+ let oldT1=T1+"3";
+ let oldT2=T2+"3";
 
  /*
-  Use original Overall columns as style source.
+  Save old styles before changing cells.
  */
 
- let old1=base1+"3";
- let old2=base2+"3";
+ let styleT1=cloneStyle(sheet[oldT1]);
+ let styleT2=cloneStyle(sheet[oldT2]);
+ let styleT1Data=cloneStyle(sheet[T1+"4"]);
+ let styleT2Data=cloneStyle(sheet[T2+"4"]);
+ let styleOverall=cloneStyle(sheet[T1+"2"]);
 
- copyCellStyle(ws,old1,p1+"3");
- copyCellStyle(ws,old1,cT2+"3");
- copyCellStyle(ws,old1,cP2+"3");
+ /*
+  Remove old Overall merge.
+ */
 
- copyCellStyle(ws,base1+"2",cT1+"2");
- copyCellStyle(ws,base1+"2",cP1+"2");
- copyCellStyle(ws,base1+"2",cT2+"2");
- copyCellStyle(ws,base1+"2",cP2+"2");
+ removeOverallMerges(sheet,cT1,cP2);
 
- for(let r=4;r<=65;r++){
+ /*
+  Delete old Overall data including old Term 2 Total.
+ */
 
-  copyCellStyle(ws,base1+"4",cP1+r);
-  copyCellStyle(ws,base1+"4",cT2+r);
-  copyCellStyle(ws,base1+"4",cP2+r)
+ for(let r=2;r<=65;r++){
+
+  for(let c=cT1;c<=cP2;c++){
+
+   delete sheet[XLSX.utils.encode_col(c)+r]
+  }
  }
 
  /*
-  Widths
+  Overall heading.
  */
 
- setWidth(ws,cT1,16);
- setWidth(ws,cP1,12);
- setWidth(ws,cT2,16);
- setWidth(ws,cP2,12);
+ sheet[T1+"2"]={
+  t:"s",
+  v:"Overall",
+  s:styleOverall
+ };
 
  /*
-  Header height
+  Merge Overall across 4 columns.
  */
 
- if(!ws["!rows"])ws["!rows"]=[];
+ if(!sheet["!merges"])sheet["!merges"]=[];
 
- ws["!rows"][1]=ws["!rows"][1]||{};
- ws["!rows"][1].hpt=25;
-
- ws["!rows"][2]=ws["!rows"][2]||{};
- ws["!rows"][2].hpt=30;
-
- /*
-  Percentage number format
- */
-
- for(let r=4;r<=65;r++){
-
-  if(ws[p1+r])ws[p1+r].z='0.00"%"';
-  if(ws[p2+r])ws[p2+r].z='0.00"%"';
- }
-
- /*
-  Overall merged heading across four columns
- */
-
- if(!ws["!merges"])ws["!merges"]=[];
-
- ws["!merges"]=ws["!merges"].filter(m=>{
-
-  return !(m.s.c<=cP2 && m.e.c>=cT1 && m.s.r<=2 && m.e.r>=1)
- });
-
- ws["!merges"].push({
+ sheet["!merges"].push({
   s:{r:1,c:cT1},
   e:{r:1,c:cP2}
  });
 
  /*
-  Make sure no hidden columns.
+  Headers.
  */
 
- unhide(ws)
-}
-
-/* ==========================================================
-   DOWNLOAD EXCEL
-   ========================================================== */
-
-function downloadExcel(){
-
- if(!ws)return alert("First load a class");
-
- let n=BOOKS[cls].length;
-
- let start=n*8+3;
-
- let cT1=start;
- let cP1=start+1;
- let cT2=start+2;
- let cP2=start+3;
-
- /*
-  FIRST REMOVE OLD ANNUAL TOTAL / OLD OVERALL DATA
- */
-
- for(let r=2;r<=65;r++){
-
-  for(let c=start;c<start+5;c++){
-
-   let a=XLSX.utils.encode_col(c)+r;
-
-   if(ws[a])delete ws[a]
-  }
- }
-
- /*
-  REMOVE OLD MERGE
- */
-
- if(ws["!merges"]){
-
-  ws["!merges"]=ws["!merges"].filter(m=>{
-
-   return !(m.s.c<=cP2 && m.e.c>=cT1 && m.s.r<=2 && m.e.r>=1)
-  })
- }
-
- /*
-  RECREATE OVERALL
- */
-
- ws[XLSX.utils.encode_col(cT1)+"2"]={
+ sheet[T1+"3"]={
   t:"s",
-  v:"Overall"
+  v:"Term 1\nTotal",
+  s:styleT1
  };
 
- ws[XLSX.utils.encode_col(cT1)+"3"]={
+ sheet[P1+"3"]={
   t:"s",
-  v:"TERM 1 TOTAL"
+  v:"Term 1\n%",
+  s:styleT1
  };
 
- ws[XLSX.utils.encode_col(cP1)+"3"]={
+ sheet[T2+"3"]={
   t:"s",
-  v:"%"
+  v:"Term 2\nTotal",
+  s:styleT2
  };
 
- ws[XLSX.utils.encode_col(cT2)+"3"]={
+ sheet[P2+"3"]={
   t:"s",
-  v:"TERM 2 TOTAL"
- };
-
- ws[XLSX.utils.encode_col(cP2)+"3"]={
-  t:"s",
-  v:"%"
+  v:"Term 2\n%",
+  s:styleT2
  };
 
  /*
-  CALCULATE DATA
+  Student formulas.
  */
 
  for(let r=4;r<=65;r++){
 
-  let t1=0;
-  let t2=0;
+  let t1refs=[];
+  let t2refs=[];
 
   for(let s=0;s<n;s++){
 
    let b=3+s*8;
 
-   let a=
-    Number(val(r,b)||0)+
-    Number(val(r,b+1)||0)+
-    Number(val(r,b+2)||0);
+   let subjectT1=XLSX.utils.encode_col(b+3);
+   let subjectT2=XLSX.utils.encode_col(b+7);
 
-   let d=
-    Number(val(r,b+4)||0)+
-    Number(val(r,b+5)||0)+
-    Number(val(r,b+6)||0);
+   /*
+    Subject Term 1 formula
+   */
 
-   ws[XLSX.utils.encode_col(b+3)+r]={
-    t:"n",
-    v:a
-   };
+   let a1=subjectT1+r;
 
-   ws[XLSX.utils.encode_col(b+7)+r]={
-    t:"n",
-    v:d
-   };
+   setCell(
+    sheet,
+    a1,
+    `SUM(${XLSX.utils.encode_col(b)}${r}:${XLSX.utils.encode_col(b+2)}${r})`,
+    "f",
+    undefined
+   );
 
-   t1+=a;
-   t2+=d
+   /*
+    Subject Term 2 formula
+   */
+
+   let a2=subjectT2+r;
+
+   setCell(
+    sheet,
+    a2,
+    `SUM(${XLSX.utils.encode_col(b+4)}${r}:${XLSX.utils.encode_col(b+6)}${r})`,
+    "f",
+    undefined
+   );
+
+   t1refs.push(a1);
+   t2refs.push(a2)
   }
 
-  let max=n*100;
+  /*
+   Overall Term 1 Total
+  */
 
-  let p1=max?(t1/max)*100:0;
-  let p2=max?(t2/max)*100:0;
+  let f1="="+t1refs.join("+");
 
-  ws[XLSX.utils.encode_col(cT1)+r]={
-   t:"n",
-   v:t1
-  };
+  setCell(
+   sheet,
+   T1+r,
+   f1.substring(1),
+   "f",
+   undefined,
+   "0"
+  );
 
-  ws[XLSX.utils.encode_col(cP1)+r]={
-   t:"n",
-   v:p1,
-   z:'0.00"%"'
-  };
+  /*
+   Overall Term 1 %
+   Excel percentage value = total / maximum.
+  */
 
-  ws[XLSX.utils.encode_col(cT2)+r]={
-   t:"n",
-   v:t2
-  };
+  setCell(
+   sheet,
+   P1+r,
+   `IF(${n*100}=0,0,${T1}${r}/${n*100})`,
+   "f",
+   undefined,
+   "0.00%"
+  );
 
-  ws[XLSX.utils.encode_col(cP2)+r]={
-   t:"n",
-   v:p2,
-   z:'0.00"%"'
-  };
+  /*
+   Overall Term 2 Total
+  */
+
+  let f2="="+t2refs.join("+");
+
+  setCell(
+   sheet,
+   T2+r,
+   f2.substring(1),
+   "f",
+   undefined,
+   "0"
+  );
+
+  /*
+   Overall Term 2 %
+  */
+
+  setCell(
+   sheet,
+   P2+r,
+   `IF(${n*100}=0,0,${T2}${r}/${n*100})`,
+   "f",
+   undefined,
+   "0.00%"
+  );
+
+  /*
+   Copy data styles.
+  */
+
+  if(styleT1Data)sheet[T1+r].s=cloneStyle(styleT1Data);
+  if(styleT1Data)sheet[P1+r].s=cloneStyle(styleT1Data);
+
+  if(styleT2Data)sheet[T2+r].s=cloneStyle(styleT2Data);
+  if(styleT2Data)sheet[P2+r].s=cloneStyle(styleT2Data);
+
+  /*
+   Reapply percentage format after style copy.
+  */
+
+  sheet[P1+r].z="0.00%";
+  sheet[P2+r].z="0.00%"
  }
 
  /*
-  ADD COLOR / STYLE
+  Column widths.
  */
 
- formatOverallExcel();
+ if(!sheet["!cols"])sheet["!cols"]=[];
+
+ let w1=sheet["!cols"][cT1]?.width||10;
+ let w2=sheet["!cols"][cT2]?.width||10;
+
+ sheet["!cols"][cT1]={width:w1,hidden:false};
+ sheet["!cols"][cP1]={width:10,hidden:false};
+ sheet["!cols"][cT2]={width:w2,hidden:false};
+ sheet["!cols"][cP2]={width:10,hidden:false};
 
  /*
-  SET FINAL RANGE
+  No hidden columns.
  */
 
- ws["!ref"]=XLSX.utils.encode_range({
+ unhide(sheet);
+
+ /*
+  Correct range.
+ */
+
+ sheet["!ref"]=XLSX.utils.encode_range({
   s:{r:0,c:0},
   e:{r:64,c:cP2}
+ })
+}
+
+/* ==========================================================
+   PREPARE ALL CLASS SHEETS FOR EXCEL
+   ========================================================== */
+
+function prepareAllClassSheets(){
+
+ [3,4,5,6,7,8].forEach(c=>{
+
+  let s=wb.Sheets["Class "+c];
+
+  if(s){
+   prepareClassSheet(s,c)
+  }
  });
 
  /*
-  WRITE FILE
+  Force Excel recalculation when file is opened.
  */
+
+ if(!wb.Workbook)wb.Workbook={};
+
+ if(!wb.Workbook.CalcPr)wb.Workbook.CalcPr={};
+
+ wb.Workbook.CalcPr.calcMode="auto";
+ wb.Workbook.CalcPr.fullCalcOnLoad=true;
+ wb.Workbook.CalcPr.forceFullCalc=true
+}
+
+/* ==========================================================
+   DOWNLOAD
+   ========================================================== */
+
+function downloadExcel(){
+
+ if(!wb)return alert("Excel template is not loaded");
+
+ /*
+  Process ALL CLASS SHEETS,
+  not only selected class.
+ */
+
+ prepareAllClassSheets();
 
  let out=XLSX.write(wb,{
   bookType:"xlsx",
@@ -702,7 +740,9 @@ function downloadExcel(){
 
  a.href=URL.createObjectURL(blob);
 
- a.download=`Assessment_Class_${cls}.xlsx`;
+ a.download=cls?
+  `Assessment_Class_${cls}.xlsx`:
+  "Assessment_Class_3_to_8.xlsx";
 
  a.click();
 
@@ -710,11 +750,11 @@ function downloadExcel(){
   URL.revokeObjectURL(a.href)
  },1000);
 
- setStatus("✅ Colorful Excel downloaded successfully")
+ setStatus("✅ All Class 3–8 formulas and percentages added")
 }
 
 /* ==========================================================
-   GOOGLE DRIVE LOAD
+   GOOGLE DRIVE
    ========================================================== */
 
 function driveLoad(){
@@ -748,9 +788,9 @@ async function findDriveFile(name){
  let q=`name='${name}' and trashed=false`;
 
  let u=
- "https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
- encodeURIComponent(q)+
- "&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
+  "https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
+  encodeURIComponent(q)+
+  "&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
 
  let r=await fetch(u,{
   headers:{
@@ -819,10 +859,6 @@ async function loadDriveFile(){
  }
 }
 
-/* ==========================================================
-   GOOGLE DRIVE SAVE
-   ========================================================== */
-
 function driveSave(){
 
  if(!cls){
@@ -855,132 +891,11 @@ async function saveDriveWorkbook(){
 
  try{
 
-  recalcAll();
-  unhide(ws);
-
-  let n=BOOKS[cls].length;
-
-  let start=n*8+3;
-
-  let cT1=start;
-  let cP1=start+1;
-  let cT2=start+2;
-  let cP2=start+3;
-
   /*
-   Remove old Overall data
+   Prepare ALL sheets before saving.
   */
 
-  for(let r=2;r<=65;r++){
-
-   for(let c=start;c<start+5;c++){
-
-    let a=XLSX.utils.encode_col(c)+r;
-
-    if(ws[a])delete ws[a]
-   }
-  }
-
-  /*
-   Overall heading and headers
-  */
-
-  ws[XLSX.utils.encode_col(cT1)+"2"]={
-   t:"s",
-   v:"Overall"
-  };
-
-  ws[XLSX.utils.encode_col(cT1)+"3"]={
-   t:"s",
-   v:"TERM 1 TOTAL"
-  };
-
-  ws[XLSX.utils.encode_col(cP1)+"3"]={
-   t:"s",
-   v:"%"
-  };
-
-  ws[XLSX.utils.encode_col(cT2)+"3"]={
-   t:"s",
-   v:"TERM 2 TOTAL"
-  };
-
-  ws[XLSX.utils.encode_col(cP2)+"3"]={
-   t:"s",
-   v:"%"
-  };
-
-  /*
-   Calculate
-  */
-
-  for(let r=4;r<=65;r++){
-
-   let t1=0;
-   let t2=0;
-
-   for(let s=0;s<n;s++){
-
-    let b=3+s*8;
-
-    let a=
-     Number(val(r,b)||0)+
-     Number(val(r,b+1)||0)+
-     Number(val(r,b+2)||0);
-
-    let d=
-     Number(val(r,b+4)||0)+
-     Number(val(r,b+5)||0)+
-     Number(val(r,b+6)||0);
-
-    t1+=a;
-    t2+=d;
-
-    ws[XLSX.utils.encode_col(b+3)+r]={
-     t:"n",
-     v:a
-    };
-
-    ws[XLSX.utils.encode_col(b+7)+r]={
-     t:"n",
-     v:d
-    };
-   }
-
-   let max=n*100;
-
-   let p1=max?t1/max*100:0;
-   let p2=max?t2/max*100:0;
-
-   ws[XLSX.utils.encode_col(cT1)+r]={
-    t:"n",
-    v:t1
-   };
-
-   ws[XLSX.utils.encode_col(cP1)+r]={
-    t:"n",
-    v:p1,
-    z:'0.00"%"'
-   };
-
-   ws[XLSX.utils.encode_col(cT2)+r]={
-    t:"n",
-    v:t2
-   };
-
-   ws[XLSX.utils.encode_col(cP2)+r]={
-    t:"n",
-    v:p2,
-    z:'0.00"%"'
-   };
-  }
-
-  formatOverallExcel();
-
-  ws["!ref"]=XLSX.utils.encode_range({
-   s:{r:0,c:0},
-   e:{r:64,c:cP2}
-  });
+  prepareAllClassSheets();
 
   let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
 
