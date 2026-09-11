@@ -3,14 +3,27 @@
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}header{background:linear-gradient(110deg,#0875c9,#034b9b);color:#fff;text-align:center;padding:12px}h2{margin:2px;font-size:21px}header div{font-size:13px;color:#ffe600;font-weight:bold}.wrap{max-width:1500px;margin:auto;padding:8px}.bar{background:#fff;padding:8px;border-radius:8px;box-shadow:0 2px 7px #bbb;margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px}select,button{padding:8px 10px;border:1px solid #aaa;border-radius:5px;font-size:13px}button{background:#075e9c;color:#fff;border:0;font-weight:bold;cursor:pointer}.green{background:#16833b}.orange{background:#e67e22}.red{background:#c62828}#status{font-size:12px;color:#087c36;background:#effff3;padding:4px 8px;border-radius:4px;flex-basis:100%}.tablebox{overflow:auto;background:#fff;border-radius:7px;box-shadow:0 2px 8px #bbb;width:100%}table{border-collapse:collapse;min-width:1800px;width:max-content;font-size:11px}th,td{border:1px solid #aaa;padding:3px;text-align:center;white-space:nowrap}th{font-weight:bold}.roll{width:38px;min-width:38px;max-width:38px}.name{width:180px;min-width:180px;text-align:left}.gender{width:75px;min-width:75px}.sub{font-size:15px;height:40px;color:#111}input[type=text]{width:100%;padding:5px;border:1px solid #bbb;border-radius:4px;text-transform:uppercase;font-size:12px}input[type=number]{width:48px;padding:5px;border:1px solid #bbb;border-radius:4px;text-align:center;font-size:11px}td select{width:100%;padding:4px;border:1px solid #bbb;border-radius:4px;font-size:11px}.total{font-weight:bold;background:#e8f2ff}.pct{font-weight:bold;background:#fff2cc;min-width:55px}.t1h{background:#ffd9e2}.t2h{background:#ddd0ff}.s1{background:#ffd1dc}.s2{background:#c9f3d2}.s3{background:#ffe8a8}.s4{background:#cce7ff}.s5{background:#e3d2ff}.s6{background:#ffd9b8}.s7{background:#c9f0f0}.s8{background:#f7d1ed}.s9{background:#d8e8c8}.sticky1{position:sticky;left:0;z-index:4;background:#fff}.sticky2{position:sticky;left:38px;z-index:4;background:#fff}.sticky3{position:sticky;left:218px;z-index:4;background:#fff}thead th{position:sticky;top:0;z-index:5}.tip{margin-top:8px;background:#e9f8ed;padding:8px;border-radius:6px;color:#176b2e;font-size:12px}@media(max-width:600px){header{padding:9px}h2{font-size:17px}.bar{padding:6px}.bar button,.bar select{font-size:11px;padding:7px}.name{width:170px;min-width:170px}.sub{font-size:13px}table{font-size:10px}input[type=number]{width:45px;padding:4px}.sticky3{left:208px}}
 </style></head><body>
+
 <header><h2>📊 ASSESSMENT MARKS ENTRY</h2><div>Class 3 to Class 8 • Assessment Framework</div></header>
+
 <div class="wrap"><div class="bar">
 <select id="classSelect"><option value="">-- Select Class --</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option></select>
-<button onclick="loadClass()">📖 Load Class</button><button onclick="driveLoad()">☁️ Sign in / Load from My Drive</button><button class="green" onclick="driveSave()">☁️ Save to My Drive</button><button class="orange" onclick="downloadExcel()">⬇ Download Excel</button><button class="red" onclick="clearMarks()">🗑 Clear Marks</button><div id="status">Please select a class.</div></div>
-<div id="tableBox" class="tablebox"></div><div class="tip">💡 Student name automatically becomes CAPITAL LETTERS. Enter marks and click <b>Save to My Drive</b> to continue later from your own Google Drive.</div></div>
+<button onclick="loadClass()">📖 Load Class</button>
+<button onclick="driveLoad()">☁️ Sign in / Load from My Drive</button>
+<button class="green" onclick="driveSave()">☁️ Save to My Drive</button>
+<button class="orange" onclick="downloadExcel()">⬇ Download Excel</button>
+<button class="red" onclick="clearMarks()">🗑 Clear Marks</button>
+<div id="status">Please select a class.</div></div>
+
+<div id="tableBox" class="tablebox"></div>
+<div class="tip">💡 Student name automatically becomes CAPITAL LETTERS. Enter marks and click <b>Save to My Drive</b> to continue later from your own Google Drive.</div>
+</div>
 
 <script>
-const EXCEL_FILE="Class_3_to_8_Assessment_Marks_Entry-1.xlsx",GOOGLE_CLIENT_ID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com",DRIVE_SCOPE="https://www.googleapis.com/auth/drive.file";
+
+const EXCEL_FILE="Class_3_to_8_Assessment_Marks_Entry-1.xlsx";
+const GOOGLE_CLIENT_ID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com";
+const DRIVE_SCOPE="https://www.googleapis.com/auth/drive.file";
 
 const BOOKS={
 3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
@@ -30,7 +43,7 @@ function setStatus(x){
 function unhide(s){
  if(!s)return;
  if(!s["!cols"])s["!cols"]=[];
- for(let i=0;i<100;i++){
+ for(let i=0;i<120;i++){
   if(!s["!cols"][i])s["!cols"][i]={};
   s["!cols"][i].hidden=false;
   if(s["!cols"][i].width===0)s["!cols"][i].width=10
@@ -46,51 +59,79 @@ function val(r,c){
 }
 
 function esc(x){
- return String(x).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+ return String(x)
+ .replace(/&/g,"&amp;")
+ .replace(/"/g,"&quot;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
 }
 
 window.addEventListener("load",()=>{
+
  try{
+
   tokenClient=google.accounts.oauth2.initTokenClient({
    client_id:GOOGLE_CLIENT_ID,
    scope:DRIVE_SCOPE,
+
    callback:r=>{
-    if(r.error)return setStatus("❌ Google sign-in failed");
+
+    if(r.error){
+     setStatus("❌ Google sign-in failed");
+     return
+    }
+
     accessToken=r.access_token;
     setStatus("✅ Google Drive connected");
+
     if(pending==="load")loadDriveFile();
     if(pending==="save")saveDriveWorkbook();
+
     pending=""
    }
   })
+
  }catch(e){
   setStatus("❌ Google initialization failed")
  }
+
  loadTemplate()
 });
 
 async function loadTemplate(){
+
  try{
+
   let r=await fetch(EXCEL_FILE+"?v="+Date.now());
+
   if(!r.ok)throw Error("Template not found");
+
   wb=XLSX.read(await r.arrayBuffer(),{
    type:"array",
    cellFormula:true,
    cellStyles:true
   });
+
   Object.values(wb.Sheets).forEach(unhide);
+
   setStatus("✅ Excel template loaded")
+
  }catch(e){
+
   setStatus("❌ Excel template load failed")
  }
 }
 
 function loadClass(){
+
  let c=document.getElementById("classSelect").value;
+
  if(!c)return alert("Select Class first");
+
  if(!wb)return alert("Excel template is loading");
 
  cls=c;
+
  ws=wb.Sheets["Class "+c];
 
  if(!ws)return alert("Class sheet not found");
@@ -98,32 +139,45 @@ function loadClass(){
  unhide(ws);
  applyBooks();
  render();
+
  setStatus("✅ Class "+c+" loaded")
 }
 
 function applyBooks(){
+
  (BOOKS[cls]||[]).forEach((b,i)=>{
+
   let a=XLSX.utils.encode_col(3+i*8)+"2";
-  if(ws[a])ws[a].v=b
+
+  if(ws[a]){
+   ws[a].v=b;
+   ws[a].t="s"
+  }
  })
 }
 
 function render(){
 
- let n=BOOKS[cls].length,rows=[];
+ let n=BOOKS[cls].length;
+ let rows=[];
 
  for(let r=4;r<=65;r++){
+
   let has=false;
+
   for(let c=0;c<77;c++){
+
    if(val(r,c)!==""){
     has=true;
     break
    }
   }
+
   if(has||r<=23)rows.push(r)
  }
 
  let colors=["s1","s2","s3","s4","s5","s6","s7","s8","s9"];
+
  let h='<table><thead><tr>';
 
  h+='<th rowspan="2" class="roll">Roll<br>No.</th>';
@@ -131,14 +185,17 @@ function render(){
  h+='<th rowspan="2" class="gender">Gender</th>';
 
  BOOKS[cls].forEach((b,i)=>{
+
   h+=`<th colspan="8" class="sub ${colors[i]}">${b}</th>`
  });
 
  h+=`<th colspan="2" class="sub t1h">TERM 1</th>`;
  h+=`<th colspan="2" class="sub t2h">TERM 2</th>`;
+
  h+='</tr><tr>';
 
  BOOKS[cls].forEach((b,i)=>{
+
   h+=`<th class="${colors[i]}">FA1<br>25</th>`;
   h+=`<th class="${colors[i]}">OBS<br>25</th>`;
   h+=`<th class="${colors[i]}">SA1<br>50</th>`;
@@ -153,6 +210,7 @@ function render(){
  h+=`<th class="t1h">%</th>`;
  h+=`<th class="t2h">TOTAL<br>(${n*100})</th>`;
  h+=`<th class="t2h">%</th>`;
+
  h+='</tr></thead><tbody>';
 
  rows.forEach(r=>{
@@ -162,8 +220,11 @@ function render(){
   let gender=val(r,2)||"";
 
   h+=`<tr>`;
+
   h+=`<td class="roll sticky1">${roll}</td>`;
+
   h+=`<td class="name sticky2"><input type="text" value="${esc(name)}" oninput="nameUpdate(${r},this)"></td>`;
+
   h+=`<td class="gender sticky3"><select onchange="upd(${r},2,this.value)"><option value=""></option><option value="Boys" ${gender==="Boys"?"selected":""}>Boys</option><option value="Girls" ${gender==="Girls"?"selected":""}>Girls</option></select></td>`;
 
   for(let s=0;s<n;s++){
@@ -171,12 +232,14 @@ function render(){
    let b=3+s*8;
 
    [25,25,50].forEach((m,k)=>{
+
     h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+k)}" oninput="mark(${r},${b+k},this,${m})"></td>`
    });
 
    h+=`<td class="total" id="c${r}_${b+3}">${val(r,b+3)}</td>`;
 
    [25,25,50].forEach((m,k)=>{
+
     h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+4+k)}" oninput="mark(${r},${b+4+k},this,${m})"></td>`
    });
 
@@ -187,34 +250,43 @@ function render(){
   h+=`<td class="pct" id="p1${r}"></td>`;
   h+=`<td class="total" id="t2${r}"></td>`;
   h+=`<td class="pct" id="p2${r}"></td>`;
+
   h+=`</tr>`
  });
 
  h+='</tbody></table>';
 
  document.getElementById("tableBox").innerHTML=h;
+
  recalcAll()
 }
 
 function nameUpdate(r,i){
+
  i.value=i.value.toUpperCase();
+
  upd(r,1,i.value)
 }
 
 function upd(r,c,v){
+
  let a=XLSX.utils.encode_col(c)+r;
+
  if(!ws[a])ws[a]={t:"s",v:""};
+
  ws[a].v=v;
  ws[a].t="s"
 }
 
 function mark(r,c,i,max){
+
  let v=Number(i.value);
 
  if(v<0)i.value=0;
  if(v>max)i.value=max;
 
  upd(r,c,i.value===""?"":Number(i.value));
+
  recalcRow(r)
 }
 
@@ -248,9 +320,11 @@ function recalcRow(r){
   };
 
   let e=document.getElementById(`c${r}_${b+3}`);
+
   if(e)e.textContent=a;
 
   e=document.getElementById(`c${r}_${b+7}`);
+
   if(e)e.textContent=d;
 
   t1+=a;
@@ -258,19 +332,9 @@ function recalcRow(r){
  }
 
  let max=n*100;
- let p1=max?t1/max*100:0;
- let p2=max?t2/max*100:0;
 
- /*
-  OVERALL STRUCTURE
-
-  Term 1 Total
-  Term 1 %
-  Term 2 Total
-  Term 2 %
-
-  NO ANNUAL TOTAL
- */
+ let p1=max?(t1/max)*100:0;
+ let p2=max?(t2/max)*100:0;
 
  let cT1=n*8+3;
  let cP1=n*8+4;
@@ -313,7 +377,10 @@ function recalcRow(r){
 }
 
 function recalcAll(){
- for(let r=4;r<=65;r++)recalcRow(r)
+
+ for(let r=4;r<=65;r++){
+  recalcRow(r)
+ }
 }
 
 function clearMarks(){
@@ -329,29 +396,47 @@ function clearMarks(){
    let b=3+s*8;
 
    [b,b+1,b+2,b+4,b+5,b+6].forEach(c=>{
+
     let a=XLSX.utils.encode_col(c)+r;
+
     if(ws[a])ws[a].v=""
    })
   }
  }
 
  render();
+
  setStatus("Marks cleared")
 }
 
-/* =========================================================
-   DOWNLOAD EXCEL
-   CLASS 3 TO CLASS 8
-   NO ANNUAL TOTAL
-   ========================================================= */
+/* ==========================================================
+   EXCEL FORMAT HELPERS
+   ========================================================== */
 
-function downloadExcel(){
+function copyCellStyle(sheet,from,to){
 
- if(!ws)return alert("First load a class");
+ if(sheet[from]&&sheet[from].s){
+
+  sheet[to]=sheet[to]||{};
+
+  sheet[to].s=JSON.parse(JSON.stringify(sheet[from].s))
+ }
+}
+
+function setWidth(sheet,c,w){
+
+ if(!sheet["!cols"])sheet["!cols"]=[];
+
+ if(!sheet["!cols"][c])sheet["!cols"][c]={};
+
+ sheet["!cols"][c].width=w;
+ sheet["!cols"][c].hidden=false
+}
+
+function formatOverallExcel(){
 
  let n=BOOKS[cls].length;
 
- /* Correct starting column of Overall */
  let start=n*8+3;
 
  let cT1=start;
@@ -360,9 +445,112 @@ function downloadExcel(){
  let cP2=start+3;
 
  /*
-  IMPORTANT:
-  Delete old Annual Total / old Overall values
-  before writing the correct four columns.
+  Copy the existing Overall styles.
+  This keeps the downloaded Excel colorful.
+ */
+
+ let base1=XLSX.utils.encode_col(cT1);
+ let base2=XLSX.utils.encode_col(cT2);
+
+ let p1=XLSX.utils.encode_col(cP1);
+ let p2=XLSX.utils.encode_col(cP2);
+
+ /*
+  Use original Overall columns as style source.
+ */
+
+ let old1=base1+"3";
+ let old2=base2+"3";
+
+ copyCellStyle(ws,old1,p1+"3");
+ copyCellStyle(ws,old1,cT2+"3");
+ copyCellStyle(ws,old1,cP2+"3");
+
+ copyCellStyle(ws,base1+"2",cT1+"2");
+ copyCellStyle(ws,base1+"2",cP1+"2");
+ copyCellStyle(ws,base1+"2",cT2+"2");
+ copyCellStyle(ws,base1+"2",cP2+"2");
+
+ for(let r=4;r<=65;r++){
+
+  copyCellStyle(ws,base1+"4",cP1+r);
+  copyCellStyle(ws,base1+"4",cT2+r);
+  copyCellStyle(ws,base1+"4",cP2+r)
+ }
+
+ /*
+  Widths
+ */
+
+ setWidth(ws,cT1,16);
+ setWidth(ws,cP1,12);
+ setWidth(ws,cT2,16);
+ setWidth(ws,cP2,12);
+
+ /*
+  Header height
+ */
+
+ if(!ws["!rows"])ws["!rows"]=[];
+
+ ws["!rows"][1]=ws["!rows"][1]||{};
+ ws["!rows"][1].hpt=25;
+
+ ws["!rows"][2]=ws["!rows"][2]||{};
+ ws["!rows"][2].hpt=30;
+
+ /*
+  Percentage number format
+ */
+
+ for(let r=4;r<=65;r++){
+
+  if(ws[p1+r])ws[p1+r].z='0.00"%"';
+  if(ws[p2+r])ws[p2+r].z='0.00"%"';
+ }
+
+ /*
+  Overall merged heading across four columns
+ */
+
+ if(!ws["!merges"])ws["!merges"]=[];
+
+ ws["!merges"]=ws["!merges"].filter(m=>{
+
+  return !(m.s.c<=cP2 && m.e.c>=cT1 && m.s.r<=2 && m.e.r>=1)
+ });
+
+ ws["!merges"].push({
+  s:{r:1,c:cT1},
+  e:{r:1,c:cP2}
+ });
+
+ /*
+  Make sure no hidden columns.
+ */
+
+ unhide(ws)
+}
+
+/* ==========================================================
+   DOWNLOAD EXCEL
+   ========================================================== */
+
+function downloadExcel(){
+
+ if(!ws)return alert("First load a class");
+
+ let n=BOOKS[cls].length;
+
+ let start=n*8+3;
+
+ let cT1=start;
+ let cP1=start+1;
+ let cT2=start+2;
+ let cP2=start+3;
+
+ /*
+  FIRST REMOVE OLD ANNUAL TOTAL / OLD OVERALL DATA
  */
 
  for(let r=2;r<=65;r++){
@@ -376,22 +564,19 @@ function downloadExcel(){
  }
 
  /*
-  Remove old merges around Overall
+  REMOVE OLD MERGE
  */
 
  if(ws["!merges"]){
 
   ws["!merges"]=ws["!merges"].filter(m=>{
 
-   let s=m.s.c;
-   let e=m.e.c;
-
-   return !(s<=cP2 && e>=start)
+   return !(m.s.c<=cP2 && m.e.c>=cT1 && m.s.r<=2 && m.e.r>=1)
   })
  }
 
  /*
-  Overall heading
+  RECREATE OVERALL
  */
 
  ws[XLSX.utils.encode_col(cT1)+"2"]={
@@ -399,43 +584,28 @@ function downloadExcel(){
   v:"Overall"
  };
 
- /*
-  Merge Overall across four columns
- */
-
- if(!ws["!merges"])ws["!merges"]=[];
-
- ws["!merges"].push({
-  s:{r:1,c:cT1},
-  e:{r:1,c:cP2}
- });
-
- /*
-  Headers
- */
-
  ws[XLSX.utils.encode_col(cT1)+"3"]={
   t:"s",
-  v:"Term 1 Total"
+  v:"TERM 1 TOTAL"
  };
 
  ws[XLSX.utils.encode_col(cP1)+"3"]={
   t:"s",
-  v:"Term 1 %"
+  v:"%"
  };
 
  ws[XLSX.utils.encode_col(cT2)+"3"]={
   t:"s",
-  v:"Term 2 Total"
+  v:"TERM 2 TOTAL"
  };
 
  ws[XLSX.utils.encode_col(cP2)+"3"]={
   t:"s",
-  v:"Term 2 %"
+  v:"%"
  };
 
  /*
-  Calculate all students again
+  CALCULATE DATA
  */
 
  for(let r=4;r<=65;r++){
@@ -500,13 +670,13 @@ function downloadExcel(){
  }
 
  /*
-  No hidden columns
+  ADD COLOR / STYLE
  */
 
- unhide(ws);
+ formatOverallExcel();
 
  /*
-  Correct Excel range
+  SET FINAL RANGE
  */
 
  ws["!ref"]=XLSX.utils.encode_range({
@@ -515,7 +685,7 @@ function downloadExcel(){
  });
 
  /*
-  Write Excel
+  WRITE FILE
  */
 
  let out=XLSX.write(wb,{
@@ -531,15 +701,21 @@ function downloadExcel(){
  let a=document.createElement("a");
 
  a.href=URL.createObjectURL(blob);
+
  a.download=`Assessment_Class_${cls}.xlsx`;
+
  a.click();
 
  setTimeout(()=>{
   URL.revokeObjectURL(a.href)
  },1000);
 
- setStatus("✅ Excel downloaded successfully")
+ setStatus("✅ Colorful Excel downloaded successfully")
 }
+
+/* ==========================================================
+   GOOGLE DRIVE LOAD
+   ========================================================== */
 
 function driveLoad(){
 
@@ -562,6 +738,7 @@ function driveLoad(){
   })
 
  }else{
+
   loadDriveFile()
  }
 }
@@ -571,9 +748,9 @@ async function findDriveFile(name){
  let q=`name='${name}' and trashed=false`;
 
  let u=
-  "https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
-  encodeURIComponent(q)+
-  "&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
+ "https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
+ encodeURIComponent(q)+
+ "&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
 
  let r=await fetch(u,{
   headers:{
@@ -642,6 +819,10 @@ async function loadDriveFile(){
  }
 }
 
+/* ==========================================================
+   GOOGLE DRIVE SAVE
+   ========================================================== */
+
 function driveSave(){
 
  if(!cls){
@@ -665,6 +846,7 @@ function driveSave(){
   })
 
  }else{
+
   saveDriveWorkbook()
  }
 }
@@ -672,12 +854,6 @@ function driveSave(){
 async function saveDriveWorkbook(){
 
  try{
-
-  /*
-   Recalculate before saving.
-   This also saves Term 1 %, Term 2 %
-   and never creates Annual Total.
-  */
 
   recalcAll();
   unhide(ws);
@@ -692,7 +868,21 @@ async function saveDriveWorkbook(){
   let cP2=start+3;
 
   /*
-   Correct Overall headers for Drive file
+   Remove old Overall data
+  */
+
+  for(let r=2;r<=65;r++){
+
+   for(let c=start;c<start+5;c++){
+
+    let a=XLSX.utils.encode_col(c)+r;
+
+    if(ws[a])delete ws[a]
+   }
+  }
+
+  /*
+   Overall heading and headers
   */
 
   ws[XLSX.utils.encode_col(cT1)+"2"]={
@@ -702,39 +892,27 @@ async function saveDriveWorkbook(){
 
   ws[XLSX.utils.encode_col(cT1)+"3"]={
    t:"s",
-   v:"Term 1 Total"
+   v:"TERM 1 TOTAL"
   };
 
   ws[XLSX.utils.encode_col(cP1)+"3"]={
    t:"s",
-   v:"Term 1 %"
+   v:"%"
   };
 
   ws[XLSX.utils.encode_col(cT2)+"3"]={
    t:"s",
-   v:"Term 2 Total"
+   v:"TERM 2 TOTAL"
   };
 
   ws[XLSX.utils.encode_col(cP2)+"3"]={
    t:"s",
-   v:"Term 2 %"
+   v:"%"
   };
 
-  if(ws["!merges"]){
-
-   ws["!merges"]=ws["!merges"].filter(m=>{
-    let s=m.s.c;
-    let e=m.e.c;
-    return !(s<=cP2 && e>=start)
-   })
-  }else{
-   ws["!merges"]=[]
-  }
-
-  ws["!merges"].push({
-   s:{r:1,c:cT1},
-   e:{r:1,c:cP2}
-  });
+  /*
+   Calculate
+  */
 
   for(let r=4;r<=65;r++){
 
@@ -770,6 +948,7 @@ async function saveDriveWorkbook(){
    }
 
    let max=n*100;
+
    let p1=max?t1/max*100:0;
    let p2=max?t2/max*100:0;
 
@@ -795,6 +974,13 @@ async function saveDriveWorkbook(){
     z:'0.00"%"'
    };
   }
+
+  formatOverallExcel();
+
+  ws["!ref"]=XLSX.utils.encode_range({
+   s:{r:0,c:0},
+   e:{r:64,c:cP2}
+  });
 
   let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
 
@@ -838,6 +1024,7 @@ async function saveDriveWorkbook(){
    let boundary="----OdishaPathasala"+Date.now();
 
    let body=new Blob([
+
     "--"+boundary+
     "\r\nContent-Type:application/json; charset=UTF-8\r\n\r\n",
 
@@ -849,6 +1036,7 @@ async function saveDriveWorkbook(){
     blob,
 
     "\r\n--"+boundary+"--"
+
    ]);
 
    let r=await fetch(
@@ -873,4 +1061,5 @@ async function saveDriveWorkbook(){
   setStatus("❌ Save failed: "+e.message)
  }
 }
+
 </script></body></html>
