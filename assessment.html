@@ -8,13 +8,24 @@
 <select id="classSelect"><option value="">-- Select Class --</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option></select>
 <button onclick="loadClass()">📖 Load Class</button><button onclick="driveLoad()">☁️ Sign in / Load from My Drive</button><button class="green" onclick="driveSave()">☁️ Save to My Drive</button><button class="orange" onclick="downloadExcel()">⬇ Download Excel</button><button class="red" onclick="clearMarks()">🗑 Clear Marks</button><div id="status">Please select a class.</div></div>
 <div id="tableBox" class="tablebox"></div><div class="tip">💡 Student name automatically becomes CAPITAL LETTERS. Enter marks and click <b>Save to My Drive</b> to continue later from your own Google Drive.</div></div>
+
 <script>
 const EXCEL_FILE="Class_3_to_8_Assessment_Marks_Entry-1.xlsx",GOOGLE_CLIENT_ID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com",DRIVE_SCOPE="https://www.googleapis.com/auth/drive.file";
-const BOOKS={3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],4:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],5:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],6:["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],7:["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],8:["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]};
+
+const BOOKS={
+3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
+4:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],
+5:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],
+6:["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],
+7:["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],
+8:["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]
+};
 
 let wb=null,ws=null,cls="",accessToken=null,tokenClient=null,pending="";
 
-function setStatus(x){document.getElementById("status").textContent=x}
+function setStatus(x){
+ document.getElementById("status").textContent=x
+}
 
 function unhide(s){
  if(!s)return;
@@ -26,9 +37,17 @@ function unhide(s){
  }
 }
 
-function cell(r,c){return ws[XLSX.utils.encode_col(c)+r]||{}}
-function val(r,c){return cell(r,c).v??""}
-function esc(x){return String(x).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function cell(r,c){
+ return ws[XLSX.utils.encode_col(c)+r]||{}
+}
+
+function val(r,c){
+ return cell(r,c).v??""
+}
+
+function esc(x){
+ return String(x).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+}
 
 window.addEventListener("load",()=>{
  try{
@@ -44,7 +63,9 @@ window.addEventListener("load",()=>{
     pending=""
    }
   })
- }catch(e){setStatus("❌ Google initialization failed")}
+ }catch(e){
+  setStatus("❌ Google initialization failed")
+ }
  loadTemplate()
 });
 
@@ -52,19 +73,28 @@ async function loadTemplate(){
  try{
   let r=await fetch(EXCEL_FILE+"?v="+Date.now());
   if(!r.ok)throw Error("Template not found");
-  wb=XLSX.read(await r.arrayBuffer(),{type:"array",cellFormula:true,cellStyles:true});
+  wb=XLSX.read(await r.arrayBuffer(),{
+   type:"array",
+   cellFormula:true,
+   cellStyles:true
+  });
   Object.values(wb.Sheets).forEach(unhide);
   setStatus("✅ Excel template loaded")
- }catch(e){setStatus("❌ Excel template load failed")}
+ }catch(e){
+  setStatus("❌ Excel template load failed")
+ }
 }
 
 function loadClass(){
  let c=document.getElementById("classSelect").value;
  if(!c)return alert("Select Class first");
  if(!wb)return alert("Excel template is loading");
+
  cls=c;
  ws=wb.Sheets["Class "+c];
+
  if(!ws)return alert("Class sheet not found");
+
  unhide(ws);
  applyBooks();
  render();
@@ -79,46 +109,89 @@ function applyBooks(){
 }
 
 function render(){
+
  let n=BOOKS[cls].length,rows=[];
+
  for(let r=4;r<=65;r++){
   let has=false;
-  for(let c=0;c<77;c++)if(val(r,c)!==""){has=true;break}
+  for(let c=0;c<77;c++){
+   if(val(r,c)!==""){
+    has=true;
+    break
+   }
+  }
   if(has||r<=23)rows.push(r)
  }
 
- let colors=["s1","s2","s3","s4","s5","s6","s7","s8","s9"],h='<table><thead><tr>';
+ let colors=["s1","s2","s3","s4","s5","s6","s7","s8","s9"];
+ let h='<table><thead><tr>';
 
- h+='<th rowspan="2" class="roll">Roll<br>No.</th><th rowspan="2" class="name">STUDENT NAME<br>(CAPITAL LETTERS)</th><th rowspan="2" class="gender">Gender</th>';
+ h+='<th rowspan="2" class="roll">Roll<br>No.</th>';
+ h+='<th rowspan="2" class="name">STUDENT NAME<br>(CAPITAL LETTERS)</th>';
+ h+='<th rowspan="2" class="gender">Gender</th>';
 
- BOOKS[cls].forEach((b,i)=>h+=`<th colspan="8" class="sub ${colors[i]}">${b}</th>`);
+ BOOKS[cls].forEach((b,i)=>{
+  h+=`<th colspan="8" class="sub ${colors[i]}">${b}</th>`
+ });
 
- h+=`<th colspan="2" class="sub t1h">TERM 1</th><th colspan="2" class="sub t2h">TERM 2</th></tr><tr>`;
+ h+=`<th colspan="2" class="sub t1h">TERM 1</th>`;
+ h+=`<th colspan="2" class="sub t2h">TERM 2</th>`;
+ h+='</tr><tr>';
 
- BOOKS[cls].forEach((b,i)=>h+=`<th class="${colors[i]}">FA1<br>25</th><th class="${colors[i]}">OBS<br>25</th><th class="${colors[i]}">SA1<br>50</th><th class="${colors[i]}">T1<br>100</th><th class="${colors[i]}">FA2<br>25</th><th class="${colors[i]}">OBS<br>25</th><th class="${colors[i]}">SA2<br>50</th><th class="${colors[i]}">T2<br>100</th>`);
+ BOOKS[cls].forEach((b,i)=>{
+  h+=`<th class="${colors[i]}">FA1<br>25</th>`;
+  h+=`<th class="${colors[i]}">OBS<br>25</th>`;
+  h+=`<th class="${colors[i]}">SA1<br>50</th>`;
+  h+=`<th class="${colors[i]}">T1<br>100</th>`;
+  h+=`<th class="${colors[i]}">FA2<br>25</th>`;
+  h+=`<th class="${colors[i]}">OBS<br>25</th>`;
+  h+=`<th class="${colors[i]}">SA2<br>50</th>`;
+  h+=`<th class="${colors[i]}">T2<br>100</th>`
+ });
 
- h+=`<th class="t1h">TOTAL<br>(${n*100})</th><th class="t1h">%</th><th class="t2h">TOTAL<br>(${n*100})</th><th class="t2h">%</th></tr></thead><tbody>`;
+ h+=`<th class="t1h">TOTAL<br>(${n*100})</th>`;
+ h+=`<th class="t1h">%</th>`;
+ h+=`<th class="t2h">TOTAL<br>(${n*100})</th>`;
+ h+=`<th class="t2h">%</th>`;
+ h+='</tr></thead><tbody>';
 
  rows.forEach(r=>{
-  let roll=val(r,0)||r-3,name=val(r,1)||"",gender=val(r,2)||"";
 
-  h+=`<tr><td class="roll sticky1">${roll}</td><td class="name sticky2"><input type="text" value="${esc(name)}" oninput="nameUpdate(${r},this)"></td><td class="gender sticky3"><select onchange="upd(${r},2,this.value)"><option value=""></option><option value="Boys" ${gender==="Boys"?"selected":""}>Boys</option><option value="Girls" ${gender==="Girls"?"selected":""}>Girls</option></select></td>`;
+  let roll=val(r,0)||r-3;
+  let name=val(r,1)||"";
+  let gender=val(r,2)||"";
+
+  h+=`<tr>`;
+  h+=`<td class="roll sticky1">${roll}</td>`;
+  h+=`<td class="name sticky2"><input type="text" value="${esc(name)}" oninput="nameUpdate(${r},this)"></td>`;
+  h+=`<td class="gender sticky3"><select onchange="upd(${r},2,this.value)"><option value=""></option><option value="Boys" ${gender==="Boys"?"selected":""}>Boys</option><option value="Girls" ${gender==="Girls"?"selected":""}>Girls</option></select></td>`;
 
   for(let s=0;s<n;s++){
+
    let b=3+s*8;
 
-   [25,25,50].forEach((m,k)=>h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+k)}" oninput="mark(${r},${b+k},this,${m})"></td>`);
+   [25,25,50].forEach((m,k)=>{
+    h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+k)}" oninput="mark(${r},${b+k},this,${m})"></td>`
+   });
 
    h+=`<td class="total" id="c${r}_${b+3}">${val(r,b+3)}</td>`;
 
-   [25,25,50].forEach((m,k)=>h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+4+k)}" oninput="mark(${r},${b+4+k},this,${m})"></td>`);
+   [25,25,50].forEach((m,k)=>{
+    h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+4+k)}" oninput="mark(${r},${b+4+k},this,${m})"></td>`
+   });
 
    h+=`<td class="total" id="c${r}_${b+7}">${val(r,b+7)}</td>`
   }
 
-  h+=`<td class="total" id="t1${r}"></td><td class="pct" id="p1${r}"></td><td class="total" id="t2${r}"></td><td class="pct" id="p2${r}"></td></tr>`
+  h+=`<td class="total" id="t1${r}"></td>`;
+  h+=`<td class="pct" id="p1${r}"></td>`;
+  h+=`<td class="total" id="t2${r}"></td>`;
+  h+=`<td class="pct" id="p2${r}"></td>`;
+  h+=`</tr>`
  });
 
  h+='</tbody></table>';
+
  document.getElementById("tableBox").innerHTML=h;
  recalcAll()
 }
@@ -137,23 +210,42 @@ function upd(r,c,v){
 
 function mark(r,c,i,max){
  let v=Number(i.value);
+
  if(v<0)i.value=0;
  if(v>max)i.value=max;
+
  upd(r,c,i.value===""?"":Number(i.value));
  recalcRow(r)
 }
 
 function recalcRow(r){
- let n=BOOKS[cls].length,t1=0,t2=0;
+
+ let n=BOOKS[cls].length;
+ let t1=0,t2=0;
 
  for(let s=0;s<n;s++){
+
   let b=3+s*8;
 
-  let a=Number(val(r,b)||0)+Number(val(r,b+1)||0)+Number(val(r,b+2)||0);
-  let d=Number(val(r,b+4)||0)+Number(val(r,b+5)||0)+Number(val(r,b+6)||0);
+  let a=
+   Number(val(r,b)||0)+
+   Number(val(r,b+1)||0)+
+   Number(val(r,b+2)||0);
 
-  ws[XLSX.utils.encode_col(b+3)+r]={t:"n",v:a};
-  ws[XLSX.utils.encode_col(b+7)+r]={t:"n",v:d};
+  let d=
+   Number(val(r,b+4)||0)+
+   Number(val(r,b+5)||0)+
+   Number(val(r,b+6)||0);
+
+  ws[XLSX.utils.encode_col(b+3)+r]={
+   t:"n",
+   v:a
+  };
+
+  ws[XLSX.utils.encode_col(b+7)+r]={
+   t:"n",
+   v:d
+  };
 
   let e=document.getElementById(`c${r}_${b+3}`);
   if(e)e.textContent=a;
@@ -169,22 +261,43 @@ function recalcRow(r){
  let p1=max?t1/max*100:0;
  let p2=max?t2/max*100:0;
 
- /* FINAL OVERALL COLUMNS
-    Term 1 Total
-    Term 1 %
-    Term 2 Total
-    Term 2 %
-    NO ANNUAL TOTAL
+ /*
+  OVERALL STRUCTURE
+
+  Term 1 Total
+  Term 1 %
+  Term 2 Total
+  Term 2 %
+
+  NO ANNUAL TOTAL
  */
+
  let cT1=n*8+3;
  let cP1=n*8+4;
  let cT2=n*8+5;
  let cP2=n*8+6;
 
- ws[XLSX.utils.encode_col(cT1)+r]={t:"n",v:t1};
- ws[XLSX.utils.encode_col(cP1)+r]={t:"n",v:p1,z:'0.00"%"'};
- ws[XLSX.utils.encode_col(cT2)+r]={t:"n",v:t2};
- ws[XLSX.utils.encode_col(cP2)+r]={t:"n",v:p2,z:'0.00"%"'};
+ ws[XLSX.utils.encode_col(cT1)+r]={
+  t:"n",
+  v:t1
+ };
+
+ ws[XLSX.utils.encode_col(cP1)+r]={
+  t:"n",
+  v:p1,
+  z:'0.00"%"'
+ };
+
+ ws[XLSX.utils.encode_col(cT2)+r]={
+  t:"n",
+  v:t2
+ };
+
+ ws[XLSX.utils.encode_col(cP2)+r]={
+  t:"n",
+  v:p2,
+  z:'0.00"%"'
+ };
 
  let e1=document.getElementById("t1"+r);
  if(e1)e1.textContent=t1;
@@ -204,102 +317,281 @@ function recalcAll(){
 }
 
 function clearMarks(){
+
  if(!ws)return;
+
  if(!confirm("ସମସ୍ତ marks clear କରିବେ କି?"))return;
 
- for(let r=4;r<=65;r++)
+ for(let r=4;r<=65;r++){
+
   for(let s=0;s<BOOKS[cls].length;s++){
+
    let b=3+s*8;
+
    [b,b+1,b+2,b+4,b+5,b+6].forEach(c=>{
     let a=XLSX.utils.encode_col(c)+r;
     if(ws[a])ws[a].v=""
    })
   }
+ }
 
  render();
  setStatus("Marks cleared")
 }
 
-function downloadExcel(){
- if(!ws)return alert("First load a class");
+/* =========================================================
+   DOWNLOAD EXCEL
+   CLASS 3 TO CLASS 8
+   NO ANNUAL TOTAL
+   ========================================================= */
 
- recalcAll();
- unhide(ws);
+function downloadExcel(){
+
+ if(!ws)return alert("First load a class");
 
  let n=BOOKS[cls].length;
 
- /* FINAL EXCEL COLUMNS
-    AZ/appropriate column = Term 1 Total
-    next = Term 1 %
-    next = Term 2 Total
-    next = Term 2 %
-    NO ANNUAL TOTAL
+ /* Correct starting column of Overall */
+ let start=n*8+3;
+
+ let cT1=start;
+ let cP1=start+1;
+ let cT2=start+2;
+ let cP2=start+3;
+
+ /*
+  IMPORTANT:
+  Delete old Annual Total / old Overall values
+  before writing the correct four columns.
  */
- let cT1=n*8+3;
- let cP1=n*8+4;
- let cT2=n*8+5;
- let cP2=n*8+6;
 
- ws[XLSX.utils.encode_col(cT1)+"3"]={t:"s",v:"Term 1 Total"};
- ws[XLSX.utils.encode_col(cP1)+"3"]={t:"s",v:"Term 1 %"};
- ws[XLSX.utils.encode_col(cT2)+"3"]={t:"s",v:"Term 2 Total"};
- ws[XLSX.utils.encode_col(cP2)+"3"]={t:"s",v:"Term 2 %"};
+ for(let r=2;r<=65;r++){
 
+  for(let c=start;c<start+5;c++){
+
+   let a=XLSX.utils.encode_col(c)+r;
+
+   if(ws[a])delete ws[a]
+  }
+ }
+
+ /*
+  Remove old merges around Overall
+ */
+
+ if(ws["!merges"]){
+
+  ws["!merges"]=ws["!merges"].filter(m=>{
+
+   let s=m.s.c;
+   let e=m.e.c;
+
+   return !(s<=cP2 && e>=start)
+  })
+ }
+
+ /*
+  Overall heading
+ */
+
+ ws[XLSX.utils.encode_col(cT1)+"2"]={
+  t:"s",
+  v:"Overall"
+ };
+
+ /*
+  Merge Overall across four columns
+ */
+
+ if(!ws["!merges"])ws["!merges"]=[];
+
+ ws["!merges"].push({
+  s:{r:1,c:cT1},
+  e:{r:1,c:cP2}
+ });
+
+ /*
+  Headers
+ */
+
+ ws[XLSX.utils.encode_col(cT1)+"3"]={
+  t:"s",
+  v:"Term 1 Total"
+ };
+
+ ws[XLSX.utils.encode_col(cP1)+"3"]={
+  t:"s",
+  v:"Term 1 %"
+ };
+
+ ws[XLSX.utils.encode_col(cT2)+"3"]={
+  t:"s",
+  v:"Term 2 Total"
+ };
+
+ ws[XLSX.utils.encode_col(cP2)+"3"]={
+  t:"s",
+  v:"Term 2 %"
+ };
+
+ /*
+  Calculate all students again
+ */
 
  for(let r=4;r<=65;r++){
-  if(ws[XLSX.utils.encode_col(cP1)+r])
-   ws[XLSX.utils.encode_col(cP1)+r].z='0.00"%"';
 
-  if(ws[XLSX.utils.encode_col(cP2)+r])
-   ws[XLSX.utils.encode_col(cP2)+r].z='0.00"%"';
+  let t1=0;
+  let t2=0;
+
+  for(let s=0;s<n;s++){
+
+   let b=3+s*8;
+
+   let a=
+    Number(val(r,b)||0)+
+    Number(val(r,b+1)||0)+
+    Number(val(r,b+2)||0);
+
+   let d=
+    Number(val(r,b+4)||0)+
+    Number(val(r,b+5)||0)+
+    Number(val(r,b+6)||0);
+
+   ws[XLSX.utils.encode_col(b+3)+r]={
+    t:"n",
+    v:a
+   };
+
+   ws[XLSX.utils.encode_col(b+7)+r]={
+    t:"n",
+    v:d
+   };
+
+   t1+=a;
+   t2+=d
+  }
+
+  let max=n*100;
+
+  let p1=max?(t1/max)*100:0;
+  let p2=max?(t2/max)*100:0;
+
+  ws[XLSX.utils.encode_col(cT1)+r]={
+   t:"n",
+   v:t1
+  };
+
+  ws[XLSX.utils.encode_col(cP1)+r]={
+   t:"n",
+   v:p1,
+   z:'0.00"%"'
+  };
+
+  ws[XLSX.utils.encode_col(cT2)+r]={
+   t:"n",
+   v:t2
+  };
+
+  ws[XLSX.utils.encode_col(cP2)+r]={
+   t:"n",
+   v:p2,
+   z:'0.00"%"'
+  };
  }
+
+ /*
+  No hidden columns
+ */
+
+ unhide(ws);
+
+ /*
+  Correct Excel range
+ */
 
  ws["!ref"]=XLSX.utils.encode_range({
   s:{r:0,c:0},
   e:{r:64,c:cP2}
  });
 
- let out=XLSX.write(wb,{bookType:"xlsx",type:"array",cellStyles:true});
+ /*
+  Write Excel
+ */
+
+ let out=XLSX.write(wb,{
+  bookType:"xlsx",
+  type:"array",
+  cellStyles:true
+ });
 
  let blob=new Blob([out],{
   type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
  });
 
  let a=document.createElement("a");
+
  a.href=URL.createObjectURL(blob);
  a.download=`Assessment_Class_${cls}.xlsx`;
  a.click();
 
- setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+ setTimeout(()=>{
+  URL.revokeObjectURL(a.href)
+ },1000);
+
+ setStatus("✅ Excel downloaded successfully")
 }
 
 function driveLoad(){
+
  if(!cls){
+
   let c=document.getElementById("classSelect").value;
+
   if(!c)return alert("Select Class first");
+
   cls=c;
   ws=wb?.Sheets["Class "+c]
  }
 
  if(!accessToken){
+
   pending="load";
-  tokenClient.requestAccessToken({prompt:"consent"})
- }else loadDriveFile()
+
+  tokenClient.requestAccessToken({
+   prompt:"consent"
+  })
+
+ }else{
+  loadDriveFile()
+ }
 }
 
 async function findDriveFile(name){
- let q=`name='${name}' and trashed=false`,
- u="https://www.googleapis.com/drive/v3/files?spaces=drive&q="+encodeURIComponent(q)+"&fields=files(id,name,mimeType,modifiedTime)&pageSize=10",
- r=await fetch(u,{headers:{Authorization:"Bearer "+accessToken}});
+
+ let q=`name='${name}' and trashed=false`;
+
+ let u=
+  "https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
+  encodeURIComponent(q)+
+  "&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
+
+ let r=await fetch(u,{
+  headers:{
+   Authorization:"Bearer "+accessToken
+  }
+ });
 
  if(!r.ok)throw Error("Drive search failed");
 
  let d=await r.json();
+
  return d.files?.length?d.files[0]:null
 }
 
 async function loadDriveFile(){
+
  try{
+
   let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
 
   setStatus("☁️ Searching My Drive...");
@@ -307,16 +599,24 @@ async function loadDriveFile(){
   let f=await findDriveFile(name);
 
   if(!f){
+
    setStatus("ℹ️ No saved file found. Loading template.");
+
    loadClass();
+
    return
   }
 
   setStatus("☁️ Loading from My Drive...");
 
-  let r=await fetch(`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`,{
-   headers:{Authorization:"Bearer "+accessToken}
-  });
+  let r=await fetch(
+   `https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`,
+   {
+    headers:{
+     Authorization:"Bearer "+accessToken
+    }
+   }
+  );
 
   if(!r.ok)throw Error("Drive download failed");
 
@@ -335,15 +635,21 @@ async function loadDriveFile(){
   render();
 
   setStatus("✅ Loaded from My Drive")
+
  }catch(e){
+
   setStatus("❌ "+e.message)
  }
 }
 
 function driveSave(){
+
  if(!cls){
+
   let c=document.getElementById("classSelect").value;
+
   if(!c)return alert("Select Class first");
+
   cls=c;
   ws=wb?.Sheets["Class "+c]
  }
@@ -351,15 +657,144 @@ function driveSave(){
  if(!ws)return alert("Load Class first");
 
  if(!accessToken){
+
   pending="save";
-  tokenClient.requestAccessToken({prompt:"consent"})
- }else saveDriveWorkbook()
+
+  tokenClient.requestAccessToken({
+   prompt:"consent"
+  })
+
+ }else{
+  saveDriveWorkbook()
+ }
 }
 
 async function saveDriveWorkbook(){
+
  try{
+
+  /*
+   Recalculate before saving.
+   This also saves Term 1 %, Term 2 %
+   and never creates Annual Total.
+  */
+
   recalcAll();
   unhide(ws);
+
+  let n=BOOKS[cls].length;
+
+  let start=n*8+3;
+
+  let cT1=start;
+  let cP1=start+1;
+  let cT2=start+2;
+  let cP2=start+3;
+
+  /*
+   Correct Overall headers for Drive file
+  */
+
+  ws[XLSX.utils.encode_col(cT1)+"2"]={
+   t:"s",
+   v:"Overall"
+  };
+
+  ws[XLSX.utils.encode_col(cT1)+"3"]={
+   t:"s",
+   v:"Term 1 Total"
+  };
+
+  ws[XLSX.utils.encode_col(cP1)+"3"]={
+   t:"s",
+   v:"Term 1 %"
+  };
+
+  ws[XLSX.utils.encode_col(cT2)+"3"]={
+   t:"s",
+   v:"Term 2 Total"
+  };
+
+  ws[XLSX.utils.encode_col(cP2)+"3"]={
+   t:"s",
+   v:"Term 2 %"
+  };
+
+  if(ws["!merges"]){
+
+   ws["!merges"]=ws["!merges"].filter(m=>{
+    let s=m.s.c;
+    let e=m.e.c;
+    return !(s<=cP2 && e>=start)
+   })
+  }else{
+   ws["!merges"]=[]
+  }
+
+  ws["!merges"].push({
+   s:{r:1,c:cT1},
+   e:{r:1,c:cP2}
+  });
+
+  for(let r=4;r<=65;r++){
+
+   let t1=0;
+   let t2=0;
+
+   for(let s=0;s<n;s++){
+
+    let b=3+s*8;
+
+    let a=
+     Number(val(r,b)||0)+
+     Number(val(r,b+1)||0)+
+     Number(val(r,b+2)||0);
+
+    let d=
+     Number(val(r,b+4)||0)+
+     Number(val(r,b+5)||0)+
+     Number(val(r,b+6)||0);
+
+    t1+=a;
+    t2+=d;
+
+    ws[XLSX.utils.encode_col(b+3)+r]={
+     t:"n",
+     v:a
+    };
+
+    ws[XLSX.utils.encode_col(b+7)+r]={
+     t:"n",
+     v:d
+    };
+   }
+
+   let max=n*100;
+   let p1=max?t1/max*100:0;
+   let p2=max?t2/max*100:0;
+
+   ws[XLSX.utils.encode_col(cT1)+r]={
+    t:"n",
+    v:t1
+   };
+
+   ws[XLSX.utils.encode_col(cP1)+r]={
+    t:"n",
+    v:p1,
+    z:'0.00"%"'
+   };
+
+   ws[XLSX.utils.encode_col(cT2)+r]={
+    t:"n",
+    v:t2
+   };
+
+   ws[XLSX.utils.encode_col(cP2)+r]={
+    t:"n",
+    v:p2,
+    z:'0.00"%"'
+   };
+  }
 
   let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
 
@@ -367,7 +802,8 @@ async function saveDriveWorkbook(){
 
   let arr=XLSX.write(wb,{
    bookType:"xlsx",
-   type:"array"
+   type:"array",
+   cellStyles:true
   });
 
   let blob=new Blob([arr],{
@@ -377,17 +813,23 @@ async function saveDriveWorkbook(){
   let old=await findDriveFile(name);
 
   if(old){
-   let r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${old.id}?uploadType=media`,{
-    method:"PATCH",
-    headers:{
-     Authorization:"Bearer "+accessToken,
-     "Content-Type":blob.type
-    },
-    body:blob
-   });
+
+   let r=await fetch(
+    `https://www.googleapis.com/upload/drive/v3/files/${old.id}?uploadType=media`,
+    {
+     method:"PATCH",
+     headers:{
+      Authorization:"Bearer "+accessToken,
+      "Content-Type":blob.type
+     },
+     body:blob
+    }
+   );
 
    if(!r.ok)throw Error("Drive update failed")
+
   }else{
+
    let meta={
     name:name,
     mimeType:blob.type
@@ -396,26 +838,38 @@ async function saveDriveWorkbook(){
    let boundary="----OdishaPathasala"+Date.now();
 
    let body=new Blob([
-    "--"+boundary+"\r\nContent-Type:application/json; charset=UTF-8\r\n\r\n",
-    JSON.stringify(meta)+"\r\n--"+boundary+"\r\nContent-Type:"+blob.type+"\r\n\r\n",
+    "--"+boundary+
+    "\r\nContent-Type:application/json; charset=UTF-8\r\n\r\n",
+
+    JSON.stringify(meta)+
+    "\r\n--"+boundary+
+    "\r\nContent-Type:"+blob.type+
+    "\r\n\r\n",
+
     blob,
+
     "\r\n--"+boundary+"--"
    ]);
 
-   let r=await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",{
-    method:"POST",
-    headers:{
-     Authorization:"Bearer "+accessToken,
-     "Content-Type":"multipart/related; boundary="+boundary
-    },
-    body:body
-   });
+   let r=await fetch(
+    "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
+    {
+     method:"POST",
+     headers:{
+      Authorization:"Bearer "+accessToken,
+      "Content-Type":"multipart/related; boundary="+boundary
+     },
+     body:body
+    }
+   );
 
    if(!r.ok)throw Error("Drive create failed")
   }
 
   setStatus("✅ Saved to your Google Drive")
+
  }catch(e){
+
   setStatus("❌ Save failed: "+e.message)
  }
 }
