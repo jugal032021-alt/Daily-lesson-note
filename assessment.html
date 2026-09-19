@@ -2,335 +2,347 @@
 <html lang="or">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assessment Marks Entry - OdishaPathasala</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assessment Marks Entry</title>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="https://apis.google.com/js/api.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-    margin:0;
-    font-family:Arial,"Noto Sans Oriya",sans-serif;
-    background:#f1f5f9;
-    color:#222;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+color:#222
 }
 
-.topbar{
-    background:linear-gradient(135deg,#003399,#0066cc);
-    color:#fff;
-    padding:16px;
-    text-align:center;
-    position:sticky;
-    top:0;
-    z-index:1000;
+header{
+background:linear-gradient(110deg,#0875c9,#034b9b);
+color:#fff;
+text-align:center;
+padding:12px
 }
 
-.topbar h2{
-    margin:0;
-    font-size:22px;
+h2{
+margin:2px;
+font-size:21px
 }
 
-.container{
-    width:100%;
-    padding:15px;
+header div{
+font-size:13px;
+color:#ffe600;
+font-weight:bold
 }
 
-.controls{
-    background:#fff;
-    padding:15px;
-    border-radius:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-    margin-bottom:15px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    align-items:center;
+.wrap{
+max-width:1900px;
+margin:auto;
+padding:8px
 }
 
-select,
-input,
-button{
-    font-family:inherit;
+.bar{
+background:#fff;
+padding:8px;
+border-radius:8px;
+box-shadow:0 2px 7px #bbb;
+margin-bottom:8px;
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+gap:4px
 }
 
-select{
-    padding:9px 12px;
-    border:1px solid #bbb;
-    border-radius:7px;
-    background:#fff;
+select,button{
+padding:8px 10px;
+border:1px solid #aaa;
+border-radius:5px;
+font-size:13px
 }
 
 button{
-    border:0;
-    border-radius:7px;
-    padding:9px 15px;
-    cursor:pointer;
-    font-weight:bold;
+background:#075e9c;
+color:#fff;
+border:0;
+font-weight:bold;
+cursor:pointer
 }
 
-.load-btn{
-    background:#0066cc;
-    color:#fff;
+.green{background:#16833b}
+.orange{background:#e67e22}
+.red{background:#c62828}
+
+#status{
+font-size:12px;
+color:#087c36;
+background:#effff3;
+padding:4px 8px;
+border-radius:4px;
+flex-basis:100%
 }
 
-.drive-btn{
-    background:#00897b;
-    color:#fff;
-}
-
-.save-btn{
-    background:#f57c00;
-    color:#fff;
-}
-
-.status{
-    width:100%;
-    font-size:14px;
-    color:#555;
-}
-
-.table-wrap{
-    width:100%;
-    overflow-x:auto;
-    overflow-y:auto;
-    max-height:72vh;
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+.tablebox{
+overflow:auto;
+background:#fff;
+border-radius:7px;
+box-shadow:0 2px 8px #bbb;
+width:100%
 }
 
 table{
-    border-collapse:collapse;
-    table-layout:fixed;
-    width:max-content;
-    min-width:max-content;
+border-collapse:collapse;
+min-width:3200px;
+width:max-content;
+font-size:11px
 }
 
-th,
-td{
-    border:1px solid #bbb;
-    padding:5px;
-    text-align:center;
-    width:70px;
-    min-width:70px;
-    max-width:70px;
-    height:38px;
-    background:#fff;
+th,td{
+border:1px solid #aaa;
+padding:3px;
+text-align:center;
+white-space:nowrap
 }
 
-thead th{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:#e3f2fd;
-    font-weight:bold;
-}
-
-.subject-head{
-    background:#1565c0 !important;
-    color:#fff;
-    font-size:14px;
-}
-
-.term-head{
-    background:#e8f5e9 !important;
-    color:#1b5e20;
-}
-
-.sub-head{
-    background:#fff3e0 !important;
-    color:#e65100;
-    font-size:12px;
+th{
+font-weight:bold;
+vertical-align:middle
 }
 
 .roll{
-    width:45px !important;
-    min-width:45px !important;
-    max-width:45px !important;
+width:38px;
+min-width:38px;
+max-width:38px
 }
 
 .name{
-    width:180px !important;
-    min-width:180px !important;
-    max-width:180px !important;
-    text-align:left;
+width:180px;
+min-width:180px;
+text-align:left
 }
 
 .gender{
-    width:75px !important;
-    min-width:75px !important;
-    max-width:75px !important;
+width:75px;
+min-width:75px
 }
 
-.comp,
-.total,
+.subject{
+font-size:14px;
+height:42px;
+color:#111
+}
+
+.group{
+font-size:12px
+}
+
+.comp{
+min-width:62px
+}
+
+.total{
+font-weight:bold;
+background:#e8f2ff;
+min-width:58px
+}
+
 .pct{
-    width:70px !important;
-    min-width:70px !important;
-    max-width:70px !important;
+font-weight:bold;
+background:#fff2cc;
+min-width:65px
 }
 
-.sticky-roll{
-    position:sticky;
-    left:0;
-    z-index:30;
-    background:#fff;
+.t1h{
+background:#ffd9e2
 }
 
-.sticky-name{
-    position:sticky;
-    left:45px;
-    z-index:30;
-    background:#fff;
+.t2h{
+background:#ddd0ff
 }
 
-.sticky-gender{
-    position:sticky;
-    left:225px;
-    z-index:30;
-    background:#fff;
+.overall{
+background:#d7f5d9;
+font-weight:bold
 }
 
-thead .sticky-roll,
-thead .sticky-name,
-thead .sticky-gender{
-    z-index:50;
-    background:#e3f2fd;
+.s1{background:#ffd1dc}
+.s2{background:#c9f3d2}
+.s3{background:#ffe8a8}
+.s4{background:#cce7ff}
+.s5{background:#e3d2ff}
+.s6{background:#ffd9b8}
+.s7{background:#c9f0f0}
+.s8{background:#f7d1ed}
+.s9{background:#d8e8c8}
+
+.sticky1{
+position:sticky;
+left:0;
+z-index:4;
+background:#fff
 }
 
-td input,
-td select{
-    width:100%;
-    border:1px solid #ddd;
-    border-radius:4px;
-    padding:5px;
-    font-size:13px;
+.sticky2{
+position:sticky;
+left:38px;
+z-index:4;
+background:#fff
 }
 
-td input{
-    text-transform:uppercase;
+.sticky3{
+position:sticky;
+left:218px;
+z-index:4;
+background:#fff
 }
 
-.total-cell{
-    background:#e8f5e9 !important;
-    font-weight:bold;
+thead th{
+position:sticky;
+top:0;
+z-index:5
 }
 
-.percent-cell{
-    background:#fff8e1 !important;
-    font-weight:bold;
+.tip{
+margin-top:8px;
+background:#e9f8ed;
+padding:8px;
+border-radius:6px;
+color:#176b2e;
+font-size:12px
 }
 
-.footer-box{
-    margin-top:15px;
-    background:#fff;
-    padding:15px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-    line-height:1.7;
+.note{
+margin:8px 0;
+background:#fff7e6;
+padding:8px;
+border-radius:6px;
+color:#805500;
+font-size:12px
 }
 
-@media(max-width:700px){
-    .topbar h2{
-        font-size:18px;
-    }
+@media(max-width:600px){
 
-    .container{
-        padding:8px;
-    }
+header{
+padding:9px
+}
 
-    .controls{
-        padding:10px;
-    }
+h2{
+font-size:17px
+}
+
+.bar{
+padding:6px
+}
+
+.bar button,
+.bar select{
+font-size:11px;
+padding:7px
+}
+
+.name{
+width:170px;
+min-width:170px
+}
+
+.subject{
+font-size:12px
+}
+
+table{
+font-size:10px
+}
+
+input[type=number]{
+width:44px;
+padding:4px
+}
+
+.sticky3{
+left:208px
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
-    <h2>📊 OdishaPathasala - Assessment Marks Entry</h2>
+<header>
+<h2>📊 ASSESSMENT MARKS ENTRY</h2>
+<div>NEP 2020 ASSESSMENT FRAMEWORK • Class 3 to Class 8</div>
+</header>
+
+<div class="wrap">
+
+<div class="bar">
+
+<select id="classSelect">
+
+<option value="">-- Select Class --</option>
+
+<option value="3">Class 3</option>
+<option value="4">Class 4</option>
+<option value="5">Class 5</option>
+
+<option value="6">Class 6</option>
+<option value="7">Class 7</option>
+<option value="8">Class 8</option>
+
+</select>
+
+<button onclick="loadClass()">📖 Load Class</button>
+
+<button onclick="driveLoad()">
+☁️ Sign in / Load from My Drive
+</button>
+
+<button class="green" onclick="driveSave()">
+☁️ Save to My Drive
+</button>
+
+<button class="orange" onclick="downloadExcel()">
+⬇ Download Excel
+</button>
+
+<button class="red" onclick="clearMarks()">
+🗑 Clear Marks
+</button>
+
+<div id="status">
+Please select a class.
 </div>
 
-<div class="container">
+</div>
 
-    <div class="controls">
+<div id="tableBox" class="tablebox"></div>
 
-        <label><b>Class:</b></label>
+<div class="tip">
+💡 Student name automatically becomes CAPITAL LETTERS.
+Enter marks according to the displayed assessment components.
+</div>
 
-        <select id="classSelect">
-            <option value="">Select Class</option>
-            <option value="3">Class 3</option>
-            <option value="4">Class 4</option>
-            <option value="5">Class 5</option>
-            <option value="6">Class 6</option>
-            <option value="7">Class 7</option>
-            <option value="8">Class 8</option>
-        </select>
-
-        <button class="load-btn" onclick="loadClass()">
-            Load Class
-        </button>
-
-        <button class="drive-btn" onclick="signInGoogle()">
-            🔐 Google Drive Login
-        </button>
-
-        <button class="save-btn" onclick="saveToDrive()">
-            💾 Save to My Drive
-        </button>
-
-        <div id="status" class="status">
-            Class ବାଛି Load Class କରନ୍ତୁ ।
-        </div>
-
-    </div>
-
-    <div class="table-wrap">
-        <table id="marksTable">
-            <thead id="tableHead"></thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
-
-    <div class="footer-box">
-        <b>ନିର୍ଦ୍ଦେଶ:</b><br>
-        • Student Name ଲେଖିଲେ ନାମ automatically CAPITAL ହେବ।<br>
-        • Marks entry କଲେ Total ଓ Percentage automatically calculate ହେବ।<br>
-        • Roll No, Student Name ଏବଂ Gender scroll କଲେ fixed ରହିବ।<br>
-        • ଅନ୍ୟ ସମସ୍ତ columns fixed width ରହିବ ଏବଂ horizontal scroll କରିପାରିବେ।<br>
-        • Save to My Drive କଲେ ପ୍ରତ୍ୟେକ Class ପାଇଁ ଅଲଗା Excel file save ହେବ।
-    </div>
+<div class="note">
+ℹ️ Class 3–5 uses the Preparatory Stage framework.
+Class 6–8 uses the Middle Stage framework.
+</div>
 
 </div>
 
 <script>
 
-/* =========================
-   GOOGLE DRIVE SETTINGS
-========================= */
-
-const CLIENT_ID =
+const GOOGLE_CLIENT_ID =
 "779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com";
 
-const SCOPES =
+const DRIVE_SCOPE =
 "https://www.googleapis.com/auth/drive.file";
-
-let tokenClient;
-let accessToken = null;
 
 
 /* =========================
-   BOOKS
+   SUBJECT NAMES
 ========================= */
 
-const BOOKS = {
+const BOOKS={
 
 3:[
 "ଭାଷା ମହକ",
@@ -399,12 +411,13 @@ const BOOKS = {
 
 
 /* =========================
-   COMPONENT STRUCTURE
+   ASSESSMENT FRAMEWORK
 ========================= */
 
-function prepNormal(){
+const FRAME={
 
-return [
+prepNormal:[
+
 ["ମୌଖିକ",5],
 ["ଲିଖିତ",15],
 ["କାର୍ଯ୍ୟଦକ୍ଷତା",5],
@@ -414,58 +427,49 @@ return [
 ["ପ୍ରକଳ୍ପ",15],
 ["ମୋଟ",25],
 
-["ଲିଖିତ",10],
-["ମୌଖିକ",0],
+["ମୌଖିକ",10],
+["ଲିଖିତ",40],
 ["ମୋଟ",50]
-];
 
-}
+],
 
+prepArt:[
 
-function prepArt(){
-
-return [
 ["ଲିଖିତ",10],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",15],
 ["ମୋଟ",25],
 
-["ଚିତ୍ରାଙ୍କନ",10],
+["ଦୃଶ୍ୟକଳା",10],
 ["ସଙ୍ଗୀତ",5],
 ["ନୃତ୍ୟ",5],
 ["ନାଟକ",5],
 ["ମୋଟ",25],
 
 ["ଲିଖିତ",20],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",30],
 ["ମୋଟ",50]
-];
 
-}
+],
 
+prepSports:[
 
-function prepSports(){
-
-return [
 ["ଲିଖିତ",10],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",15],
 ["ମୋଟ",25],
 
-["ଶାରୀରିକ ଚଳନ",10],
-["କ୍ରୀଡ଼ା",5],
-["ଯୋଗ / ପ୍ରାଣାୟାମ",10],
+["ଶାରୀରିକ ଅଙ୍ଗଚଳନା",10],
+["ଖେଳ ଓ କ୍ରୀଡ଼ା",5],
+["ଯୋଗ ଓ ପ୍ରାଣାୟମ",10],
 ["ମୋଟ",25],
 
 ["ଲିଖିତ",20],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",30],
 ["ମୋଟ",50]
-];
 
-}
+],
 
+middleNormal:[
 
-function middleNormal(){
-
-return [
 ["ମୌଖିକ",5],
 ["ଲିଖିତ",15],
 ["କାର୍ଯ୍ୟଦକ୍ଷତା",5],
@@ -473,129 +477,296 @@ return [
 
 ["ଲିଖିତ",10],
 ["ପ୍ରକଳ୍ପ",10],
-["ଛାତ୍ର ଡାଏରୀ",5],
+["ଶିକ୍ଷାର୍ଥୀଙ୍କ ଡାଏରୀ",5],
 ["ମୋଟ",25],
 
 ["ଲିଖିତ",50],
 ["ମୋଟ",50]
-];
 
-}
+],
 
+middleArt:[
 
-function middleArt(){
-
-return [
 ["ଲିଖିତ",10],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",15],
 ["ମୋଟ",25],
 
-["ଚିତ୍ରାଙ୍କନ",10],
+["ଚିତ୍ରକଳା",10],
 ["ସଙ୍ଗୀତ",5],
 ["ନୃତ୍ୟ",5],
 ["ନାଟକ",5],
 ["ମୋଟ",25],
 
 ["ଲିଖିତ",20],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",30],
 ["ମୋଟ",50]
-];
 
-}
+],
 
+middleSkill:[
 
-function middleSkill(){
-
-return [
 ["ଲିଖିତ",5],
 ["ପ୍ରକଳ୍ପ",20],
 ["ମୋଟ",25],
 
-["ଦକ୍ଷତା",5],
-["ବୁଝାମଣା",5],
-["ମନୋଭାବ",5],
+["ଦକ୍ଷତାରେ ନିପୁଣତା",5],
+["ବୋଧଗମ୍ୟତା",5],
+["କାର୍ଯ୍ୟପ୍ରତି ମନୋଭାବ",5],
 ["ସମାପ୍ତ କାର୍ଯ୍ୟ",5],
-["ବାସ୍ତବ ଜୀବନ ପ୍ରୟୋଗ",5],
+["ବାସ୍ତବ ଜୀବନରେ ପ୍ରୟୋଗ",5],
 ["ମୋଟ",25],
 
 ["ଲିଖିତ",20],
 ["ପ୍ରକଳ୍ପ",30],
 ["ମୋଟ",50]
-];
 
-}
+],
 
+middleSports:[
 
-function middleSports(){
-
-return [
 ["ଲିଖିତ",10],
-["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",15],
 ["ମୋଟ",25],
 
 ["ମୌଳିକ ବ୍ୟାୟାମ",10],
-["କ୍ରୀଡ଼ା",5],
-["ଯୋଗ / ପ୍ରାଣାୟାମ",10],
+["ଖେଳକୁଦ",5],
+["ଯୋଗ ଓ ପ୍ରାଣାୟମ",10],
 ["ମୋଟ",25],
 
-["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ପ୍ରଦର୍ଶନଭିତ୍ତିକ",30],
 ["ଲିଖିତ",20],
 ["ମୋଟ",50]
-];
 
-}
+]
+
+};
 
 
 /* =========================
    SUBJECT TYPE
 ========================= */
 
-function getStructure(cls,subject){
+function subjectType(c,s){
 
-    const artWords=[
-        "କଳା",
-        "କଳାକୁଞ୍ଜ",
-        "କଳାକୃତି",
-        "କୃତି"
-    ];
+if(c<=5){
 
-    const sportWords=[
-        "ଖେଳ",
-        "କ୍ରୀଡ଼ା"
-    ];
+if(s===4)return "art";
 
-    const skillWords=[
-        "କୌଶଳ"
-    ];
+if(s===5)return "sports";
 
-    if(
-        artWords.some(x=>subject.includes(x))
-    ){
-        return cls<=5 ? prepArt() : middleArt();
-    }
+return "normal";
 
-    if(
-        sportWords.some(x=>subject.includes(x))
-    ){
-        return cls<=5 ? prepSports() : middleSports();
-    }
+}
 
-    if(
-        skillWords.some(x=>subject.includes(x))
-    ){
-        return middleSkill();
-    }
+if(s===6)return "art";
 
-    return cls<=5 ? prepNormal() : middleNormal();
+if(s===7)return "skill";
+
+if(s===8)return "sports";
+
+return "normal";
+
+}
+
+
+function comps(c,s){
+
+const t=subjectType(c,s);
+
+return FRAME[
+(c<=5?"prep":"middle")+
+t.charAt(0).toUpperCase()+
+t.slice(1)
+];
+
+}
+
+
+function inputList(c,s){
+
+return comps(c,s).filter(
+x=>x[0]!=="ମୋଟ"
+);
+
+}
+
+
+function totalIndex(c,s){
+
+let out=[];
+
+comps(c,s).forEach((x,i)=>{
+
+if(x[0]==="ମୋଟ")
+out.push(i);
+
+});
+
+return out;
+
+}
+
+
+function groupOf(c,s,index){
+
+const a=comps(c,s);
+
+const totals=totalIndex(c,s);
+
+if(index<totals[0])return 0;
+
+if(index<totals[1])return 1;
+
+return 2;
+
+}
+
+
+function classMax(){
+
+return BOOKS[cls].length*100;
+
 }
 
 
 /* =========================
-   GLOBAL DATA
+   DATA
 ========================= */
 
-let currentClass="";
-let tableData=[];
+let cls=0;
+
+let data={};
+
+let accessToken=null;
+
+let tokenClient=null;
+
+let pending="";
+
+
+function setStatus(x){
+
+document.getElementById("status").textContent=x;
+
+}
+
+
+function esc(x){
+
+return String(x)
+.replace(/&/g,"&amp;")
+.replace(/"/g,"&quot;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;");
+
+}
+
+
+function key(term,row,s,c){
+
+return term+"_"+row+"_"+s+"_"+c;
+
+}
+
+
+function getV(term,row,s,c){
+
+return Number(
+data[key(term,row,s,c)]??0
+);
+
+}
+
+
+function setV(term,row,s,c,v){
+
+data[key(term,row,s,c)]=v;
+
+}
+
+
+function nameOf(r){
+
+return data["name_"+r]??"";
+
+}
+
+
+function genderOf(r){
+
+return data["gender_"+r]??"";
+
+}
+
+
+/* =========================
+   CALCULATION
+========================= */
+
+function subjectTotal(term,r,s){
+
+let total=0;
+
+inputList(cls,s).forEach(
+(x,i)=>{
+total+=getV(term,r,s,i);
+}
+);
+
+return total;
+
+}
+
+
+function groupTotal(term,r,s,g){
+
+let total=0;
+
+let idx=0;
+
+comps(cls,s).forEach((x,i)=>{
+
+if(x[0]==="ମୋଟ")return;
+
+if(groupOf(cls,s,i)===g){
+
+total+=getV(
+term,
+r,
+s,
+idx
+);
+
+}
+
+idx++;
+
+});
+
+return total;
+
+}
+
+
+function overall(term,r){
+
+return BOOKS[cls].reduce(
+(a,_,s)=>a+subjectTotal(term,r,s),
+0
+);
+
+}
+
+
+function pct(v){
+
+return classMax()
+?
+((v/classMax())*100).toFixed(2)
+:
+"0.00";
+
+}
 
 
 /* =========================
@@ -604,20 +775,28 @@ let tableData=[];
 
 function loadClass(){
 
-    currentClass =
-        document.getElementById("classSelect").value;
+const c=
+Number(
+document.getElementById("classSelect").value
+);
 
-    if(!currentClass){
-        alert("ପ୍ରଥମେ Class ବାଛନ୍ତୁ।");
-        return;
-    }
+if(!c)
+return alert("Select Class first");
 
-    renderTable();
+cls=c;
 
-    loadLocalData();
+render();
 
-    document.getElementById("status").innerText =
-        `Class ${currentClass} loaded. Marks entry କରନ୍ତୁ।`;
+setStatus(
+"✅ Class "+
+cls+
+" loaded • "+
+(cls<=5?
+"Preparatory Stage":
+"Middle Stage")+
+" framework"
+);
+
 }
 
 
@@ -625,538 +804,745 @@ function loadClass(){
    RENDER TABLE
 ========================= */
 
-function renderTable(){
+function render(){
 
-    const books=BOOKS[currentClass];
+const books=BOOKS[cls];
 
-    let head1="";
-    let head2="";
-    let head3="";
+const rows=
+Array.from(
+{length:60},
+(_,i)=>i+1
+);
 
-    head1+=`
-        <tr>
-            <th rowspan="3" class="roll sticky-roll">Roll</th>
-            <th rowspan="3" class="name sticky-name">Student Name</th>
-            <th rowspan="3" class="gender sticky-gender">Gender</th>
-    `;
+const colors=[
+"s1","s2","s3","s4",
+"s5","s6","s7","s8","s9"
+];
 
-    books.forEach((book,i)=>{
+let h="<table><thead><tr>";
 
-        const structure=getStructure(
-            Number(currentClass),
-            book
-        );
+h+=
+'<th rowspan="3" class="roll">ରୋ.<br>ନଂ</th>';
 
-        let totalGroups=0;
+h+=
+'<th rowspan="3" class="name">ଛାତ୍ରଛାତ୍ରୀଙ୍କ ନାମ<br>(CAPITAL LETTERS)</th>';
 
-        structure.forEach(x=>{
-            if(x[0]==="ମୋଟ") totalGroups++;
-        });
-
-        head1+=`
-            <th colspan="${structure.length+2}"
-                class="subject-head">
-                ${book}
-            </th>
-        `;
-
-        head2+=`
-            <th colspan="${structure.length}">
-                Term 1
-            </th>
-            <th rowspan="2" class="term-head">T1 %</th>
-            <th colspan="${structure.length}">
-                Term 2
-            </th>
-        `;
-
-    });
-
-    head1+=`</tr>`;
-
-    head2=`<tr>${head2}</tr>`;
-
-    head3+=`
-        <tr>
-    `;
-
-    books.forEach((book,si)=>{
-
-        const structure=getStructure(
-            Number(currentClass),
-            book
-        );
-
-        structure.forEach((item,j)=>{
-
-            const label=item[0];
-
-            head3+=`
-                <th class="${
-                    label==="ମୋଟ"
-                    ? "total"
-                    : "comp"
-                }">
-                    ${label}
-                    ${
-                        label!=="ମୋଟ"
-                        ? `<br><small>${item[1]}</small>`
-                        : ""
-                    }
-                </th>
-            `;
-
-        });
-
-        head3+=`
-            <th class="pct">%</th>
-        `;
-
-        structure.forEach((item,j)=>{
-
-            const label=item[0];
-
-            head3+=`
-                <th class="${
-                    label==="ମୋଟ"
-                    ? "total"
-                    : "comp"
-                }">
-                    ${label}
-                    ${
-                        label!=="ମୋଟ"
-                        ? `<br><small>${item[1]}</small>`
-                        : ""
-                    }
-                </th>
-            `;
-
-        });
-
-    });
-
-    head3+=`</tr>`;
-
-    document.getElementById("tableHead").innerHTML =
-        head1+head2+head3;
+h+=
+'<th rowspan="3" class="gender">ଲିଙ୍ଗ</th>';
 
 
-    let body="";
+/* SUBJECT HEADERS */
 
-    for(let r=1;r<=60;r++){
+books.forEach((b,s)=>{
 
-        body+=`
-        <tr>
+const span=
+(comps(cls,s).length+1)*2;
 
-            <td class="sticky-roll">
-                ${r}
-            </td>
+h+=
+`<th colspan="${span}"
+class="subject ${colors[s]}">
+${b}
+</th>`;
 
-            <td class="sticky-name">
-                <input
-                    type="text"
-                    id="name_${r}"
-                    oninput="upperName(this);saveLocal()"
-                >
-            </td>
-
-            <td class="sticky-gender">
-                <select
-                    id="gender_${r}"
-                    onchange="saveLocal()"
-                >
-                    <option value="">-</option>
-                    <option value="Boys">Boys</option>
-                    <option value="Girls">Girls</option>
-                </select>
-            </td>
-        `;
+});
 
 
-        books.forEach((book,s)=>{
+h+=
+'<th colspan="2" rowspan="2" class="overall t1h">TERM 1 OVERALL</th>';
 
-            const structure=getStructure(
-                Number(currentClass),
-                book
-            );
+h+=
+'<th colspan="2" rowspan="2" class="overall t2h">TERM 2 OVERALL</th>';
 
-            let t1Index=0;
-            let t2Index=0;
+h+="</tr><tr>";
 
 
-            structure.forEach((item,j)=>{
+/* TERM HEADERS */
 
-                const label=item[0];
+books.forEach((b,s)=>{
 
-                if(label==="ମୋଟ"){
+const one=
+comps(cls,s).length+1;
 
-                    body+=`
-                    <td
-                        id="t1total_${r}_${s}_${j}"
-                        class="total-cell"
-                    >0</td>
-                    `;
+h+=
+`<th colspan="${one}"
+class="group t1h">
+TERM 1
+</th>`;
 
-                }else{
+h+=
+`<th colspan="${one}"
+class="group t2h">
+TERM 2
+</th>`;
 
-                    body+=`
-                    <td class="comp">
-                        <input
-                            type="number"
-                            min="0"
-                            max="${item[1]}"
-                            id="t1_${r}_${s}_${j}"
-                            oninput="calculateRow(${r},${s})"
-                        >
-                    </td>
-                    `;
-
-                }
-
-            });
+});
 
 
-            body+=`
-                <td
-                    id="pct_${r}_${s}"
-                    class="percent-cell"
-                >0%</td>
-            `;
+h+="</tr><tr>";
 
 
-            structure.forEach((item,j)=>{
+/* COMPONENT HEADERS */
 
-                const label=item[0];
+books.forEach((b,s)=>{
 
-                if(label==="ମୋଟ"){
+["t1","t2"].forEach(term=>{
 
-                    body+=`
-                    <td
-                        id="t2total_${r}_${s}_${j}"
-                        class="total-cell"
-                    >0</td>
-                    `;
+comps(cls,s).forEach(x=>{
 
-                }else{
+h+=
+`<th class="${colors[s]} comp">
+${x[0]}<br>${x[1]}
+</th>`;
 
-                    body+=`
-                    <td class="comp">
-                        <input
-                            type="number"
-                            min="0"
-                            max="${item[1]}"
-                            id="t2_${r}_${s}_${j}"
-                            oninput="calculateRow(${r},${s})"
-                        >
-                    </td>
-                    `;
+});
 
-                }
+h+=
+`<th class="${
+term==="t1"?"t1h":"t2h"
+} total">
+ବିଷୟ ମୋଟ<br>(100)
+</th>`;
 
-            });
+});
 
-        });
+});
 
-        body+=`</tr>`;
-    }
 
-    document.getElementById("tableBody").innerHTML=body;
+h+=
+'<th class="overall t1h">ମୋଟ</th>';
+
+h+=
+'<th class="overall t1h">%</th>';
+
+h+=
+'<th class="overall t2h">ମୋଟ</th>';
+
+h+=
+'<th class="overall t2h">%</th>';
+
+h+="</tr></thead><tbody>";
+
+
+/* STUDENT ROWS */
+
+rows.forEach(r=>{
+
+h+="<tr>";
+
+
+h+=
+`<td class="roll sticky1">
+${r}
+</td>`;
+
+
+h+=
+`<td class="name sticky2">
+<input
+type="text"
+value="${esc(nameOf(r))}"
+oninput="nameUpdate(${r},this)">
+</td>`;
+
+
+h+=
+`<td class="gender sticky3">
+
+<select onchange="genderUpdate(${r},this.value)">
+
+<option value=""></option>
+
+<option value="Boys"
+${genderOf(r)==="Boys"?"selected":""}>
+Boys
+</option>
+
+<option value="Girls"
+${genderOf(r)==="Girls"?"selected":""}>
+Girls
+</option>
+
+</select>
+
+</td>`;
+
+
+/* SUBJECT DATA */
+
+books.forEach((b,s)=>{
+
+["t1","t2"].forEach(term=>{
+
+let inputCounter=0;
+
+comps(cls,s).forEach((x,i)=>{
+
+if(x[0]==="ମୋଟ"){
+
+h+=
+`<td class="total">
+${groupTotal(
+term,
+r,
+s,
+groupOf(cls,s,i)
+)}
+</td>`;
+
+}else{
+
+const v=
+getV(
+term,
+r,
+s,
+inputCounter
+);
+
+h+=
+`<td>
+
+<input
+type="number"
+min="0"
+max="${x[1]}"
+value="${v||""}"
+oninput="mark(
+${r},
+${s},
+${inputCounter},
+this,
+'${term}',
+${x[1]}
+)">
+
+</td>`;
+
+inputCounter++;
+
 }
 
-
-/* =========================
-   CALCULATE
-========================= */
-
-function calculateRow(r,s){
-
-    const book=BOOKS[currentClass][s];
-
-    const structure=getStructure(
-        Number(currentClass),
-        book
-    );
+});
 
 
-    let t1=0;
-    let t2=0;
+h+=
+`<td class="total ${
+term==="t1"?"t1h":"t2h"
+}">
+${subjectTotal(
+term,
+r,
+s
+)}
+</td>`;
 
-    let t1Start=0;
-    let t2Start=0;
+});
 
-
-    structure.forEach((item,j)=>{
-
-        if(item[0]!=="ମୋଟ"){
-
-            const el=
-                document.getElementById(
-                    `t1_${r}_${s}_${j}`
-                );
-
-            if(el){
-                t1+=Number(el.value)||0;
-            }
-
-        }
-
-    });
+});
 
 
-    structure.forEach((item,j)=>{
+/* OVERALL */
 
-        if(item[0]!=="ମୋଟ"){
+const a=
+overall("t1",r);
 
-            const el=
-                document.getElementById(
-                    `t2_${r}_${s}_${j}`
-                );
-
-            if(el){
-                t2+=Number(el.value)||0;
-            }
-
-        }
-
-    });
+const b=
+overall("t2",r);
 
 
-    let totalPositions=[];
+h+=
+`<td class="total overall">
+${a}
+</td>`;
 
-    structure.forEach((item,j)=>{
-        if(item[0]==="ମୋଟ"){
-            totalPositions.push(j);
-        }
-    });
+h+=
+`<td class="pct overall">
+${pct(a)}%
+</td>`;
 
+h+=
+`<td class="total overall">
+${b}
+</td>`;
 
-    if(totalPositions.length>=1){
-
-        const pos=totalPositions[0];
-
-        const el=document.getElementById(
-            `t1total_${r}_${s}_${pos}`
-        );
-
-        if(el) el.innerText=t1;
-
-    }
-
-
-    if(totalPositions.length>=2){
-
-        const pos=totalPositions[1];
-
-        const el=document.getElementById(
-            `t2total_${r}_${s}_${pos}`
-        );
-
-        if(el) el.innerText=t2;
-
-    }
+h+=
+`<td class="pct overall">
+${pct(b)}%
+</td>`;
 
 
-    /*
-       T1 percentage based on
-       first 25 + second 25 = 50
-       against 50
-    */
+h+="</tr>";
 
-    const percent=
-        ((t1+t2)/100)*100;
-
-    const pctEl=
-        document.getElementById(
-            `pct_${r}_${s}`
-        );
-
-    if(pctEl){
-        pctEl.innerText =
-            isNaN(percent)
-            ? "0%"
-            : percent.toFixed(1)+"%";
-    }
-
-    saveLocal();
-}
+});
 
 
-/* =========================
-   UPPERCASE
-========================= */
+h+="</tbody></table>";
 
-function upperName(el){
-
-    el.value=el.value.toUpperCase();
+document.getElementById(
+"tableBox"
+).innerHTML=h;
 
 }
 
 
 /* =========================
-   LOCAL STORAGE
+   STUDENT DETAILS
 ========================= */
 
-function collectData(){
+function nameUpdate(r,i){
 
-    let students=[];
+i.value=
+i.value.toUpperCase();
 
-    for(let r=1;r<=60;r++){
-
-        let student={
-            roll:r,
-            name:
-                document.getElementById(
-                    `name_${r}`
-                )?.value || "",
-
-            gender:
-                document.getElementById(
-                    `gender_${r}`
-                )?.value || "",
-
-            marks:{}
-        };
-
-
-        BOOKS[currentClass].forEach((book,s)=>{
-
-            const structure=
-                getStructure(
-                    Number(currentClass),
-                    book
-                );
-
-            student.marks[s]={
-                t1:{},
-                t2:{}
-            };
-
-
-            structure.forEach((item,j)=>{
-
-                if(item[0]!=="ମୋଟ"){
-
-                    const a=
-                        document.getElementById(
-                            `t1_${r}_${s}_${j}`
-                        );
-
-                    const b=
-                        document.getElementById(
-                            `t2_${r}_${s}_${j}`
-                        );
-
-                    student.marks[s].t1[j]=
-                        a ? a.value : "";
-
-                    student.marks[s].t2[j]=
-                        b ? b.value : "";
-
-                }
-
-            });
-
-        });
-
-        students.push(student);
-    }
-
-    return students;
-}
-
-
-function saveLocal(){
-
-    if(!currentClass) return;
-
-    const data=collectData();
-
-    localStorage.setItem(
-        `assessment_${currentClass}`,
-        JSON.stringify(data)
-    );
+data["name_"+r]=i.value;
 
 }
 
 
-function loadLocalData(){
+function genderUpdate(r,v){
 
-    const raw=
-        localStorage.getItem(
-            `assessment_${currentClass}`
-        );
+data["gender_"+r]=v;
 
-    if(!raw) return;
-
-    try{
-
-        const students=JSON.parse(raw);
-
-        students.forEach(student=>{
-
-            const r=student.roll;
-
-            const nameEl=
-                document.getElementById(
-                    `name_${r}`
-                );
-
-            const genderEl=
-                document.getElementById(
-                    `gender_${r}`
-                );
-
-            if(nameEl)
-                nameEl.value=student.name||"";
-
-            if(genderEl)
-                genderEl.value=student.gender||"";
+}
 
 
-            BOOKS[currentClass].forEach((book,s)=>{
+/* =========================
+   MARK ENTRY
+========================= */
 
-                const structure=
-                    getStructure(
-                        Number(currentClass),
-                        book
-                    );
+function mark(
+r,
+s,
+c,
+input,
+term,
+max
+){
 
-                structure.forEach((item,j)=>{
+let v=
+input.value===""
+?
+""
+:
+Number(input.value);
 
-                    if(item[0]==="ମୋଟ")
-                        return;
 
-                    const a=
-                        document.getElementById(
-                            `t1_${r}_${s}_${j}`
-                        );
+if(v!==""&&v<0){
 
-                    const b=
-                        document.getElementById(
-                            `t2_${r}_${s}_${j}`
-                        );
+v=0;
 
-                    if(a)
-                        a.value=
-                            student.marks?.[s]?.t1?.[j]||"";
+input.value=0;
 
-                    if(b)
-                        b.value=
-                            student.marks?.[s]?.t2?.[j]||"";
+}
 
-                });
 
-                calculateRow(r,s);
+if(v!==""&&v>max){
 
-            });
+v=max;
 
-        });
+input.value=max;
 
-    }catch(e){
+}
 
-        console.error(e);
 
-    }
+setV(
+term,
+r,
+s,
+c,
+v
+);
+
+render();
+
+}
+
+
+/* =========================
+   CLEAR MARKS
+========================= */
+
+function clearMarks(){
+
+if(!cls)return;
+
+if(
+!confirm(
+"ସମସ୍ତ marks clear କରିବେ କି?"
+)
+)return;
+
+
+Object.keys(data).forEach(k=>{
+
+if(
+k.startsWith("t1_")||
+k.startsWith("t2_")
+)
+delete data[k];
+
+});
+
+
+render();
+
+setStatus("Marks cleared");
+
+}
+
+
+/* =========================
+   EXCEL DOWNLOAD
+========================= */
+
+function workbookFromData(){
+
+const wb=
+XLSX.utils.book_new();
+
+const ws=[];
+
+
+ws.push(
+["NEP 2020 ASSESSMENT FRAMEWORK"],
+[]
+);
+
+
+const head=[
+"ରୋ.ନଂ",
+"ଛାତ୍ରଛାତ୍ରୀଙ୍କ ନାମ",
+"ଲିଙ୍ଗ"
+];
+
+
+BOOKS[cls].forEach((b,s)=>{
+
+["t1","t2"].forEach(term=>{
+
+comps(cls,s).forEach(x=>{
+
+head.push(
+`${b} - ${term.toUpperCase()} - ${x[0]} (${x[1]})`
+);
+
+});
+
+head.push(
+`${b} - ${term.toUpperCase()} - ବିଷୟ ମୋଟ (100)`
+);
+
+});
+
+});
+
+
+head.push(
+"TERM 1 OVERALL TOTAL",
+"TERM 1 OVERALL %",
+"TERM 2 OVERALL TOTAL",
+"TERM 2 OVERALL %"
+);
+
+
+ws.push(head);
+
+
+/* DATA */
+
+for(
+let r=1;
+r<=60;
+r++
+){
+
+const row=[
+r,
+nameOf(r),
+genderOf(r)
+];
+
+
+BOOKS[cls].forEach(
+(b,s)=>{
+
+["t1","t2"].forEach(
+term=>{
+
+let ic=0;
+
+comps(cls,s).forEach(
+x=>{
+
+if(
+x[0]==="ମୋଟ"
+){
+
+row.push(
+groupTotal(
+term,
+r,
+s,
+groupOf(
+cls,
+s,
+comps(cls,s).indexOf(x)
+)
+)
+);
+
+}else{
+
+row.push(
+getV(
+term,
+r,
+s,
+ic
+)
+);
+
+ic++;
+
+}
+
+});
+
+
+row.push(
+subjectTotal(
+term,
+r,
+s
+)
+);
+
+});
+
+});
+
+
+const a=
+overall("t1",r);
+
+const b=
+overall("t2",r);
+
+
+row.push(
+a,
+a/classMax(),
+b,
+b/classMax()
+);
+
+
+ws.push(row);
+
+}
+
+
+const sh=
+XLSX.utils.aoa_to_sheet(ws);
+
+
+sh["!cols"]=
+head.map(
+(_,i)=>({
+wch:
+i===1
+?
+28
+:
+i<3
+?
+10
+:
+14
+})
+);
+
+
+XLSX.utils.book_append_sheet(
+wb,
+sh,
+"Class "+cls
+);
+
+
+if(!wb.Workbook)
+wb.Workbook={};
+
+
+wb.Workbook.CalcPr={
+calcMode:"auto",
+fullCalcOnLoad:true,
+forceFullCalc:true
+};
+
+
+return wb;
+
+}
+
+
+/* DOWNLOAD */
+
+function downloadExcel(){
+
+if(!cls)
+return alert(
+"Select Class first"
+);
+
+
+const wb=
+workbookFromData();
+
+
+const arr=
+XLSX.write(
+wb,
+{
+bookType:"xlsx",
+type:"array",
+cellStyles:true
+}
+);
+
+
+const blob=
+new Blob(
+[arr],
+{
+type:
+"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+}
+);
+
+
+const a=
+document.createElement("a");
+
+
+a.href=
+URL.createObjectURL(blob);
+
+
+a.download=
+`Assessment_Class_${cls}.xlsx`;
+
+
+a.click();
+
+
+setTimeout(
+()=>{
+URL.revokeObjectURL(a.href)
+},
+1000
+);
+
+
+setStatus(
+"✅ Excel downloaded"
+);
+
+}
+
+
+/* =========================
+   GOOGLE DRIVE
+========================= */
+
+function driveWorkbook(){
+
+const wb=
+workbookFromData();
+
+
+const meta=
+XLSX.utils.aoa_to_sheet(
+[
+[
+JSON.stringify(
+{
+version:3,
+classNo:cls,
+data:data
+}
+)
+]
+]
+);
+
+
+meta["!hidden"]=1;
+
+
+XLSX.utils.book_append_sheet(
+wb,
+meta,
+"__DATA"
+);
+
+
+return wb;
+
+}
+
+
+function parseDriveWorkbook(buf){
+
+const wb=
+XLSX.read(
+buf,
+{
+type:"array",
+cellStyles:true
+}
+);
+
+
+const m=
+wb.Sheets["__DATA"];
+
+
+if(
+m&&
+m["A1"]
+){
+
+const p=
+JSON.parse(
+m["A1"].v
+);
+
+
+if(
+Number(p.classNo)!==
+Number(cls)
+)
+throw Error(
+"Saved file belongs to another class"
+);
+
+
+data=
+p.data||{};
+
+
+render();
+
+return;
+
+}
+
+
+throw Error(
+"This Drive file is not a new OdishaPathasala assessment file"
+);
+
 }
 
 
@@ -1164,464 +1550,427 @@ function loadLocalData(){
    GOOGLE LOGIN
 ========================= */
 
-function signInGoogle(){
-
-    if(!window.google){
-        alert("Google Identity Services load ହୋଇନାହିଁ।");
-        return;
-    }
-
-    tokenClient =
-        google.accounts.oauth2.initTokenClient({
-
-            client_id:CLIENT_ID,
-
-            scope:SCOPES,
-
-            callback:(response)=>{
-
-                accessToken=response.access_token;
-
-                document.getElementById("status")
-                    .innerText=
-                    "Google Drive login successful. ବର୍ତ୍ତମାନ Save କରିପାରିବେ।";
-
-            }
-
-        });
-
-    tokenClient.requestAccessToken({
-        prompt:"consent"
-    });
-}
-
-
-/* =========================
-   DRIVE FILE NAME
-========================= */
-
-function driveFileName(){
-
-    return `OdishaPathasala_Assessment_Class_${currentClass}.xlsx`;
-
-}
-
-
-/* =========================
-   CREATE EXCEL
-========================= */
-
-function createWorkbook(){
-
-    const books=BOOKS[currentClass];
-
-    let rows=[];
-
-    let header1=[
-        "Roll No.",
-        "Student Name",
-        "Gender"
-    ];
-
-    books.forEach(book=>{
-
-        header1.push(book);
-
-    });
-
-    rows.push(header1);
-
-
-    let header2=[
-        "",
-        "",
-        ""
-    ];
-
-    books.forEach(book=>{
-
-        header2.push(
-            "Term 1 / Observation / Term 2"
-        );
-
-    });
-
-    rows.push(header2);
-
-
-    for(let r=1;r<=60;r++){
-
-        let row=[
-            r,
-            document.getElementById(
-                `name_${r}`
-            )?.value||"",
-            document.getElementById(
-                `gender_${r}`
-            )?.value||""
-        ];
-
-
-        books.forEach((book,s)=>{
-
-            const structure=
-                getStructure(
-                    Number(currentClass),
-                    book
-                );
-
-            let values=[];
-
-
-            structure.forEach((item,j)=>{
-
-                if(item[0]==="ମୋଟ"){
-
-                    const el=
-                        document.getElementById(
-                            `t1total_${r}_${s}_${j}`
-                        );
-
-                    values.push(
-                        el?.innerText||0
-                    );
-
-                }else{
-
-                    const el=
-                        document.getElementById(
-                            `t1_${r}_${s}_${j}`
-                        );
-
-                    values.push(
-                        el?.value||""
-                    );
-
-                }
-
-            });
-
-
-            values.push(
-                document.getElementById(
-                    `pct_${r}_${s}`
-                )?.innerText||"0%"
-            );
-
-
-            structure.forEach((item,j)=>{
-
-                if(item[0]==="ମୋଟ"){
-
-                    const el=
-                        document.getElementById(
-                            `t2total_${r}_${s}_${j}`
-                        );
-
-                    values.push(
-                        el?.innerText||0
-                    );
-
-                }else{
-
-                    const el=
-                        document.getElementById(
-                            `t2_${r}_${s}_${j}`
-                        );
-
-                    values.push(
-                        el?.value||""
-                    );
-
-                }
-
-            });
-
-
-            row.push(values.join(" | "));
-
-        });
-
-
-        rows.push(row);
-
-    }
-
-
-    const ws=
-        XLSX.utils.aoa_to_sheet(rows);
-
-    const wb=
-        XLSX.utils.book_new();
-
-    XLSX.utils.book_append_sheet(
-        wb,
-        ws,
-        `Class ${currentClass}`
-    );
-
-
-    /*
-       Extra hidden data sheet.
-       This preserves all marks exactly
-       for Drive resume.
-    */
-
-    const data=collectData();
-
-    const dataRows=[
-        ["CLASS",currentClass],
-        ["BOOKS",JSON.stringify(books)],
-        ["DATA",JSON.stringify(data)]
-    ];
-
-    const dataWs=
-        XLSX.utils.aoa_to_sheet(dataRows);
-
-    XLSX.utils.book_append_sheet(
-        wb,
-        dataWs,
-        "__DATA"
-    );
-
-
-    return wb;
-}
-
-
-/* =========================
-   DRIVE SEARCH
-========================= */
-
-async function findDriveFile(){
-
-    const name=driveFileName();
-
-    const url=
-        "https://www.googleapis.com/drive/v3/files"+
-        "?q="+encodeURIComponent(
-            `name='${name}' and trashed=false`
-        )+
-        "&spaces=drive"+
-        "&fields=files(id,name,modifiedTime)";
-
-    const res=
-        await fetch(url,{
-            headers:{
-                Authorization:
-                    `Bearer ${accessToken}`
-            }
-        });
-
-    if(!res.ok){
-
-        throw new Error(
-            "Drive search failed"
-        );
-
-    }
-
-    const data=await res.json();
-
-    return data.files?.[0]||null;
-}
-
-
-/* =========================
-   SAVE TO DRIVE
-========================= */
-
-async function saveToDrive(){
-
-    if(!currentClass){
-
-        alert("ପ୍ରଥମେ Class ବାଛନ୍ତୁ।");
-        return;
-
-    }
-
-    if(!accessToken){
-
-        alert(
-            "ପ୍ରଥମେ Google Drive Login କରନ୍ତୁ।"
-        );
-
-        signInGoogle();
-        return;
-
-    }
-
-
-    try{
-
-        document.getElementById("status")
-            .innerText=
-            "Saving to Google Drive...";
-
-
-        const wb=createWorkbook();
-
-        const arrayBuffer=
-            XLSX.write(
-                wb,
-                {
-                    bookType:"xlsx",
-                    type:"array"
-                }
-            );
-
-
-        const fileName=driveFileName();
-
-        const existing=
-            await findDriveFile();
-
-
-        const metadata={
-            name:fileName,
-            mimeType:
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        };
-
-
-        const boundary=
-            "-------314159265358979323846";
-
-        const delimiter=
-            "\r\n--"+boundary+"\r\n";
-
-        const closeDelimiter=
-            "\r\n--"+boundary+"--";
-
-
-        const body=new Blob([
-
-            delimiter,
-
-            "Content-Type: application/json; charset=UTF-8\r\n\r\n",
-
-            JSON.stringify(metadata),
-
-            delimiter,
-
-            "Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n\r\n",
-
-            new Uint8Array(arrayBuffer),
-
-            closeDelimiter
-
-        ]);
-
-
-        let url;
-
-        let method;
-
-
-        if(existing){
-
-            url=
-                `https://www.googleapis.com/upload/drive/v3/files/${existing.id}?uploadType=multipart`;
-
-            method="PATCH";
-
-        }else{
-
-            url=
-                "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart";
-
-            method="POST";
-
-        }
-
-
-        const response=
-            await fetch(url,{
-
-                method:method,
-
-                headers:{
-                    Authorization:
-                        `Bearer ${accessToken}`,
-
-                    "Content-Type":
-                        `multipart/related; boundary=${boundary}`
-                },
-
-                body:body
-
-            });
-
-
-        if(!response.ok){
-
-            const error=
-                await response.text();
-
-            console.error(error);
-
-            throw new Error(
-                "Drive save failed"
-            );
-
-        }
-
-
-        document.getElementById("status")
-            .innerText=
-            `✅ Class ${currentClass} data Google Drive ରେ save ହୋଇଗଲା।`;
-
-        alert(
-            `Class ${currentClass} assessment successfully saved to My Drive.`
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        document.getElementById("status")
-            .innerText=
-            "❌ Save failed.";
-
-        alert(
-            "Google Drive ରେ save କରିବାରେ problem ହେଲା।"
-        );
-
-    }
-
-}
-
-
-/* =========================
-   INITIAL GOOGLE API
-========================= */
-
 window.addEventListener(
-    "load",
-    ()=>{
+"load",
+()=>{
 
-        if(window.google){
+try{
 
-            tokenClient =
-                google.accounts.oauth2.initTokenClient({
+tokenClient=
+google.accounts.oauth2.initTokenClient({
 
-                    client_id:CLIENT_ID,
+client_id:
+GOOGLE_CLIENT_ID,
 
-                    scope:SCOPES,
+scope:
+DRIVE_SCOPE,
 
-                    callback:(response)=>{
+callback:r=>{
 
-                        accessToken=
-                            response.access_token;
+if(r.error){
 
-                    }
-
-                });
-
-        }
-
-    }
+setStatus(
+"❌ Google sign-in failed"
 );
+
+return;
+
+}
+
+
+accessToken=
+r.access_token;
+
+
+setStatus(
+"✅ Google Drive connected"
+);
+
+
+if(
+pending==="load"
+)
+loadDriveFile();
+
+
+if(
+pending==="save"
+)
+saveDriveWorkbook();
+
+
+pending="";
+
+}
+
+});
+
+}catch(e){
+
+setStatus(
+"❌ Google initialization failed"
+);
+
+}
+
+}
+);
+
+
+/* =========================
+   DRIVE LOAD
+========================= */
+
+function driveLoad(){
+
+if(!cls){
+
+const c=
+document.getElementById(
+"classSelect"
+).value;
+
+if(!c)
+return alert(
+"Select Class first"
+);
+
+cls=
+Number(c);
+
+}
+
+
+if(!accessToken){
+
+pending="load";
+
+tokenClient.requestAccessToken(
+{
+prompt:"consent"
+}
+);
+
+}else{
+
+loadDriveFile();
+
+}
+
+}
+
+
+/* =========================
+   DRIVE SAVE
+========================= */
+
+function driveSave(){
+
+if(!cls){
+
+const c=
+document.getElementById(
+"classSelect"
+).value;
+
+if(!c)
+return alert(
+"Select Class first"
+);
+
+cls=
+Number(c);
+
+}
+
+
+if(!accessToken){
+
+pending="save";
+
+tokenClient.requestAccessToken(
+{
+prompt:"consent"
+}
+);
+
+}else{
+
+saveDriveWorkbook();
+
+}
+
+}
+
+
+/* =========================
+   FIND DRIVE FILE
+========================= */
+
+async function findDriveFile(name){
+
+const q=
+`name='${name}' and trashed=false`;
+
+
+const u=
+"https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
+encodeURIComponent(q)+
+"&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
+
+
+const r=
+await fetch(
+u,
+{
+headers:{
+Authorization:
+"Bearer "+accessToken
+}
+}
+);
+
+
+if(!r.ok)
+throw Error(
+"Drive search failed"
+);
+
+
+const d=
+await r.json();
+
+
+return d.files?.length
+?
+d.files[0]
+:
+null;
+
+}
+
+
+/* =========================
+   LOAD DRIVE FILE
+========================= */
+
+async function loadDriveFile(){
+
+try{
+
+const name=
+`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
+
+
+setStatus(
+"☁️ Searching My Drive..."
+);
+
+
+const f=
+await findDriveFile(name);
+
+
+if(!f){
+
+data={};
+
+render();
+
+setStatus(
+"ℹ️ No saved file found. Starting new."
+);
+
+return;
+
+}
+
+
+setStatus(
+"☁️ Loading from My Drive..."
+);
+
+
+const r=
+await fetch(
+`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`,
+{
+headers:{
+Authorization:
+"Bearer "+accessToken
+}
+}
+);
+
+
+if(!r.ok)
+throw Error(
+"Drive download failed"
+);
+
+
+parseDriveWorkbook(
+await r.arrayBuffer()
+);
+
+
+setStatus(
+"✅ Loaded from My Drive"
+);
+
+
+}catch(e){
+
+setStatus(
+"❌ "+e.message
+);
+
+}
+
+}
+
+
+/* =========================
+   SAVE DRIVE FILE
+========================= */
+
+async function saveDriveWorkbook(){
+
+try{
+
+setStatus(
+"☁️ Saving to My Drive..."
+);
+
+
+const wb=
+driveWorkbook();
+
+
+const arr=
+XLSX.write(
+wb,
+{
+bookType:"xlsx",
+type:"array",
+cellStyles:true
+}
+);
+
+
+const blob=
+new Blob(
+[arr],
+{
+type:
+"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+}
+);
+
+
+const name=
+`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
+
+
+const old=
+await findDriveFile(name);
+
+
+if(old){
+
+const r=
+await fetch(
+`https://www.googleapis.com/upload/drive/v3/files/${old.id}?uploadType=media`,
+{
+method:"PATCH",
+headers:{
+Authorization:
+"Bearer "+accessToken,
+"Content-Type":
+blob.type
+},
+body:blob
+}
+);
+
+
+if(!r.ok)
+throw Error(
+"Drive update failed"
+);
+
+
+}else{
+
+const meta={
+name:name,
+mimeType:blob.type
+};
+
+
+const boundary=
+"----OdishaPathasala"+
+Date.now();
+
+
+const body=
+new Blob([
+
+"--"+boundary+
+"\r\nContent-Type:application/json; charset=UTF-8\r\n\r\n",
+
+JSON.stringify(meta)+
+"\r\n--"+boundary+
+"\r\nContent-Type:"+
+blob.type+
+"\r\n\r\n",
+
+blob,
+
+"\r\n--"+boundary+"--"
+
+]);
+
+
+const r=
+await fetch(
+"https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
+{
+method:"POST",
+headers:{
+Authorization:
+"Bearer "+accessToken,
+"Content-Type":
+"multipart/related; boundary="+
+boundary
+},
+body:body
+}
+);
+
+
+if(!r.ok)
+throw Error(
+"Drive create failed"
+);
+
+}
+
+
+setStatus(
+"✅ Saved to your Google Drive"
+);
+
+
+}catch(e){
+
+setStatus(
+"❌ Save failed: "+e.message
+);
+
+}
+
+}
 
 </script>
 
