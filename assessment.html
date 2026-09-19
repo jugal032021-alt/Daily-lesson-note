@@ -1,980 +1,1629 @@
-<!DOCTYPE html><html lang="or"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Assessment Marks Entry</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="https://accounts.google.com/gsi/client"></script>
+<!DOCTYPE html>
+<html lang="or">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment Marks Entry - OdishaPathasala</title>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}header{background:linear-gradient(110deg,#0875c9,#034b9b);color:#fff;text-align:center;padding:12px}h2{margin:2px;font-size:21px}header div{font-size:13px;color:#ffe600;font-weight:bold}.wrap{max-width:1500px;margin:auto;padding:8px}.bar{background:#fff;padding:8px;border-radius:8px;box-shadow:0 2px 7px #bbb;margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:4px}select,button{padding:8px 10px;border:1px solid #aaa;border-radius:5px;font-size:13px}button{background:#075e9c;color:#fff;border:0;font-weight:bold;cursor:pointer}.green{background:#16833b}.orange{background:#e67e22}.red{background:#c62828}#status{font-size:12px;color:#087c36;background:#effff3;padding:4px 8px;border-radius:4px;flex-basis:100%}.tablebox{overflow:auto;background:#fff;border-radius:7px;box-shadow:0 2px 8px #bbb;width:100%}table{border-collapse:collapse;min-width:1800px;width:max-content;font-size:11px}th,td{border:1px solid #aaa;padding:3px;text-align:center;white-space:nowrap}th{font-weight:bold}.roll{width:38px;min-width:38px;max-width:38px}.name{width:180px;min-width:180px;text-align:left}.gender{width:75px;min-width:75px}.sub{font-size:15px;height:40px;color:#111}input[type=text]{width:100%;padding:5px;border:1px solid #bbb;border-radius:4px;text-transform:uppercase;font-size:12px}input[type=number]{width:48px;padding:5px;border:1px solid #bbb;border-radius:4px;text-align:center;font-size:11px}td select{width:100%;padding:4px;border:1px solid #bbb;border-radius:4px;font-size:11px}.total{font-weight:bold;background:#e8f2ff}.pct{font-weight:bold;background:#fff2cc;min-width:55px}.t1h{background:#ffd9e2}.t2h{background:#ddd0ff}.s1{background:#ffd1dc}.s2{background:#c9f3d2}.s3{background:#ffe8a8}.s4{background:#cce7ff}.s5{background:#e3d2ff}.s6{background:#ffd9b8}.s7{background:#c9f0f0}.s8{background:#f7d1ed}.s9{background:#d8e8c8}.sticky1{position:sticky;left:0;z-index:4;background:#fff}.sticky2{position:sticky;left:38px;z-index:4;background:#fff}.sticky3{position:sticky;left:218px;z-index:4;background:#fff}thead th{position:sticky;top:0;z-index:5}.tip{margin-top:8px;background:#e9f8ed;padding:8px;border-radius:6px;color:#176b2e;font-size:12px}@media(max-width:600px){header{padding:9px}h2{font-size:17px}.bar{padding:6px}.bar button,.bar select{font-size:11px;padding:7px}.name{width:170px;min-width:170px}.sub{font-size:13px}table{font-size:10px}input[type=number]{width:45px;padding:4px}.sticky3{left:208px}}
-</style></head><body>
+*{
+    box-sizing:border-box;
+}
 
-<header><h2>📊 ASSESSMENT MARKS ENTRY</h2><div>Class 3 to Class 8 • Assessment Framework</div></header>
+body{
+    margin:0;
+    font-family:Arial,"Noto Sans Oriya",sans-serif;
+    background:#f1f5f9;
+    color:#222;
+}
 
-<div class="wrap"><div class="bar">
-<select id="classSelect"><option value="">-- Select Class --</option><option value="3">Class 3</option><option value="4">Class 4</option><option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option><option value="8">Class 8</option></select>
-<button onclick="loadClass()">📖 Load Class</button>
-<button onclick="driveLoad()">☁️ Sign in / Load from My Drive</button>
-<button class="green" onclick="driveSave()">☁️ Save to My Drive</button>
-<button class="orange" onclick="downloadExcel()">⬇ Download Excel</button>
-<button class="red" onclick="clearMarks()">🗑 Clear Marks</button>
-<div id="status">Please select a class.</div></div>
+.topbar{
+    background:linear-gradient(135deg,#003399,#0066cc);
+    color:#fff;
+    padding:16px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-<div id="tableBox" class="tablebox"></div>
-<div class="tip">💡 Student name automatically becomes CAPITAL LETTERS. Enter marks and click <b>Save to My Drive</b> to continue later from your own Google Drive.</div>
+.topbar h2{
+    margin:0;
+    font-size:22px;
+}
+
+.container{
+    width:100%;
+    padding:15px;
+}
+
+.controls{
+    background:#fff;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    margin-bottom:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+select,
+input,
+button{
+    font-family:inherit;
+}
+
+select{
+    padding:9px 12px;
+    border:1px solid #bbb;
+    border-radius:7px;
+    background:#fff;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.load-btn{
+    background:#0066cc;
+    color:#fff;
+}
+
+.drive-btn{
+    background:#00897b;
+    color:#fff;
+}
+
+.save-btn{
+    background:#f57c00;
+    color:#fff;
+}
+
+.status{
+    width:100%;
+    font-size:14px;
+    color:#555;
+}
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+    overflow-y:auto;
+    max-height:72vh;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+table{
+    border-collapse:collapse;
+    table-layout:fixed;
+    width:max-content;
+    min-width:max-content;
+}
+
+th,
+td{
+    border:1px solid #bbb;
+    padding:5px;
+    text-align:center;
+    width:70px;
+    min-width:70px;
+    max-width:70px;
+    height:38px;
+    background:#fff;
+}
+
+thead th{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:#e3f2fd;
+    font-weight:bold;
+}
+
+.subject-head{
+    background:#1565c0 !important;
+    color:#fff;
+    font-size:14px;
+}
+
+.term-head{
+    background:#e8f5e9 !important;
+    color:#1b5e20;
+}
+
+.sub-head{
+    background:#fff3e0 !important;
+    color:#e65100;
+    font-size:12px;
+}
+
+.roll{
+    width:45px !important;
+    min-width:45px !important;
+    max-width:45px !important;
+}
+
+.name{
+    width:180px !important;
+    min-width:180px !important;
+    max-width:180px !important;
+    text-align:left;
+}
+
+.gender{
+    width:75px !important;
+    min-width:75px !important;
+    max-width:75px !important;
+}
+
+.comp,
+.total,
+.pct{
+    width:70px !important;
+    min-width:70px !important;
+    max-width:70px !important;
+}
+
+.sticky-roll{
+    position:sticky;
+    left:0;
+    z-index:30;
+    background:#fff;
+}
+
+.sticky-name{
+    position:sticky;
+    left:45px;
+    z-index:30;
+    background:#fff;
+}
+
+.sticky-gender{
+    position:sticky;
+    left:225px;
+    z-index:30;
+    background:#fff;
+}
+
+thead .sticky-roll,
+thead .sticky-name,
+thead .sticky-gender{
+    z-index:50;
+    background:#e3f2fd;
+}
+
+td input,
+td select{
+    width:100%;
+    border:1px solid #ddd;
+    border-radius:4px;
+    padding:5px;
+    font-size:13px;
+}
+
+td input{
+    text-transform:uppercase;
+}
+
+.total-cell{
+    background:#e8f5e9 !important;
+    font-weight:bold;
+}
+
+.percent-cell{
+    background:#fff8e1 !important;
+    font-weight:bold;
+}
+
+.footer-box{
+    margin-top:15px;
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    line-height:1.7;
+}
+
+@media(max-width:700px){
+    .topbar h2{
+        font-size:18px;
+    }
+
+    .container{
+        padding:8px;
+    }
+
+    .controls{
+        padding:10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <h2>📊 OdishaPathasala - Assessment Marks Entry</h2>
+</div>
+
+<div class="container">
+
+    <div class="controls">
+
+        <label><b>Class:</b></label>
+
+        <select id="classSelect">
+            <option value="">Select Class</option>
+            <option value="3">Class 3</option>
+            <option value="4">Class 4</option>
+            <option value="5">Class 5</option>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+        </select>
+
+        <button class="load-btn" onclick="loadClass()">
+            Load Class
+        </button>
+
+        <button class="drive-btn" onclick="signInGoogle()">
+            🔐 Google Drive Login
+        </button>
+
+        <button class="save-btn" onclick="saveToDrive()">
+            💾 Save to My Drive
+        </button>
+
+        <div id="status" class="status">
+            Class ବାଛି Load Class କରନ୍ତୁ ।
+        </div>
+
+    </div>
+
+    <div class="table-wrap">
+        <table id="marksTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="footer-box">
+        <b>ନିର୍ଦ୍ଦେଶ:</b><br>
+        • Student Name ଲେଖିଲେ ନାମ automatically CAPITAL ହେବ।<br>
+        • Marks entry କଲେ Total ଓ Percentage automatically calculate ହେବ।<br>
+        • Roll No, Student Name ଏବଂ Gender scroll କଲେ fixed ରହିବ।<br>
+        • ଅନ୍ୟ ସମସ୍ତ columns fixed width ରହିବ ଏବଂ horizontal scroll କରିପାରିବେ।<br>
+        • Save to My Drive କଲେ ପ୍ରତ୍ୟେକ Class ପାଇଁ ଅଲଗା Excel file save ହେବ।
+    </div>
+
 </div>
 
 <script>
 
-const EXCEL_FILE="Class_3_to_8_Assessment_Marks_Entry-1.xlsx";
-const GOOGLE_CLIENT_ID="779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com";
-const DRIVE_SCOPE="https://www.googleapis.com/auth/drive.file";
+/* =========================
+   GOOGLE DRIVE SETTINGS
+========================= */
 
-const BOOKS={
-3:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","ଖେଳ ଓ ଯୋଗ"],
-4:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ଇନ୍ଦ୍ରଧନୁ","କ୍ରୀଡ଼ା ଓ ଯୋଗ"],
-5:["ଭାଷା ମହକ","Pallavi","ଗଣିତ ମେଳା","ଆମ ବିଚିତ୍ର ବିଶ୍ୱ","ନବରସ","ଖେଳ ଓ ଯୋଗ"],
-6:["ସାହିତ୍ୟ ସୁଧା","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କଳାକୁଞ୍ଜ","କୌଶଳ ବୋଧ","ଖେଳ ଶିକ୍ଷା"],
-7:["ସାହିତ୍ୟ ସୁମନ","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କଳାକୃତି","ଖେଳ ଶିକ୍ଷା"],
-8:["ସାହିତ୍ୟ ସୁରଭି","Jasmine","ଗଣିତ ପ୍ରକାଶ","ଜିଜ୍ଞାସା","ଭାରତ ଓ ଆମ ପୃଥିବୀ","ହିନ୍ଦୀ କଳିକା","କୌଶଳ ବୋଧ","କୃତି","ଖେଳ ଶିକ୍ଷା"]
+const CLIENT_ID =
+"779998626577-u1iau2cj8i0ip2fjob5n789pfeu00htt.apps.googleusercontent.com";
+
+const SCOPES =
+"https://www.googleapis.com/auth/drive.file";
+
+let tokenClient;
+let accessToken = null;
+
+
+/* =========================
+   BOOKS
+========================= */
+
+const BOOKS = {
+
+3:[
+"ଭାଷା ମହକ",
+"Pallavi",
+"ଗଣିତ ମେଳା",
+"ଆମ ବିଚିତ୍ର ବିଶ୍ୱ",
+"ଇନ୍ଦ୍ରଧନୁ",
+"ଖେଳ ଓ ଯୋଗ"
+],
+
+4:[
+"ଭାଷା ମହକ",
+"Pallavi",
+"ଗଣିତ ଖେଳ",
+"ଆମ ବିଚିତ୍ର ବିଶ୍ୱ",
+"ଇନ୍ଦ୍ରଧନୁ",
+"କ୍ରୀଡ଼ା ଓ ଯୋଗ"
+],
+
+5:[
+"ଭାଷା ମହକ",
+"Pallavi",
+"ଗଣିତ ମେଳା",
+"ଆମ ବିଚିତ୍ର ବିଶ୍ୱ",
+"ନବରସ",
+"ଖେଳ ଓ ଯୋଗ"
+],
+
+6:[
+"ସାହିତ୍ୟ ସୁଧା",
+"Jasmine",
+"ଗଣିତ ପ୍ରକାଶ",
+"ଜିଜ୍ଞାସା",
+"ଭାରତ ଓ ଆମ ପୃଥିବୀ",
+"ହିନ୍ଦୀ କଳିକା",
+"କଳାକୁଞ୍ଜ",
+"କୌଶଳ ବୋଧ",
+"ଖେଳ ଶିକ୍ଷା"
+],
+
+7:[
+"ସାହିତ୍ୟ ସୁମନ",
+"Jasmine",
+"ଗଣିତ ପ୍ରକାଶ",
+"ଜିଜ୍ଞାସା",
+"ଭାରତ ଓ ଆମ ପୃଥିବୀ",
+"ହିନ୍ଦୀ କଳିକା",
+"କୌଶଳ ବୋଧ",
+"କଳାକୃତି",
+"ଖେଳ ଶିକ୍ଷା"
+],
+
+8:[
+"ସାହିତ୍ୟ ସୁରଭି",
+"Jasmine",
+"ଗଣିତ ପ୍ରକାଶ",
+"ଜିଜ୍ଞାସା",
+"ଭାରତ ଓ ଆମ ପୃଥିବୀ",
+"ହିନ୍ଦୀ କଳିକା",
+"କୌଶଳ ବୋଧ",
+"କୃତି",
+"ଖେଳ ଶିକ୍ଷା"
+]
+
 };
 
-let wb=null,ws=null,cls="",accessToken=null,tokenClient=null,pending="";
 
-function setStatus(x){
- document.getElementById("status").textContent=x
+/* =========================
+   COMPONENT STRUCTURE
+========================= */
+
+function prepNormal(){
+
+return [
+["ମୌଖିକ",5],
+["ଲିଖିତ",15],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",5],
+["ମୋଟ",25],
+
+["ଲିଖିତ",10],
+["ପ୍ରକଳ୍ପ",15],
+["ମୋଟ",25],
+
+["ଲିଖିତ",10],
+["ମୌଖିକ",0],
+["ମୋଟ",50]
+];
+
 }
 
-function unhide(s){
- if(!s)return;
- if(!s["!cols"])s["!cols"]=[];
- for(let i=0;i<120;i++){
-  if(!s["!cols"][i])s["!cols"][i]={};
-  s["!cols"][i].hidden=false;
-  if(s["!cols"][i].width===0)s["!cols"][i].width=10
- }
+
+function prepArt(){
+
+return [
+["ଲିଖିତ",10],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ମୋଟ",25],
+
+["ଚିତ୍ରାଙ୍କନ",10],
+["ସଙ୍ଗୀତ",5],
+["ନୃତ୍ୟ",5],
+["ନାଟକ",5],
+["ମୋଟ",25],
+
+["ଲିଖିତ",20],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ମୋଟ",50]
+];
+
 }
 
-function cell(r,c){
- return ws[XLSX.utils.encode_col(c)+r]||{}
+
+function prepSports(){
+
+return [
+["ଲିଖିତ",10],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ମୋଟ",25],
+
+["ଶାରୀରିକ ଚଳନ",10],
+["କ୍ରୀଡ଼ା",5],
+["ଯୋଗ / ପ୍ରାଣାୟାମ",10],
+["ମୋଟ",25],
+
+["ଲିଖିତ",20],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ମୋଟ",50]
+];
+
 }
 
-function val(r,c){
- return cell(r,c).v??""
+
+function middleNormal(){
+
+return [
+["ମୌଖିକ",5],
+["ଲିଖିତ",15],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",5],
+["ମୋଟ",25],
+
+["ଲିଖିତ",10],
+["ପ୍ରକଳ୍ପ",10],
+["ଛାତ୍ର ଡାଏରୀ",5],
+["ମୋଟ",25],
+
+["ଲିଖିତ",50],
+["ମୋଟ",50]
+];
+
 }
 
-function esc(x){
- return String(x).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+
+function middleArt(){
+
+return [
+["ଲିଖିତ",10],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ମୋଟ",25],
+
+["ଚିତ୍ରାଙ୍କନ",10],
+["ସଙ୍ଗୀତ",5],
+["ନୃତ୍ୟ",5],
+["ନାଟକ",5],
+["ମୋଟ",25],
+
+["ଲିଖିତ",20],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ମୋଟ",50]
+];
+
 }
 
-window.addEventListener("load",()=>{
 
- try{
+function middleSkill(){
 
-  tokenClient=google.accounts.oauth2.initTokenClient({
-   client_id:GOOGLE_CLIENT_ID,
-   scope:DRIVE_SCOPE,
+return [
+["ଲିଖିତ",5],
+["ପ୍ରକଳ୍ପ",20],
+["ମୋଟ",25],
 
-   callback:r=>{
+["ଦକ୍ଷତା",5],
+["ବୁଝାମଣା",5],
+["ମନୋଭାବ",5],
+["ସମାପ୍ତ କାର୍ଯ୍ୟ",5],
+["ବାସ୍ତବ ଜୀବନ ପ୍ରୟୋଗ",5],
+["ମୋଟ",25],
 
-    if(r.error){
-     setStatus("❌ Google sign-in failed");
-     return
+["ଲିଖିତ",20],
+["ପ୍ରକଳ୍ପ",30],
+["ମୋଟ",50]
+];
+
+}
+
+
+function middleSports(){
+
+return [
+["ଲିଖିତ",10],
+["କାର୍ଯ୍ୟଦକ୍ଷତା",15],
+["ମୋଟ",25],
+
+["ମୌଳିକ ବ୍ୟାୟାମ",10],
+["କ୍ରୀଡ଼ା",5],
+["ଯୋଗ / ପ୍ରାଣାୟାମ",10],
+["ମୋଟ",25],
+
+["କାର୍ଯ୍ୟଦକ୍ଷତା",30],
+["ଲିଖିତ",20],
+["ମୋଟ",50]
+];
+
+}
+
+
+/* =========================
+   SUBJECT TYPE
+========================= */
+
+function getStructure(cls,subject){
+
+    const artWords=[
+        "କଳା",
+        "କଳାକୁଞ୍ଜ",
+        "କଳାକୃତି",
+        "କୃତି"
+    ];
+
+    const sportWords=[
+        "ଖେଳ",
+        "କ୍ରୀଡ଼ା"
+    ];
+
+    const skillWords=[
+        "କୌଶଳ"
+    ];
+
+    if(
+        artWords.some(x=>subject.includes(x))
+    ){
+        return cls<=5 ? prepArt() : middleArt();
     }
 
-    accessToken=r.access_token;
-    setStatus("✅ Google Drive connected");
+    if(
+        sportWords.some(x=>subject.includes(x))
+    ){
+        return cls<=5 ? prepSports() : middleSports();
+    }
 
-    if(pending==="load")loadDriveFile();
-    if(pending==="save")saveDriveWorkbook();
+    if(
+        skillWords.some(x=>subject.includes(x))
+    ){
+        return middleSkill();
+    }
 
-    pending=""
-   }
-  })
-
- }catch(e){
-
-  setStatus("❌ Google initialization failed")
- }
-
- loadTemplate()
-});
-
-async function loadTemplate(){
-
- try{
-
-  let r=await fetch(EXCEL_FILE+"?v="+Date.now());
-
-  if(!r.ok)throw Error("Template not found");
-
-  wb=XLSX.read(await r.arrayBuffer(),{
-   type:"array",
-   cellFormula:true,
-   cellStyles:true
-  });
-
-  Object.values(wb.Sheets).forEach(unhide);
-
-  setStatus("✅ Excel template loaded")
-
- }catch(e){
-
-  setStatus("❌ Excel template load failed")
- }
+    return cls<=5 ? prepNormal() : middleNormal();
 }
+
+
+/* =========================
+   GLOBAL DATA
+========================= */
+
+let currentClass="";
+let tableData=[];
+
+
+/* =========================
+   LOAD CLASS
+========================= */
 
 function loadClass(){
 
- let c=document.getElementById("classSelect").value;
-
- if(!c)return alert("Select Class first");
-
- if(!wb)return alert("Excel template is loading");
-
- cls=c;
-
- ws=wb.Sheets["Class "+c];
-
- if(!ws)return alert("Class sheet not found");
-
- unhide(ws);
- applyBooks();
- render();
-
- setStatus("✅ Class "+c+" loaded")
-}
-
-function applyBooks(){
-
- (BOOKS[cls]||[]).forEach((b,i)=>{
-
-  let a=XLSX.utils.encode_col(3+i*8)+"2";
-
-  if(ws[a]){
-   ws[a].v=b;
-   ws[a].t="s"
-  }
- })
-}
-
-function render(){
-
- let n=BOOKS[cls].length;
- let rows=[];
-
- for(let r=4;r<=65;r++){
-
-  let has=false;
-
-  for(let c=0;c<77;c++){
-
-   if(val(r,c)!==""){
-    has=true;
-    break
-   }
-  }
-
-  if(has||r<=23)rows.push(r)
- }
-
- let colors=["s1","s2","s3","s4","s5","s6","s7","s8","s9"];
-
- let h='<table><thead><tr>';
-
- h+='<th rowspan="2" class="roll">Roll<br>No.</th>';
- h+='<th rowspan="2" class="name">STUDENT NAME<br>(CAPITAL LETTERS)</th>';
- h+='<th rowspan="2" class="gender">Gender</th>';
-
- BOOKS[cls].forEach((b,i)=>{
-  h+=`<th colspan="8" class="sub ${colors[i]}">${b}</th>`
- });
-
- h+=`<th colspan="2" class="sub t1h">TERM 1</th>`;
- h+=`<th colspan="2" class="sub t2h">TERM 2</th>`;
-
- h+='</tr><tr>';
-
- BOOKS[cls].forEach((b,i)=>{
-
-  h+=`<th class="${colors[i]}">FA1<br>25</th>`;
-  h+=`<th class="${colors[i]}">OBS<br>25</th>`;
-  h+=`<th class="${colors[i]}">SA1<br>50</th>`;
-  h+=`<th class="${colors[i]}">T1<br>100</th>`;
-  h+=`<th class="${colors[i]}">FA2<br>25</th>`;
-  h+=`<th class="${colors[i]}">OBS<br>25</th>`;
-  h+=`<th class="${colors[i]}">SA2<br>50</th>`;
-  h+=`<th class="${colors[i]}">T2<br>100</th>`
- });
-
- h+=`<th class="t1h">TOTAL<br>(${n*100})</th>`;
- h+=`<th class="t1h">%</th>`;
- h+=`<th class="t2h">TOTAL<br>(${n*100})</th>`;
- h+=`<th class="t2h">%</th>`;
-
- h+='</tr></thead><tbody>';
-
- rows.forEach(r=>{
-
-  let roll=val(r,0)||r-3;
-  let name=val(r,1)||"";
-  let gender=val(r,2)||"";
-
-  h+=`<tr>`;
-
-  h+=`<td class="roll sticky1">${roll}</td>`;
-
-  h+=`<td class="name sticky2"><input type="text" value="${esc(name)}" oninput="nameUpdate(${r},this)"></td>`;
-
-  h+=`<td class="gender sticky3"><select onchange="upd(${r},2,this.value)"><option value=""></option><option value="Boys" ${gender==="Boys"?"selected":""}>Boys</option><option value="Girls" ${gender==="Girls"?"selected":""}>Girls</option></select></td>`;
-
-  for(let s=0;s<n;s++){
-
-   let b=3+s*8;
-
-   [25,25,50].forEach((m,k)=>{
-
-    h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+k)}" oninput="mark(${r},${b+k},this,${m})"></td>`
-   });
-
-   h+=`<td class="total" id="c${r}_${b+3}">${val(r,b+3)}</td>`;
-
-   [25,25,50].forEach((m,k)=>{
-
-    h+=`<td><input type="number" min="0" max="${m}" value="${val(r,b+4+k)}" oninput="mark(${r},${b+4+k},this,${m})"></td>`
-   });
-
-   h+=`<td class="total" id="c${r}_${b+7}">${val(r,b+7)}</td>`
-  }
-
-  h+=`<td class="total" id="t1${r}"></td>`;
-  h+=`<td class="pct" id="p1${r}"></td>`;
-  h+=`<td class="total" id="t2${r}"></td>`;
-  h+=`<td class="pct" id="p2${r}"></td>`;
-
-  h+=`</tr>`
- });
-
- h+='</tbody></table>';
-
- document.getElementById("tableBox").innerHTML=h;
-
- recalcAll()
-}
-
-function nameUpdate(r,i){
-
- i.value=i.value.toUpperCase();
-
- upd(r,1,i.value)
-}
-
-function upd(r,c,v){
-
- let a=XLSX.utils.encode_col(c)+r;
-
- if(!ws[a])ws[a]={t:"s",v:""};
-
- ws[a].v=v;
- ws[a].t="s"
-}
-
-function mark(r,c,i,max){
-
- let v=Number(i.value);
-
- if(v<0)i.value=0;
- if(v>max)i.value=max;
-
- upd(r,c,i.value===""?"":Number(i.value));
-
- recalcRow(r)
-}
-
-function recalcRow(r){
-
- let n=BOOKS[cls].length;
- let t1=0,t2=0;
-
- for(let s=0;s<n;s++){
-
-  let b=3+s*8;
-
-  let a=
-   Number(val(r,b)||0)+
-   Number(val(r,b+1)||0)+
-   Number(val(r,b+2)||0);
-
-  let d=
-   Number(val(r,b+4)||0)+
-   Number(val(r,b+5)||0)+
-   Number(val(r,b+6)||0);
-
-  ws[XLSX.utils.encode_col(b+3)+r]={
-   t:"n",
-   v:a
-  };
-
-  ws[XLSX.utils.encode_col(b+7)+r]={
-   t:"n",
-   v:d
-  };
-
-  let e=document.getElementById(`c${r}_${b+3}`);
-  if(e)e.textContent=a;
-
-  e=document.getElementById(`c${r}_${b+7}`);
-  if(e)e.textContent=d;
-
-  t1+=a;
-  t2+=d
- }
-
- let max=n*100;
-
- let p1=max?t1/max*100:0;
- let p2=max?t2/max*100:0;
-
- let e1=document.getElementById("t1"+r);
- if(e1)e1.textContent=t1;
-
- let e2=document.getElementById("p1"+r);
- if(e2)e2.textContent=p1.toFixed(2)+"%";
-
- let e3=document.getElementById("t2"+r);
- if(e3)e3.textContent=t2;
-
- let e4=document.getElementById("p2"+r);
- if(e4)e4.textContent=p2.toFixed(2)+"%"
-}
-
-function recalcAll(){
-
- for(let r=4;r<=65;r++){
-  recalcRow(r)
- }
-}
-
-function clearMarks(){
-
- if(!ws)return;
-
- if(!confirm("ସମସ୍ତ marks clear କରିବେ କି?"))return;
-
- for(let r=4;r<=65;r++){
-
-  for(let s=0;s<BOOKS[cls].length;s++){
-
-   let b=3+s*8;
-
-   [b,b+1,b+2,b+4,b+5,b+6].forEach(c=>{
-
-    let a=XLSX.utils.encode_col(c)+r;
-
-    if(ws[a])ws[a].v=""
-   })
-  }
- }
-
- render();
-
- setStatus("Marks cleared")
-}
-
-/* ==========================================================
-   EXCEL FORMULA + STYLE FUNCTIONS
-   ========================================================== */
-
-function cloneStyle(c){
-
- if(!c||c.s===undefined)return undefined;
-
- try{
-  return JSON.parse(JSON.stringify(c.s))
- }catch(e){
-  return c.s
- }
-}
-
-function copyStyle(sheet,from,to){
-
- let a=sheet[from];
- if(!a)return;
-
- if(a.s!==undefined){
-  sheet[to]=sheet[to]||{};
-  sheet[to].s=cloneStyle(a)
- }
-}
-
-function setCell(sheet,addr,value,type,styleSource,format){
-
- let o={};
-
- if(type==="f"){
-  o.t="n";
-  o.f=value;
-  o.v=0
- }else{
-  o.t=type||"s";
-  o.v=value
- }
-
- if(styleSource)copyStyle(sheet,styleSource,addr);
-
- if(format)o.z=format;
-
- sheet[addr]=Object.assign(sheet[addr]||{},o)
-}
-
-function removeOverallMerges(sheet,start,end){
-
- if(!sheet["!merges"])return;
-
- sheet["!merges"]=sheet["!merges"].filter(m=>{
-
-  return !(m.s.r<=1&&m.e.r>=1&&m.s.c<=end&&m.e.c>=start)
- })
-}
-
-function prepareClassSheet(sheet,classNo){
-
- if(!sheet)return;
-
- let n=BOOKS[classNo].length;
-
- let start=n*8+3;
-
- let cT1=start;
- let cP1=start+1;
- let cT2=start+2;
- let cP2=start+3;
-
- let T1=XLSX.utils.encode_col(cT1);
- let P1=XLSX.utils.encode_col(cP1);
- let T2=XLSX.utils.encode_col(cT2);
- let P2=XLSX.utils.encode_col(cP2);
-
- let oldT1=T1+"3";
- let oldT2=T2+"3";
-
- /*
-  Save old styles before changing cells.
- */
-
- let styleT1=cloneStyle(sheet[oldT1]);
- let styleT2=cloneStyle(sheet[oldT2]);
- let styleT1Data=cloneStyle(sheet[T1+"4"]);
- let styleT2Data=cloneStyle(sheet[T2+"4"]);
- let styleOverall=cloneStyle(sheet[T1+"2"]);
-
- /*
-  Remove old Overall merge.
- */
-
- removeOverallMerges(sheet,cT1,cP2);
-
- /*
-  Delete old Overall data including old Term 2 Total.
- */
-
- for(let r=2;r<=65;r++){
-
-  for(let c=cT1;c<=cP2;c++){
-
-   delete sheet[XLSX.utils.encode_col(c)+r]
-  }
- }
-
- /*
-  Overall heading.
- */
-
- sheet[T1+"2"]={
-  t:"s",
-  v:"Overall",
-  s:styleOverall
- };
-
- /*
-  Merge Overall across 4 columns.
- */
-
- if(!sheet["!merges"])sheet["!merges"]=[];
-
- sheet["!merges"].push({
-  s:{r:1,c:cT1},
-  e:{r:1,c:cP2}
- });
-
- /*
-  Headers.
- */
-
- sheet[T1+"3"]={
-  t:"s",
-  v:"Term 1\nTotal",
-  s:styleT1
- };
-
- sheet[P1+"3"]={
-  t:"s",
-  v:"Term 1\n%",
-  s:styleT1
- };
-
- sheet[T2+"3"]={
-  t:"s",
-  v:"Term 2\nTotal",
-  s:styleT2
- };
-
- sheet[P2+"3"]={
-  t:"s",
-  v:"Term 2\n%",
-  s:styleT2
- };
-
- /*
-  Student formulas.
- */
-
- for(let r=4;r<=65;r++){
-
-  let t1refs=[];
-  let t2refs=[];
-
-  for(let s=0;s<n;s++){
-
-   let b=3+s*8;
-
-   let subjectT1=XLSX.utils.encode_col(b+3);
-   let subjectT2=XLSX.utils.encode_col(b+7);
-
-   /*
-    Subject Term 1 formula
-   */
-
-   let a1=subjectT1+r;
-
-   setCell(
-    sheet,
-    a1,
-    `SUM(${XLSX.utils.encode_col(b)}${r}:${XLSX.utils.encode_col(b+2)}${r})`,
-    "f",
-    undefined
-   );
-
-   /*
-    Subject Term 2 formula
-   */
-
-   let a2=subjectT2+r;
-
-   setCell(
-    sheet,
-    a2,
-    `SUM(${XLSX.utils.encode_col(b+4)}${r}:${XLSX.utils.encode_col(b+6)}${r})`,
-    "f",
-    undefined
-   );
-
-   t1refs.push(a1);
-   t2refs.push(a2)
-  }
-
-  /*
-   Overall Term 1 Total
-  */
-
-  let f1="="+t1refs.join("+");
-
-  setCell(
-   sheet,
-   T1+r,
-   f1.substring(1),
-   "f",
-   undefined,
-   "0"
-  );
-
-  /*
-   Overall Term 1 %
-   Excel percentage value = total / maximum.
-  */
-
-  setCell(
-   sheet,
-   P1+r,
-   `IF(${n*100}=0,0,${T1}${r}/${n*100})`,
-   "f",
-   undefined,
-   "0.00%"
-  );
-
-  /*
-   Overall Term 2 Total
-  */
-
-  let f2="="+t2refs.join("+");
-
-  setCell(
-   sheet,
-   T2+r,
-   f2.substring(1),
-   "f",
-   undefined,
-   "0"
-  );
-
-  /*
-   Overall Term 2 %
-  */
-
-  setCell(
-   sheet,
-   P2+r,
-   `IF(${n*100}=0,0,${T2}${r}/${n*100})`,
-   "f",
-   undefined,
-   "0.00%"
-  );
-
-  /*
-   Copy data styles.
-  */
-
-  if(styleT1Data)sheet[T1+r].s=cloneStyle(styleT1Data);
-  if(styleT1Data)sheet[P1+r].s=cloneStyle(styleT1Data);
-
-  if(styleT2Data)sheet[T2+r].s=cloneStyle(styleT2Data);
-  if(styleT2Data)sheet[P2+r].s=cloneStyle(styleT2Data);
-
-  /*
-   Reapply percentage format after style copy.
-  */
-
-  sheet[P1+r].z="0.00%";
-  sheet[P2+r].z="0.00%"
- }
-
- /*
-  Column widths.
- */
-
- if(!sheet["!cols"])sheet["!cols"]=[];
-
- let w1=sheet["!cols"][cT1]?.width||10;
- let w2=sheet["!cols"][cT2]?.width||10;
-
- sheet["!cols"][cT1]={width:w1,hidden:false};
- sheet["!cols"][cP1]={width:10,hidden:false};
- sheet["!cols"][cT2]={width:w2,hidden:false};
- sheet["!cols"][cP2]={width:10,hidden:false};
-
- /*
-  No hidden columns.
- */
-
- unhide(sheet);
-
- /*
-  Correct range.
- */
-
- sheet["!ref"]=XLSX.utils.encode_range({
-  s:{r:0,c:0},
-  e:{r:64,c:cP2}
- })
-}
-
-/* ==========================================================
-   PREPARE ALL CLASS SHEETS FOR EXCEL
-   ========================================================== */
-
-function prepareAllClassSheets(){
-
- [3,4,5,6,7,8].forEach(c=>{
-
-  let s=wb.Sheets["Class "+c];
-
-  if(s){
-   prepareClassSheet(s,c)
-  }
- });
-
- /*
-  Force Excel recalculation when file is opened.
- */
-
- if(!wb.Workbook)wb.Workbook={};
-
- if(!wb.Workbook.CalcPr)wb.Workbook.CalcPr={};
-
- wb.Workbook.CalcPr.calcMode="auto";
- wb.Workbook.CalcPr.fullCalcOnLoad=true;
- wb.Workbook.CalcPr.forceFullCalc=true
-}
-
-/* ==========================================================
-   DOWNLOAD
-   ========================================================== */
-
-function downloadExcel(){
-
- if(!wb)return alert("Excel template is not loaded");
-
- /*
-  Process ALL CLASS SHEETS,
-  not only selected class.
- */
-
- prepareAllClassSheets();
-
- let out=XLSX.write(wb,{
-  bookType:"xlsx",
-  type:"array",
-  cellStyles:true
- });
-
- let blob=new Blob([out],{
-  type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
- });
-
- let a=document.createElement("a");
-
- a.href=URL.createObjectURL(blob);
-
- a.download=cls?
-  `Assessment_Class_${cls}.xlsx`:
-  "Assessment_Class_3_to_8.xlsx";
-
- a.click();
-
- setTimeout(()=>{
-  URL.revokeObjectURL(a.href)
- },1000);
-
- setStatus("✅ All Class 3–8 formulas and percentages added")
-}
-
-/* ==========================================================
-   GOOGLE DRIVE
-   ========================================================== */
-
-function driveLoad(){
-
- if(!cls){
-
-  let c=document.getElementById("classSelect").value;
-
-  if(!c)return alert("Select Class first");
-
-  cls=c;
-  ws=wb?.Sheets["Class "+c]
- }
-
- if(!accessToken){
-
-  pending="load";
-
-  tokenClient.requestAccessToken({
-   prompt:"consent"
-  })
-
- }else{
-
-  loadDriveFile()
- }
-}
-
-async function findDriveFile(name){
-
- let q=`name='${name}' and trashed=false`;
-
- let u=
-  "https://www.googleapis.com/drive/v3/files?spaces=drive&q="+
-  encodeURIComponent(q)+
-  "&fields=files(id,name,mimeType,modifiedTime)&pageSize=10";
-
- let r=await fetch(u,{
-  headers:{
-   Authorization:"Bearer "+accessToken
-  }
- });
-
- if(!r.ok)throw Error("Drive search failed");
-
- let d=await r.json();
-
- return d.files?.length?d.files[0]:null
-}
-
-async function loadDriveFile(){
-
- try{
-
-  let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
-
-  setStatus("☁️ Searching My Drive...");
-
-  let f=await findDriveFile(name);
-
-  if(!f){
-
-   setStatus("ℹ️ No saved file found. Loading template.");
-
-   loadClass();
-
-   return
-  }
-
-  setStatus("☁️ Loading from My Drive...");
-
-  let r=await fetch(
-   `https://www.googleapis.com/drive/v3/files/${f.id}?alt=media`,
-   {
-    headers:{
-     Authorization:"Bearer "+accessToken
+    currentClass =
+        document.getElementById("classSelect").value;
+
+    if(!currentClass){
+        alert("ପ୍ରଥମେ Class ବାଛନ୍ତୁ।");
+        return;
     }
-   }
-  );
 
-  if(!r.ok)throw Error("Drive download failed");
+    renderTable();
 
-  wb=XLSX.read(await r.arrayBuffer(),{
-   type:"array",
-   cellFormula:true,
-   cellStyles:true
-  });
+    loadLocalData();
 
-  ws=wb.Sheets["Class "+cls];
-
-  if(!ws)throw Error("Class sheet not found");
-
-  unhide(ws);
-  applyBooks();
-  render();
-
-  setStatus("✅ Loaded from My Drive")
-
- }catch(e){
-
-  setStatus("❌ "+e.message)
- }
+    document.getElementById("status").innerText =
+        `Class ${currentClass} loaded. Marks entry କରନ୍ତୁ।`;
 }
 
-function driveSave(){
 
- if(!cls){
+/* =========================
+   RENDER TABLE
+========================= */
 
-  let c=document.getElementById("classSelect").value;
+function renderTable(){
 
-  if(!c)return alert("Select Class first");
+    const books=BOOKS[currentClass];
 
-  cls=c;
-  ws=wb?.Sheets["Class "+c]
- }
+    let head1="";
+    let head2="";
+    let head3="";
 
- if(!ws)return alert("Load Class first");
+    head1+=`
+        <tr>
+            <th rowspan="3" class="roll sticky-roll">Roll</th>
+            <th rowspan="3" class="name sticky-name">Student Name</th>
+            <th rowspan="3" class="gender sticky-gender">Gender</th>
+    `;
 
- if(!accessToken){
+    books.forEach((book,i)=>{
 
-  pending="save";
+        const structure=getStructure(
+            Number(currentClass),
+            book
+        );
 
-  tokenClient.requestAccessToken({
-   prompt:"consent"
-  })
+        let totalGroups=0;
 
- }else{
+        structure.forEach(x=>{
+            if(x[0]==="ମୋଟ") totalGroups++;
+        });
 
-  saveDriveWorkbook()
- }
-}
+        head1+=`
+            <th colspan="${structure.length+2}"
+                class="subject-head">
+                ${book}
+            </th>
+        `;
 
-async function saveDriveWorkbook(){
+        head2+=`
+            <th colspan="${structure.length}">
+                Term 1
+            </th>
+            <th rowspan="2" class="term-head">T1 %</th>
+            <th colspan="${structure.length}">
+                Term 2
+            </th>
+        `;
 
- try{
+    });
 
-  /*
-   Prepare ALL sheets before saving.
-  */
+    head1+=`</tr>`;
 
-  prepareAllClassSheets();
+    head2=`<tr>${head2}</tr>`;
 
-  let name=`OdishaPathasala_Assessment_Class_${cls}.xlsx`;
+    head3+=`
+        <tr>
+    `;
 
-  setStatus("☁️ Saving to My Drive...");
+    books.forEach((book,si)=>{
 
-  let arr=XLSX.write(wb,{
-   bookType:"xlsx",
-   type:"array",
-   cellStyles:true
-  });
+        const structure=getStructure(
+            Number(currentClass),
+            book
+        );
 
-  let blob=new Blob([arr],{
-   type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  });
+        structure.forEach((item,j)=>{
 
-  let old=await findDriveFile(name);
+            const label=item[0];
 
-  if(old){
+            head3+=`
+                <th class="${
+                    label==="ମୋଟ"
+                    ? "total"
+                    : "comp"
+                }">
+                    ${label}
+                    ${
+                        label!=="ମୋଟ"
+                        ? `<br><small>${item[1]}</small>`
+                        : ""
+                    }
+                </th>
+            `;
 
-   let r=await fetch(
-    `https://www.googleapis.com/upload/drive/v3/files/${old.id}?uploadType=media`,
-    {
-     method:"PATCH",
-     headers:{
-      Authorization:"Bearer "+accessToken,
-      "Content-Type":blob.type
-     },
-     body:blob
+        });
+
+        head3+=`
+            <th class="pct">%</th>
+        `;
+
+        structure.forEach((item,j)=>{
+
+            const label=item[0];
+
+            head3+=`
+                <th class="${
+                    label==="ମୋଟ"
+                    ? "total"
+                    : "comp"
+                }">
+                    ${label}
+                    ${
+                        label!=="ମୋଟ"
+                        ? `<br><small>${item[1]}</small>`
+                        : ""
+                    }
+                </th>
+            `;
+
+        });
+
+    });
+
+    head3+=`</tr>`;
+
+    document.getElementById("tableHead").innerHTML =
+        head1+head2+head3;
+
+
+    let body="";
+
+    for(let r=1;r<=60;r++){
+
+        body+=`
+        <tr>
+
+            <td class="sticky-roll">
+                ${r}
+            </td>
+
+            <td class="sticky-name">
+                <input
+                    type="text"
+                    id="name_${r}"
+                    oninput="upperName(this);saveLocal()"
+                >
+            </td>
+
+            <td class="sticky-gender">
+                <select
+                    id="gender_${r}"
+                    onchange="saveLocal()"
+                >
+                    <option value="">-</option>
+                    <option value="Boys">Boys</option>
+                    <option value="Girls">Girls</option>
+                </select>
+            </td>
+        `;
+
+
+        books.forEach((book,s)=>{
+
+            const structure=getStructure(
+                Number(currentClass),
+                book
+            );
+
+            let t1Index=0;
+            let t2Index=0;
+
+
+            structure.forEach((item,j)=>{
+
+                const label=item[0];
+
+                if(label==="ମୋଟ"){
+
+                    body+=`
+                    <td
+                        id="t1total_${r}_${s}_${j}"
+                        class="total-cell"
+                    >0</td>
+                    `;
+
+                }else{
+
+                    body+=`
+                    <td class="comp">
+                        <input
+                            type="number"
+                            min="0"
+                            max="${item[1]}"
+                            id="t1_${r}_${s}_${j}"
+                            oninput="calculateRow(${r},${s})"
+                        >
+                    </td>
+                    `;
+
+                }
+
+            });
+
+
+            body+=`
+                <td
+                    id="pct_${r}_${s}"
+                    class="percent-cell"
+                >0%</td>
+            `;
+
+
+            structure.forEach((item,j)=>{
+
+                const label=item[0];
+
+                if(label==="ମୋଟ"){
+
+                    body+=`
+                    <td
+                        id="t2total_${r}_${s}_${j}"
+                        class="total-cell"
+                    >0</td>
+                    `;
+
+                }else{
+
+                    body+=`
+                    <td class="comp">
+                        <input
+                            type="number"
+                            min="0"
+                            max="${item[1]}"
+                            id="t2_${r}_${s}_${j}"
+                            oninput="calculateRow(${r},${s})"
+                        >
+                    </td>
+                    `;
+
+                }
+
+            });
+
+        });
+
+        body+=`</tr>`;
     }
-   );
 
-   if(!r.ok)throw Error("Drive update failed")
-
-  }else{
-
-   let meta={
-    name:name,
-    mimeType:blob.type
-   };
-
-   let boundary="----OdishaPathasala"+Date.now();
-
-   let body=new Blob([
-
-    "--"+boundary+
-    "\r\nContent-Type:application/json; charset=UTF-8\r\n\r\n",
-
-    JSON.stringify(meta)+
-    "\r\n--"+boundary+
-    "\r\nContent-Type:"+blob.type+
-    "\r\n\r\n",
-
-    blob,
-
-    "\r\n--"+boundary+"--"
-
-   ]);
-
-   let r=await fetch(
-    "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-    {
-     method:"POST",
-     headers:{
-      Authorization:"Bearer "+accessToken,
-      "Content-Type":"multipart/related; boundary="+boundary
-     },
-     body:body
-    }
-   );
-
-   if(!r.ok)throw Error("Drive create failed")
-  }
-
-  setStatus("✅ Saved to your Google Drive")
-
- }catch(e){
-
-  setStatus("❌ Save failed: "+e.message)
- }
+    document.getElementById("tableBody").innerHTML=body;
 }
 
-</script></body></html>
+
+/* =========================
+   CALCULATE
+========================= */
+
+function calculateRow(r,s){
+
+    const book=BOOKS[currentClass][s];
+
+    const structure=getStructure(
+        Number(currentClass),
+        book
+    );
+
+
+    let t1=0;
+    let t2=0;
+
+    let t1Start=0;
+    let t2Start=0;
+
+
+    structure.forEach((item,j)=>{
+
+        if(item[0]!=="ମୋଟ"){
+
+            const el=
+                document.getElementById(
+                    `t1_${r}_${s}_${j}`
+                );
+
+            if(el){
+                t1+=Number(el.value)||0;
+            }
+
+        }
+
+    });
+
+
+    structure.forEach((item,j)=>{
+
+        if(item[0]!=="ମୋଟ"){
+
+            const el=
+                document.getElementById(
+                    `t2_${r}_${s}_${j}`
+                );
+
+            if(el){
+                t2+=Number(el.value)||0;
+            }
+
+        }
+
+    });
+
+
+    let totalPositions=[];
+
+    structure.forEach((item,j)=>{
+        if(item[0]==="ମୋଟ"){
+            totalPositions.push(j);
+        }
+    });
+
+
+    if(totalPositions.length>=1){
+
+        const pos=totalPositions[0];
+
+        const el=document.getElementById(
+            `t1total_${r}_${s}_${pos}`
+        );
+
+        if(el) el.innerText=t1;
+
+    }
+
+
+    if(totalPositions.length>=2){
+
+        const pos=totalPositions[1];
+
+        const el=document.getElementById(
+            `t2total_${r}_${s}_${pos}`
+        );
+
+        if(el) el.innerText=t2;
+
+    }
+
+
+    /*
+       T1 percentage based on
+       first 25 + second 25 = 50
+       against 50
+    */
+
+    const percent=
+        ((t1+t2)/100)*100;
+
+    const pctEl=
+        document.getElementById(
+            `pct_${r}_${s}`
+        );
+
+    if(pctEl){
+        pctEl.innerText =
+            isNaN(percent)
+            ? "0%"
+            : percent.toFixed(1)+"%";
+    }
+
+    saveLocal();
+}
+
+
+/* =========================
+   UPPERCASE
+========================= */
+
+function upperName(el){
+
+    el.value=el.value.toUpperCase();
+
+}
+
+
+/* =========================
+   LOCAL STORAGE
+========================= */
+
+function collectData(){
+
+    let students=[];
+
+    for(let r=1;r<=60;r++){
+
+        let student={
+            roll:r,
+            name:
+                document.getElementById(
+                    `name_${r}`
+                )?.value || "",
+
+            gender:
+                document.getElementById(
+                    `gender_${r}`
+                )?.value || "",
+
+            marks:{}
+        };
+
+
+        BOOKS[currentClass].forEach((book,s)=>{
+
+            const structure=
+                getStructure(
+                    Number(currentClass),
+                    book
+                );
+
+            student.marks[s]={
+                t1:{},
+                t2:{}
+            };
+
+
+            structure.forEach((item,j)=>{
+
+                if(item[0]!=="ମୋଟ"){
+
+                    const a=
+                        document.getElementById(
+                            `t1_${r}_${s}_${j}`
+                        );
+
+                    const b=
+                        document.getElementById(
+                            `t2_${r}_${s}_${j}`
+                        );
+
+                    student.marks[s].t1[j]=
+                        a ? a.value : "";
+
+                    student.marks[s].t2[j]=
+                        b ? b.value : "";
+
+                }
+
+            });
+
+        });
+
+        students.push(student);
+    }
+
+    return students;
+}
+
+
+function saveLocal(){
+
+    if(!currentClass) return;
+
+    const data=collectData();
+
+    localStorage.setItem(
+        `assessment_${currentClass}`,
+        JSON.stringify(data)
+    );
+
+}
+
+
+function loadLocalData(){
+
+    const raw=
+        localStorage.getItem(
+            `assessment_${currentClass}`
+        );
+
+    if(!raw) return;
+
+    try{
+
+        const students=JSON.parse(raw);
+
+        students.forEach(student=>{
+
+            const r=student.roll;
+
+            const nameEl=
+                document.getElementById(
+                    `name_${r}`
+                );
+
+            const genderEl=
+                document.getElementById(
+                    `gender_${r}`
+                );
+
+            if(nameEl)
+                nameEl.value=student.name||"";
+
+            if(genderEl)
+                genderEl.value=student.gender||"";
+
+
+            BOOKS[currentClass].forEach((book,s)=>{
+
+                const structure=
+                    getStructure(
+                        Number(currentClass),
+                        book
+                    );
+
+                structure.forEach((item,j)=>{
+
+                    if(item[0]==="ମୋଟ")
+                        return;
+
+                    const a=
+                        document.getElementById(
+                            `t1_${r}_${s}_${j}`
+                        );
+
+                    const b=
+                        document.getElementById(
+                            `t2_${r}_${s}_${j}`
+                        );
+
+                    if(a)
+                        a.value=
+                            student.marks?.[s]?.t1?.[j]||"";
+
+                    if(b)
+                        b.value=
+                            student.marks?.[s]?.t2?.[j]||"";
+
+                });
+
+                calculateRow(r,s);
+
+            });
+
+        });
+
+    }catch(e){
+
+        console.error(e);
+
+    }
+}
+
+
+/* =========================
+   GOOGLE LOGIN
+========================= */
+
+function signInGoogle(){
+
+    if(!window.google){
+        alert("Google Identity Services load ହୋଇନାହିଁ।");
+        return;
+    }
+
+    tokenClient =
+        google.accounts.oauth2.initTokenClient({
+
+            client_id:CLIENT_ID,
+
+            scope:SCOPES,
+
+            callback:(response)=>{
+
+                accessToken=response.access_token;
+
+                document.getElementById("status")
+                    .innerText=
+                    "Google Drive login successful. ବର୍ତ୍ତମାନ Save କରିପାରିବେ।";
+
+            }
+
+        });
+
+    tokenClient.requestAccessToken({
+        prompt:"consent"
+    });
+}
+
+
+/* =========================
+   DRIVE FILE NAME
+========================= */
+
+function driveFileName(){
+
+    return `OdishaPathasala_Assessment_Class_${currentClass}.xlsx`;
+
+}
+
+
+/* =========================
+   CREATE EXCEL
+========================= */
+
+function createWorkbook(){
+
+    const books=BOOKS[currentClass];
+
+    let rows=[];
+
+    let header1=[
+        "Roll No.",
+        "Student Name",
+        "Gender"
+    ];
+
+    books.forEach(book=>{
+
+        header1.push(book);
+
+    });
+
+    rows.push(header1);
+
+
+    let header2=[
+        "",
+        "",
+        ""
+    ];
+
+    books.forEach(book=>{
+
+        header2.push(
+            "Term 1 / Observation / Term 2"
+        );
+
+    });
+
+    rows.push(header2);
+
+
+    for(let r=1;r<=60;r++){
+
+        let row=[
+            r,
+            document.getElementById(
+                `name_${r}`
+            )?.value||"",
+            document.getElementById(
+                `gender_${r}`
+            )?.value||""
+        ];
+
+
+        books.forEach((book,s)=>{
+
+            const structure=
+                getStructure(
+                    Number(currentClass),
+                    book
+                );
+
+            let values=[];
+
+
+            structure.forEach((item,j)=>{
+
+                if(item[0]==="ମୋଟ"){
+
+                    const el=
+                        document.getElementById(
+                            `t1total_${r}_${s}_${j}`
+                        );
+
+                    values.push(
+                        el?.innerText||0
+                    );
+
+                }else{
+
+                    const el=
+                        document.getElementById(
+                            `t1_${r}_${s}_${j}`
+                        );
+
+                    values.push(
+                        el?.value||""
+                    );
+
+                }
+
+            });
+
+
+            values.push(
+                document.getElementById(
+                    `pct_${r}_${s}`
+                )?.innerText||"0%"
+            );
+
+
+            structure.forEach((item,j)=>{
+
+                if(item[0]==="ମୋଟ"){
+
+                    const el=
+                        document.getElementById(
+                            `t2total_${r}_${s}_${j}`
+                        );
+
+                    values.push(
+                        el?.innerText||0
+                    );
+
+                }else{
+
+                    const el=
+                        document.getElementById(
+                            `t2_${r}_${s}_${j}`
+                        );
+
+                    values.push(
+                        el?.value||""
+                    );
+
+                }
+
+            });
+
+
+            row.push(values.join(" | "));
+
+        });
+
+
+        rows.push(row);
+
+    }
+
+
+    const ws=
+        XLSX.utils.aoa_to_sheet(rows);
+
+    const wb=
+        XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        wb,
+        ws,
+        `Class ${currentClass}`
+    );
+
+
+    /*
+       Extra hidden data sheet.
+       This preserves all marks exactly
+       for Drive resume.
+    */
+
+    const data=collectData();
+
+    const dataRows=[
+        ["CLASS",currentClass],
+        ["BOOKS",JSON.stringify(books)],
+        ["DATA",JSON.stringify(data)]
+    ];
+
+    const dataWs=
+        XLSX.utils.aoa_to_sheet(dataRows);
+
+    XLSX.utils.book_append_sheet(
+        wb,
+        dataWs,
+        "__DATA"
+    );
+
+
+    return wb;
+}
+
+
+/* =========================
+   DRIVE SEARCH
+========================= */
+
+async function findDriveFile(){
+
+    const name=driveFileName();
+
+    const url=
+        "https://www.googleapis.com/drive/v3/files"+
+        "?q="+encodeURIComponent(
+            `name='${name}' and trashed=false`
+        )+
+        "&spaces=drive"+
+        "&fields=files(id,name,modifiedTime)";
+
+    const res=
+        await fetch(url,{
+            headers:{
+                Authorization:
+                    `Bearer ${accessToken}`
+            }
+        });
+
+    if(!res.ok){
+
+        throw new Error(
+            "Drive search failed"
+        );
+
+    }
+
+    const data=await res.json();
+
+    return data.files?.[0]||null;
+}
+
+
+/* =========================
+   SAVE TO DRIVE
+========================= */
+
+async function saveToDrive(){
+
+    if(!currentClass){
+
+        alert("ପ୍ରଥମେ Class ବାଛନ୍ତୁ।");
+        return;
+
+    }
+
+    if(!accessToken){
+
+        alert(
+            "ପ୍ରଥମେ Google Drive Login କରନ୍ତୁ।"
+        );
+
+        signInGoogle();
+        return;
+
+    }
+
+
+    try{
+
+        document.getElementById("status")
+            .innerText=
+            "Saving to Google Drive...";
+
+
+        const wb=createWorkbook();
+
+        const arrayBuffer=
+            XLSX.write(
+                wb,
+                {
+                    bookType:"xlsx",
+                    type:"array"
+                }
+            );
+
+
+        const fileName=driveFileName();
+
+        const existing=
+            await findDriveFile();
+
+
+        const metadata={
+            name:fileName,
+            mimeType:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        };
+
+
+        const boundary=
+            "-------314159265358979323846";
+
+        const delimiter=
+            "\r\n--"+boundary+"\r\n";
+
+        const closeDelimiter=
+            "\r\n--"+boundary+"--";
+
+
+        const body=new Blob([
+
+            delimiter,
+
+            "Content-Type: application/json; charset=UTF-8\r\n\r\n",
+
+            JSON.stringify(metadata),
+
+            delimiter,
+
+            "Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\r\n\r\n",
+
+            new Uint8Array(arrayBuffer),
+
+            closeDelimiter
+
+        ]);
+
+
+        let url;
+
+        let method;
+
+
+        if(existing){
+
+            url=
+                `https://www.googleapis.com/upload/drive/v3/files/${existing.id}?uploadType=multipart`;
+
+            method="PATCH";
+
+        }else{
+
+            url=
+                "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart";
+
+            method="POST";
+
+        }
+
+
+        const response=
+            await fetch(url,{
+
+                method:method,
+
+                headers:{
+                    Authorization:
+                        `Bearer ${accessToken}`,
+
+                    "Content-Type":
+                        `multipart/related; boundary=${boundary}`
+                },
+
+                body:body
+
+            });
+
+
+        if(!response.ok){
+
+            const error=
+                await response.text();
+
+            console.error(error);
+
+            throw new Error(
+                "Drive save failed"
+            );
+
+        }
+
+
+        document.getElementById("status")
+            .innerText=
+            `✅ Class ${currentClass} data Google Drive ରେ save ହୋଇଗଲା।`;
+
+        alert(
+            `Class ${currentClass} assessment successfully saved to My Drive.`
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById("status")
+            .innerText=
+            "❌ Save failed.";
+
+        alert(
+            "Google Drive ରେ save କରିବାରେ problem ହେଲା।"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   INITIAL GOOGLE API
+========================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        if(window.google){
+
+            tokenClient =
+                google.accounts.oauth2.initTokenClient({
+
+                    client_id:CLIENT_ID,
+
+                    scope:SCOPES,
+
+                    callback:(response)=>{
+
+                        accessToken=
+                            response.access_token;
+
+                    }
+
+                });
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
