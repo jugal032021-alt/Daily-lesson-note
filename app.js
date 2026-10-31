@@ -123,6 +123,24 @@ async function checkExistingNote() {
     }
 }
 
+// AUTOMATIC LATEX FRACTION CONVERSION
+function autoFormatMath(content) {
+    return content.replace(
+        /\\frac\{([^{}]+)\}\{([^{}]+)\}/g,
+        function(match, numerator, denominator, offset, fullText) {
+            const before = fullText.substring(0, offset);
+            const lastOpen = before.lastIndexOf('\\(');
+            const lastClose = before.lastIndexOf('\\)');
+
+            if (lastOpen > lastClose) {
+                return match;
+            }
+
+            return '\\( ' + match + ' \\)';
+        }
+    );
+}
+
 async function searchNote() {
     const searchDate = document.getElementById("searchDate")?.value;
     const searchClass = document.getElementById("searchClass")?.value;
@@ -164,7 +182,7 @@ async function searchNote() {
                 <div class="note-card" style="background:transparent !important; border:none !important; box-shadow:none !important; padding:15px;">
                     <h3 style="font-size:20px; font-weight:bold; color:#b30000; border-bottom:1px solid #ccc; padding-bottom:5px;">${foundNote.className || searchClass} - ${foundNote.subject || searchSubject}</h3>
                     <div class="note-item" style="font-size:16px; line-height:1.8; margin-bottom:8px;"><strong>ତାରିଖ:</strong> ${foundNote.date || searchDate} | <strong>କାଳାଂଶ:</strong> ${foundNote.period || ''}</div>
-                    <div class="note-item" style="font-size:16px; line-height:1.8; white-space:pre-wrap; margin-top:10px; background:rgba(255,255,255,0.8); padding:12px; border-radius:5px; border-left:4px solid #0056b3;">${contentToShow}</div>
+                    <div class="note-item" style="font-size:16px; line-height:1.8; white-space:pre-wrap; margin-top:10px; background:rgba(255,255,255,0.8); padding:12px; border-radius:5px; border-left:4px solid #0056b3;">${formattedContent}</div>
                 
                 </div>`;
 
